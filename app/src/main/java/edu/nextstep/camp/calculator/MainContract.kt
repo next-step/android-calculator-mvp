@@ -16,6 +16,8 @@ interface MainContract {
         fun formatExpression(number: Int)
 
         fun formatExpression(operator: Operator)
+
+        fun deleteExpression()
     }
 
 }

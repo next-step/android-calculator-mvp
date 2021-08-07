@@ -4,10 +4,10 @@ import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainPresenter(
-    private val view: MainContract.View
+    private val view: MainContract.View,
+    private var _expression: Expression = Expression.EMPTY
 ) : MainContract.Presenter {
 
-    private var _expression: Expression = Expression.EMPTY
     override val expression: Expression
         get() = _expression
 
@@ -18,6 +18,11 @@ class MainPresenter(
 
     override fun formatExpression(operator: Operator) {
         _expression += operator
+        view.showExpression(_expression)
+    }
+
+    override fun deleteExpression() {
+        _expression = _expression.removeLast()
         view.showExpression(_expression)
     }
 }
