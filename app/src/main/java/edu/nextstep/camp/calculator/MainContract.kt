@@ -7,13 +7,15 @@ interface MainContract {
 
     interface View {
 
+        fun showExpression(expression: Expression)
     }
 
     interface Presenter {
+        val expression: Expression
 
-        fun expression(number: Int): Expression
+        fun formatExpression(number: Int)
 
-        fun expression(operator: Operator): Expression
+        fun formatExpression(operator: Operator)
     }
 
 }

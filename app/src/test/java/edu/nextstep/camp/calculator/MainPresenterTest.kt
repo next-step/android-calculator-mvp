@@ -2,30 +2,29 @@ package edu.nextstep.camp.calculator
 
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
+import io.mockk.mockk
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class MainPresenterTest {
 
-    private val expression: Expression = Expression.EMPTY
+    private val view: MainContract.View = mockk(relaxed = true)
 
     @Test
     fun `숫자가 입력되면 수식에 추가되고 변경된 수식을 보여줘야 한다`() {
-        val presenter = MainPresenter(expression = expression) as MainContract.Presenter
+        val presenter = MainPresenter(view = view) as MainContract.Presenter
 
-        val actual = presenter
-            .expression(number = 1)
-            .toString()
+        presenter.formatExpression(number = 1)
 
-        assertThat(actual).isEqualTo("1")
+        assertThat(presenter.expression.toString()).isEqualTo("1")
     }
 
     @Test
     fun `빈 수식에 연산자가 입력되면 수식에 추가되지 않습니다`() {
-        val presenter = MainPresenter(expression = expression) as MainContract.Presenter
+        val presenter = MainPresenter(view = view) as MainContract.Presenter
 
-        val actual = presenter.expression(operator = Operator.Plus)
+        presenter.formatExpression(operator = Operator.Plus)
 
-        assertThat(actual).isEqualTo(Expression.EMPTY)
+        assertThat(presenter.expression).isEqualTo(Expression.EMPTY)
     }
 }
