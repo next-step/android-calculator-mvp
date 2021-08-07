@@ -66,13 +66,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             presenter.deleteExpression()
         }
         binding.buttonEquals.setOnClickListener {
-            // val result = calculator.calculate(expression.toString())
-            // if (result == null) {
-            //     Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
-            //     return@setOnClickListener
-            // }
-            // expression = Expression.EMPTY + result
-            // binding.textView.text = result.toString()
+            presenter.calculate()
         }
     }
 
