@@ -11,7 +11,7 @@ internal class MainPresenterTest {
 
     @Test
     fun `숫자가 입력되면 수식에 추가되고 변경된 수식을 보여줘야 한다`() {
-        val presenter = MainPresenter(expression = expression)
+        val presenter = MainPresenter(expression = expression) as MainContract.Presenter
 
         val actual = presenter
             .expression(number = 1)
@@ -22,7 +22,7 @@ internal class MainPresenterTest {
 
     @Test
     fun `빈 수식에 연산자가 입력되면 수식에 추가되지 않습니다`() {
-        val presenter = MainPresenter(expression = expression)
+        val presenter = MainPresenter(expression = expression) as MainContract.Presenter
 
         val actual = presenter.expression(operator = Operator.Plus)
 

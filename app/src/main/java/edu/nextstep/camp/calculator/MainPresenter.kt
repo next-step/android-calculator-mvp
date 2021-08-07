@@ -5,14 +5,14 @@ import edu.nextstep.camp.calculator.domain.Operator
 
 class MainPresenter(
     private var expression: Expression = Expression.EMPTY
-) {
+) : MainContract.Presenter {
 
-    fun expression(number: Int): Expression {
+    override fun expression(number: Int): Expression {
         expression += number
         return expression
     }
 
-    fun expression(operator: Operator): Expression {
+    override fun expression(operator: Operator): Expression {
         expression += operator
         return expression
     }
