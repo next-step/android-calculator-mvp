@@ -68,4 +68,19 @@ internal class MainPresenterTest {
             view.showExpression(presenter.expression)
         }
     }
+
+    @Test
+    fun `불완전한 수식을 계산하면 에러가 발생한다`() {
+        val presenter = MainPresenter(
+            view = view,
+            _expression = Expression(
+                values = listOf(2, Operator.Plus, 3, Operator.Multiply)
+            )
+        ) as MainContract.Presenter
+
+        presenter.calculate()
+        verify {
+            view.showError()
+        }
+    }
 }

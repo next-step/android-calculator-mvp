@@ -9,7 +9,7 @@ interface MainContract {
 
         fun showExpression(expression: Expression)
 
-        fun showError(throwable: Throwable)
+        fun showError()
     }
 
     interface Presenter {

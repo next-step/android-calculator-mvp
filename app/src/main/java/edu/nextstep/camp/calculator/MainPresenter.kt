@@ -31,7 +31,7 @@ class MainPresenter(
     override fun calculate() {
         val result = calculator.calculate(expression.toString())
         if (result == null) {
-            view.showError(IllegalStateException("incomplete_expression"))
+            view.showError()
             return
         }
         _expression = Expression.EMPTY + result
