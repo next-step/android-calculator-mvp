@@ -62,8 +62,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             presenter.formatExpression(operator = Operator.Divide)
         }
         binding.buttonDelete.setOnClickListener {
-            // expression = expression.removeLast()
-            // binding.textView.text = expression.toString()
+            presenter.deleteExpression()
         }
         binding.buttonEquals.setOnClickListener {
             // val result = calculator.calculate(expression.toString())
