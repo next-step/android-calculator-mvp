@@ -1,11 +1,13 @@
 package edu.nextstep.camp.calculator
 
+import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainPresenter(
     private val view: MainContract.View,
-    private var _expression: Expression = Expression.EMPTY
+    private var _expression: Expression = Expression.EMPTY,
+    private val calculator: Calculator = Calculator()
 ) : MainContract.Presenter {
 
     override val expression: Expression
@@ -23,6 +25,16 @@ class MainPresenter(
 
     override fun deleteExpression() {
         _expression = _expression.removeLast()
+        view.showExpression(_expression)
+    }
+
+    override fun calculate() {
+        val result = calculator.calculate(expression.toString())
+        if (result == null) {
+            view.showError(IllegalStateException("incomplete_expression"))
+            return
+        }
+        _expression = Expression.EMPTY + result
         view.showExpression(_expression)
     }
 }

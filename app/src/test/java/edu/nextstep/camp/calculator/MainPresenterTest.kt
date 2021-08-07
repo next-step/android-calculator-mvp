@@ -51,4 +51,21 @@ internal class MainPresenterTest {
             view.showExpression(presenter.expression)
         }
     }
+
+    @Test
+    fun `완전한 수식을 계산하면 계산된 결과를 보여줘야 한다`() {
+        val presenter = MainPresenter(
+            view = view,
+            _expression = Expression(
+                values = listOf(2, Operator.Plus, 3, Operator.Multiply, 4, Operator.Divide, 2)
+            )
+        ) as MainContract.Presenter
+
+        presenter.calculate()
+
+        assertThat(presenter.expression.toString()).isEqualTo("10")
+        verify {
+            view.showExpression(presenter.expression)
+        }
+    }
 }

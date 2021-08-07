@@ -8,6 +8,8 @@ interface MainContract {
     interface View {
 
         fun showExpression(expression: Expression)
+
+        fun showError(throwable: Throwable)
     }
 
     interface Presenter {
@@ -18,6 +20,8 @@ interface MainContract {
         fun formatExpression(operator: Operator)
 
         fun deleteExpression()
+
+        fun calculate()
     }
 
 }
