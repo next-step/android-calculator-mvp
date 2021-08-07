@@ -10,7 +10,6 @@ import edu.nextstep.camp.calculator.domain.Operator
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
-    private val calculator = Calculator()
     private lateinit var presenter: MainPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,6 +19,18 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
         presenter = MainPresenter(view = this)
 
+        setupListener()
+    }
+
+    override fun showExpression(expression: Expression) {
+        binding.textView.text = expression.toString()
+    }
+
+    override fun showError() {
+        Toast.makeText(this, getString(R.string.incomplete_expression), Toast.LENGTH_SHORT).show()
+    }
+
+    private fun setupListener() {
         binding.button0.setOnClickListener {
             presenter.formatExpression(number = 0)
         }
@@ -68,13 +79,5 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonEquals.setOnClickListener {
             presenter.calculate()
         }
-    }
-
-    override fun showExpression(expression: Expression) {
-        binding.textView.text = expression.toString()
-    }
-
-    override fun showError() {
-        Toast.makeText(this, getString(R.string.incomplete_expression), Toast.LENGTH_SHORT).show()
     }
 }
