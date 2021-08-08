@@ -86,5 +86,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonEquals.setOnClickListener {
             presenter.calculate()
         }
+        binding.buttonMemory.setOnClickListener {
+            showHistories(histories = presenter.histories)
+        }
     }
 }
