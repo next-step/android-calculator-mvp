@@ -84,4 +84,18 @@ internal class MainPresenterTest {
             view.showError()
         }
     }
+
+    @Test
+    fun `계산을 하게 되면 계산 기록이 저장됩니다`() {
+        presenter = MainPresenter(
+            view = view,
+            expression = Expression(
+                values = listOf(2, Operator.Plus, 3)
+            )
+        )
+
+        presenter.saveHistory(expression = presenter.expression, result = 5)
+
+        assertThat(presenter.histories.size).isEqualTo(1)
+    }
 }

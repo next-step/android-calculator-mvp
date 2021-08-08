@@ -1,6 +1,7 @@
 package edu.nextstep.camp.calculator
 
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.History
 import edu.nextstep.camp.calculator.domain.Operator
 
 interface MainContract {
@@ -15,6 +16,8 @@ interface MainContract {
     interface Presenter {
         val expression: Expression
 
+        val histories: List<History>
+
         fun formatExpression(number: Int)
 
         fun formatExpression(operator: Operator)
@@ -22,6 +25,8 @@ interface MainContract {
         fun deleteExpression()
 
         fun calculate()
+
+        fun saveHistory(expression: Expression, result: Int?)
     }
 
 }
