@@ -39,7 +39,7 @@ internal class MainPresenterTest {
     fun `수식을 지우면 마지막 수식이 지워지고 지워진 수식을 보여줘야 한다`() {
         val presenter = MainPresenter(
             view = view,
-            _expression = Expression(
+            expression = Expression(
                 values = listOf(2, Operator.Plus, 3, Operator.Multiply, 4, Operator.Divide, 2)
             ),
         ) as MainContract.Presenter
@@ -56,7 +56,7 @@ internal class MainPresenterTest {
     fun `완전한 수식을 계산하면 계산된 결과를 보여줘야 한다`() {
         val presenter = MainPresenter(
             view = view,
-            _expression = Expression(
+            expression = Expression(
                 values = listOf(2, Operator.Plus, 3, Operator.Multiply, 4, Operator.Divide, 2)
             )
         ) as MainContract.Presenter
@@ -73,7 +73,7 @@ internal class MainPresenterTest {
     fun `불완전한 수식을 계산하면 에러가 발생한다`() {
         val presenter = MainPresenter(
             view = view,
-            _expression = Expression(
+            expression = Expression(
                 values = listOf(2, Operator.Plus, 3, Operator.Multiply)
             )
         ) as MainContract.Presenter
