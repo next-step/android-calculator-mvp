@@ -37,6 +37,11 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         adapter = MainAdapter().apply { replaceItems(items = histories) }
     }
 
+    override fun hideHistories() = with(binding) {
+        textView.isVisible = true
+        recyclerView.isVisible = false
+    }
+
     private fun setupListener() {
         binding.button0.setOnClickListener {
             presenter.formatExpression(number = 0)
@@ -87,6 +92,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             presenter.calculate()
         }
         binding.buttonMemory.setOnClickListener {
+            if (binding.recyclerView.isVisible) {
+                hideHistories()
+                return@setOnClickListener
+            }
             showHistories(histories = presenter.histories)
         }
     }

@@ -13,6 +13,8 @@ interface MainContract {
         fun showError()
 
         fun showHistories(histories: List<History>)
+
+        fun hideHistories()
     }
 
     interface Presenter {
