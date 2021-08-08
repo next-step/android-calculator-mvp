@@ -11,6 +11,8 @@ interface MainContract {
         fun showExpression(expression: Expression)
 
         fun showError()
+
+        fun showHistories(histories: List<History>)
     }
 
     interface Presenter {

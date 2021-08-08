@@ -3,9 +3,10 @@ package edu.nextstep.camp.calculator
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
-import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.History
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainActivity : AppCompatActivity(), MainContract.View {
@@ -28,6 +29,12 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun showError() {
         Toast.makeText(this, getString(R.string.incomplete_expression), Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showHistories(histories: List<History>) = with(binding.recyclerView) {
+        binding.textView.isVisible = false
+        isVisible = true
+        adapter = MainAdapter().apply { replaceItems(items = histories) }
     }
 
     private fun setupListener() {
