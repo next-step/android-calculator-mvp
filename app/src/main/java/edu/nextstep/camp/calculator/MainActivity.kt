@@ -31,10 +31,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         Toast.makeText(this, getString(R.string.incomplete_expression), Toast.LENGTH_SHORT).show()
     }
 
-    override fun showHistories(histories: List<History>) = with(binding.recyclerView) {
-        binding.textView.isVisible = false
-        isVisible = true
-        adapter = MainAdapter().apply { replaceItems(items = histories) }
+    override fun showHistories(histories: List<History>) = with(binding) {
+        textView.isVisible = false
+        recyclerView.isVisible = true
+        recyclerView.adapter = MainAdapter().apply { replaceItems(items = histories) }
     }
 
     override fun hideHistories() = with(binding) {
