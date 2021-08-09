@@ -6,10 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.domain.Calculator
 import edu.nextstep.camp.domain.Expression
+import edu.nextstep.camp.domain.Operator
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
-    private val calculator = Calculator()
+    private val calculator = Calculator
     private var expression = Expression.EMPTY
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,19 +59,19 @@ class MainActivity : AppCompatActivity() {
             binding.textView.text = expression.toString()
         }
         binding.buttonPlus.setOnClickListener {
-            expression += edu.nextstep.camp.domain.Operator.Plus
+            expression += Operator.Plus
             binding.textView.text = expression.toString()
         }
         binding.buttonMinus.setOnClickListener {
-            expression += edu.nextstep.camp.domain.Operator.Minus
+            expression += Operator.Minus
             binding.textView.text = expression.toString()
         }
         binding.buttonMultiply.setOnClickListener {
-            expression += edu.nextstep.camp.domain.Operator.Multiply
+            expression += Operator.Multiply
             binding.textView.text = expression.toString()
         }
         binding.buttonDivide.setOnClickListener {
-            expression += edu.nextstep.camp.domain.Operator.Divide
+            expression += Operator.Divide
             binding.textView.text = expression.toString()
         }
         binding.buttonDelete.setOnClickListener {
@@ -86,5 +87,13 @@ class MainActivity : AppCompatActivity() {
             expression = Expression.EMPTY + result
             binding.textView.text = result.toString()
         }
+    }
+
+    override fun refreshExpression(expression: Expression) {
+
+    }
+
+    override fun notifyIncompleteExpression() {
+
     }
 }
