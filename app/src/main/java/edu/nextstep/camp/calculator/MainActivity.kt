@@ -13,12 +13,16 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
     private lateinit var presenter: MainPresenter
 
+    private val mainAdapter = MainAdapter()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         presenter = MainPresenter(view = this)
+
+        binding.recyclerView.adapter = mainAdapter
 
         setupListener()
     }
@@ -34,7 +38,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     override fun showHistories(histories: List<History>) = with(binding) {
         textView.isVisible = false
         recyclerView.isVisible = true
-        recyclerView.adapter = MainAdapter().apply { replaceItems(items = histories) }
+        mainAdapter.replaceItems(items = histories)
     }
 
     override fun hideHistories() = with(binding) {
