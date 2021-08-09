@@ -94,7 +94,7 @@ internal class MainPresenterTest {
             )
         )
 
-        presenter.saveHistory(expression = presenter.expression, result = 5)
+        presenter.calculate()
 
         assertThat(presenter.histories.size).isEqualTo(1)
     }

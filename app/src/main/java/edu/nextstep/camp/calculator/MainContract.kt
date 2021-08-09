@@ -29,8 +29,6 @@ interface MainContract {
         fun deleteExpression()
 
         fun calculate()
-
-        fun saveHistory(expression: Expression, result: Int?)
     }
 
 }

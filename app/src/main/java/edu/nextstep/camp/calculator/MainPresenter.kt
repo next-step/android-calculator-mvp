@@ -47,7 +47,7 @@ class MainPresenter(
         view.showExpression(_expression)
     }
 
-    override fun saveHistory(expression: Expression, result: Int?) {
+    private fun saveHistory(expression: Expression, result: Int?) {
         _histories.add(
             History(
                 expression = expression,
