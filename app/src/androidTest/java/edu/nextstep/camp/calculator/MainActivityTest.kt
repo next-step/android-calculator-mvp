@@ -35,7 +35,7 @@ class CalculatorActivityTest {
 
 
         // then
-        onView(withId(R.id.tv_result)).check(matches(withText(expectedText)))
+        onView(withId(R.id.text_result)).check(matches(withText(expectedText)))
     }
 
     @Test
@@ -49,7 +49,7 @@ class CalculatorActivityTest {
         onView(withId(R.id.button2)).perform(click())
 
         // then
-        onView(withId(R.id.tv_result)).check(matches(withText(expectedText)))
+        onView(withId(R.id.text_result)).check(matches(withText(expectedText)))
     }
 
     @Test
@@ -58,7 +58,7 @@ class CalculatorActivityTest {
         onView(withId(R.id.buttonDelete)).perform(click())
 
         // then
-        onView(withId(R.id.tv_result)).check(matches(withText("")))
+        onView(withId(R.id.text_result)).check(matches(withText("")))
     }
 
     @Test
@@ -74,17 +74,17 @@ class CalculatorActivityTest {
         // when
         onView(withId(R.id.buttonDelete)).perform(click())
         // then
-        onView(withId(R.id.tv_result)).check(matches(withText("46 +")))
+        onView(withId(R.id.text_result)).check(matches(withText("46 +")))
 
         // when
         onView(withId(R.id.buttonDelete)).perform(click())
         // then
-        onView(withId(R.id.tv_result)).check(matches(withText("46")))
+        onView(withId(R.id.text_result)).check(matches(withText("46")))
 
         // when
         onView(withId(R.id.buttonDelete)).perform(click())
         // then
-        onView(withId(R.id.tv_result)).check(matches(withText("4")))
+        onView(withId(R.id.text_result)).check(matches(withText("4")))
     }
 
     @Test
@@ -98,7 +98,7 @@ class CalculatorActivityTest {
         onView(withId(R.id.buttonEquals)).perform(click())
 
         // then
-        onView(withId(R.id.tv_result)).check(matches(withText("17")))
+        onView(withId(R.id.text_result)).check(matches(withText("17")))
     }
 
     @Test
@@ -111,7 +111,7 @@ class CalculatorActivityTest {
         onView(withId(R.id.buttonEquals)).perform(click())
 
         // then
-        onView(withText("완성되지 않은 수식입니다")).inRoot(isToast())
+        onView(withText("완성되지 않은 수식입니다.")).inRoot(isToast())
             .check(matches(isDisplayed()))
     }
 }
@@ -149,7 +149,7 @@ class CalculatorActivityNumberParameterizedTest(
         onView(withId(buttonResId)).perform(click())
 
         // then
-        onView(withId(R.id.tv_result)).check(matches(withText(expectedText)))
+        onView(withId(R.id.text_result)).check(matches(withText(expectedText)))
     }
 }
 
@@ -180,7 +180,7 @@ class CalculatorActivityOperatorParameterizedTest(
         onView(withId(operatorButtonResId)).perform(click())
 
         // then
-        onView(withId(R.id.tv_result)).check(matches(withText("")))
+        onView(withId(R.id.text_result)).check(matches(withText("")))
     }
 
     @Test
@@ -192,7 +192,7 @@ class CalculatorActivityOperatorParameterizedTest(
         onView(withId(operatorButtonResId)).perform(click())
 
         // then
-        onView(withId(R.id.tv_result)).check(matches(withText("7 $symbol")))
+        onView(withId(R.id.text_result)).check(matches(withText("7 $symbol")))
     }
 
     @Test
@@ -205,6 +205,6 @@ class CalculatorActivityOperatorParameterizedTest(
         onView(withId(operatorButtonResId)).perform(click())
 
         // then
-        onView(withId(R.id.tv_result)).check(matches(withText("7 $symbol")))
+        onView(withId(R.id.text_result)).check(matches(withText("7 $symbol")))
     }
 }
