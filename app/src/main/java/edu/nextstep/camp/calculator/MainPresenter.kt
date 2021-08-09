@@ -19,7 +19,7 @@ class MainPresenter(
 
     private val _histories = histories.toMutableList()
     override val histories: List<History>
-        get() = _histories
+        get() = _histories.toList()
 
     override fun formatExpression(number: Int) {
         _expression += number
