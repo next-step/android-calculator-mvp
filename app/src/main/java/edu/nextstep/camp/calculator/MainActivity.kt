@@ -20,63 +20,63 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
         binding.button0.setOnClickListener {
             expression += 0
-            binding.textView.text = expression.toString()
+            displayExpression(expression.toString())
         }
         binding.button1.setOnClickListener {
             expression += 1
-            binding.textView.text = expression.toString()
+            displayExpression(expression.toString())
         }
         binding.button2.setOnClickListener {
             expression += 2
-            binding.textView.text = expression.toString()
+            displayExpression(expression.toString())
         }
         binding.button3.setOnClickListener {
             expression += 3
-            binding.textView.text = expression.toString()
+            displayExpression(expression.toString())
         }
         binding.button4.setOnClickListener {
             expression += 4
-            binding.textView.text = expression.toString()
+            displayExpression(expression.toString())
         }
         binding.button5.setOnClickListener {
             expression += 5
-            binding.textView.text = expression.toString()
+            displayExpression(expression.toString())
         }
         binding.button6.setOnClickListener {
             expression += 6
-            binding.textView.text = expression.toString()
+            displayExpression(expression.toString())
         }
         binding.button7.setOnClickListener {
             expression += 7
-            binding.textView.text = expression.toString()
+            displayExpression(expression.toString())
         }
         binding.button8.setOnClickListener {
             expression += 8
-            binding.textView.text = expression.toString()
+            displayExpression(expression.toString())
         }
         binding.button9.setOnClickListener {
             expression += 9
-            binding.textView.text = expression.toString()
+            displayExpression(expression.toString())
         }
         binding.buttonPlus.setOnClickListener {
             expression += com.joseph.domain.Operator.Plus
-            binding.textView.text = expression.toString()
+            displayExpression(expression.toString())
         }
         binding.buttonMinus.setOnClickListener {
             expression += com.joseph.domain.Operator.Minus
-            binding.textView.text = expression.toString()
+            displayExpression(expression.toString())
         }
         binding.buttonMultiply.setOnClickListener {
             expression += com.joseph.domain.Operator.Multiply
-            binding.textView.text = expression.toString()
+            displayExpression(expression.toString())
         }
         binding.buttonDivide.setOnClickListener {
             expression += com.joseph.domain.Operator.Divide
-            binding.textView.text = expression.toString()
+            displayExpression(expression.toString())
         }
         binding.buttonDelete.setOnClickListener {
             expression = expression.removeLast()
-            binding.textView.text = expression.toString()
+            displayExpression(expression.toString())
         }
         binding.buttonEquals.setOnClickListener {
             val result = calculator.calculate(expression.toString())
@@ -85,7 +85,11 @@ class MainActivity : AppCompatActivity(), MainContract.View {
                 return@setOnClickListener
             }
             expression = com.joseph.domain.Expression.EMPTY + result
-            binding.textView.text = result.toString()
+            displayExpression(result.toString())
         }
+    }
+
+    override fun displayExpression(expression: String) {
+        binding.textView.text = expression
     }
 }
