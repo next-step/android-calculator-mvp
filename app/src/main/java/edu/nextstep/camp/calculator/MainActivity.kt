@@ -35,8 +35,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonEquals.setOnClickListener { presenter.calculate() }
     }
 
-    override fun displayExpression(expression: String) {
-        binding.textView.text = expression
+    override fun displayExpression(expression: Expression) {
+        binding.textView.text = expression.toString()
     }
 
     override fun showIncompleteExpressionToast() {

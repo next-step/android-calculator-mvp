@@ -5,7 +5,7 @@ import com.joseph.domain.Operator
 
 interface MainContract {
     interface View {
-        fun displayExpression(expression: String)
+        fun displayExpression(expression: Expression)
         fun showIncompleteExpressionToast()
     }
 

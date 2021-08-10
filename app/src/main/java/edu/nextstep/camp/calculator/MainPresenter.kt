@@ -10,17 +10,17 @@ class MainPresenter(val view: MainContract.View): MainContract.Presenter {
 
     override fun addExpression(number: Int) {
         expression += number
-        view.displayExpression(expression.toString())
+        view.displayExpression(expression)
     }
 
     override fun addExpression(operator: Operator) {
         expression += operator
-        view.displayExpression(expression.toString())
+        view.displayExpression(expression)
     }
 
     override fun removeAtLastExpression() {
         expression = expression.removeLast()
-        view.displayExpression(expression.toString())
+        view.displayExpression(expression)
     }
 
     override fun calculate() {
