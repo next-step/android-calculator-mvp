@@ -8,7 +8,7 @@ import com.joseph.domain.Calculator
 import com.joseph.domain.Expression
 import com.joseph.domain.Operator
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
     private val calculator = Calculator()
     private var expression = Expression.EMPTY
