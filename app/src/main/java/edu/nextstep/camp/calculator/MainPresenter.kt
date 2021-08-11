@@ -32,6 +32,7 @@ class MainPresenter(
             view.showIncompleteExpressionToast()
         } else {
             expression = Expression.EMPTY + result
+            view.displayExpression(expression)
         }
     }
 }
