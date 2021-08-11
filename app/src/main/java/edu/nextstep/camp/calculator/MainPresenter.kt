@@ -30,7 +30,8 @@ class MainPresenter(
         val result = calculator.calculate(expression.toString())
         if (result == null) {
             view.showIncompleteExpressionToast()
+        } else {
+            expression = Expression.EMPTY + result
         }
-        expression = Expression.EMPTY + result!!
     }
 }
