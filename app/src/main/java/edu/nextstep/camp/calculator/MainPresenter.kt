@@ -4,8 +4,11 @@ import com.joseph.domain.Calculator
 import com.joseph.domain.Expression
 import com.joseph.domain.Operator
 
-class MainPresenter(val view: MainContract.View): MainContract.Presenter {
-    private var expression = Expression.EMPTY
+class MainPresenter(
+    private val view: MainContract.View,
+    private var expression: Expression = Expression.EMPTY
+): MainContract.Presenter {
+
     private val calculator = Calculator()
 
     override fun addExpression(number: Int) {
