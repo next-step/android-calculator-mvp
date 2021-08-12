@@ -1,6 +1,7 @@
 package edu.nextstep.camp.calculator
 
 import com.google.common.truth.Truth.assertThat
+import edu.nextstep.camp.domain.CalculationHistory
 import edu.nextstep.camp.domain.Expression
 import edu.nextstep.camp.domain.Operator
 import io.mockk.every
@@ -160,5 +161,32 @@ class MainPresenterTest {
         // then
         verify(exactly = 0) { view.refreshExpression(any()) }
         verify(exactly = 1) { view.notifyIncompleteExpression() }
+    }
+
+    // 무언가 저장만 하게 만들면, 기록이 저장되었는 지 테스트를 어떻게 해야할 지 모르겠습니다.
+    // 그래서 테스트를 위해서 계산을 하면, view에 수식 변경, 기록 갱신을 동시에 알리는 방법을 사용했습니다.
+    // 기록을 보지 않을때 조차도 갱신을 하는 것이 비효율적인 것 같네요.
+
+    // 내부의 객체 상태만 변하는 경우 테스트를 어떻게 진행하면 좋을까요?
+    // 아니면 설계가 좋지 않다는 신호로 받아들이고 다시 설계를 해야 할까요?
+    @Test
+    fun `입력한 수식이 완전할 때 결과를 구하면 기록된 목록을 뷰에 알린다`() {
+        // given
+        val expression = Expression(10, Operator.Plus, 20)
+        presenter = MainPresenter(view, expression)
+
+        val calculationHistoriesSlot = slot<List<CalculationHistory>>()
+        every { view.refreshCalculationHistories(capture(calculationHistoriesSlot)) } answers { nothing }
+
+        val expectedHistories = listOf(CalculationHistory(expression, 30))
+
+        // when
+        presenter.calculateExpression()
+
+        // then
+        val actualHistories = calculationHistoriesSlot.captured
+
+        assertThat(actualHistories).containsExactlyElementsIn(expectedHistories).inOrder()
+        verify(exactly = 1) { view.refreshCalculationHistories(actualHistories) }
     }
 }

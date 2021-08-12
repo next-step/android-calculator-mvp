@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
+import edu.nextstep.camp.domain.CalculationHistory
 import edu.nextstep.camp.domain.Expression
 import edu.nextstep.camp.domain.Operator
 
@@ -42,5 +43,9 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun notifyIncompleteExpression() {
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun refreshCalculationHistories(histories: List<CalculationHistory>) {
+        // not yet
     }
 }
