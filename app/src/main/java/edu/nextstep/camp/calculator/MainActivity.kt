@@ -16,6 +16,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        presenter = MainPresenter(this)
+
         binding.button0.setOnClickListener {
             presenter.addOperand(0)
         }
