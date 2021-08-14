@@ -6,8 +6,10 @@ package edu.nextstep.camp.domain
  */
 
 class CalculatorMemory(
-    private val histories: MutableList<CalculationHistory> = mutableListOf()
+    initialHistories: List<CalculationHistory> = emptyList()
 ) {
+    private val histories: MutableList<CalculationHistory> = initialHistories.toMutableList()
+
     fun record(expression: Expression, result: Int) {
         val history = CalculationHistory(expression, result)
         histories.add(history)

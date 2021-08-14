@@ -156,19 +156,8 @@ class CalculatorActivityTest {
         onView(withId(R.id.buttonMemory)).perform(click())
 
         // then
-        onView(withId(R.id.recyclerView))
-            .perform(
-                actionOnItem<CalculationHistoriesAdapter.ViewHolder>(
-                    hasDescendant(withText("1 + 2")), click()
-                )
-            )
-        onView(withId(R.id.recyclerView))
-            .perform(
-                actionOnItem<CalculationHistoriesAdapter.ViewHolder>(
-                    hasDescendant(withText("=3")), click()
-                )
-            )
-
+        onView(withText("1 + 2")).check(matches(isDisplayed()))
+        onView(withText("=3")).check(matches(isDisplayed()))
     }
 }
 

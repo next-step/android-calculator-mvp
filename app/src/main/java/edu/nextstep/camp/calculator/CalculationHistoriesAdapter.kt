@@ -26,7 +26,7 @@ class CalculationHistoriesAdapter :
         holder.bind(getItem(position))
     }
 
-    inner class ViewHolder(
+    class ViewHolder(
         private val binding: ItemResultBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
