@@ -1,8 +1,7 @@
 package edu.nextstep.camp.calculator
 
 import com.google.common.truth.Truth.assertThat
-import edu.nextstep.camp.calculator.domain.Expression
-import edu.nextstep.camp.calculator.domain.Operator
+import edu.nextstep.camp.calculator.domain.*
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
@@ -113,5 +112,24 @@ class MainPresenterTest {
 
         // then
         verify { view.showErrorMsg() }
+    }
+
+    @Test
+    fun `계산 기록 버튼을 누르면, 계산기록이 표시되어야한다`() {
+        // given
+        val expression = listOf(3, Operator.Multiply, 4)
+        val histories = listOf(CalculationResult(expression.joinToString(" "), 12))
+        val calculator = Calculator(CalculationHistories(histories))
+        presenter = MainPresenter(view = view, calculator = calculator)
+        val expressionSlot = slot<List<CalculationResult>>()
+        every { view.showHistory(capture(expressionSlot)) } answers { nothing }
+
+        // when
+        presenter.loadHistory()
+
+        // then
+        val actual = expressionSlot.captured
+        assertThat(actual).isEqualTo(histories)
+        verify { view.showHistory(histories) }
     }
 }
