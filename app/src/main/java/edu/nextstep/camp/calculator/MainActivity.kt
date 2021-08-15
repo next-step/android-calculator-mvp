@@ -25,28 +25,28 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             presenter.addOperand(1)
         }
         binding.button2.setOnClickListener {
-            presenter.addOperand(1)
+            presenter.addOperand(2)
         }
         binding.button3.setOnClickListener {
-            presenter.addOperand(1)
+            presenter.addOperand(3)
         }
         binding.button4.setOnClickListener {
-            presenter.addOperand(1)
+            presenter.addOperand(4)
         }
         binding.button5.setOnClickListener {
-            presenter.addOperand(1)
+            presenter.addOperand(5)
         }
         binding.button6.setOnClickListener {
-            presenter.addOperand(1)
+            presenter.addOperand(6)
         }
         binding.button7.setOnClickListener {
-            presenter.addOperand(1)
+            presenter.addOperand(7)
         }
         binding.button8.setOnClickListener {
-            presenter.addOperand(1)
+            presenter.addOperand(8)
         }
         binding.button9.setOnClickListener {
-            presenter.addOperand(1)
+            presenter.addOperand(9)
         }
         binding.buttonPlus.setOnClickListener {
             presenter.addOperator(Operator.Plus)
