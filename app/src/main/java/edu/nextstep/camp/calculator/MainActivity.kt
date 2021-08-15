@@ -3,7 +3,9 @@ package edu.nextstep.camp.calculator
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
+import edu.nextstep.camp.calculator.domain.CalculationResult
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 
@@ -11,12 +13,16 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
     private lateinit var presenter: MainContract.Presenter
 
+    private val adapter by lazy { CalculatorHistoryAdapter() }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         presenter = MainPresenter(this)
+
+        binding.recyclerView.adapter = adapter
 
         binding.button0.setOnClickListener {
             presenter.addOperand(0)
@@ -66,6 +72,17 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonEquals.setOnClickListener {
             presenter.calculate()
         }
+        binding.buttonMemory.setOnClickListener {
+            val needToShowHistory = binding.recyclerView.isVisible.not()
+            if (needToShowHistory) {
+                presenter.loadHistory()
+            }
+            showHistoriesView(needToShowHistory)
+        }
+    }
+
+    private fun showHistoriesView(isShown: Boolean) {
+        binding.recyclerView.isVisible = isShown
     }
 
     override fun showExpression(expression: Expression) {
@@ -77,5 +94,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun showHistory(histories: List<CalculationResult>) {
+        adapter.setList(histories)
     }
 }
