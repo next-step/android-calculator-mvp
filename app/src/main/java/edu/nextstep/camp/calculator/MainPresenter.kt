@@ -34,4 +34,8 @@ class MainPresenter(
             view.showExpression(Expression.EMPTY + result)
         }
     }
+
+    override fun loadHistory() {
+        view.showHistory(calculator.getHistories())
+    }
 }

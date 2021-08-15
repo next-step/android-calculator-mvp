@@ -75,4 +75,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     override fun showErrorMsg() {
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
     }
+
+    override fun showHistory(histories: List<CalculationResult>) {
+    }
 }
