@@ -23,8 +23,11 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initializeView()
         initializeRecyclerView()
+    }
 
+    private fun initializeView() {
         binding.button0.setOnClickListener { presenter.addExpression(0) }
         binding.button1.setOnClickListener { presenter.addExpression(1) }
         binding.button2.setOnClickListener { presenter.addExpression(2) }
