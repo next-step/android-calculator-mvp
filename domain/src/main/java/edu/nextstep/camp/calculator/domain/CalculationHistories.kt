@@ -1,13 +1,13 @@
 package edu.nextstep.camp.calculator.domain
 
 class CalculationHistories(
-    histories: List<CalculationResult> = listOf()
+    histories: List<CalculationHistory> = listOf()
 ) {
-    private val _list: MutableList<CalculationResult> = histories.toMutableList()
-    val list: List<CalculationResult>
+    private val _list: MutableList<CalculationHistory> = histories.toMutableList()
+    val list: List<CalculationHistory>
         get() = _list.toList()
 
-    fun addHistory(resultHistory: CalculationResult) {
-        _list.add(resultHistory)
+    fun addHistory(historyHistory: CalculationHistory): CalculationHistories {
+        return CalculationHistories(_list + historyHistory)
     }
 }

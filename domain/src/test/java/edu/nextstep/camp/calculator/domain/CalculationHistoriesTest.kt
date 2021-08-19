@@ -10,17 +10,17 @@ class CalculationHistoriesTest {
 
         // given
         val beforeHistories = listOf(
-            CalculationResult("1+2", 3),
-            CalculationResult("1+3", 4),
-            CalculationResult("1+3", 4),
+            CalculationHistory("1+2", 3),
+            CalculationHistory("1+3", 4),
+            CalculationHistory("1+3", 4),
         )
         val histories = CalculationHistories(beforeHistories)
-        val newHistory = CalculationResult("1+3", 3)
+        val newHistory = CalculationHistory("1+3", 3)
 
         // when
-        histories.addHistory(newHistory)
+        val resultHistories = histories.addHistory(newHistory)
 
         // then
-        assertThat(histories.list).isEqualTo(beforeHistories + newHistory)
+        assertThat(resultHistories.list).isEqualTo(beforeHistories + newHistory)
     }
 }

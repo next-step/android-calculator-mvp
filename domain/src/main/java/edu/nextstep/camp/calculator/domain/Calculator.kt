@@ -1,7 +1,7 @@
 package edu.nextstep.camp.calculator.domain
 
 class Calculator(
-    private val histories: CalculationHistories = CalculationHistories()
+    private var histories: CalculationHistories = CalculationHistories()
 ) {
 
     fun calculate(rawExpression: String): Int? {
@@ -16,7 +16,9 @@ class Calculator(
             val secondOperand = values[i + 1].toIntOrNull() ?: return null
             acc = operator.operation(acc, secondOperand)
         }
-        histories.addHistory(CalculationResult(expression = rawExpression, result = acc))
+        histories = histories.addHistory(
+            CalculationHistory(expression = rawExpression, result = acc)
+        )
         return acc
     }
 

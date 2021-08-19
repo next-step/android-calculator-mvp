@@ -118,10 +118,10 @@ class MainPresenterTest {
     fun `계산 기록 버튼을 누르면, 계산기록이 표시되어야한다`() {
         // given
         val expression = listOf(3, Operator.Multiply, 4)
-        val histories = listOf(CalculationResult(expression.joinToString(" "), 12))
+        val histories = listOf(CalculationHistory(expression.joinToString(" "), 12))
         val calculator = Calculator(CalculationHistories(histories))
         presenter = MainPresenter(view = view, calculator = calculator)
-        val expressionSlot = slot<List<CalculationResult>>()
+        val expressionSlot = slot<List<CalculationHistory>>()
         every { view.showHistory(capture(expressionSlot)) } answers { nothing }
 
         // when
@@ -131,5 +131,28 @@ class MainPresenterTest {
         val actual = expressionSlot.captured
         assertThat(actual).isEqualTo(histories)
         verify { view.showHistory(histories) }
+    }
+
+
+    @Test
+    fun `수식 계산 시, 계산식과 결과가 계산 기록에 추가 되어야 한다`() {
+        // given
+        val expression = listOf(3, Operator.Multiply, 4)
+        val expressionResult = Calculator().calculate(expression.joinToString(" ")) ?: 0
+        presenter = MainPresenter(view = view, expression = Expression(expression))
+
+        val expressionSlot = slot<List<CalculationHistory>>()
+        every { view.showExpression(Expression.EMPTY + expressionResult) } answers { nothing }
+        every { view.showHistory(capture(expressionSlot)) } answers { nothing }
+
+        // when
+        presenter.calculate()
+        presenter.loadHistory()
+
+        // then
+        val calResult = listOf(CalculationHistory(expression.joinToString(" "), expressionResult))
+        val actual = expressionSlot.captured
+        assertThat(actual).isEqualTo(calResult)
+        verify { view.showHistory(calResult) }
     }
 }

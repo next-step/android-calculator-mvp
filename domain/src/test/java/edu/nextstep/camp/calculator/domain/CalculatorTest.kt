@@ -73,7 +73,7 @@ class CalculatorTest {
 
         // when
         val result = calculator.calculate(expression)
-        val calResult = CalculationResult(expression, result ?: 0)
+        val calResult = CalculationHistory(expression, result ?: 0)
 
         // then
         assertThat(calculator.getHistories()).isEqualTo(listOf(calResult))
