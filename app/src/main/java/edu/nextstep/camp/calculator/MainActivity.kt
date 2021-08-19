@@ -11,6 +11,7 @@ import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import com.joseph.domain.Expression
 import com.joseph.domain.Operator
 import edu.nextstep.camp.calculator.adpaters.CalculateRecordAdapter
+import edu.nextstep.camp.calculator.util.toggleShowAndHide
 
 class MainActivity : AppCompatActivity(), MainContract.View {
 
@@ -62,13 +63,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun showCalculateResults() = with(binding) {
-        if (recyclerView.isVisible) {
-            recyclerView.visibility = View.INVISIBLE
-            textView.visibility = View.VISIBLE
-        } else {
-            recyclerView.visibility = View.VISIBLE
-            textView.visibility = View.INVISIBLE
-        }
+        recyclerView.toggleShowAndHide()
+        textView.toggleShowAndHide()
     }
 
     override fun refreshRecyclerView(records: List<CalculateRecord>) {
