@@ -10,7 +10,6 @@ class MainPresenter(
     private val calculator: Calculator = Calculator()
 ) : MainContract.Presenter {
 
-
     override fun addOperator(operator: Operator) {
         expression += operator
         view.showExpression(expression)
@@ -35,7 +34,11 @@ class MainPresenter(
         }
     }
 
-    override fun loadHistory() {
-        view.showHistory(calculator.getHistories())
+    override fun loadHistory(isShowingHistories: Boolean) {
+        if (isShowingHistories) {
+            view.hideHistory()
+        } else {
+            view.showHistory(calculator.getHistories())
+        }
     }
 }

@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import edu.nextstep.camp.calculator.databinding.ItemResultBinding
-import edu.nextstep.camp.calculator.domain.CalculationResult
+import edu.nextstep.camp.calculator.domain.CalculationHistory
 
 class CalculatorHistoryAdapter : RecyclerView.Adapter<ResultViewHolder>() {
-    private val items = mutableListOf<CalculationResult>()
+    private val items = mutableListOf<CalculationHistory>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultViewHolder =
         ResultViewHolder(parent)
@@ -16,7 +16,7 @@ class CalculatorHistoryAdapter : RecyclerView.Adapter<ResultViewHolder>() {
         holder.bind(items[position])
     }
 
-    fun setList(list: List<CalculationResult>) {
+    fun setList(list: List<CalculationHistory>) {
         items.clear()
         items.addAll(list)
     }
@@ -30,10 +30,10 @@ class ResultViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
 ) {
     private val binding = ItemResultBinding.bind(itemView)
 
-    fun bind(result: CalculationResult) {
+    fun bind(history: CalculationHistory) {
         with(binding) {
-            tvExpression.text = result.expression
-            tvResult.text = result.result.toString()
+            tvExpression.text = history.expression
+            tvResult.text = history.result.toString()
         }
     }
 }

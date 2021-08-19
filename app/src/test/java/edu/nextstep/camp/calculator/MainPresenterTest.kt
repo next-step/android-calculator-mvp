@@ -125,12 +125,26 @@ class MainPresenterTest {
         every { view.showHistory(capture(expressionSlot)) } answers { nothing }
 
         // when
-        presenter.loadHistory()
+        presenter.loadHistory(isShowingHistories = false)
 
         // then
         val actual = expressionSlot.captured
         assertThat(actual).isEqualTo(histories)
         verify { view.showHistory(histories) }
+    }
+
+    @Test
+    fun `계산 기록 화면이 보여주고 있을때, 버튼을 다시 누르면, 계산 기록이 닫혀야 한다`() {
+        // given
+        presenter = MainPresenter(view = view)
+        every { view.hideHistory() } answers { nothing }
+        val isShowingHistories = true
+
+        // when
+        presenter.loadHistory(isShowingHistories = isShowingHistories)
+
+        // then
+        verify { view.hideHistory() }
     }
 
 
@@ -147,7 +161,7 @@ class MainPresenterTest {
 
         // when
         presenter.calculate()
-        presenter.loadHistory()
+        presenter.loadHistory(isShowingHistories = false)
 
         // then
         val calResult = listOf(CalculationHistory(expression.joinToString(" "), expressionResult))

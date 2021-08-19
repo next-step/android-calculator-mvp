@@ -5,7 +5,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
-import edu.nextstep.camp.calculator.domain.CalculationResult
+import edu.nextstep.camp.calculator.domain.CalculationHistory
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 
@@ -73,11 +73,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             presenter.calculate()
         }
         binding.buttonMemory.setOnClickListener {
-            val needToShowHistory = binding.recyclerView.isVisible.not()
-            if (needToShowHistory) {
-                presenter.loadHistory()
-            }
-            showHistoriesView(needToShowHistory)
+            val isShowingHistories = binding.recyclerView.isVisible
+            presenter.loadHistory(isShowingHistories)
         }
     }
 
@@ -93,7 +90,12 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
     }
 
-    override fun showHistory(histories: List<CalculationResult>) {
+    override fun showHistory(histories: List<CalculationHistory>) {
         adapter.setList(histories)
+        showHistoriesView(true)
+    }
+
+    override fun hideHistory() {
+        showHistoriesView(false)
     }
 }
