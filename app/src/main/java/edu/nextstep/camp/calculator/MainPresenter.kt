@@ -36,9 +36,9 @@ class MainPresenter(
 
     override fun loadHistory(isShowingHistories: Boolean) {
         if (isShowingHistories) {
-            view.hideHistory()
+            view.hideHistories()
         } else {
-            view.showHistory(calculator.getHistories())
+            view.showHistories(calculator.getHistories())
         }
     }
 }

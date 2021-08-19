@@ -90,12 +90,12 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
     }
 
-    override fun showHistory(histories: List<CalculationHistory>) {
+    override fun showHistories(histories: List<CalculationHistory>) {
         adapter.setList(histories)
         showHistoriesView(true)
     }
 
-    override fun hideHistory() {
+    override fun hideHistories() {
         showHistoriesView(false)
     }
 }

@@ -8,8 +8,8 @@ interface MainContract {
     interface View {
         fun showExpression(expression: Expression)
         fun showErrorMsg()
-        fun showHistory(histories: List<CalculationHistory>)
-        fun hideHistory()
+        fun showHistories(histories: List<CalculationHistory>)
+        fun hideHistories()
     }
 
     interface Presenter {

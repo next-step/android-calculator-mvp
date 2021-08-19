@@ -122,7 +122,7 @@ class MainPresenterTest {
         val calculator = Calculator(CalculationHistories(histories))
         presenter = MainPresenter(view = view, calculator = calculator)
         val expressionSlot = slot<List<CalculationHistory>>()
-        every { view.showHistory(capture(expressionSlot)) } answers { nothing }
+        every { view.showHistories(capture(expressionSlot)) } answers { nothing }
 
         // when
         presenter.loadHistory(isShowingHistories = false)
@@ -130,21 +130,21 @@ class MainPresenterTest {
         // then
         val actual = expressionSlot.captured
         assertThat(actual).isEqualTo(histories)
-        verify { view.showHistory(histories) }
+        verify { view.showHistories(histories) }
     }
 
     @Test
     fun `계산 기록 화면이 보여주고 있을때, 버튼을 다시 누르면, 계산 기록이 닫혀야 한다`() {
         // given
         presenter = MainPresenter(view = view)
-        every { view.hideHistory() } answers { nothing }
+        every { view.hideHistories() } answers { nothing }
         val isShowingHistories = true
 
         // when
         presenter.loadHistory(isShowingHistories = isShowingHistories)
 
         // then
-        verify { view.hideHistory() }
+        verify { view.hideHistories() }
     }
 
 
@@ -157,7 +157,7 @@ class MainPresenterTest {
 
         val expressionSlot = slot<List<CalculationHistory>>()
         every { view.showExpression(Expression.EMPTY + expressionResult) } answers { nothing }
-        every { view.showHistory(capture(expressionSlot)) } answers { nothing }
+        every { view.showHistories(capture(expressionSlot)) } answers { nothing }
 
         // when
         presenter.calculate()
@@ -167,6 +167,6 @@ class MainPresenterTest {
         val calResult = listOf(CalculationHistory(expression.joinToString(" "), expressionResult))
         val actual = expressionSlot.captured
         assertThat(actual).isEqualTo(calResult)
-        verify { view.showHistory(calResult) }
+        verify { view.showHistories(calResult) }
     }
 }
