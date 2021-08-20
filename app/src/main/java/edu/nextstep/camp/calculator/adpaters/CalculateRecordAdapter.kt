@@ -20,13 +20,9 @@ class CalculateRecordAdapter : ListAdapter<CalculateRecord, ViewHolder>(Calculat
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val record = currentList[position]
+        val record = getItem(position)
         Log.d("TAG", "${record.expression.toString()} ${record.result.toString()}")
         holder.binding.tvExpression.text = record.expression.toString()
         holder.binding.tvResult.text = "= ${record.result.toString()}"
-    }
-
-    override fun getItemCount(): Int {
-        return currentList.size
     }
 }
