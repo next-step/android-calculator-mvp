@@ -13,37 +13,38 @@ class CalculateRecorderTest {
     fun `계산 결과를 한 번 기록하면 records에 하나가 추가된다`() {
         // given
         val expression = Expression(listOf(5, Operator.Plus, 4))
-        val result = calculator.calculate(expression.toString())
+        val calculateResult = calculator.calculate(expression.toString())
 
         // when
-        val calculatorResult = CalculateRecord(expression, result!!)
-        recorder.recordCalculate(calculatorResult)
+        val record = CalculateRecord(expression, calculateResult!!)
+        val recordResult = recorder.recordCalculate(record)
 
         // then
-        val expected = listOf(CalculateRecord(expression, result))
-        assertThat(recorder.records).isEqualTo(expected)
+        val expected = listOf(CalculateRecord(expression, calculateResult))
+        assertThat(recordResult.value).isEqualTo(expected)
     }
 
     @Test
     fun `계산 결과를 다섯 번 기록하면 records에 다섯개 추가된다`() {
         // given
         val expression = Expression(listOf(5, Operator.Plus, 4))
-        val result = calculator.calculate(expression.toString())
+        val calculateResult = calculator.calculate(expression.toString())
 
         // when
-        val record = CalculateRecord(expression, result!!)
+        val record = CalculateRecord(expression, calculateResult!!)
+        var recordResult: CalculateRecords? = null
         repeat(5) {
-            recorder.recordCalculate(record)
+            recordResult = recorder.recordCalculate(record)
         }
 
         // then
         val expected = listOf(
-            CalculateRecord(expression, result),
-            CalculateRecord(expression, result),
-            CalculateRecord(expression, result),
-            CalculateRecord(expression, result),
-            CalculateRecord(expression, result)
+            CalculateRecord(expression, calculateResult),
+            CalculateRecord(expression, calculateResult),
+            CalculateRecord(expression, calculateResult),
+            CalculateRecord(expression, calculateResult),
+            CalculateRecord(expression, calculateResult)
         )
-        assertThat(recorder.records).isEqualTo(expected)
+        assertThat(recordResult?.value).isEqualTo(expected)
     }
 }

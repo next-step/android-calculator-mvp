@@ -37,8 +37,8 @@ class MainPresenter(
     }
 
     override fun addCalculateRecord(record: CalculateRecord) {
-        calculateRecorder.recordCalculate(record)
-        view.refreshCalculateRecords(calculateRecorder.records)
+        val records = calculateRecorder.recordCalculate(record)
+        view.refreshCalculateRecords(records)
     }
 
     override fun toggleCalculateResults() {

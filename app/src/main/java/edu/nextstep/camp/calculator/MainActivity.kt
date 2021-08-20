@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.joseph.domain.CalculateRecord
+import com.joseph.domain.CalculateRecords
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import com.joseph.domain.Expression
 import com.joseph.domain.Operator
@@ -67,7 +68,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         textView.toggleShowAndHide()
     }
 
-    override fun refreshCalculateRecords(records: List<CalculateRecord>) {
-        calculateResultAdapter.submitList(records)
+    override fun refreshCalculateRecords(records: CalculateRecords) {
+        calculateResultAdapter.submitList(records.value)
     }
 }

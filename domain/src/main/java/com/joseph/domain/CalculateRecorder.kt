@@ -1,13 +1,11 @@
 package com.joseph.domain
 
-class CalculateRecorder(
-    records: List<CalculateRecord> = emptyList()
-) {
+class CalculateRecorder {
 
-    private val _records: MutableList<CalculateRecord> = records.toMutableList()
-    val records get() = _records.toList()
+    private var records: CalculateRecords = CalculateRecords()
 
-    fun recordCalculate(record: CalculateRecord) {
-        _records.add(record)
+    fun recordCalculate(record: CalculateRecord): CalculateRecords {
+        records += record
+        return records
     }
 }
