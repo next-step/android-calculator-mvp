@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonDivide.setOnClickListener { presenter.addExpression(Operator.Divide) }
         binding.buttonDelete.setOnClickListener { presenter.removeAtLastExpression() }
         binding.buttonEquals.setOnClickListener { presenter.calculate() }
-        binding.buttonMemory.setOnClickListener { presenter.showCalculateResults() }
+        binding.buttonMemory.setOnClickListener { presenter.toggleCalculateResults() }
     }
 
     private fun initializeRecyclerView() = with(binding) {
@@ -62,12 +62,12 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
     }
 
-    override fun showCalculateResults() = with(binding) {
+    override fun toggleCalculateResults() = with(binding) {
         recyclerView.toggleShowAndHide()
         textView.toggleShowAndHide()
     }
 
-    override fun refreshRecyclerView(records: List<CalculateRecord>) {
+    override fun refreshCalculateRecords(records: List<CalculateRecord>) {
         calculateResultAdapter.submitList(records)
     }
 }

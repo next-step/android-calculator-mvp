@@ -8,8 +8,8 @@ interface MainContract {
     interface View {
         fun displayExpression(expression: Expression)
         fun showIncompleteExpressionToast()
-        fun showCalculateResults()
-        fun refreshRecyclerView(records: List<CalculateRecord>)
+        fun toggleCalculateResults()
+        fun refreshCalculateRecords(records: List<CalculateRecord>)
     }
 
     interface Presenter {
@@ -17,7 +17,7 @@ interface MainContract {
         fun addExpression(operator: Operator)
         fun removeAtLastExpression()
         fun calculate()
-        fun showCalculateResults()
+        fun toggleCalculateResults()
         fun addCalculateRecord(record: CalculateRecord)
     }
 }

@@ -38,10 +38,10 @@ class MainPresenter(
 
     override fun addCalculateRecord(record: CalculateRecord) {
         calculateRecorder.recordCalculate(record)
-        view.refreshRecyclerView(calculateRecorder.records)
+        view.refreshCalculateRecords(calculateRecorder.records)
     }
 
-    override fun showCalculateResults() {
-        view.showCalculateResults()
+    override fun toggleCalculateResults() {
+        view.toggleCalculateResults()
     }
 }
