@@ -18,6 +18,8 @@ test {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
+    testImplementation 'com.google.truth:truth:1.1.2'
+
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_version"
     testImplementation "org.junit.jupiter:junit-jupiter-params:$junit_version"
     testImplementation "org.assertj:assertj-core:$assertj_version"
