@@ -4,14 +4,12 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
-import edu.nextstep.camp.calculator.domain.Calculator
-import edu.nextstep.camp.calculator.domain.Expression
-import edu.nextstep.camp.calculator.domain.Operator
+import com.github.dodobest.domain.*
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val calculator = Calculator()
-    private var expression = Expression.EMPTY
+    private val inputFarm = InputFarm()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,73 +17,84 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.button0.setOnClickListener {
-            expression += 0
-            binding.textView.text = expression.toString()
+            inputFarm.handleInputNum("0")
+            refreshTextView()
         }
+
         binding.button1.setOnClickListener {
-            expression += 1
-            binding.textView.text = expression.toString()
+            inputFarm.handleInputNum("1")
+            refreshTextView()
         }
         binding.button2.setOnClickListener {
-            expression += 2
-            binding.textView.text = expression.toString()
+            inputFarm.handleInputNum("2")
+            refreshTextView()
         }
         binding.button3.setOnClickListener {
-            expression += 3
-            binding.textView.text = expression.toString()
+            inputFarm.handleInputNum("3")
+            refreshTextView()
         }
         binding.button4.setOnClickListener {
-            expression += 4
-            binding.textView.text = expression.toString()
+            inputFarm.handleInputNum("4")
+            refreshTextView()
         }
         binding.button5.setOnClickListener {
-            expression += 5
-            binding.textView.text = expression.toString()
+            inputFarm.handleInputNum("5")
+            refreshTextView()
         }
         binding.button6.setOnClickListener {
-            expression += 6
-            binding.textView.text = expression.toString()
+            inputFarm.handleInputNum("6")
+            refreshTextView()
         }
         binding.button7.setOnClickListener {
-            expression += 7
-            binding.textView.text = expression.toString()
+            inputFarm.handleInputNum("7")
+            refreshTextView()
         }
         binding.button8.setOnClickListener {
-            expression += 8
-            binding.textView.text = expression.toString()
+            inputFarm.handleInputNum("8")
+            refreshTextView()
         }
         binding.button9.setOnClickListener {
-            expression += 9
-            binding.textView.text = expression.toString()
+            inputFarm.handleInputNum("9")
+            refreshTextView()
         }
+
         binding.buttonPlus.setOnClickListener {
-            expression += Operator.Plus
-            binding.textView.text = expression.toString()
+            inputFarm.handleInputArithmetic("+")
+            refreshTextView()
         }
+
         binding.buttonMinus.setOnClickListener {
-            expression += Operator.Minus
-            binding.textView.text = expression.toString()
+            inputFarm.handleInputArithmetic("-")
+            refreshTextView()
         }
+
         binding.buttonMultiply.setOnClickListener {
-            expression += Operator.Multiply
-            binding.textView.text = expression.toString()
+            inputFarm.handleInputArithmetic("*")
+            refreshTextView()
         }
+
         binding.buttonDivide.setOnClickListener {
-            expression += Operator.Divide
-            binding.textView.text = expression.toString()
+            inputFarm.handleInputArithmetic("/")
+            refreshTextView()
         }
+
         binding.buttonDelete.setOnClickListener {
-            expression = expression.removeLast()
-            binding.textView.text = expression.toString()
+            inputFarm.handleInputDelete()
+            refreshTextView()
         }
+
         binding.buttonEquals.setOnClickListener {
-            val result = calculator.calculate(expression.toString())
-            if (result == null) {
-                Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+            if (inputFarm.checkExpressionCanCalculated()) {
+                inputFarm.handleEquals()
+                refreshTextView()
+            } else {
+                Toast.makeText(this, "완성되지 않은 수식입니다", Toast.LENGTH_LONG).show()
             }
-            expression = Expression.EMPTY + result
-            binding.textView.text = result.toString()
         }
+    }
+
+
+    private fun refreshTextView() {
+        binding.textView.text = inputFarm.getString()
     }
 }
