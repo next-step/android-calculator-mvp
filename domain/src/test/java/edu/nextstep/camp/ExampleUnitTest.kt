@@ -1,4 +1,4 @@
-package edu.nextstep.camp.calculator
+package edu.nextstep.camp
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

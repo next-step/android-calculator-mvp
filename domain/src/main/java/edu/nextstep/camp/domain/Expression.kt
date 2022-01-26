@@ -1,4 +1,4 @@
-package edu.nextstep.camp.calculator
+package edu.nextstep.camp.domain
 
 class Expression {
     private val calculator by lazy { Calculator() }
