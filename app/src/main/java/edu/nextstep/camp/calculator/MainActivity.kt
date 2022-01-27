@@ -16,67 +16,18 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.button0.setOnClickListener {
-            inputFarm.handleInputNum("0")
-            refreshTextView()
-        }
+        listOf(binding.button0, binding.button1, binding.button2, binding.button3, binding.button4,
+            binding.button5, binding.button6, binding.button7, binding.button8, binding.button9)
+            .forEach{ view -> view.setOnClickListener {
+                inputFarm.handleInputNum(view.text.toString())
+                refreshTextView()
+            }}
 
-        binding.button1.setOnClickListener {
-            inputFarm.handleInputNum("1")
-            refreshTextView()
-        }
-        binding.button2.setOnClickListener {
-            inputFarm.handleInputNum("2")
-            refreshTextView()
-        }
-        binding.button3.setOnClickListener {
-            inputFarm.handleInputNum("3")
-            refreshTextView()
-        }
-        binding.button4.setOnClickListener {
-            inputFarm.handleInputNum("4")
-            refreshTextView()
-        }
-        binding.button5.setOnClickListener {
-            inputFarm.handleInputNum("5")
-            refreshTextView()
-        }
-        binding.button6.setOnClickListener {
-            inputFarm.handleInputNum("6")
-            refreshTextView()
-        }
-        binding.button7.setOnClickListener {
-            inputFarm.handleInputNum("7")
-            refreshTextView()
-        }
-        binding.button8.setOnClickListener {
-            inputFarm.handleInputNum("8")
-            refreshTextView()
-        }
-        binding.button9.setOnClickListener {
-            inputFarm.handleInputNum("9")
-            refreshTextView()
-        }
-
-        binding.buttonPlus.setOnClickListener {
-            inputFarm.handleInputArithmetic("+")
-            refreshTextView()
-        }
-
-        binding.buttonMinus.setOnClickListener {
-            inputFarm.handleInputArithmetic("-")
-            refreshTextView()
-        }
-
-        binding.buttonMultiply.setOnClickListener {
-            inputFarm.handleInputArithmetic("*")
-            refreshTextView()
-        }
-
-        binding.buttonDivide.setOnClickListener {
-            inputFarm.handleInputArithmetic("/")
-            refreshTextView()
-        }
+        listOf(binding.buttonPlus, binding.buttonMinus, binding.buttonMultiply, binding.buttonDivide)
+            .forEach{ view -> view.setOnClickListener {
+                inputFarm.handleInputArithmetic(view.text.toString())
+                refreshTextView()
+            }}
 
         binding.buttonDelete.setOnClickListener {
             inputFarm.handleInputDelete()
