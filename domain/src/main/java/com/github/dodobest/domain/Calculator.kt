@@ -1,30 +1,25 @@
 package com.github.dodobest.domain
 
 enum class Operation (
-    private val operation: String
+    private val symbol: String,
+    private val calculateStrategy: (Double, Double) -> Double
 ) {
-    PLUS("+"),
-    MINUS("-"),
-    MULTIPLY("*"),
-    DIVIDE("/");
-    companion object {
-        fun charIsOperation(inputChar: Char): Boolean {
-            return values().any{ it.getName() == inputChar.toString() }
-        }
+    PLUS("+", { left, right -> left + right }),
+    MINUS("-", { left, right -> left - right }),
+    MULTIPLY("*", { left, right -> left * right }),
+    DIVIDE("/", { left, right -> left / right });
 
-        fun convertToOperation(inputChar: String): Operation {
-            return values().find{ it.getName() == inputChar }
-                ?: throw IllegalArgumentException("[의도한 Exception]사칙 연산이 아닌 문자열을 전달했습니다.")
-        }
+    fun getName(): String = symbol
+
+    fun calculate(left: Double, right: Double): Double {
+        return calculateStrategy(left, right)
     }
 
-    fun getName() = operation
-    fun calc(numOne:Double, numTwo: Double) = when (operation) {
-        "+" -> numOne + numTwo
-        "-" -> numOne - numTwo
-        "*" -> numOne * numTwo
-        "/" -> numOne / numTwo
-        else -> throw IllegalArgumentException("[의도한 Exception]등록되지 않은 enum class 연산자 입니다")
+    companion object {
+        fun charIsOperation(inputChar: Char): Boolean = values().any{ it.symbol == inputChar.toString() }
+
+        fun convertToOperation(symbol: String): Operation = values().find { it.symbol == symbol }
+                ?: throw IllegalArgumentException("${symbol}을 가진 연산자를 찾을 수 없습니다.")
     }
 }
 
@@ -66,7 +61,7 @@ class Calculator {
         var sum: Double = inputArray[0].toDouble()
 
         for (idx in 1 until inputArray.size step 2) {
-            sum = Operation.convertToOperation(inputArray[idx]).calc(sum, inputArray[idx+1].toDouble())
+            sum = Operation.convertToOperation(inputArray[idx]).calculate(sum, inputArray[idx+1].toDouble())
         }
 
         return sum
