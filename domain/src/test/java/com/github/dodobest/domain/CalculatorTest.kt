@@ -83,7 +83,7 @@ class CalculatorTest {
 
         // then : IllegalArgumentException 을 발생시킨다
         assertThat(thrown).isInstanceOf(IllegalArgumentException::class.java)
-        assertThat(thrown).hasMessageThat().contains("의도한 Exception")
+        assertThat(thrown).hasMessageThat().contains("사칙 연산 외 기호가 입력되었습니다")
 
     }
 
@@ -96,7 +96,7 @@ class CalculatorTest {
 
         // then : IllegalArgumentException 을 발생시킨다
         assertThat(thrown).isInstanceOf(IllegalArgumentException::class.java)
-        assertThat(thrown).hasMessageThat().contains("의도한 Exception")
+        assertThat(thrown).hasMessageThat().contains("연산 기호가 연속으로 입력되었습니다")
     }
 
     @Test
@@ -108,7 +108,7 @@ class CalculatorTest {
 
         // then : IllegalArgumentException 을 발생시킨다
         assertThat(thrown).isInstanceOf(IllegalArgumentException::class.java)
-        assertThat(thrown).hasMessageThat().contains("의도한 Exception")
+        assertThat(thrown).hasMessageThat().contains("사칙 연산 외 기호가 입력되었습니다.")
     }
 
     @Test
@@ -120,7 +120,7 @@ class CalculatorTest {
 
         // then : IllegalArgumentException 을 발생시킨다
         assertThat(thrown).isInstanceOf(IllegalArgumentException::class.java)
-        assertThat(thrown).hasMessageThat().contains("의도한 Exception")
+        assertThat(thrown).hasMessageThat().contains("연산 기호가 연속으로 입력되었습니다")
     }
 
     @Test
@@ -132,7 +132,7 @@ class CalculatorTest {
 
         // then : IllegalArgumentException 을 발생시킨다
         assertThat(thrown).isInstanceOf(IllegalArgumentException::class.java)
-        assertThat(thrown).hasMessageThat().contains("의도한 Exception")
+        assertThat(thrown).hasMessageThat().contains("연산 기호가 연속으로 입력되었습니다")
     }
 
     @Test
@@ -144,7 +144,7 @@ class CalculatorTest {
 
         // then : IllegalArgumentException 을 발생시킨다
         assertThat(thrown).isInstanceOf(IllegalArgumentException::class.java)
-        assertThat(thrown).hasMessageThat().contains("의도한 Exception")
+        assertThat(thrown).hasMessageThat().contains("연산 기호가 연속으로 입력되었습니다")
     }
 
     @Test
@@ -156,7 +156,7 @@ class CalculatorTest {
 
         // then : IllegalArgumentException 을 발생시킨다
         assertThat(thrown).isInstanceOf(IllegalArgumentException::class.java)
-        assertThat(thrown).hasMessageThat().contains("의도한 Exception")
+        assertThat(thrown).hasMessageThat().contains("0으로 나누는 값은 존재하지 않습니다")
     }
 
     @Test
@@ -168,7 +168,7 @@ class CalculatorTest {
 
         // then : IllegalArgumentException 을 발생시킨다
         assertThat(thrown).isInstanceOf(IllegalArgumentException::class.java)
-        assertThat(thrown).hasMessageThat().contains("의도한 Exception")
+        assertThat(thrown).hasMessageThat().contains("사칙 연산 외 기호가 입력되었습니다")
     }
 
     @Test
@@ -180,6 +180,6 @@ class CalculatorTest {
 
         // then : IllegalArgumentException 을 발생시킨다
         assertThat(thrown).isInstanceOf(IllegalArgumentException::class.java)
-        assertThat(thrown).hasMessageThat().contains("의도한 Exception")
+        assertThat(thrown).hasMessageThat().contains("0으로 시작하는 숫자는 지원하지 않습니다")
     }
 }
