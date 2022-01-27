@@ -16,7 +16,7 @@ enum class Operation (
     }
 
     companion object {
-        fun charIsOperation(inputChar: Char): Boolean = values().any{ it.symbol == inputChar.toString() }
+        fun isOperation(symbol: String): Boolean = values().any{ it.symbol == symbol }
 
         fun convertToOperation(symbol: String): Operation = values().find { it.symbol == symbol }
                 ?: throw IllegalArgumentException("${symbol}을 가진 연산자를 찾을 수 없습니다.")
@@ -115,7 +115,7 @@ class Calculator {
     }
 
     private fun checkInputIsNotCorrect(inputString: String, charIndex: Int) {
-        require(Operation.charIsOperation(inputString[charIndex])) { "사칙 연산 외 기호가 입력되었습니다." }
+        require(Operation.isOperation(inputString[charIndex].toString())) { "사칙 연산 외 기호가 입력되었습니다." }
 
         require(charIndex != inputString.length - 1) { "사칙 연산 뒤에 값이 오지 않았습니다." }
 
@@ -133,7 +133,7 @@ class Calculator {
     }
 
     private fun throwErrorIfOperationIsConsecutive(inputString: String, charIndex: Int) {
-        if (!Operation.charIsOperation(inputString[charIndex+1])) {
+        if (!Operation.isOperation(inputString[charIndex+1].toString())) {
             return
         }
 
