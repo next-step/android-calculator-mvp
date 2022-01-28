@@ -15,21 +15,21 @@ class Expression {
 
 
     private fun extractNumAndSignAll(inputString: String): List<String> {
-        val numAndSignArray: MutableList<String> = MutableList(0) { "" }
+        val numAndOperation = MutableList(0) { "" }
         val firstIndexOfNum: Array<Int> = arrayOf(NUM_IS_EMPTY)
 
         for (idx in inputString.indices) {
-            numAndSignArray.addAll(splitNumAndSignOnce(inputString, idx, firstIndexOfNum))
+            numAndOperation.addAll(splitNumAndSignOnce(inputString, idx, firstIndexOfNum))
         }
-        numAndSignArray.add(inputString.slice(IntRange(firstIndexOfNum[0], inputString.length-1)))
+        numAndOperation.add(inputString.slice(IntRange(firstIndexOfNum[0], inputString.length-1)))
 
-        return numAndSignArray
+        return numAndOperation.toList()
     }
 
     private fun splitNumAndSignOnce(inputString: String, charIndex: Int, firstIndexOfNum: Array<Int>): List<String> {
         if (isNum(inputString[charIndex])) {
             updateFirstIndexOfNum(inputString, charIndex, firstIndexOfNum)
-            return MutableList(0) { "" }
+            return emptyList()
         }
 
         return checkArithmeticOperation(inputString, charIndex, firstIndexOfNum)
@@ -57,25 +57,25 @@ class Expression {
     }
 
     private fun checkArithmeticOperation(inputString: String, charIndex: Int, firstIndexOfNum: Array<Int>): List<String> {
-        val numAndSignArray: MutableList<String> = MutableList(0) { "" }
+        val numAndOperation = MutableList(0) { "" }
 
         checkInputIsNotCorrect(inputString, charIndex)
 
         if (isNegativeSignNotMinusSign(inputString[charIndex], firstIndexOfNum)) {
             firstIndexOfNum[0] = charIndex
-            return MutableList(0) { "" }
+            return emptyList()
         }
 
         if (isPositiveSign(inputString[charIndex], firstIndexOfNum)) {
-            return MutableList(0) { "" }
+            return emptyList()
         }
 
-        numAndSignArray.add(inputString.slice(IntRange(firstIndexOfNum[0], charIndex-1)))
-        numAndSignArray.add(inputString[charIndex].toString())
+        numAndOperation.add(inputString.slice(IntRange(firstIndexOfNum[0], charIndex-1)))
+        numAndOperation.add(inputString[charIndex].toString())
 
         firstIndexOfNum[0] = NUM_IS_EMPTY
 
-        return numAndSignArray
+        return numAndOperation.toList()
     }
 
     private fun isPositiveSign(inputChar: Char, firstIndexOfNum: Array<Int>): Boolean {
