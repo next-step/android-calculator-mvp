@@ -2,6 +2,7 @@ package com.github.dodobest.domain
 
 class InputFarm {
     private val calculator = Calculator()
+    private val expression = Expression()
     private val numAndSignArray: MutableList<String> = MutableList(0) { "" }
     private val arraySize: Int get() = numAndSignArray.size
 
@@ -17,7 +18,7 @@ class InputFarm {
     }
 
     fun handleInputNum (inputNum: String) {
-        if (arraySize > 0 && calculator.isNum(numAndSignArray.last().toCharArray().last())) {
+        if (arraySize > 0 && expression.isNum(numAndSignArray.last().toCharArray().last())) {
             numAndSignArray[arraySize-1] = (numAndSignArray.last().toInt() * 10 + inputNum.toInt()).toString()
             return
         }
