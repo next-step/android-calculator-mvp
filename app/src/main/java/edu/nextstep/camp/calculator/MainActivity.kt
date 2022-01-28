@@ -10,8 +10,8 @@ import edu.nextstep.camp.calculator.domain.Operator
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val calculator = edu.nextstep.camp.calculator.domain.Calculator()
-    private var expression = edu.nextstep.camp.calculator.domain.Expression.EMPTY
+    private val calculator = Calculator()
+    private var expression = Expression.EMPTY
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,19 +59,19 @@ class MainActivity : AppCompatActivity() {
             binding.textView.text = expression.toString()
         }
         binding.buttonPlus.setOnClickListener {
-            expression += edu.nextstep.camp.calculator.domain.Operator.Plus
+            expression += Operator.Plus
             binding.textView.text = expression.toString()
         }
         binding.buttonMinus.setOnClickListener {
-            expression += edu.nextstep.camp.calculator.domain.Operator.Minus
+            expression += Operator.Minus
             binding.textView.text = expression.toString()
         }
         binding.buttonMultiply.setOnClickListener {
-            expression += edu.nextstep.camp.calculator.domain.Operator.Multiply
+            expression += Operator.Multiply
             binding.textView.text = expression.toString()
         }
         binding.buttonDivide.setOnClickListener {
-            expression += edu.nextstep.camp.calculator.domain.Operator.Divide
+            expression += Operator.Divide
             binding.textView.text = expression.toString()
         }
         binding.buttonDelete.setOnClickListener {
@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            expression = edu.nextstep.camp.calculator.domain.Expression.EMPTY + result
+            expression = Expression.EMPTY + result
             binding.textView.text = result.toString()
         }
     }
