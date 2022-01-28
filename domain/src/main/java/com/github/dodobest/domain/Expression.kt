@@ -16,7 +16,7 @@ class Expression {
 
     private fun extractNumAndSignAll(inputString: String): List<String> {
         val numAndSignArray: MutableList<String> = MutableList(0) { "" }
-        val firstIndexOfNum: Array<Int> = arrayOf(-1)
+        val firstIndexOfNum: Array<Int> = arrayOf(NUM_IS_EMPTY)
 
         for (idx in inputString.indices) {
             numAndSignArray.addAll(splitNumAndSignOnce(inputString, idx, firstIndexOfNum))
@@ -36,7 +36,7 @@ class Expression {
     }
 
     private fun updateFirstIndexOfNum(inputString: String, charIndex: Int, firstIndexOfNum: Array<Int>){
-        if (firstIndexOfNum[0] != -1) {
+        if (firstIndexOfNum[0] != NUM_IS_EMPTY) {
             return
         }
 
@@ -73,13 +73,13 @@ class Expression {
         numAndSignArray.add(inputString.slice(IntRange(firstIndexOfNum[0], charIndex-1)))
         numAndSignArray.add(inputString[charIndex].toString())
 
-        firstIndexOfNum[0] = -1
+        firstIndexOfNum[0] = NUM_IS_EMPTY
 
         return numAndSignArray
     }
 
     private fun isPositiveSign(inputChar: Char, firstIndexOfNum: Array<Int>): Boolean {
-        return Operation.convertToOperation(inputChar.toString()) == Operation.PLUS && firstIndexOfNum[0] == -1
+        return Operation.convertToOperation(inputChar.toString()) == Operation.PLUS && firstIndexOfNum[0] == NUM_IS_EMPTY
     }
 
     private fun checkInputIsNotCorrect(inputString: String, charIndex: Int) {
@@ -94,7 +94,7 @@ class Expression {
     }
 
     private fun isNegativeSignNotMinusSign(inputChar: Char, firstIndexOfNum: Array<Int>): Boolean {
-        return Operation.convertToOperation(inputChar.toString()) == Operation.MINUS && firstIndexOfNum[0] == -1
+        return Operation.convertToOperation(inputChar.toString()) == Operation.MINUS && firstIndexOfNum[0] == NUM_IS_EMPTY
     }
 
     private fun isDividedWithZero(inputString: String, charIndex: Int): Boolean {
@@ -128,5 +128,9 @@ class Expression {
     private fun checkOperationIsWhatExpect(inputString: String, charIndex: Int, firstOperation: Operation, secondOperation: Operation): Boolean {
         return inputString[charIndex].toString() == firstOperation.getName()
                 && inputString[charIndex+1].toString() == secondOperation.getName()
+    }
+
+    companion object {
+        const val NUM_IS_EMPTY = -1
     }
 }
