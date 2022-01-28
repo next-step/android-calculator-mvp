@@ -1,6 +1,5 @@
 package edu.nextstep.camp.calculator
 
-import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
@@ -12,15 +11,12 @@ class MainPresenterTest {
 
     @BeforeEach
     fun setUp() {
-        view = mockk()
+        view = mockk(relaxed = true)
         presenter = MainPresenter(view)
     }
 
     @Test
     fun `수식 1 을 입력하면 1이 보여야한다`() {
-        // GIVEN
-        every { view.showExpression(any()) } answers { nothing }
-
         // WHEN
         presenter.appendOperand("", "1")
 
@@ -30,9 +26,6 @@ class MainPresenterTest {
 
     @Test
     fun `수식 1 + 을 입력하면 1 + 이 보여야한다`() {
-        // GIVEN
-        every { view.showExpression(any()) } answers { nothing }
-
         // WHEN
         presenter.appendOperand("", "1")
         presenter.appendOperator("1", "+")
@@ -44,9 +37,6 @@ class MainPresenterTest {
 
     @Test
     fun `수식 1 + 2 - 1 을 입력하면 1이 보여야한다`() {
-        // GIVEN
-        every { view.showExpression(any()) } answers { nothing }
-
         // WHEN
         presenter.calculate("1 + 2 - 1")
 
@@ -57,9 +47,6 @@ class MainPresenterTest {
 
     @Test
     fun `수식 1 + 2 - 1 에서 요소를 제거하면 1 + 2 - 가 보여야한다`() {
-        // GIVEN
-        every { view.showExpression(any()) } answers { nothing }
-
         // WHEN
         presenter.deleteLastElement("1 + 2 - 1")
 
