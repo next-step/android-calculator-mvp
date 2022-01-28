@@ -13,7 +13,7 @@ class CalculatorTest {
     private val expression = Expression()
 
     @Test
-    fun test_plus_calculation() {
+    fun whenInputPlusStatement_thenShouldShowRightResult() {
         // when : 사용자가 덧셈 식을 입력하면
         val actual: Double = calculator.calculate(expression.evaluate("1+2+3"))
 
@@ -22,7 +22,7 @@ class CalculatorTest {
     }
 
     @Test
-    fun test_minus_calculation() {
+    fun whenInputMinusStatement_thenShouldShowRightResult() {
         // when : 사용자가 뺄셈 식을 입력하면
         val actual: Double = calculator.calculate(expression.evaluate("10-2-3"))
 
@@ -31,7 +31,7 @@ class CalculatorTest {
     }
 
     @Test
-    fun test_multiple_calculation() {
+    fun whenInputMultiplyStatement_thenShouldShowRightResult() {
         // when : 사용자가 곱셈 식을 입력하면
         val actual: Double = calculator.calculate(expression.evaluate("10*-5*9"))
 
@@ -40,7 +40,7 @@ class CalculatorTest {
     }
 
     @Test
-    fun test_divide_calculation() {
+    fun whenInputDivideStatementWhichSplitApart_thenShouldShowIntegerResult() {
         // when : 사용자가 나누어 떨어지는 나눗셈 식을 입력하면
         val actual: Double = calculator.calculate(expression.evaluate("120/2/3"))
 
@@ -49,7 +49,7 @@ class CalculatorTest {
     }
 
     @Test
-    fun test_not_divided_calculation() {
+    fun whenInputDivideStatementWhichNotSplitApart_thenShouldShowRealNumberResult() {
         // when : 사용자가 나누어 떨어지지 않는 나눗셈 식을 입력하면
         val actual = calculator.calculate(expression.evaluate("10/3"))
 
@@ -58,7 +58,7 @@ class CalculatorTest {
     }
 
     @Test
-    fun test_all_arithmetic_input_calculation() {
+    fun whenInputAllArithmeticStatement_thenShouldShowRightResult() {
         // when : 사용자가 사칙연산을 모두 포함하는 사칙연산 식을 입력하면
         val actual: Double = calculator.calculate(expression.evaluate("2 + 3 * 4 / 2"))
 
@@ -67,7 +67,7 @@ class CalculatorTest {
     }
 
     @Test
-    fun test_positive_num_sign_calculation() {
+    fun whenInputPositiveSignNumber_thenConsiderPositiveSignAsNothing() {
         // when : +가 붙은 양수를 입력하면
         val actual: Double = calculator.calculate(expression.evaluate("+10+10/+20"))
 
@@ -76,7 +76,7 @@ class CalculatorTest {
     }
 
     @Test
-    fun test_null_input_calculation() {
+    fun whenInputNull_thenThrowIllegalArgumentException() {
         // when : 사용자가 사칙연산 식에 null을 입력하면
         val thrown: IllegalArgumentException = assertThrows(
             IllegalArgumentException::class.java
@@ -89,7 +89,7 @@ class CalculatorTest {
     }
 
     @Test
-    fun test_blank_input_calculation() {
+    fun whenInputBlank_thenThrowIllegalArgumentException() {
         // when : 사용자가 사칙연산 식에 빈 문자열을 입력하면
         val thrown: IllegalArgumentException = assertThrows(
             IllegalArgumentException::class.java
@@ -101,7 +101,7 @@ class CalculatorTest {
     }
 
     @Test
-    fun test_no_arithmetic_input_calculation() {
+    fun whenInputOperationWhichIsNotArithmetic_thenThrowIllegalArgumentException() {
         // when : 사용자가 사칙연산 식에 사칙연산이 아닌 기호를 포함하면
         val thrown: IllegalArgumentException = assertThrows(
             IllegalArgumentException::class.java
@@ -113,7 +113,7 @@ class CalculatorTest {
     }
 
     @Test
-    fun test_arithmetic_input_consecutive_calculation() {
+    fun whenInputOperationConsecutively_thenThrowIllegalArgumentException() {
         // 사용자가 사칙연산 기호를 연속으로 입력하면
         val thrown: IllegalArgumentException = assertThrows(
             IllegalArgumentException::class.java
@@ -125,7 +125,7 @@ class CalculatorTest {
     }
 
     @Test
-    fun test_arithmetic_minus_consecutive_calculation() {
+    fun whenInputMinusOperationConsecutively_thenThrowIllegalArgumentException() {
         // when : 사용자가 사칙연산 기호 -를 연속으로 입력하면
         val thrown: IllegalArgumentException = assertThrows(
             IllegalArgumentException::class.java
@@ -137,8 +137,8 @@ class CalculatorTest {
     }
 
     @Test
-    fun test_arithmetic_plus_consecutive_calculation() {
-        // when : 사용자가 사칙연산 기호 -를 연속으로 입력하면
+    fun whenInputPlusOperationConsecutively_thenThrowIllegalArgumentException() {
+        // when : 사용자가 사칙연산 기호 +를 연속으로 입력하면
         val thrown: IllegalArgumentException = assertThrows(
             IllegalArgumentException::class.java
         ) { calculator.calculate(expression.evaluate("10+2+++-+++2")) }
@@ -149,7 +149,7 @@ class CalculatorTest {
     }
 
     @Test
-    fun test_divide_with_zero_calculation() {
+    fun whenInputNumberDividedByZero_thenThrowIllegalArgumentException() {
         // when : 사용자가 0으로 나누는 사칙연산 식을 입력하면
         val thrown: IllegalArgumentException = assertThrows(
             IllegalArgumentException::class.java
@@ -161,7 +161,7 @@ class CalculatorTest {
     }
 
     @Test
-    fun test_bracket_included_calculation() {
+    fun whenInputBracket_thenThrowIllegalArgumentException() {
         // when : 사용자가 사칙연산 식에 괄호를 포함하면
         val thrown: IllegalArgumentException = assertThrows(
             IllegalArgumentException::class.java
@@ -173,7 +173,7 @@ class CalculatorTest {
     }
 
     @Test
-    fun test_zero_start_num_calculation() {
+    fun whenInputNumberWhichStartWithZero_thenThrowIllegalArgumentException() {
         // when : 사용자가 0으로 시작하는 숫자를 입력하면
         val thrown: IllegalArgumentException = assertThrows(
             IllegalArgumentException::class.java
