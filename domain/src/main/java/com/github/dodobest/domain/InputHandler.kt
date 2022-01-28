@@ -1,6 +1,6 @@
 package com.github.dodobest.domain
 
-class InputFarm {
+class InputHandler {
     private val calculator = Calculator()
     private val expression = Expression()
     private val numAndSignArray: MutableList<String> = MutableList(0) { "" }
