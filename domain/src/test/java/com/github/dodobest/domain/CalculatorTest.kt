@@ -83,7 +83,7 @@ class CalculatorTest {
 
         // then : IllegalArgumentException 을 발생시킨다
         assertThat(thrown).isInstanceOf(IllegalArgumentException::class.java)
-        assertThat(thrown).hasMessageThat().contains("사칙 연산 외 기호가 입력되었습니다")
+        assertThat(thrown).hasMessageThat().contains("연산자를 찾을 수 없습니다")
 
     }
 
@@ -108,7 +108,7 @@ class CalculatorTest {
 
         // then : IllegalArgumentException 을 발생시킨다
         assertThat(thrown).isInstanceOf(IllegalArgumentException::class.java)
-        assertThat(thrown).hasMessageThat().contains("사칙 연산 외 기호가 입력되었습니다.")
+        assertThat(thrown).hasMessageThat().contains("연산자를 찾을 수 없습니다")
     }
 
     @Test
@@ -168,7 +168,7 @@ class CalculatorTest {
 
         // then : IllegalArgumentException 을 발생시킨다
         assertThat(thrown).isInstanceOf(IllegalArgumentException::class.java)
-        assertThat(thrown).hasMessageThat().contains("사칙 연산 외 기호가 입력되었습니다")
+        assertThat(thrown).hasMessageThat().contains("연산자를 찾을 수 없습니다")
     }
 
     @Test

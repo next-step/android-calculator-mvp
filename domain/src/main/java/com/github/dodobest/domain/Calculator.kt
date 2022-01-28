@@ -115,7 +115,8 @@ class Calculator {
     }
 
     private fun checkInputIsNotCorrect(inputString: String, charIndex: Int) {
-        require(Operation.isOperation(inputString[charIndex].toString())) { "사칙 연산 외 기호가 입력되었습니다." }
+//        require(Operation.isOperation(inputString[charIndex].toString())) { "사칙 연산 외 기호가 입력되었습니다." }
+        Operation.convertToOperation(inputString[charIndex].toString())
 
         require(charIndex != inputString.length - 1) { "사칙 연산 뒤에 값이 오지 않았습니다." }
 
