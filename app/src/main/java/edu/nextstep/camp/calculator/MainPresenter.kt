@@ -13,15 +13,13 @@ class MainPresenter(
     }
 
     override fun appendOperand(statement: String, operand: String) {
-        val appendedStatement = expression.appendStatement(statement, operand)
+        val appendedStatement = expression.appendOperand(statement, operand)
         view.showExpression(appendedStatement)
     }
 
     override fun appendOperator(statement: String, operator: String) {
-        if (statement.isNotEmpty()) {
-            val appendedStatement = expression.appendStatement(statement, operator)
-            view.showExpression(appendedStatement)
-        }
+        val appendedStatement = expression.appendOperator(statement, operator)
+        view.showExpression(appendedStatement)
     }
 
     override fun deleteLastElement(statement: String) {
