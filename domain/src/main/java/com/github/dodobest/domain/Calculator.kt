@@ -13,7 +13,7 @@ class Calculator {
         return inputString.replace(" ", "")
     }
 
-    private fun extractNumAndSignAll(inputString: String): MutableList<String> {
+    private fun extractNumAndSignAll(inputString: String): List<String> {
         val numAndSignArray: MutableList<String> = MutableList(0) { "" }
         val firstIndexOfNum: Array<Int> = arrayOf(-1)
 
@@ -25,7 +25,7 @@ class Calculator {
         return numAndSignArray
     }
 
-    private fun splitNumAndSignOnce(inputString: String, charIndex: Int, firstIndexOfNum: Array<Int>): MutableList<String> {
+    private fun splitNumAndSignOnce(inputString: String, charIndex: Int, firstIndexOfNum: Array<Int>): List<String> {
         if (isNum(inputString[charIndex])) {
             updateFirstIndexOfNum(inputString, charIndex, firstIndexOfNum)
             return MutableList(0) { "" }
@@ -65,7 +65,7 @@ class Calculator {
         return inputString[charIndex] == '0' && charIndex < inputString.length - 1 && isNum(inputString[charIndex + 1])
     }
 
-    private fun checkArithmeticOperation(inputString: String, charIndex: Int, firstIndexOfNum: Array<Int>): MutableList<String> {
+    private fun checkArithmeticOperation(inputString: String, charIndex: Int, firstIndexOfNum: Array<Int>): List<String> {
         val numAndSignArray: MutableList<String> = MutableList(0) { "" }
 
         checkInputIsNotCorrect(inputString, charIndex)
