@@ -9,23 +9,23 @@ class MainPresenter(
 
     override fun calculate(statement: String) {
         val result = expression.calculatedValue(statement)
-        view.refreshCalculator(result)
+        view.showExpression(result)
     }
 
     override fun appendOperand(statement: String, operand: String) {
         val appendedStatement = expression.appendStatement(statement, operand)
-        view.refreshCalculator(appendedStatement)
+        view.showExpression(appendedStatement)
     }
 
     override fun appendOperator(statement: String, operator: String) {
         if (statement.isNotEmpty()) {
             val appendedStatement = expression.appendStatement(statement, operator)
-            view.refreshCalculator(appendedStatement)
+            view.showExpression(appendedStatement)
         }
     }
 
     override fun deleteLastElement(statement: String) {
         val deletedStatement = expression.deleteLastElement(statement)
-        view.refreshCalculator(deletedStatement)
+        view.showExpression(deletedStatement)
     }
 }

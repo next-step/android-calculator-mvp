@@ -2,7 +2,7 @@ package edu.nextstep.camp.calculator
 
 interface MainContract {
     interface View {
-        fun refreshCalculator(result: String)
+        fun showExpression(expression: String?)
     }
 
     interface Presenter {

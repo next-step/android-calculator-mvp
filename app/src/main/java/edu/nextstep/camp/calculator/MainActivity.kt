@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         }
     }
 
-    override fun refreshCalculator(result: String) {
-        binding.textView.text = result
+    override fun showExpression(expression: String?) {
+        binding.textView.text = expression
     }
 }
