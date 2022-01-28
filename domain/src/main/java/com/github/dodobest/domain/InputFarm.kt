@@ -17,7 +17,7 @@ class InputFarm {
     }
 
     fun handleInputNum (inputNum: String) {
-        if (arraySize > 0 && calculator.checkCharIsNum(numAndSignArray.last().toCharArray().last())) {
+        if (arraySize > 0 && calculator.isNum(numAndSignArray.last().toCharArray().last())) {
             numAndSignArray[arraySize-1] = (numAndSignArray.last().toInt() * 10 + inputNum.toInt()).toString()
             return
         }

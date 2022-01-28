@@ -2,31 +2,31 @@ package com.github.dodobest.domain
 
 class Calculator {
     fun evaluate(input: String): Double {
-        val inputString: String = eraseBlankAtString(input)
+        val inputString: String = eraseBlank(input)
 
         require(inputString != "") { "빈 공백문자를 입력했습니다." }
 
-        return calculate(makeNumAndSingToArrayFromString(inputString))
+        return calculate(extractNumAndSignAll(inputString))
     }
 
-    private fun eraseBlankAtString(inputString: String): String {
+    private fun eraseBlank(inputString: String): String {
         return inputString.replace(" ", "")
     }
 
-    private fun makeNumAndSingToArrayFromString(inputString: String): MutableList<String> {
+    private fun extractNumAndSignAll(inputString: String): MutableList<String> {
         val numAndSignArray: MutableList<String> = MutableList(0) { "" }
         val firstIndexOfNum: Array<Int> = arrayOf(-1)
 
         for (idx in inputString.indices) {
-            numAndSignArray.addAll(splitNumAndSignFromString(inputString, idx, firstIndexOfNum))
+            numAndSignArray.addAll(splitNumAndSignOnce(inputString, idx, firstIndexOfNum))
         }
         numAndSignArray.add(inputString.slice(IntRange(firstIndexOfNum[0], inputString.length-1)))
 
         return numAndSignArray
     }
 
-    private fun splitNumAndSignFromString(inputString: String, charIndex: Int, firstIndexOfNum: Array<Int>): MutableList<String> {
-        if (checkCharIsNum(inputString[charIndex])) {
+    private fun splitNumAndSignOnce(inputString: String, charIndex: Int, firstIndexOfNum: Array<Int>): MutableList<String> {
+        if (isNum(inputString[charIndex])) {
             updateFirstIndexOfNum(inputString, charIndex, firstIndexOfNum)
             return MutableList(0) { "" }
         }
@@ -54,7 +54,7 @@ class Calculator {
         firstIndexOfNum[0] = charIndex
     }
 
-    fun checkCharIsNum(charVal: Char): Boolean {
+    fun isNum(charVal: Char): Boolean {
         if (charVal.code in '0'.code..'9'.code ) {
             return true
         }
@@ -62,7 +62,7 @@ class Calculator {
     }
 
     private fun checkNumStartWithZeroAndNotExactZero(inputString: String, charIndex: Int): Boolean {
-        return inputString[charIndex] == '0' && charIndex < inputString.length - 1 && checkCharIsNum(inputString[charIndex + 1])
+        return inputString[charIndex] == '0' && charIndex < inputString.length - 1 && isNum(inputString[charIndex + 1])
     }
 
     private fun checkArithmeticOperation(inputString: String, charIndex: Int, firstIndexOfNum: Array<Int>): MutableList<String> {
@@ -97,7 +97,7 @@ class Calculator {
 
         require(charIndex != inputString.length - 1) { "사칙 연산 뒤에 값이 오지 않았습니다." }
 
-        require(!isDivideWithZero(inputString, charIndex)) { "0으로 나누는 값은 존재하지 않습니다." }
+        require(!isDividedWithZero(inputString, charIndex)) { "0으로 나누는 값은 존재하지 않습니다." }
 
         throwErrorIfOperationIsConsecutive(inputString, charIndex)
     }
@@ -106,7 +106,7 @@ class Calculator {
         return Operation.convertToOperation(inputChar.toString()) == Operation.MINUS && firstIndexOfNum[0] == -1
     }
 
-    private fun isDivideWithZero(inputString: String, charIndex: Int): Boolean {
+    private fun isDividedWithZero(inputString: String, charIndex: Int): Boolean {
         return Operation.convertToOperation(inputString[charIndex].toString()) == Operation.DIVIDE && inputString[charIndex+1] == '0'
     }
 
