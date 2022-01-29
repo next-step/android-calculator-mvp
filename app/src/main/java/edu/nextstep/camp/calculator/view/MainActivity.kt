@@ -3,6 +3,7 @@ package edu.nextstep.camp.calculator.view
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import edu.nextstep.camp.calculator.MainContract
 import edu.nextstep.camp.calculator.R
@@ -50,6 +51,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonMultiply.setOnClickListener { appendOperator(getString(R.string.calculator_multiply)) }
         binding.buttonDelete.setOnClickListener { deleteLastElement() }
         binding.buttonEquals.setOnClickListener { calculateStatement() }
+        binding.buttonMemory.setOnClickListener { toggleMemoryView() }
     }
 
     private fun appendOperand(operand: String) {
@@ -74,6 +76,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun showError(errorMessage: String) {
         Toast.makeText(this@MainActivity, errorMessage, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun toggleMemoryView() {
+        binding.recyclerView.isVisible = !binding.recyclerView.isVisible
     }
 
     override fun saveAddedStatement() {
