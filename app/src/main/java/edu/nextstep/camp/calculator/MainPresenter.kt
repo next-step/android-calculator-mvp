@@ -8,8 +8,13 @@ class MainPresenter(
     private val expression = Expression()
 
     override fun calculate(statement: String) {
-        val result = expression.calculatedValue(statement)
-        view.showExpression(result)
+        runCatching {
+            val result = expression.calculatedValue(statement)
+            view.showExpression(result)
+        }.onFailure {
+            view.showError(it.message.toString())
+        }
+
     }
 
     override fun appendOperand(statement: String, operand: String) {

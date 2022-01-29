@@ -3,6 +3,7 @@ package edu.nextstep.camp.calculator
 interface MainContract {
     interface View {
         fun showExpression(expression: String?)
+        fun showError(errorMessage: String)
     }
 
     interface Presenter {

@@ -51,14 +51,14 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     private fun calculateStatement() {
-        runCatching {
-            presenter.calculate(binding.textView.text.toString())
-        }.onFailure { e ->
-            Toast.makeText(this@MainActivity, e.message, Toast.LENGTH_SHORT).show()
-        }
+        presenter.calculate(binding.textView.text.toString())
     }
 
     override fun showExpression(expression: String?) {
         binding.textView.text = expression
+    }
+
+    override fun showError(errorMessage: String) {
+        Toast.makeText(this@MainActivity, errorMessage, Toast.LENGTH_SHORT).show()
     }
 }
