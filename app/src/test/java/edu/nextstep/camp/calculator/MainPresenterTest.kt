@@ -1,12 +1,18 @@
 package edu.nextstep.camp.calculator
 
+import com.google.common.truth.Truth.assertThat
 import edu.nextstep.camp.calculator.domain.Calculator.Companion.IS_NOT_OPERATOR
 import edu.nextstep.camp.calculator.domain.Calculator.Companion.IS_NOT_OR_BLANK
 import edu.nextstep.camp.calculator.domain.Calculator.Companion.WRONG_INPUT
+import edu.nextstep.camp.calculator.model.Result
+import edu.nextstep.camp.calculator.model.Statement
+import edu.nextstep.camp.calculator.presenter.MainPresenter
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 
 class MainPresenterTest {
     private lateinit var presenter: MainContract.Presenter
@@ -79,5 +85,28 @@ class MainPresenterTest {
 
         // THEN
         verify { view.showError(IS_NOT_OPERATOR) }
+    }
+
+    @CsvSource(
+        delimiter = '=',
+        value = [
+            "1 + 2=3",
+            "2 * 4=8",
+            "2 * 3 * 4=24"
+        ]
+    )
+    @ParameterizedTest(name = "{0}을 계산하면 {0} = {1}이 저장된다")
+    fun recordStatementTest(expression: String, result: String) {
+        val statement = Statement(
+            expression = expression,
+            result = Result(result)
+        )
+
+        // WHEN
+        presenter.calculate(expression)
+
+        // THEN
+        verify { view.saveAddedStatement() }
+        assertThat(statement).isEqualTo(presenter.statementList[0])
     }
 }
