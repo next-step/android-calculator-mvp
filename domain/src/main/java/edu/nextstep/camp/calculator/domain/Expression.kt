@@ -1,45 +1,56 @@
 package edu.nextstep.camp.calculator.domain
 
-data class Expression(
-    private val values: List<Any> = emptyList()
-) {
-    operator fun plus(operand: Int): Expression {
-        return when (val last = values.lastOrNull()) {
-            is Operator -> Expression(values + operand)
-            is Int -> Expression(values.dropLast(1) + "$last$operand".toInt())
-            null -> Expression(listOf(operand))
-            else -> throw IllegalStateException("Failed plus operand. last: $last")
+data class Expression(val rawExpression: String) {
+    fun addOperand(operand: String): Expression {
+        if (this == EMPTY) return Expression(operand)
+        return if (rawExpression.last().isDigit()) {
+            Expression("$rawExpression$operand")
+        } else {
+            Expression("$rawExpression $operand")
         }
     }
 
-    operator fun plus(operator: Operator): Expression {
-        return when (val last = values.lastOrNull()) {
-            is Operator -> Expression(values.dropLast(1) + operator)
-            is Int -> Expression(values + operator)
-            null -> EMPTY
-            else -> throw IllegalStateException("Failed plus operator. last: $last")
+    fun addOperator(operator: String): Expression {
+        if (this == EMPTY) return EMPTY
+        return if (rawExpression.last().isDigit()) {
+            Expression("$rawExpression $operator")
+        } else {
+            Expression("${rawExpression.dropLast(1)}$operator")
         }
     }
 
     fun removeLast(): Expression {
-        return when (val last = values.lastOrNull()) {
-            is Operator -> Expression(values.dropLast(1))
-            is Int -> {
-                val operand = (last / 10).takeIf { it != 0 }
-                Expression(values.dropLast(1) + listOfNotNull(operand))
-            }
-            null -> EMPTY
-            else -> throw IllegalStateException("Failed remove last. last: $last")
+        if (this == EMPTY) return EMPTY
+        return if (rawExpression.last().isDigit()) {
+            removeLastDigit()
+        } else {
+            Expression(rawExpression.dropLast(DROP_LAST_OPERATOR))
         }
     }
 
-    override fun toString(): String {
-        return values.joinToString(" ") {
-            if (it is Operator) it.sign else it.toString()
+    private fun removeLastDigit(): Expression {
+        return when {
+            rawExpression.length == 1 -> {
+                Expression(rawExpression.dropLast(DROP_LAST_OPERAND))
+            }
+            rawExpression.dropLast(DROP_LAST_OPERAND).last().toString() == " " -> {
+                Expression(rawExpression.dropLast(OPERAND_MIX_OPERATOR))
+            }
+            else -> {
+                Expression(rawExpression.dropLast(DROP_LAST_OPERAND))
+            }
         }
+    }
+
+    fun getResult(): Float {
+        return Calculator.evaluate(rawExpression)
     }
 
     companion object {
-        val EMPTY = Expression()
+        val EMPTY = Expression("")
+
+        const val DROP_LAST_OPERAND = 1
+        const val DROP_LAST_OPERATOR = 2
+        const val OPERAND_MIX_OPERATOR = 2
     }
 }

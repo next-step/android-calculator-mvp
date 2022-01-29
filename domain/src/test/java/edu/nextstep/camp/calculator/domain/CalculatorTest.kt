@@ -1,68 +1,68 @@
 package edu.nextstep.camp.calculator.domain
 
 import com.google.common.truth.Truth.assertThat
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
+import org.junit.Assert
 
-class CalculatorTest {
-    private lateinit var calculator: Calculator
+class CalculatorTest() {
 
-    @BeforeEach
-    fun setUp() {
-        calculator = Calculator()
-    }
-
-    @Test
-    fun `더하기`() {
-        // whens
-        val actual = calculator.calculate("1 + 2")
-
-        // then
-        assertThat(actual).isEqualTo(3)
-    }
-
-    @Test
-    fun `빼기`() {
+    @org.junit.Test
+    fun `5와 2를 더하면 7이 된다`() {
         // when
-        val actual = calculator.calculate("1 - 2")
+        val result = Operator.PLUS.calculate(5f, 2f)
 
         // then
-        assertThat(actual).isEqualTo(-1)
+        assertThat(result).isEqualTo(7)
     }
 
-    @Test
-    fun `곱하기`() {
+    @org.junit.Test
+    fun `5와 2를 빼면 3이 된다`() {
         // when
-        val actual = calculator.calculate("1 * 2")
+        val result = Operator.MINUS.calculate(5f, 2f)
 
         // then
-        assertThat(actual).isEqualTo(2)
+        assertThat(result).isEqualTo(3)
     }
 
-    @Test
-    fun `나누기`() {
+    @org.junit.Test
+    fun `5와 2를 곱하면 10이 된다`() {
         // when
-        val actual = calculator.calculate("4 / 2")
+        val result = Operator.MULTIPLY.calculate(5f, 2f)
 
         // then
-        assertThat(actual).isEqualTo(2)
+        assertThat(result).isEqualTo(10)
     }
 
-    @Test
-    fun `수식이 아니면 계산 불가`() {
+    @org.junit.Test
+    fun `5와 2를 나누면 2점5가 된다`() {
         // when
-        val actual = calculator.calculate("qwe")
+        val result = Operator.DIVIDE.calculate(5f, 2f)
 
         // then
-        assertThat(actual).isNull()
+        assertThat(result).isEqualTo(2.5f)
     }
 
-    @Test
-    fun `미완성된 수식이면 계산 불가`() {
+    @org.junit.Test
+    fun `8 더하기 2 곱하기 5 나누기 4 는 사칙연산 우선순위가 아닌 순서대로 연산하여 12점5가 된다`() {
         // when
-        val actual = calculator.calculate("1 +")
+        val result = Calculator.evaluate("8+2×5÷4")
 
         // then
-        assertThat(actual).isNull()
+        assertThat(result).isEqualTo(12.5f)
+    }
+
+    @org.junit.Test
+    fun `입력된 값이 공백이면 IllegalArgumentException 오류가 발생한다`() {
+        // when
+        Assert.assertThrows(IllegalArgumentException::class.java) {
+            Calculator.evaluate("")
+        }
+    }
+
+    @org.junit.Test
+    fun `숫자가 아닌 기호 중에 사칙연산이 아닌 경우 IllegalArgumentException 오류가 발생한다`() {
+        // when
+        Assert.assertThrows(IllegalArgumentException::class.java) {
+            Calculator.evaluate("2^3")
+        }
     }
 }

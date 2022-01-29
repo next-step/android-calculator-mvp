@@ -1,18 +1,22 @@
 package edu.nextstep.camp.calculator.domain
 
-class Calculator {
-    fun calculate(rawExpression: String): Int? {
-        if (rawExpression.isBlank()) return null
+object Calculator {
+    private val operandRegex = "[0-9]+".toRegex()
 
-        val values = rawExpression.split(" ")
-        if (values.size % 2 == 0) return null
+    fun evaluate(rawExpression: String): Float {
+        var result = 0f
+        var operator = Operator.NONE
 
-        var acc = values[0].toIntOrNull() ?: return null
-        for (i in 1..values.lastIndex step 2) {
-            val operator = Operator.of(values[i]) ?: return null
-            val secondOperand = values[i + 1].toIntOrNull() ?: return null
-            acc = operator.operation(acc, secondOperand)
+        if (rawExpression.isEmpty()) throw IllegalArgumentException("exception data")
+        val rawArray = rawExpression.split(" ")
+        if (!operandRegex.matches(rawArray.last())) throw IllegalArgumentException("exception data")
+        rawArray.forEach {
+            if (operandRegex.matches(it)) {
+                result = operator.calculate(result, it.toFloat())
+            } else {
+                operator = Operator.getOperator(it)
+            }
         }
-        return acc
+        return result
     }
 }

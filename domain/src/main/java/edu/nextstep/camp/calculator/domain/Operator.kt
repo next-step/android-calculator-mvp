@@ -1,17 +1,22 @@
 package edu.nextstep.camp.calculator.domain
 
 enum class Operator(
-    val sign: String,
-    val operation: (Int, Int) -> Int,
-) {
-    Plus("+", { x, y -> x + y }),
-    Minus("-", { x, y -> x - y }),
-    Multiply("*", { x, y -> x * y }),
-    Divide("/", { x, y -> x / y });
+    val operator: String?,
+    val operatorFunc: (Float, Float) -> Float
+) : OperatorAction {
+    PLUS("+", { operand1, operand2 -> operand1 + operand2 }),
+    MINUS("-", { operand1, operand2 -> operand1 - operand2 }),
+    MULTIPLY("×", { operand1, operand2 -> operand1 * operand2 }),
+    DIVIDE("÷", { operand1, operand2 -> operand1 / operand2 }),
+    NONE(null, { _, operand2 -> operand2 });
+
+    override fun calculate(first: Float, second: Float): Float {
+        return operatorFunc(first, second)
+    }
 
     companion object {
-        fun of(sign: String): Operator? {
-            return values().find { it.sign == sign }
-        }
+        fun getOperator(operator: String): Operator =
+            values().find { it.operator == operator }
+                ?: throw IllegalArgumentException("exception operator")
     }
 }
