@@ -6,43 +6,11 @@ class Expression {
 
         require(inputString != "") { "빈 공백문자를 입력했습니다." }
 
-        return extractNumAndSignAll(inputString)
+        return extractor.extractNumAndSignAll(inputString)
     }
 
     private fun eraseBlank(inputString: String): String {
         return inputString.replace(" ", "")
-    }
-
-
-    private fun extractNumAndSignAll(inputString: String): List<String> {
-        val numAndOperation = MutableList(0) { "" }
-        val firstIndexOfNum: Array<Int> = arrayOf(NUM_IS_EMPTY)
-
-        for (idx in inputString.indices) {
-            numAndOperation.addAll(splitNumAndSignOnce(inputString, idx, firstIndexOfNum))
-        }
-        numAndOperation.add(inputString.slice(IntRange(firstIndexOfNum[0], inputString.length-1)))
-
-        return numAndOperation.toList()
-    }
-
-    private fun splitNumAndSignOnce(inputString: String, charIndex: Int, firstIndexOfNum: Array<Int>): List<String> {
-        if (isNum(inputString[charIndex])) {
-            updateFirstIndexOfNum(inputString, charIndex, firstIndexOfNum)
-            return emptyList()
-        }
-
-        return checkArithmeticOperation(inputString, charIndex, firstIndexOfNum)
-    }
-
-    private fun updateFirstIndexOfNum(inputString: String, charIndex: Int, firstIndexOfNum: Array<Int>){
-        if (firstIndexOfNum[0] != NUM_IS_EMPTY) {
-            return
-        }
-
-        require(!checkNumStartWithZeroAndNotExactZero(inputString, charIndex)) { "0으로 시작하는 숫자는 지원하지 않습니다." }
-
-        firstIndexOfNum[0] = charIndex
     }
 
     fun isNum(charVal: Char): Boolean {
@@ -52,37 +20,11 @@ class Expression {
         return false
     }
 
-    private fun checkNumStartWithZeroAndNotExactZero(inputString: String, charIndex: Int): Boolean {
+    fun checkNumStartWithZeroAndNotExactZero(inputString: String, charIndex: Int): Boolean {
         return inputString[charIndex] == '0' && charIndex < inputString.length - 1 && isNum(inputString[charIndex + 1])
     }
 
-    private fun checkArithmeticOperation(inputString: String, charIndex: Int, firstIndexOfNum: Array<Int>): List<String> {
-        val numAndOperation = MutableList(0) { "" }
-
-        checkInputIsNotCorrect(inputString, charIndex)
-
-        if (isNegativeSignNotMinusSign(inputString[charIndex], firstIndexOfNum)) {
-            firstIndexOfNum[0] = charIndex
-            return emptyList()
-        }
-
-        if (isPositiveSign(inputString[charIndex], firstIndexOfNum)) {
-            return emptyList()
-        }
-
-        numAndOperation.add(inputString.slice(IntRange(firstIndexOfNum[0], charIndex-1)))
-        numAndOperation.add(inputString[charIndex].toString())
-
-        firstIndexOfNum[0] = NUM_IS_EMPTY
-
-        return numAndOperation.toList()
-    }
-
-    private fun isPositiveSign(inputChar: Char, firstIndexOfNum: Array<Int>): Boolean {
-        return Operation.convertToOperation(inputChar.toString()) == Operation.PLUS && firstIndexOfNum[0] == NUM_IS_EMPTY
-    }
-
-    private fun checkInputIsNotCorrect(inputString: String, charIndex: Int) {
+    fun checkInputIsNotCorrect(inputString: String, charIndex: Int) {
         require(Operation.isOperation(inputString[charIndex].toString())) { "사칙 연산 외 기호가 입력되었습니다." }
 
         require(charIndex != inputString.length - 1) { "사칙 연산 뒤에 값이 오지 않았습니다." }
@@ -92,8 +34,12 @@ class Expression {
         throwErrorIfOperationIsConsecutive(inputString, charIndex)
     }
 
-    private fun isNegativeSignNotMinusSign(inputChar: Char, firstIndexOfNum: Array<Int>): Boolean {
+    fun isNegativeSignNotMinusSign(inputChar: Char, firstIndexOfNum: Array<Int>): Boolean {
         return Operation.convertToOperation(inputChar.toString()) == Operation.MINUS && firstIndexOfNum[0] == NUM_IS_EMPTY
+    }
+
+    fun isPositiveSign(inputChar: Char, firstIndexOfNum: Array<Int>): Boolean {
+        return Operation.convertToOperation(inputChar.toString()) == Operation.PLUS && firstIndexOfNum[0] == NUM_IS_EMPTY
     }
 
     private fun isDividedWithZero(inputString: String, charIndex: Int): Boolean {
@@ -131,5 +77,6 @@ class Expression {
 
     companion object {
         const val NUM_IS_EMPTY = -1
+        val extractor = Extractor()
     }
 }
