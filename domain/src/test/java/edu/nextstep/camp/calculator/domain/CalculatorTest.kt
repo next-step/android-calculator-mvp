@@ -44,7 +44,7 @@ class CalculatorTest() {
     @org.junit.Test
     fun `8 더하기 2 곱하기 5 나누기 4 는 사칙연산 우선순위가 아닌 순서대로 연산하여 12점5가 된다`() {
         // when
-        val result = Calculator.evaluate("8+2×5÷4")
+        val result = Calculator.evaluate("8 + 2 × 5 ÷ 4")
 
         // then
         assertThat(result).isEqualTo(12.5f)
