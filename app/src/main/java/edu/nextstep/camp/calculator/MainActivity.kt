@@ -15,28 +15,32 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         setContentView(binding.root)
 
         presenter = MainPresenter(this)
-        initLayout()
+
+        initListener()
     }
 
-    private fun initLayout() {
-        binding.button0.setOnClickListener { presenter.addOperand(binding.button0.text.toString()) }
-        binding.button1.setOnClickListener { presenter.addOperand(binding.button1.text.toString()) }
-        binding.button2.setOnClickListener { presenter.addOperand(binding.button2.text.toString()) }
-        binding.button3.setOnClickListener { presenter.addOperand(binding.button3.text.toString()) }
-        binding.button4.setOnClickListener { presenter.addOperand(binding.button4.text.toString()) }
-        binding.button5.setOnClickListener { presenter.addOperand(binding.button5.text.toString()) }
-        binding.button6.setOnClickListener { presenter.addOperand(binding.button6.text.toString()) }
-        binding.button7.setOnClickListener { presenter.addOperand(binding.button7.text.toString()) }
-        binding.button8.setOnClickListener { presenter.addOperand(binding.button8.text.toString()) }
-        binding.button9.setOnClickListener { presenter.addOperand(binding.button9.text.toString()) }
+    private fun initListener() {
+        with(binding) {
+            listOf(
+                button0, button1, button2, button3, button4,
+                button5, button6, button7, button8, button9
+            ).forEach { button ->
+                button.setOnClickListener {
+                    presenter.addOperand(button.text.toString())
+                }
+            }
 
-        binding.buttonDivide.setOnClickListener { presenter.addOperator(binding.buttonDivide.text.toString()) }
-        binding.buttonMultiply.setOnClickListener { presenter.addOperator(binding.buttonMultiply.text.toString()) }
-        binding.buttonMinus.setOnClickListener { presenter.addOperator(binding.buttonMinus.text.toString()) }
-        binding.buttonPlus.setOnClickListener { presenter.addOperator(binding.buttonPlus.text.toString()) }
-        binding.buttonDelete.setOnClickListener { presenter.removeLast() }
+            listOf(
+                buttonDivide, buttonMultiply, buttonMinus, buttonPlus
+            ).forEach { button ->
+                button.setOnClickListener {
+                    presenter.addOperator(button.text.toString())
+                }
+            }
 
-        binding.buttonEquals.setOnClickListener { presenter.getResult() }
+            buttonDelete.setOnClickListener { presenter.removeLast() }
+            buttonEquals.setOnClickListener { presenter.getResult() }
+        }
     }
 
     override fun refreshExpression(expression: String) {
