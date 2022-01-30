@@ -5,13 +5,11 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
-import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
-    private val calculator = Calculator()
     private var expression = Expression.EMPTY
 
     private lateinit var presenter: MainContract.Presenter
@@ -23,6 +21,15 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
         presenter = MainPresenter(this)
         setViewsClickListener()
+    }
+
+    override fun onViewUpdated(newExpression: Expression) {
+        binding.textView.text = newExpression.toString()
+        expression = newExpression
+    }
+
+    override fun onExpressionIncomplete() {
+        Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
     }
 
     private fun setViewsClickListener() {
@@ -58,18 +65,5 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     private fun setEqualsButtonClickListener() {
         presenter.calculate(expression)
-    }
-
-    override fun onViewUpdated(newExpression: Expression) {
-        binding.textView.text = newExpression.toString()
-        expression = newExpression
-    }
-
-    override fun onExpressionIncomplete() {
-        Toast.makeText(
-            this@MainActivity,
-            R.string.incomplete_expression,
-            Toast.LENGTH_SHORT
-        ).show()
     }
 }
