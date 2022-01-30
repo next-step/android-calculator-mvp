@@ -4,65 +4,50 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
-import edu.nextstep.camp.calculator.domain.Expression
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
-    private var expression = Expression.EMPTY
+    private lateinit var presenter: MainPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        presenter = MainPresenter(this)
         initLayout()
     }
 
     private fun initLayout() {
-        binding.button0.setOnClickListener { addOperand(binding.button0.text.toString()) }
-        binding.button1.setOnClickListener { addOperand(binding.button1.text.toString()) }
-        binding.button2.setOnClickListener { addOperand(binding.button2.text.toString()) }
-        binding.button3.setOnClickListener { addOperand(binding.button3.text.toString()) }
-        binding.button4.setOnClickListener { addOperand(binding.button4.text.toString()) }
-        binding.button5.setOnClickListener { addOperand(binding.button5.text.toString()) }
-        binding.button6.setOnClickListener { addOperand(binding.button6.text.toString()) }
-        binding.button7.setOnClickListener { addOperand(binding.button7.text.toString()) }
-        binding.button8.setOnClickListener { addOperand(binding.button8.text.toString()) }
-        binding.button9.setOnClickListener { addOperand(binding.button9.text.toString()) }
+        binding.button0.setOnClickListener { presenter.addOperand(binding.button0.text.toString()) }
+        binding.button1.setOnClickListener { presenter.addOperand(binding.button1.text.toString()) }
+        binding.button2.setOnClickListener { presenter.addOperand(binding.button2.text.toString()) }
+        binding.button3.setOnClickListener { presenter.addOperand(binding.button3.text.toString()) }
+        binding.button4.setOnClickListener { presenter.addOperand(binding.button4.text.toString()) }
+        binding.button5.setOnClickListener { presenter.addOperand(binding.button5.text.toString()) }
+        binding.button6.setOnClickListener { presenter.addOperand(binding.button6.text.toString()) }
+        binding.button7.setOnClickListener { presenter.addOperand(binding.button7.text.toString()) }
+        binding.button8.setOnClickListener { presenter.addOperand(binding.button8.text.toString()) }
+        binding.button9.setOnClickListener { presenter.addOperand(binding.button9.text.toString()) }
 
-        binding.buttonDivide.setOnClickListener { addOperator(binding.buttonDivide.text.toString()) }
-        binding.buttonMultiply.setOnClickListener { addOperator(binding.buttonMultiply.text.toString()) }
-        binding.buttonMinus.setOnClickListener { addOperator(binding.buttonMinus.text.toString()) }
-        binding.buttonPlus.setOnClickListener { addOperator(binding.buttonPlus.text.toString()) }
-        binding.buttonDelete.setOnClickListener { removeLast() }
+        binding.buttonDivide.setOnClickListener { presenter.addOperator(binding.buttonDivide.text.toString()) }
+        binding.buttonMultiply.setOnClickListener { presenter.addOperator(binding.buttonMultiply.text.toString()) }
+        binding.buttonMinus.setOnClickListener { presenter.addOperator(binding.buttonMinus.text.toString()) }
+        binding.buttonPlus.setOnClickListener { presenter.addOperator(binding.buttonPlus.text.toString()) }
+        binding.buttonDelete.setOnClickListener { presenter.removeLast() }
 
-        binding.buttonEquals.setOnClickListener { getResult() }
+        binding.buttonEquals.setOnClickListener { presenter.getResult() }
     }
 
-    private fun addOperand(rawOperand: String) {
-        expression = expression.addOperand(rawOperand)
-        setResult(expression.rawExpression)
+    override fun refreshExpression(expression: String) {
+        binding.textView.text = expression
     }
 
-    private fun addOperator(rawOperator: String) {
-        expression = expression.addOperator(rawOperator)
-        setResult(expression.rawExpression)
-    }
-
-    private fun removeLast() {
-        expression = expression.removeLast()
-        setResult(expression.rawExpression)
-    }
-
-    private fun getResult() {
-        try {
-            setResult(expression.getResult().toString())
-        } catch (e: IllegalArgumentException) {
-            Toast.makeText(this@MainActivity, "완성되지 않은 수식입니다", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun setResult(result: String) {
+    override fun showResult(result: String) {
         binding.textView.text = result
+    }
+
+    override fun showToast(result: String) {
+        Toast.makeText(this@MainActivity, "완성되지 않은 수식입니다", Toast.LENGTH_SHORT).show()
     }
 }
