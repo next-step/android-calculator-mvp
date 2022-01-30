@@ -1,8 +1,8 @@
 package edu.nextstep.camp.calculator.domain
 
 enum class Operator(
-    val operator: String?,
-    val operatorFunc: (Float, Float) -> Float
+    private val operator: String?,
+    private val operatorFunc: (Float, Float) -> Float
 ) : OperatorAction {
     PLUS("+", { operand1, operand2 -> operand1 + operand2 }),
     MINUS("-", { operand1, operand2 -> operand1 - operand2 }),
