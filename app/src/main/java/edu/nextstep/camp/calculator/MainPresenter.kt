@@ -19,12 +19,12 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
         view.showExpression(expression.toString())
     }
 
-    override fun removeExpression() {
+    override fun removeLastInExpression() {
         expression.removeLast()
         view.showExpression(expression.toString())
     }
 
-    override fun evaluateExpression() {
+    override fun evaluateByExpression() {
         val result = calculator.calculate(expression.toString()) ?: run {
             view.showError()
             return

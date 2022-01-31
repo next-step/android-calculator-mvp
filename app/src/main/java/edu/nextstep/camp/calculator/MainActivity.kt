@@ -63,13 +63,13 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     private fun setupButtonDelete() {
         binding.buttonDelete.setOnClickListener {
-            presenter.removeExpression()
+            presenter.removeLastInExpression()
         }
     }
 
     private fun setupButtonEquals() {
         binding.buttonEquals.setOnClickListener {
-            presenter.evaluateExpression()
+            presenter.evaluateByExpression()
         }
     }
 
