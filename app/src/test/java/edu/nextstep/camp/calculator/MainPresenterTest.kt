@@ -1,10 +1,8 @@
 package edu.nextstep.camp.calculator
 
-import com.github.dodobest.domain.InputHandler
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
@@ -14,12 +12,15 @@ class MainPresenterTest {
 
     @Before
     fun setUp() {
-        view = mockk(relaxUnitFun = true)
+        view = mockk()
         presenter = MainPresenter(view)
     }
 
     @Test
     fun `이전에 입력이 주어지지 않았을때, 3을 누르면 3이 보여야 한다`() {
+        // given
+         every { view.refreshTextView("3") } answers { nothing }
+
         // when
         presenter.handleInputNum("3")
 
@@ -31,6 +32,7 @@ class MainPresenterTest {
     @Test
     fun `이전에 입력 3이 주어 졌을 때, 3을 누르면 33이 보여야 한다`() {
         // given
+        every { view.refreshTextView(any()) } answers { nothing }
         presenter.handleInputNum("3")
 
         // when
@@ -45,6 +47,7 @@ class MainPresenterTest {
     @Test
     fun `이전에 입력이 주어지지 않았을때, +를 누르면 변화가 없다`() {
         // when
+        every { view.refreshTextView(any()) } answers { nothing }
         presenter.handleInputArithmetic("+")
 
         // then
@@ -54,6 +57,7 @@ class MainPresenterTest {
     @Test
     fun `이전에 입력 3이 주어졌을 때, +를 누르면 3+ 를 보여준다`() {
         // given
+        every { view.refreshTextView(any()) } answers { nothing }
         presenter.handleInputNum("3")
 
         // when
@@ -65,6 +69,9 @@ class MainPresenterTest {
 
     @Test
     fun `이전에 입력이 주어지지 않았을 때, 지우기를 누르면 변화가 없다`() {
+        // given
+        every { view.refreshTextView(any()) } answers { nothing }
+
         // when
         presenter.handleInputDelete()
 
@@ -75,6 +82,7 @@ class MainPresenterTest {
     @Test
     fun `이전에 입력 3+가 주어졌을 때, 지우기를 누르면 3을 보여준다`() {
         // given
+        every { view.refreshTextView(any()) } answers { nothing }
         presenter.handleInputNum("3")
         presenter.handleInputArithmetic("+")
 
@@ -88,6 +96,7 @@ class MainPresenterTest {
     @Test
     fun `이전에 입력 3+2x5나누기2-2가 주어졌을 때, =를 누르면 3을 보여준다`() {
         // given
+        every { view.refreshTextView(any()) } answers { nothing }
         presenter.handleInputNum("3")
         presenter.handleInputArithmetic("+")
         presenter.handleInputNum("2")
@@ -108,6 +117,8 @@ class MainPresenterTest {
     @Test
     fun `이전에 입력 3+2x가 주어졌을 때, =를 누르면 토스트 메시지를 보여준다`() {
         // given
+        every { view.refreshTextView(any()) } answers { nothing }
+        every { view.showToastMessage(any()) } answers { nothing }
         presenter.handleInputNum("3")
         presenter.handleInputArithmetic("+")
         presenter.handleInputNum("2")
