@@ -2,8 +2,8 @@ package edu.nextstep.camp.calculator.presenter
 
 import edu.nextstep.camp.calculator.MainContract
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.model.CalculateResult
 import edu.nextstep.camp.calculator.model.RecordStatement
-import edu.nextstep.camp.calculator.model.Result
 
 class MainPresenter(
     private val view: MainContract.View
@@ -16,7 +16,7 @@ class MainPresenter(
         runCatching {
             val result = expression.calculatedValue(statement)
             view.showExpression(result)
-            saveStatement(statement, Result(result))
+            saveStatement(statement, CalculateResult(result))
         }.onFailure {
             view.showError(it.message.toString())
         }
@@ -37,12 +37,12 @@ class MainPresenter(
         view.showExpression(deletedStatement)
     }
 
-    override fun saveStatement(statement: String, result: Result) {
+    override fun saveStatement(statement: String, calculateResult: CalculateResult) {
         _recordStatementList.add(
             0,
             RecordStatement(
                 expression = statement,
-                result = result
+                calculateResult = calculateResult
             )
         )
         view.saveAddedStatement()

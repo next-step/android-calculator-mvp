@@ -1,7 +1,7 @@
 package edu.nextstep.camp.calculator
 
+import edu.nextstep.camp.calculator.model.CalculateResult
 import edu.nextstep.camp.calculator.model.RecordStatement
-import edu.nextstep.camp.calculator.model.Result
 
 interface MainContract {
     interface View {
@@ -16,6 +16,6 @@ interface MainContract {
         fun appendOperand(statement: String, operand: String)
         fun appendOperator(statement: String, operator: String)
         fun deleteLastElement(statement: String)
-        fun saveStatement(statement: String, result: Result)
+        fun saveStatement(statement: String, calculateResult: CalculateResult)
     }
 }

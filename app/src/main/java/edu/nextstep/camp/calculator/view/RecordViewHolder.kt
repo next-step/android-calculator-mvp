@@ -9,6 +9,6 @@ class RecordViewHolder(private val view: ItemResultBinding) :
 
     fun bind(recordStatement: RecordStatement) {
         view.tvExpression.text = recordStatement.expression
-        view.tvResult.text = recordStatement.result.toString()
+        view.tvResult.text = recordStatement.calculateResult.toString()
     }
 }

@@ -4,8 +4,8 @@ import com.google.common.truth.Truth.assertThat
 import edu.nextstep.camp.calculator.domain.Calculator.Companion.IS_NOT_OPERATOR
 import edu.nextstep.camp.calculator.domain.Calculator.Companion.IS_NOT_OR_BLANK
 import edu.nextstep.camp.calculator.domain.Calculator.Companion.WRONG_INPUT
+import edu.nextstep.camp.calculator.model.CalculateResult
 import edu.nextstep.camp.calculator.model.RecordStatement
-import edu.nextstep.camp.calculator.model.Result
 import edu.nextstep.camp.calculator.presenter.MainPresenter
 import io.mockk.mockk
 import io.mockk.verify
@@ -99,7 +99,7 @@ class MainPresenterTest {
     fun recordStatementTest(expression: String, result: String) {
         val statement = RecordStatement(
             expression = expression,
-            result = Result(result)
+            calculateResult = CalculateResult(result)
         )
 
         // WHEN
