@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.recyclerview.widget.LinearLayoutManager
 import edu.nextstep.camp.calculator.MainContract
 import edu.nextstep.camp.calculator.R
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
@@ -20,18 +19,14 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         presenter = MainPresenter(this)
         initRecyclerView()
-
         clickButtonListener()
     }
 
     private fun initRecyclerView() {
-        binding.recyclerView.apply {
-            layoutManager =
-                LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
-            adapter = recordAdapter
-        }
+        binding.recyclerView.adapter = recordAdapter
     }
 
     private fun clickButtonListener() {
