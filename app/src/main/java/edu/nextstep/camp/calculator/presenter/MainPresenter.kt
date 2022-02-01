@@ -1,23 +1,27 @@
 package edu.nextstep.camp.calculator.presenter
 
 import edu.nextstep.camp.calculator.MainContract
+import edu.nextstep.camp.calculator.domain.CalculatorRepository
 import edu.nextstep.camp.calculator.domain.Expression
-import edu.nextstep.camp.calculator.model.CalculateResult
-import edu.nextstep.camp.calculator.model.RecordStatement
+import edu.nextstep.camp.calculator.domain.model.CalculateResult
+import edu.nextstep.camp.calculator.domain.model.RecordStatement
 
 class MainPresenter(
     private val view: MainContract.View
 ) : MainContract.Presenter {
     private val expression = Expression()
-    private val _recordStatementList = mutableListOf<RecordStatement>()
-    override val recordStatementList: List<RecordStatement> = _recordStatementList
+    private val calculatorRepository = CalculatorRepository()
 
     override fun calculate(statement: String) {
         view.showMemory(false)
         runCatching {
             val result = expression.calculatedValue(statement)
+            val recordStatement = RecordStatement(
+                expression = statement,
+                calculateResult = CalculateResult(result)
+            )
             view.showExpression(result)
-            saveStatement(statement, CalculateResult(result))
+            saveStatement(recordStatement)
         }.onFailure {
             view.showError(it.message.toString())
         }
@@ -41,14 +45,8 @@ class MainPresenter(
         view.showExpression(deletedStatement)
     }
 
-    override fun saveStatement(statement: String, calculateResult: CalculateResult) {
-        _recordStatementList.add(
-            0,
-            RecordStatement(
-                expression = statement,
-                calculateResult = calculateResult
-            )
-        )
-        view.showSavedStatement(recordStatementList.first())
+    override fun saveStatement(recordStatement: RecordStatement) {
+        calculatorRepository.saveStatement(recordStatement)
+        view.showSavedStatement(calculatorRepository.recordStatementList.first())
     }
 }

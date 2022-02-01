@@ -1,7 +1,6 @@
 package edu.nextstep.camp.calculator
 
-import edu.nextstep.camp.calculator.model.CalculateResult
-import edu.nextstep.camp.calculator.model.RecordStatement
+import edu.nextstep.camp.calculator.domain.model.RecordStatement
 
 interface MainContract {
     interface View {
@@ -12,11 +11,10 @@ interface MainContract {
     }
 
     interface Presenter {
-        val recordStatementList: List<RecordStatement>
         fun calculate(statement: String)
         fun appendOperand(statement: String, operand: String)
         fun appendOperator(statement: String, operator: String)
         fun deleteLastElement(statement: String)
-        fun saveStatement(statement: String, calculateResult: CalculateResult)
+        fun saveStatement(recordStatement: RecordStatement)
     }
 }
