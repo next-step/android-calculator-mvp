@@ -45,6 +45,6 @@ class MainPresenter(
                 calculateResult = calculateResult
             )
         )
-        view.saveAddedStatement()
+        view.showSavedStatement(recordStatementList.first())
     }
 }

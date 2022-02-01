@@ -106,7 +106,7 @@ class MainPresenterTest {
         presenter.calculate(expression)
 
         // THEN
-        verify { view.saveAddedStatement() }
+        verify { view.showSavedStatement(presenter.recordStatementList.first()) }
         assertThat(statement).isEqualTo(presenter.recordStatementList[0])
     }
 }

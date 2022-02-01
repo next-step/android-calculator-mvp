@@ -7,7 +7,7 @@ interface MainContract {
     interface View {
         fun showExpression(expression: String?)
         fun showError(errorMessage: String)
-        fun saveAddedStatement()
+        fun showSavedStatement(recordStatement: RecordStatement)
     }
 
     interface Presenter {

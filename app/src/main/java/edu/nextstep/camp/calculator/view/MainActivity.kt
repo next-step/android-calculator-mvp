@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import edu.nextstep.camp.calculator.MainContract
 import edu.nextstep.camp.calculator.R
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
+import edu.nextstep.camp.calculator.model.RecordStatement
 import edu.nextstep.camp.calculator.presenter.MainPresenter
 
 class MainActivity : AppCompatActivity(), MainContract.View {
@@ -82,7 +83,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.recyclerView.isVisible = !binding.recyclerView.isVisible
     }
 
-    override fun saveAddedStatement() {
-        recordAdapter.addStatement(presenter.recordStatementList[0])
+    override fun showSavedStatement(recordStatement: RecordStatement) {
+        recordAdapter.addStatement(recordStatement)
     }
 }
