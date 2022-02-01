@@ -1,15 +1,13 @@
 package edu.nextstep.camp.calculator
 
-import com.google.common.truth.Truth.assertThat
 import edu.nextstep.camp.calculator.domain.Calculator.Companion.IS_NOT_OPERATOR
 import edu.nextstep.camp.calculator.domain.Calculator.Companion.IS_NOT_OR_BLANK
 import edu.nextstep.camp.calculator.domain.Calculator.Companion.WRONG_INPUT
-import edu.nextstep.camp.calculator.model.CalculateResult
-import edu.nextstep.camp.calculator.model.RecordStatement
+import edu.nextstep.camp.calculator.domain.model.CalculateResult
+import edu.nextstep.camp.calculator.domain.model.RecordStatement
 import edu.nextstep.camp.calculator.presenter.MainPresenter
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -107,9 +105,6 @@ class MainPresenterTest {
         presenter.calculate(expression)
 
         // THEN
-        assertAll(
-            { verify { view.showSavedStatement(presenter.recordStatementList.first()) } },
-            { assertThat(statement).isEqualTo(presenter.recordStatementList[0]) }
-        )
+        verify { view.showSavedStatement(statement) }
     }
 }
