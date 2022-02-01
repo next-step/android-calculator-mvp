@@ -26,42 +26,46 @@ class MainPresenterTest {
         presenter.addNumber(expression, "5")
 
         // then
-        verify { view.onViewUpdated(expression + 5) }
+        val newExpression = expression + 5
+        verify { view.onViewUpdated(newExpression) }
     }
 
     @Test
     fun `5 더하기 1이 보이는 화면에서 빼기를 클릭하면 5 더하기 1 빼기가 보여야 한다`() {
         // given
-        val expression = Expression.EMPTY + 5 + Operator.Plus + 1
+        val expression = Expression(listOf(5, Operator.Plus, 1))
 
         // when
         presenter.addOperator(expression, Operator.Minus)
 
         // then
-        verify { view.onViewUpdated(expression + Operator.Minus) }
+        val newExpression = expression + Operator.Minus
+        verify { view.onViewUpdated(newExpression) }
     }
 
     @Test
     fun `6 곱하기가 보이는 화면에서 지우기 버튼을 누르면 6이 보여야 한다`() {
         // given
-        val expression = Expression.EMPTY + 6 + Operator.Multiply
+        val expression = Expression(listOf(Expression.EMPTY + 6 + Operator.Multiply))
 
         // when
         presenter.delete(expression)
 
         // then
-        verify { view.onViewUpdated(expression.removeLast()) }
+        val newExpression = expression.removeLast()
+        verify { view.onViewUpdated(newExpression) }
     }
 
     @Test
     fun `2 더하기 10을 계산하면 12가 보여야 한다`() {
         // given
-        val expression  = Expression.EMPTY + 2 + Operator.Plus + 10
+        val expression  = Expression(listOf(Expression.EMPTY + 2 + Operator.Plus + 10))
 
         // when
         presenter.calculate(expression)
 
         // then
-        verify { view.onViewUpdated(Expression.EMPTY + 12) }
+        val newExpression = Expression.EMPTY + 12
+        verify { view.onViewUpdated(newExpression) }
     }
 }
