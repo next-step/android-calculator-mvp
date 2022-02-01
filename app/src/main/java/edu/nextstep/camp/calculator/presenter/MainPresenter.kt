@@ -13,6 +13,7 @@ class MainPresenter(
     override val recordStatementList: List<RecordStatement> = _recordStatementList
 
     override fun calculate(statement: String) {
+        view.showMemory(false)
         runCatching {
             val result = expression.calculatedValue(statement)
             view.showExpression(result)
@@ -23,16 +24,19 @@ class MainPresenter(
     }
 
     override fun appendOperand(statement: String, operand: String) {
+        view.showMemory(false)
         val appendedStatement = expression.appendOperand(statement, operand)
         view.showExpression(appendedStatement)
     }
 
     override fun appendOperator(statement: String, operator: String) {
+        view.showMemory(false)
         val appendedStatement = expression.appendOperator(statement, operator)
         view.showExpression(appendedStatement)
     }
 
     override fun deleteLastElement(statement: String) {
+        view.showMemory(false)
         val deletedStatement = expression.deleteLastElement(statement)
         view.showExpression(deletedStatement)
     }

@@ -86,4 +86,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     override fun showSavedStatement(recordStatement: RecordStatement) {
         recordAdapter.addStatement(recordStatement)
     }
+
+    override fun showMemory(isVisible: Boolean) {
+        binding.recyclerView.isVisible = isVisible
+    }
 }

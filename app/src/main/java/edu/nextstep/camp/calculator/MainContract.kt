@@ -8,6 +8,7 @@ interface MainContract {
         fun showExpression(expression: String?)
         fun showError(errorMessage: String)
         fun showSavedStatement(recordStatement: RecordStatement)
+        fun showMemory(isVisible: Boolean)
     }
 
     interface Presenter {
