@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import edu.nextstep.camp.calculator.databinding.ItemResultBinding
-import edu.nextstep.camp.calculator.model.RecordStatement
+import edu.nextstep.camp.calculator.domain.model.RecordStatement
 
 class RecordAdapter : RecyclerView.Adapter<RecordViewHolder>() {
     private val statementList = mutableListOf<RecordStatement>()

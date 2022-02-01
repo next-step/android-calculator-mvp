@@ -7,7 +7,7 @@ import androidx.core.view.isVisible
 import edu.nextstep.camp.calculator.MainContract
 import edu.nextstep.camp.calculator.R
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
-import edu.nextstep.camp.calculator.model.RecordStatement
+import edu.nextstep.camp.calculator.domain.model.RecordStatement
 import edu.nextstep.camp.calculator.presenter.MainPresenter
 
 class MainActivity : AppCompatActivity(), MainContract.View {

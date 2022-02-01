@@ -1,4 +1,4 @@
-package edu.nextstep.camp.calculator.model
+package edu.nextstep.camp.calculator.domain.model
 
 @JvmInline
 value class CalculateResult(private val value: String) {
