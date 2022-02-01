@@ -9,6 +9,7 @@ import edu.nextstep.camp.calculator.model.RecordStatement
 import edu.nextstep.camp.calculator.presenter.MainPresenter
 import io.mockk.mockk
 import io.mockk.verify
+import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -106,7 +107,9 @@ class MainPresenterTest {
         presenter.calculate(expression)
 
         // THEN
-        verify { view.showSavedStatement(presenter.recordStatementList.first()) }
-        assertThat(statement).isEqualTo(presenter.recordStatementList[0])
+        assertAll(
+            { verify { view.showSavedStatement(presenter.recordStatementList.first()) } },
+            { assertThat(statement).isEqualTo(presenter.recordStatementList[0]) }
+        )
     }
 }
