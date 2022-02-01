@@ -4,8 +4,8 @@ import com.google.common.truth.Truth.assertThat
 import edu.nextstep.camp.calculator.domain.Calculator.Companion.IS_NOT_OPERATOR
 import edu.nextstep.camp.calculator.domain.Calculator.Companion.IS_NOT_OR_BLANK
 import edu.nextstep.camp.calculator.domain.Calculator.Companion.WRONG_INPUT
+import edu.nextstep.camp.calculator.model.RecordStatement
 import edu.nextstep.camp.calculator.model.Result
-import edu.nextstep.camp.calculator.model.Statement
 import edu.nextstep.camp.calculator.presenter.MainPresenter
 import io.mockk.mockk
 import io.mockk.verify
@@ -97,7 +97,7 @@ class MainPresenterTest {
     )
     @ParameterizedTest(name = "{0}을 계산하면 {0} = {1}이 저장된다")
     fun recordStatementTest(expression: String, result: String) {
-        val statement = Statement(
+        val statement = RecordStatement(
             expression = expression,
             result = Result(result)
         )
@@ -107,6 +107,6 @@ class MainPresenterTest {
 
         // THEN
         verify { view.saveAddedStatement() }
-        assertThat(statement).isEqualTo(presenter.statementList[0])
+        assertThat(statement).isEqualTo(presenter.recordStatementList[0])
     }
 }

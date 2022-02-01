@@ -2,15 +2,15 @@ package edu.nextstep.camp.calculator.presenter
 
 import edu.nextstep.camp.calculator.MainContract
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.model.RecordStatement
 import edu.nextstep.camp.calculator.model.Result
-import edu.nextstep.camp.calculator.model.Statement
 
 class MainPresenter(
     private val view: MainContract.View
 ) : MainContract.Presenter {
     private val expression = Expression()
-    private val _statementList = mutableListOf<Statement>()
-    override val statementList: List<Statement> = _statementList
+    private val _recordStatementList = mutableListOf<RecordStatement>()
+    override val recordStatementList: List<RecordStatement> = _recordStatementList
 
     override fun calculate(statement: String) {
         runCatching {
@@ -38,9 +38,9 @@ class MainPresenter(
     }
 
     override fun saveStatement(statement: String, result: Result) {
-        _statementList.add(
+        _recordStatementList.add(
             0,
-            Statement(
+            RecordStatement(
                 expression = statement,
                 result = result
             )

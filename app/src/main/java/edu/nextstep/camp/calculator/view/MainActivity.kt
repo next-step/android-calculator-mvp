@@ -83,6 +83,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun saveAddedStatement() {
-        recordAdapter.addStatement(presenter.statementList[0])
+        recordAdapter.addStatement(presenter.recordStatementList[0])
     }
 }
