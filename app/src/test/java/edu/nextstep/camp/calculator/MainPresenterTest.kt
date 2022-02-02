@@ -76,6 +76,6 @@ class MainPresenterTest {
         presenter.calculate()
 
         // then
-        verify { view.showToast("완성되지 않은 수식입니다") }
+        verify { view.showErrorToast() }
     }
 }

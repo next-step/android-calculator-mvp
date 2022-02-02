@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.textView.text = expression
     }
 
-    override fun showToast(result: String) {
+    override fun showErrorToast() {
         Toast.makeText(this@MainActivity, "완성되지 않은 수식입니다", Toast.LENGTH_SHORT).show()
     }
 }

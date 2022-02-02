@@ -24,7 +24,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
         try {
             view.refreshExpressionView(expression.getResult().toString())
         } catch (e: IllegalArgumentException) {
-            view.showToast("완성되지 않은 수식입니다")
+            view.showErrorToast()
         }
     }
 }

@@ -6,7 +6,7 @@ interface MainContract {
 
         fun refreshExpressionView(expression: String)
 
-        fun showToast(result: String)
+        fun showErrorToast()
     }
 
     interface Presenter {
