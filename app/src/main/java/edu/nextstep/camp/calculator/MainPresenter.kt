@@ -3,9 +3,9 @@ package edu.nextstep.camp.calculator
 import com.github.dodobest.domain.InputHandler
 
 class MainPresenter(
-    private val view: MainContract.View
+    private val view: MainContract.View,
+    private val inputHandler: InputHandler = InputHandler()
 ) : MainContract.Presenter {
-    private val inputHandler = InputHandler()
 
     override fun handleInputNum(inputNum: String) {
         inputHandler.handleInputNum(inputNum)
