@@ -1,5 +1,6 @@
 package edu.nextstep.camp.calculator
 
+import android.content.res.Resources
 import com.github.dodobest.domain.InputHandler
 
 class MainPresenter(
@@ -29,6 +30,6 @@ class MainPresenter(
             return
         }
 
-        view.showToastMessage("완성되지 않은 수식입니다")
+        view.showToastMessage(Resources.getSystem().getString(R.string.incomplete_expression))
     }
 }
