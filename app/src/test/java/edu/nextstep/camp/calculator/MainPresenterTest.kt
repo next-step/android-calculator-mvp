@@ -23,7 +23,7 @@ class MainPresenterTest {
         presenter.addOperand("1")
 
         // then
-        verify { view.refreshExpression("1") }
+        verify { view.refreshExpressionView("1") }
     }
 
     @DisplayName("수식 2 + 3이 입력되면 2 + 3이 보여아 한다")
@@ -35,7 +35,7 @@ class MainPresenterTest {
         presenter.addOperand("3")
 
         // then
-        verify { view.refreshExpression("2 + 3") }
+        verify { view.refreshExpressionView("2 + 3") }
     }
 
     @DisplayName("수식 2 + 3 에서 지우기 버튼을 누르면 2 + 이 된다")
@@ -48,7 +48,7 @@ class MainPresenterTest {
         presenter.removeLast()
 
         // then
-        verify { view.refreshExpression("2 +") }
+        verify { view.refreshExpressionView("2 +") }
     }
 
     @DisplayName("수식 2 + 3 * 5 에서 = 버튼을 누르면 25.0 이 보여야 한다")
@@ -63,7 +63,7 @@ class MainPresenterTest {
         presenter.calculate()
 
         // then
-        verify { view.showResult("25.0") }
+        verify { view.refreshExpressionView("25.0") }
     }
 
     @DisplayName("사칙연산이 아닌 기호가 입력된 경우 토스트 팝업이 보여야 한다")

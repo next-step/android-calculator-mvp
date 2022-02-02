@@ -43,12 +43,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         }
     }
 
-    override fun refreshExpression(expression: String) {
+    override fun refreshExpressionView(expression: String) {
         binding.textView.text = expression
-    }
-
-    override fun showResult(result: String) {
-        binding.textView.text = result
     }
 
     override fun showToast(result: String) {

@@ -4,9 +4,7 @@ interface MainContract {
 
     interface View {
 
-        fun refreshExpression(expression: String)
-
-        fun showResult(result: String)
+        fun refreshExpressionView(expression: String)
 
         fun showToast(result: String)
     }

@@ -7,22 +7,22 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
 
     override fun addOperand(rawOperand: String) {
         expression = expression.addOperand(rawOperand)
-        view.refreshExpression(expression.rawExpression)
+        view.refreshExpressionView(expression.rawExpression)
     }
 
     override fun addOperator(rawOperator: String) {
         expression = expression.addOperator(rawOperator)
-        view.refreshExpression(expression.rawExpression)
+        view.refreshExpressionView(expression.rawExpression)
     }
 
     override fun removeLast() {
         expression = expression.removeLast()
-        view.refreshExpression(expression.rawExpression)
+        view.refreshExpressionView(expression.rawExpression)
     }
 
     override fun calculate() {
         try {
-            view.showResult(expression.getResult().toString())
+            view.refreshExpressionView(expression.getResult().toString())
         } catch (e: IllegalArgumentException) {
             view.showToast("완성되지 않은 수식입니다")
         }
