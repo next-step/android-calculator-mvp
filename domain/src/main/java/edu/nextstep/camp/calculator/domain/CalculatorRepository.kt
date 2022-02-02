@@ -3,13 +3,14 @@ package edu.nextstep.camp.calculator.domain
 import edu.nextstep.camp.calculator.domain.model.RecordStatement
 
 class CalculatorRepository {
-    private val _recordStatementList = mutableListOf<RecordStatement>()
-    val recordStatementList: List<RecordStatement> = _recordStatementList
+    private val recordStatementList = mutableListOf<RecordStatement>()
 
     fun saveStatement(recordStatement: RecordStatement) {
-        _recordStatementList.add(
+        recordStatementList.add(
             index = 0,
             element = recordStatement
         )
     }
+
+    fun getRecordStatement(): RecordStatement = recordStatementList.first()
 }
