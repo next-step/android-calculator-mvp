@@ -2,9 +2,11 @@ package edu.nextstep.camp.calculator
 
 import android.content.res.Resources
 import com.github.dodobest.domain.InputHandler
+import com.github.dodobest.domain.Result
 
 class MainPresenter(
     private val view: MainContract.View,
+    private val resultList: ArrayList<Result>,
     private val inputHandler: InputHandler = InputHandler()
 ) : MainContract.Presenter {
 
@@ -25,8 +27,12 @@ class MainPresenter(
 
     override fun handleEquals() {
         if (inputHandler.checkExpressionCanCalculated()) {
+            val expression = inputHandler.getString()
             inputHandler.handleEquals()
-            view.refreshTextView(inputHandler.getString())
+            val result = inputHandler.getString()
+
+            view.refreshTextView(result)
+            resultList.add(Result(expression, "= $result"))
             return
         }
 

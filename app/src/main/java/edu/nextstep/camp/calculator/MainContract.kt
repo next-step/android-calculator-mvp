@@ -5,6 +5,7 @@ interface MainContract {
 
         fun refreshTextView(text: String)
         fun showToastMessage(toastMessage: String)
+        fun switchRecyclerViewVisible()
     }
     interface Presenter {
 

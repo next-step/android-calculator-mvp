@@ -52,7 +52,7 @@ class InputHandler {
         return true
     }
 
-    fun handleEquals(){
+    fun handleEquals() {
         val res: String = calculator.calculate(numAndSignArray).toString()
 
         numAndSignArray.clear()
