@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             }
 
             buttonDelete.setOnClickListener { presenter.removeLast() }
-            buttonEquals.setOnClickListener { presenter.getResult() }
+            buttonEquals.setOnClickListener { presenter.calculate() }
         }
     }
 

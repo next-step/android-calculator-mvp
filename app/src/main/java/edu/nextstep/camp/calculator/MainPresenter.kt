@@ -20,7 +20,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
         view.refreshExpression(expression.rawExpression)
     }
 
-    override fun getResult() {
+    override fun calculate() {
         try {
             view.showResult(expression.getResult().toString())
         } catch (e: IllegalArgumentException) {

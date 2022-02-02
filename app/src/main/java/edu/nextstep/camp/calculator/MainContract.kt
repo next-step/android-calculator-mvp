@@ -18,7 +18,7 @@ interface MainContract {
 
         fun removeLast()
 
-        fun getResult()
+        fun calculate()
 
     }
 
