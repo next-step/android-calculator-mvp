@@ -60,7 +60,7 @@ class MainPresenterTest {
         presenter.addOperand("3")
         presenter.addOperator("×")
         presenter.addOperand("5")
-        presenter.getResult()
+        presenter.calculate()
 
         // then
         verify { view.showResult("25.0") }
@@ -73,7 +73,7 @@ class MainPresenterTest {
         presenter.addOperand("2")
         presenter.addOperator("^")
         presenter.addOperand("3")
-        presenter.getResult()
+        presenter.calculate()
 
         // then
         verify { view.showToast("완성되지 않은 수식입니다") }
