@@ -27,7 +27,7 @@ internal class MainPresenterTest {
 
     @Test
     @DisplayName("Presenter 테스트 예시")
-    fun `숫자가 입력되면 수식에 추가되고 변경된 수식을 보여줘야 한다`() {
+    fun `숫자가 입력되면 수식에 추가되고 변경된 수식을 보여줘야 한다 (1)`() {
         // given
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } answers { nothing }
@@ -39,6 +39,20 @@ internal class MainPresenterTest {
         val actual = expressionSlot.captured
         assertThat(actual).isEqualTo("1")
         verify { view.showExpression(actual) }
+    }
+
+    @Test
+    @DisplayName("Presenter 테스트 예시 without Capture")
+    fun `숫자가 입력되면 수식에 추가되고 변경된 수식을 보여줘야 한다 (2)`() {
+        // given
+        val expressionSlot = "1"
+        every { view.showExpression(expressionSlot) } answers { nothing }
+
+        // when
+        presenter.addToExpression(1)
+
+        // then
+        verify { view.showExpression(expressionSlot) }
     }
 
     @Test
