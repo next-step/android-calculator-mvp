@@ -6,11 +6,8 @@ class CalculatorRepository {
     private val recordStatementList = mutableListOf<RecordStatement>()
 
     fun saveStatement(recordStatement: RecordStatement) {
-        recordStatementList.add(
-            index = 0,
-            element = recordStatement
-        )
+        recordStatementList.add(recordStatement)
     }
 
-    fun getRecordStatement(): RecordStatement = recordStatementList.first()
+    fun getRecordStatement(): RecordStatement = recordStatementList.last()
 }
