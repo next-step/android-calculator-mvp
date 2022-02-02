@@ -105,6 +105,6 @@ class MainPresenterTest {
         presenter.calculate(expression)
 
         // THEN
-        verify { view.showSavedStatement(statement) }
+        verify { view.notifyRecordStatement(statement) }
     }
 }

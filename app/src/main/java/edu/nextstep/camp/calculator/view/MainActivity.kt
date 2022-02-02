@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.recyclerView.isVisible = !binding.recyclerView.isVisible
     }
 
-    override fun showSavedStatement(recordStatement: RecordStatement) {
+    override fun notifyRecordStatement(recordStatement: RecordStatement) {
         recordAdapter.addStatement(recordStatement)
     }
 

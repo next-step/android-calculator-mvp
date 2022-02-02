@@ -47,6 +47,6 @@ class MainPresenter(
 
     override fun saveStatement(recordStatement: RecordStatement) {
         calculatorRepository.saveStatement(recordStatement)
-        view.showSavedStatement(calculatorRepository.getRecordStatement())
+        view.notifyRecordStatement(calculatorRepository.getRecordStatement())
     }
 }
