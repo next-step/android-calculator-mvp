@@ -1,5 +1,6 @@
 package edu.nextstep.camp.calculator
 
+import android.content.res.Resources
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -94,24 +95,24 @@ class MainPresenterTest {
     }
 
     @Test
-    fun `이전에 입력 3+2x5나누기2-2가 주어졌을 때, =를 누르면 3을 보여준다`() {
+    fun `이전에 입력 3+2x4나누기2-5가 주어졌을 때, =를 누르면 5을 보여준다`() {
         // given
         every { view.refreshTextView(any()) } answers { nothing }
         presenter.handleInputNum("3")
         presenter.handleInputArithmetic("+")
         presenter.handleInputNum("2")
         presenter.handleInputArithmetic("*")
-        presenter.handleInputNum("5")
+        presenter.handleInputNum("4")
         presenter.handleInputArithmetic("/")
         presenter.handleInputNum("2")
         presenter.handleInputArithmetic("-")
-        presenter.handleInputNum("2")
+        presenter.handleInputNum("5")
 
         // when
         presenter.handleEquals()
 
         // then
-        verify { view.refreshTextView("3") }
+        verify { view.refreshTextView("5.0") }
     }
 
     @Test
