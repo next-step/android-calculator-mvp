@@ -6,7 +6,7 @@ import com.github.dodobest.domain.Result
 
 class MainPresenter(
     private val view: MainContract.View,
-    private val resultList: ArrayList<Result>,
+    private val resultList: ArrayList<Result> = arrayListOf(),
     private val inputHandler: InputHandler = InputHandler()
 ) : MainContract.Presenter {
 
@@ -37,5 +37,9 @@ class MainPresenter(
         }
 
         view.showToastMessage(Resources.getSystem().getString(R.string.incomplete_expression))
+    }
+
+    override fun getResultList(): ArrayList<Result> {
+        return resultList
     }
 }

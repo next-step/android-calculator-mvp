@@ -13,15 +13,14 @@ import com.github.dodobest.domain.*
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
     private lateinit var presenter: MainContract.Presenter
-    private val resultList = arrayListOf<Result>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        presenter = MainPresenter(this, resultList)
+        presenter = MainPresenter(this)
 
-        val mAdapter = ResultAdapter(resultList)
+        val mAdapter = ResultAdapter(presenter.getResultList())
         binding.recyclerView.adapter = mAdapter
 
         val linearLayoutManager = LinearLayoutManager(this)
