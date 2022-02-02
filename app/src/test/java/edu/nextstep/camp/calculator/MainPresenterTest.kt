@@ -38,41 +38,47 @@ class MainPresenterTest {
         verify { view.refreshExpressionView("2 + 3") }
     }
 
-    @DisplayName("수식 2 + 3 에서 지우기 버튼을 누르면 2 + 이 된다")
+    @DisplayName("입력된 수식이 2 + 3 일 때 지우기 버튼을 누르면 2 + 이 된다")
     @Test
-    fun whenClickExpression_thenDisplayExpression2() {
-        // when
+    fun givenDisplayExpression_whenClickDelete_thenDisplayExpression2() {
+        // given
         presenter.addOperand("2")
         presenter.addOperator("+")
         presenter.addOperand("3")
+
+        // when
         presenter.removeLast()
 
         // then
         verify { view.refreshExpressionView("2 +") }
     }
 
-    @DisplayName("수식 2 + 3 * 5 에서 = 버튼을 누르면 25.0 이 보여야 한다")
+    @DisplayName("입력된 수식이 2 + 3 * 5 일 때 = 버튼을 누르면 25.0 이 보여야 한다")
     @Test
-    fun whenClickExpression_thenDisplayResult() {
-        // when
+    fun givenDisplayExpression_whenClickEquals_thenDisplayResult() {
+        // given
         presenter.addOperand("2")
         presenter.addOperator("+")
         presenter.addOperand("3")
         presenter.addOperator("×")
         presenter.addOperand("5")
+
+        // when
         presenter.calculate()
 
         // then
         verify { view.refreshExpressionView("25.0") }
     }
 
-    @DisplayName("사칙연산이 아닌 기호가 입력된 경우 토스트 팝업이 보여야 한다")
+    @DisplayName("사칙연산이 아닌 기호가 입력된 경우 = 버튼을 누르면 토스트 팝업이 보여야 한다")
     @Test
-    fun whenClickExpression_thenDisplayResult2() {
-        // when
+    fun givenDisplayExpression_whenClickEquals_thenDisplayResult2() {
+        // given
         presenter.addOperand("2")
         presenter.addOperator("^")
         presenter.addOperand("3")
+
+        // when
         presenter.calculate()
 
         // then
