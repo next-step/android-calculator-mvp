@@ -15,6 +15,5 @@ interface MainContract {
         fun appendOperand(statement: String, operand: String)
         fun appendOperator(statement: String, operator: String)
         fun deleteLastElement(statement: String)
-        fun saveStatement(recordStatement: RecordStatement)
     }
 }

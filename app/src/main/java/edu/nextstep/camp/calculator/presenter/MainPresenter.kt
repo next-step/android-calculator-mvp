@@ -45,7 +45,7 @@ class MainPresenter(
         view.showExpression(deletedStatement)
     }
 
-    override fun saveStatement(recordStatement: RecordStatement) {
+    private fun saveStatement(recordStatement: RecordStatement) {
         calculatorRepository.saveStatement(recordStatement)
         view.notifyRecordStatement(calculatorRepository.getRecordStatement())
     }
