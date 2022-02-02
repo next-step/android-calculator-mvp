@@ -3,10 +3,11 @@ package edu.nextstep.camp.calculator
 import android.content.res.Resources
 import com.github.dodobest.domain.InputHandler
 import com.github.dodobest.domain.Result
+import com.github.dodobest.domain.ResultHandler
 
 class MainPresenter(
     private val view: MainContract.View,
-    private val resultList: ArrayList<Result> = arrayListOf(),
+    private val resultHandler: ResultHandler = ResultHandler(),
     private val inputHandler: InputHandler = InputHandler()
 ) : MainContract.Presenter {
 
@@ -32,7 +33,7 @@ class MainPresenter(
             val result = inputHandler.getString()
 
             view.refreshTextView(result)
-            resultList.add(Result(expression, "= $result"))
+            resultHandler.add(expression, "= $result")
             return
         }
 
@@ -40,6 +41,6 @@ class MainPresenter(
     }
 
     override fun getResultList(): ArrayList<Result> {
-        return resultList
+        return resultHandler.getResultList()
     }
 }
