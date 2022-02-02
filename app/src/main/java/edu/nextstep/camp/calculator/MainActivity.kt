@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import com.example.domain.Calculator
 import com.example.domain.Expression
+import com.example.domain.Operator
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -58,19 +59,19 @@ class MainActivity : AppCompatActivity() {
             binding.textView.text = expression.toString()
         }
         binding.buttonPlus.setOnClickListener {
-            expression += com.example.domain.Operator.Plus
+            expression += Operator.Plus
             binding.textView.text = expression.toString()
         }
         binding.buttonMinus.setOnClickListener {
-            expression += com.example.domain.Operator.Minus
+            expression += Operator.Minus
             binding.textView.text = expression.toString()
         }
         binding.buttonMultiply.setOnClickListener {
-            expression += com.example.domain.Operator.Multiply
+            expression += Operator.Multiply
             binding.textView.text = expression.toString()
         }
         binding.buttonDivide.setOnClickListener {
-            expression += com.example.domain.Operator.Divide
+            expression += Operator.Divide
             binding.textView.text = expression.toString()
         }
         binding.buttonDelete.setOnClickListener {
