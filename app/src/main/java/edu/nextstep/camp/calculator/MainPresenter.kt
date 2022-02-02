@@ -1,6 +1,7 @@
 package edu.nextstep.camp.calculator
 
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.Memory
 
 class MainPresenter(private val view: MainContract.View) : MainContract.Presenter {
     private var expression = Expression.EMPTY
@@ -22,9 +23,19 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
 
     override fun calculate() {
         try {
-            view.refreshExpressionView(expression.getResult().toString())
+            val result = expression.getResult().toString()
+            view.refreshExpressionView(result)
+            addMemory(expression.rawExpression, result)
         } catch (e: IllegalArgumentException) {
             view.showErrorToast()
         }
+    }
+
+    override fun toggleMemory() {
+        view.toggleMemoryView()
+    }
+
+    private fun addMemory(expression: String, result: String) {
+        view.addMemory(Memory(expression, result))
     }
 }

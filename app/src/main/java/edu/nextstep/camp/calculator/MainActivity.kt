@@ -3,11 +3,15 @@ package edu.nextstep.camp.calculator
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
+import edu.nextstep.camp.calculator.domain.Memory
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
     private lateinit var presenter: MainContract.Presenter
+    private val memoryAdapter: MemoryAdapter by lazy { MemoryAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,7 +20,14 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
         presenter = MainPresenter(this)
 
+        initRecycler()
         initListener()
+    }
+
+    private fun initRecycler() {
+        binding.recyclerView.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.recyclerView.adapter = memoryAdapter
     }
 
     private fun initListener() {
@@ -40,6 +51,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
             buttonDelete.setOnClickListener { presenter.removeLast() }
             buttonEquals.setOnClickListener { presenter.calculate() }
+            buttonMemory.setOnClickListener { presenter.toggleMemory() }
         }
     }
 
@@ -49,5 +61,13 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun showErrorToast() {
         Toast.makeText(this@MainActivity, "완성되지 않은 수식입니다", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun toggleMemoryView() {
+        binding.recyclerView.isVisible = !binding.recyclerView.isVisible
+    }
+
+    override fun addMemory(memory: Memory) {
+        memoryAdapter.addItem(memory)
     }
 }
