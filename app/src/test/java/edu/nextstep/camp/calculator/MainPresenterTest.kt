@@ -2,10 +2,7 @@ package edu.nextstep.camp.calculator
 
 import com.google.common.truth.Truth.assertThat
 import edu.nextstep.camp.calculator.domain.Operator
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.slot
-import io.mockk.verify
+import io.mockk.*
 import org.junit.Before
 import org.junit.Test
 
@@ -23,7 +20,7 @@ class MainPresenterTest {
     fun `숫자가 입력되면 수식에 추가되고 변경된 수식을 보여줘야 한다`() {
         // given
         val expressionSlot = slot<String>()
-        every { view.showExpression(capture(expressionSlot)) } answers { nothing }
+        every { view.showExpression(capture(expressionSlot)) } just Runs
 
         // when
         presenter.addToExpression(1)
@@ -38,7 +35,7 @@ class MainPresenterTest {
     fun `연산자가 입력되면 수식에 추가되고 변경된 수식을 보여줘야 한다`() {
         // given
         val expressionSlot = slot<String>()
-        every { view.showExpression(capture(expressionSlot)) } answers { nothing }
+        every { view.showExpression(capture(expressionSlot)) } just Runs
         presenter.addToExpression(1)
 
         // when
@@ -54,7 +51,7 @@ class MainPresenterTest {
     fun `지우기가 입력되면 마지막에 입력된 수식이 지워지고 변경된 수식을 보여줘야 한다`() {
         // given
         val expressionSlot = slot<String>()
-        every { view.showExpression(capture(expressionSlot)) } answers { nothing }
+        every { view.showExpression(capture(expressionSlot)) } just Runs
         presenter.addToExpression(1)
         presenter.addToExpression(Operator.Plus)
 
@@ -71,7 +68,7 @@ class MainPresenterTest {
     fun `등호가 입력되면 수식이 계산되고 계산된 수식을 보여줘야 한다`() {
         // given
         val expressionSlot = slot<String>()
-        every { view.showExpression(capture(expressionSlot)) } answers { nothing }
+        every { view.showExpression(capture(expressionSlot)) } just Runs
         presenter.addToExpression(1)
         presenter.addToExpression(Operator.Plus)
         presenter.addToExpression(2)
