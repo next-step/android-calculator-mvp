@@ -86,8 +86,7 @@ class MainPresenterTest {
         verify { view.showErrorToast() }
     }
 
-
-    @DisplayName("입력된 수식의 2 + 3 × 5 = 25.0 기록이 있을 때 메모리 버튼을 누르면 2 + 3 × 5 = 25.0 기록이 보여아 한다")
+    @DisplayName("입력된 수식이 2 + 3 × 5 일 때 = 버튼을 누르면 2 + 3 × 5 = 25.0 기록이 추가되어야 한다")
     @Test
     fun givenDisplayExpression_whenClickMemory_thenDisplayMemory() {
         // given
@@ -96,14 +95,11 @@ class MainPresenterTest {
         presenter.addOperand("3")
         presenter.addOperator("×")
         presenter.addOperand("5")
-        presenter.calculate()
 
         // when
-        presenter.toggleMemory()
+        presenter.calculate()
 
         // then
-        verify {
-            view.addMemory(Memory("2 + 3 × 5", "25.0"))
-        }
+        verify { view.addMemory(Memory("2 + 3 × 5", "25.0")) }
     }
 }
