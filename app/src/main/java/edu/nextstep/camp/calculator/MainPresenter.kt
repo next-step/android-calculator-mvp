@@ -1,11 +1,12 @@
 package edu.nextstep.camp.calculator
 
 import edu.nextstep.camp.calculator.domain.Expression
-import edu.nextstep.camp.calculator.domain.Memory
+import edu.nextstep.camp.calculator.domain.MemoryRepository
 
 class MainPresenter(private val view: MainContract.View) : MainContract.Presenter {
     private var expression = Expression.EMPTY
     private var isShowMemoryVisible = false
+    private var memoryRepository = MemoryRepository()
 
     override fun addOperand(rawOperand: String) {
         hideMemoryView()
@@ -49,6 +50,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
     }
 
     private fun addMemory(expression: String, result: String) {
-        view.addMemory(Memory(expression, result))
+        val memory = memoryRepository.addMemory(expression, result)
+        view.addMemory(memory)
     }
 }

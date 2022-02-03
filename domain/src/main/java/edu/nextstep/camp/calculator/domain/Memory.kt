@@ -1,3 +1,3 @@
 package edu.nextstep.camp.calculator.domain
 
-data class Memory(val rawExpression: String, val result: String)
+data class Memory(val expression: String, val result: String)
