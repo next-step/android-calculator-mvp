@@ -39,7 +39,7 @@ class MainPresenter(
         view.showToastMessage(view.getResourceValue(R.string.incomplete_expression))
     }
 
-    override fun getResultList(): ArrayList<Result> {
-        return resultHandler.getResultList()
+    override fun getResults(): ArrayList<Result> {
+        return resultHandler.getResults()
     }
 }

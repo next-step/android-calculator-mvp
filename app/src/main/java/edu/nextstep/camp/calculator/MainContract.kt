@@ -16,7 +16,7 @@ interface MainContract {
         fun handleInputArithmetic(inputOperation: String)
         fun handleInputDelete()
         fun handleEquals()
-        fun getResultList(): ArrayList<Result>
+        fun getResults(): ArrayList<Result>
     }
 
 }

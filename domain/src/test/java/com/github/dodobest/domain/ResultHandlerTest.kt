@@ -17,7 +17,7 @@ class ResultHandlerTest {
         // when
         resultHandler.add("3+3", "5")
         resultHandler.add("1+1", "2")
-        val actual: ArrayList<Result> = resultHandler.getResultList()
+        val actual: ArrayList<Result> = resultHandler.getResults()
 
         // then
         Truth.assertThat(actual).isEqualTo(arrayListOf(Result("3+3", "5")
