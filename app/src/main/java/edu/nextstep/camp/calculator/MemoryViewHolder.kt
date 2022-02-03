@@ -7,7 +7,7 @@ import edu.nextstep.camp.calculator.domain.Memory
 class MemoryViewHolder(private val view: ItemResultBinding) : RecyclerView.ViewHolder(view.root) {
 
     fun bind(item: Memory) {
-        view.tvExpression.text = item.rawExpression
+        view.tvExpression.text = item.expression
         view.tvResult.text = "= ${item.result}"
     }
 }
