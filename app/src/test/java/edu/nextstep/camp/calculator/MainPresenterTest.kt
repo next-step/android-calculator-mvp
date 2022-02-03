@@ -3,6 +3,7 @@ package edu.nextstep.camp.calculator
 import com.google.common.truth.Truth.assertThat
 import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.History
 import edu.nextstep.camp.calculator.domain.Operator
 import io.mockk.*
 import org.junit.Before
@@ -20,7 +21,7 @@ class MainPresenterTest {
     @Test
     fun `숫자가 입력되면 수식에 추가되고 변경된 수식을 보여줘야 한다`() {
         // given
-        presenter = MainPresenter(view, Calculator(), Expression.EMPTY)
+        presenter = MainPresenter(view, Calculator(), Expression.EMPTY, History.EMPTY)
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } just Runs
 
@@ -36,7 +37,7 @@ class MainPresenterTest {
     @Test
     fun `연산자가 입력되면 수식에 추가되고 변경된 수식을 보여줘야 한다`() {
         // given
-        presenter = MainPresenter(view, Calculator(), Expression(listOf(1)))
+        presenter = MainPresenter(view, Calculator(), Expression(listOf(1)), History.EMPTY)
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } just Runs
 
@@ -52,7 +53,7 @@ class MainPresenterTest {
     @Test
     fun `지우기가 입력되면 마지막에 입력된 수식이 지워지고 변경된 수식을 보여줘야 한다`() {
         // given
-        presenter = MainPresenter(view, Calculator(), Expression(listOf(1, Operator.Plus)))
+        presenter = MainPresenter(view, Calculator(), Expression(listOf(1, Operator.Plus)), History.EMPTY)
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } just Runs
 
@@ -68,9 +69,10 @@ class MainPresenterTest {
     @Test
     fun `등호가 입력되면 수식이 계산되고 계산된 수식을 보여줘야 한다`() {
         // given
-        presenter = MainPresenter(view, Calculator(), Expression(listOf(1, Operator.Plus, 2)))
+        presenter = MainPresenter(view, Calculator(), Expression(listOf(1, Operator.Plus, 2)), History.EMPTY)
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } just Runs
+        every { view.showHistory(any()) } just Runs
 
         // when
         presenter.calculate()
@@ -79,5 +81,31 @@ class MainPresenterTest {
         val actual = expressionSlot.captured
         assertThat(actual).isEqualTo("3")
         verify { view.showExpression(actual) }
+    }
+
+    @Test
+    fun `히스토리가 보이도록 디스플레이를 바꾸면 히스토리가 보여야 한다`() {
+        // given
+        presenter = MainPresenter(view, Calculator(), Expression.EMPTY, History.EMPTY)
+        every { view.showCalculateDisplay() } just Runs
+
+        // when
+        presenter.changeDisplay(true)
+
+        // then
+        verify { view.showCalculateDisplay() }
+    }
+
+    @Test
+    fun `히스토리가 보이지 않도록 디스플레이를 바꾸면 수식 화면이 보여야 한다`() {
+        // given
+        presenter = MainPresenter(view, Calculator(), Expression.EMPTY, History.EMPTY)
+        every { view.showHistoryDisplay() } just Runs
+
+        // when
+        presenter.changeDisplay(false)
+
+        // then
+        verify { view.showHistoryDisplay() }
     }
 }
