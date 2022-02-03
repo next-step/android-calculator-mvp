@@ -8,7 +8,7 @@ import edu.nextstep.camp.calculator.domain.Memory
 
 class MemoryAdapter : RecyclerView.Adapter<MemoryViewHolder>() {
 
-    private val memoryList = ArrayList<Memory>()
+    private val memoryList = mutableListOf<Memory>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MemoryViewHolder {
         return MemoryViewHolder(
