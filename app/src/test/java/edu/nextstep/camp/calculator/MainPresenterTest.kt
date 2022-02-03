@@ -87,7 +87,7 @@ class MainPresenterTest {
     }
 
 
-    @DisplayName("입력된 수식의 2 + 3 × 5 = 25.0 기록이 있을 때 시계 버튼을 누르면 2 + 3 × 5 = 25.0 기록이 보여아 한다")
+    @DisplayName("입력된 수식의 2 + 3 × 5 = 25.0 기록이 있을 때 메모리 버튼을 누르면 2 + 3 × 5 = 25.0 기록이 보여아 한다")
     @Test
     fun givenDisplayExpression_whenClickMemory_thenDisplayMemory() {
         // given
