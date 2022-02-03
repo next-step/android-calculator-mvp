@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.History
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainActivity : AppCompatActivity(), MainContract.View {
@@ -15,12 +16,16 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override lateinit var presenter: MainContract.Presenter
 
+    private lateinit var mainHistoryAdapter: MainHistoryAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        presenter = MainPresenter(this, Calculator(), Expression.EMPTY)
+        presenter = MainPresenter(this, Calculator(), Expression.EMPTY, History.EMPTY)
+        mainHistoryAdapter = MainHistoryAdapter(presenter.history)
+        binding.recyclerView.adapter = mainHistoryAdapter
 
         binding.button0.setOnClickListener { presenter.addToExpression(0) }
         binding.button1.setOnClickListener { presenter.addToExpression(1) }
@@ -37,13 +42,32 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonMinus.setOnClickListener { presenter.addToExpression(Operator.Minus) }
         binding.buttonMultiply.setOnClickListener { presenter.addToExpression(Operator.Multiply) }
         binding.buttonDivide.setOnClickListener { presenter.addToExpression(Operator.Divide) }
+        binding.buttonEquals.setOnClickListener { presenter.calculate() }
+
+        binding.buttonMemory.setOnClickListener {
+            presenter.changeDisplay(binding.recyclerView.visibility == View.VISIBLE)
+        }
     }
 
     override fun showExpression(expression: String) {
         binding.textView.text = expression
     }
 
+    override fun showHistory(history: History) {
+        mainHistoryAdapter.refreshHistory(history)
+    }
+
     override fun showIncompleteExpressionToast() {
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showHistoryDisplay() {
+        binding.textView.visibility = View.INVISIBLE
+        binding.recyclerView.visibility = View.VISIBLE
+    }
+
+    override fun showCalculateDisplay() {
+        binding.textView.visibility = View.VISIBLE
+        binding.recyclerView.visibility = View.INVISIBLE
     }
 }
