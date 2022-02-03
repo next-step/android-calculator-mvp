@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.recyclerview.widget.LinearLayoutManager
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.Memory
 
@@ -61,8 +60,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         Toast.makeText(this@MainActivity, "완성되지 않은 수식입니다", Toast.LENGTH_SHORT).show()
     }
 
-    override fun toggleMemoryView() {
-        binding.recyclerView.isVisible = !binding.recyclerView.isVisible
+    override fun showMemoryView(isVisible: Boolean) {
+        binding.recyclerView.isVisible = isVisible
     }
 
     override fun addMemory(memory: Memory) {

@@ -5,23 +5,35 @@ import edu.nextstep.camp.calculator.domain.Memory
 
 class MainPresenter(private val view: MainContract.View) : MainContract.Presenter {
     private var expression = Expression.EMPTY
+    private var isShowMemoryVisible = false
 
     override fun addOperand(rawOperand: String) {
+        hideMemoryView()
         expression = expression.addOperand(rawOperand)
         view.refreshExpressionView(expression.rawExpression)
     }
 
+    private fun hideMemoryView() {
+        if (isShowMemoryVisible) {
+            isShowMemoryVisible = false
+            view.showMemoryView(isShowMemoryVisible)
+        }
+    }
+
     override fun addOperator(rawOperator: String) {
+        hideMemoryView()
         expression = expression.addOperator(rawOperator)
         view.refreshExpressionView(expression.rawExpression)
     }
 
     override fun removeLast() {
+        hideMemoryView()
         expression = expression.removeLast()
         view.refreshExpressionView(expression.rawExpression)
     }
 
     override fun calculate() {
+        hideMemoryView()
         try {
             val result = expression.getResult().toString()
             view.refreshExpressionView(result)
@@ -32,7 +44,8 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
     }
 
     override fun toggleMemory() {
-        view.toggleMemoryView()
+        isShowMemoryVisible = !isShowMemoryVisible
+        view.showMemoryView(isShowMemoryVisible)
     }
 
     private fun addMemory(expression: String, result: String) {

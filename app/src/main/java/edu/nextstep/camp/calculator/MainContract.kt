@@ -10,7 +10,7 @@ interface MainContract {
 
         fun showErrorToast()
 
-        fun toggleMemoryView()
+        fun showMemoryView(isVisible: Boolean)
 
         fun addMemory(memory: Memory)
 
