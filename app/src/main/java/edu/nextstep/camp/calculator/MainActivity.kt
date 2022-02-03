@@ -25,8 +25,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     private fun initRecycler() {
-        binding.recyclerView.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.recyclerView.adapter = memoryAdapter
     }
 
