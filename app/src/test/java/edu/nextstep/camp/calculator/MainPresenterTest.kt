@@ -120,7 +120,8 @@ class MainPresenterTest {
         // given
         every { view.refreshTextView(any()) } answers { nothing }
         every { view.showToastMessage(any()) } answers { nothing }
-        every { Resources.getSystem().getString(R.string.incomplete_expression)} answers { "완성되지 않은 수식입니다." }
+        every { view.getResourceValue(any()) } returns "완성되지 않은 수식입니다."
+
         presenter.handleInputNum("3")
         presenter.handleInputArithmetic("+")
         presenter.handleInputNum("2")
@@ -130,6 +131,6 @@ class MainPresenterTest {
         presenter.handleEquals()
 
         // then
-        verify { view.showToastMessage(Resources.getSystem().getString(R.string.incomplete_expression)) }
+        verify { view.showToastMessage("완성되지 않은 수식입니다.")}
     }
 }
