@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
-import com.github.dodobest.domain.*
 
 
 class MainActivity : AppCompatActivity(), MainContract.View {
@@ -62,5 +61,9 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun showToastMessage(toastMessage: String) {
         Toast.makeText(this, toastMessage, Toast.LENGTH_LONG).show()
+    }
+
+    override fun getResourceValue(resourceValue: Int): String {
+        return this.resources.getString(resourceValue)
     }
 }

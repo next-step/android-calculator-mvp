@@ -1,6 +1,5 @@
 package edu.nextstep.camp.calculator
 
-import android.content.res.Resources
 import com.github.dodobest.domain.InputHandler
 import com.github.dodobest.domain.Result
 import com.github.dodobest.domain.ResultHandler
@@ -37,7 +36,7 @@ class MainPresenter(
             return
         }
 
-        view.showToastMessage(Resources.getSystem().getString(R.string.incomplete_expression))
+        view.showToastMessage(view.getResourceValue(R.string.incomplete_expression))
     }
 
     override fun getResultList(): ArrayList<Result> {
