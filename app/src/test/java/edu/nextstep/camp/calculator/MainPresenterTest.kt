@@ -19,24 +19,22 @@ internal class MainPresenterTest {
         presenter = MainPresenter(view)
     }
 
-    @DisplayName("숫자를 입력할 수 있다.")
     @ValueSource(strings = ["42", "123", "93562"])
-    @ParameterizedTest
+    @ParameterizedTest(name = "{0}를 입력하면 View에 {0}를 그리도록 요청해야 한다.")
     fun inputNumber(number: String) {
         number.map(Char::digitToInt).forEach(presenter::inputNumber)
         verify { view.showExpression(number) }
     }
 
-    @DisplayName("연산자 뒤에 숫자를 입력할 수 있다..")
     @ValueSource(strings = ["42", "123", "93562"])
-    @ParameterizedTest
+    @ParameterizedTest(name = "5 + {0}을 입력하면 5 + {0}을 그리도록 요청해야 한다.")
     fun inputNumberAfterOperator(number: String) {
         // given
         presenter.inputNumber(5)
         presenter.inputPlus()
-        val expected = "5 + $number"
 
         // when
+        val expected = "5 + $number"
         number.map(Char::digitToInt).forEach(presenter::inputNumber)
 
         // then
@@ -46,85 +44,78 @@ internal class MainPresenterTest {
     @DisplayName("입력된 피연산자가 없을 때, 연산자를 입력해도 변화가 없어야 한다.")
     @Test
     fun inputBlankOperator() {
-        // given
-        val expected = ""
-
         // when
+        val expected = ""
         presenter.inputPlus()
         presenter.inputMinus()
         presenter.inputMultiply()
         presenter.inputDivide()
 
         // then
-        verifySequence {
-            view.showExpression(expected)
-            view.showExpression(expected)
-            view.showExpression(expected)
-            view.showExpression(expected)
-        }
+        verify(exactly = 4) { view.showExpression(expected) }
     }
 
-    @DisplayName("덧셈을 입력할 수 있다.")
+    @DisplayName("덧셈을 입력하면 View 에 +를 그리도록 요청해야 한다.")
     @Test
     fun inputPlus() {
         // given
         val number = 7
-        val expected = "$number +"
         presenter.inputNumber(number)
 
         // when
+        val expected = "$number +"
         presenter.inputPlus()
 
         // then
         verify { view.showExpression(expected) }
     }
 
-    @DisplayName("뺄셈을 입력할 수 있다.")
+    @DisplayName("뺄셈을 입력하면 View 에 - 그리도록 요청해야 한다.")
     @Test
     fun inputMinus() {
         // given
         val number = 7
-        val expected = "$number -"
         presenter.inputNumber(number)
 
         // when
+        val expected = "$number -"
         presenter.inputMinus()
 
         // then
         verify { view.showExpression(expected) }
     }
 
-    @DisplayName("곱셈을 입력할 수 있다.")
+    @DisplayName("곱셈을 입력하면 View 에 *를 그리도록 요청해야 한다.")
     @Test
     fun inputMultiply() {
         // given
         val number = 7
-        val expected = "$number *"
         presenter.inputNumber(number)
 
         // when
+        val expected = "$number *"
         presenter.inputMultiply()
 
         // then
         verify { view.showExpression(expected) }
     }
 
-    @DisplayName("나눗셈을 입력할 수 있다.")
+    @DisplayName("나눗셈을 입력하면 View 에 /를 그리도록 요청해야 한다.")
     @Test
     fun inputDivide() {
         // given
         val number = 7
-        val expected = "$number /"
         presenter.inputNumber(number)
 
         // when
+        val expected = "$number /"
         presenter.inputDivide()
 
         // then
         verify { view.showExpression(expected) }
     }
 
-    @DisplayName("수식을 삭제할 수 있다.")
+    @DisplayName("32 + 1 수식을 삭제하면 마지막 값이 삭제된 텍스트를 View 에 그리도록 요청해야 한다.")
     @Test
     fun deleteLast() {
         // given
@@ -156,10 +147,8 @@ internal class MainPresenterTest {
 
     @Test
     fun deleteNothing() {
-        // given
-        val expected = ""
-
         // when
+        val expected = ""
         presenter.deleteLast()
         presenter.deleteLast()
 
@@ -170,12 +159,11 @@ internal class MainPresenterTest {
         }
     }
 
-    @DisplayName("수식을 계산할 수 있다.")
+    @DisplayName("2 + 3 * 4 / 2 를 계산하면 View 에 10을 그리도록 요청해야 한다.")
     @Test
     fun calculate() {
         // given
         val expression = "2 + 3 * 4 / 2"
-        val expected = "10"
         presenter.inputNumber(2)
         presenter.inputPlus()
         presenter.inputNumber(3)
@@ -185,13 +173,11 @@ internal class MainPresenterTest {
         presenter.inputNumber(2)
 
         // when
+        val expected = "10"
         presenter.calculate()
 
         // then
-        verify {
-            view.showExpression(expression)
-            view.showExpression(expected)
-        }
+        verify { view.showExpression(expected) }
     }
 
     @DisplayName("입력된 수식이 완전하지 않을 때, 완성되지 않은 수식임을 화면에 알려아 한다.")
@@ -206,9 +192,6 @@ internal class MainPresenterTest {
         presenter.calculate()
 
         // then
-        verify {
-            view.showExpression(expression)
-            view.showExpressionError()
-        }
+        verify { view.showExpressionError() }
     }
 }
