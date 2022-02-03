@@ -40,9 +40,12 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
     }
 
     override fun calculate() {
-        calculator.calculate(expression.toString())
-            ?.let(::showCalculated)
-            ?: run(view::showExpressionError)
+        val result = calculator.calculate(expression.toString())
+        if (result == null) {
+            view.showExpressionError()
+        } else {
+            showCalculated(result)
+        }
     }
 
     private fun showCalculated(answer: Int) {
