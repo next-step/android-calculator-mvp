@@ -7,7 +7,7 @@ import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
-    private val presenter = MainPresenter(this)
+    private lateinit var presenter: MainContract.Presenter
 
     override fun showExpression(expression: String) = with(binding) {
         textView.text = expression
@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        presenter = MainPresenter(this)
         setContentView(binding.root)
         setListener()
     }

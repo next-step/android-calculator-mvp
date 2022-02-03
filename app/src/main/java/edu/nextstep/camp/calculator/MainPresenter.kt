@@ -29,6 +29,11 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
         inputOperator(Operator.Divide)
     }
 
+    private fun inputOperator(operator: Operator) {
+        expression += operator
+        showExpression()
+    }
+
     override fun deleteLast() {
         expression = expression.removeLast()
         showExpression()
@@ -38,11 +43,6 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
         calculator.calculate(expression.toString())
             ?.let(::showCalculated)
             ?: run(view::showExpressionError)
-    }
-
-    private fun inputOperator(operator: Operator) {
-        expression += operator
-        showExpression()
     }
 
     private fun showCalculated(answer: Int) {
