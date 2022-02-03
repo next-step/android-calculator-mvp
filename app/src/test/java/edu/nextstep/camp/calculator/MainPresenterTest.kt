@@ -1,6 +1,8 @@
 package edu.nextstep.camp.calculator
 
 import com.google.common.truth.Truth.assertThat
+import edu.nextstep.camp.calculator.domain.Calculator
+import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 import io.mockk.*
 import org.junit.Before
@@ -13,12 +15,12 @@ class MainPresenterTest {
     @Before
     fun setUp() {
         view = mockk()
-        presenter = MainPresenter(view)
     }
 
     @Test
     fun `숫자가 입력되면 수식에 추가되고 변경된 수식을 보여줘야 한다`() {
         // given
+        presenter = MainPresenter(view, Calculator(), Expression.EMPTY)
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } just Runs
 
@@ -34,9 +36,9 @@ class MainPresenterTest {
     @Test
     fun `연산자가 입력되면 수식에 추가되고 변경된 수식을 보여줘야 한다`() {
         // given
+        presenter = MainPresenter(view, Calculator(), Expression(listOf(1)))
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } just Runs
-        presenter.addToExpression(1)
 
         // when
         presenter.addToExpression(Operator.Plus)
@@ -50,10 +52,9 @@ class MainPresenterTest {
     @Test
     fun `지우기가 입력되면 마지막에 입력된 수식이 지워지고 변경된 수식을 보여줘야 한다`() {
         // given
+        presenter = MainPresenter(view, Calculator(), Expression(listOf(1, Operator.Plus)))
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } just Runs
-        presenter.addToExpression(1)
-        presenter.addToExpression(Operator.Plus)
 
         // when
         presenter.removeLatest()
@@ -67,11 +68,9 @@ class MainPresenterTest {
     @Test
     fun `등호가 입력되면 수식이 계산되고 계산된 수식을 보여줘야 한다`() {
         // given
+        presenter = MainPresenter(view, Calculator(), Expression(listOf(1, Operator.Plus, 2)))
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } just Runs
-        presenter.addToExpression(1)
-        presenter.addToExpression(Operator.Plus)
-        presenter.addToExpression(2)
 
         // when
         presenter.calculate()
