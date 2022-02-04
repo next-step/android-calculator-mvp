@@ -16,8 +16,6 @@ interface MainContract {
     }
 
     interface Presenter {
-        val history: History
-
         fun addToExpression(operand: Int)
         fun addToExpression(operator: Operator)
         fun removeLatest()
