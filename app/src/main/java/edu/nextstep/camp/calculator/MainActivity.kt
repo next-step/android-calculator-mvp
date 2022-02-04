@@ -1,11 +1,13 @@
 package edu.nextstep.camp.calculator
 
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.Memory
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainActivity : AppCompatActivity(), MainContract.View {
@@ -20,7 +22,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         setContentView(binding.root)
 
         presenter = MainPresenter(this)
-        setViewsClickListener()
+        initViews()
     }
 
     override fun onViewUpdated(newExpression: Expression) {
@@ -32,8 +34,16 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
     }
 
-    private fun setViewsClickListener() {
+    override fun onViewTypeChanged(viewType: CalculatorViewType, memory: Memory) {
+        binding.textView.text = when (viewType) {
+            is ExpressionView -> expression.toString()
+            is MemoryView -> memory.toString()
+        }
+    }
+
+    private fun initViews() {
         binding.run {
+            binding.textView.movementMethod = ScrollingMovementMethod()
             setNumberButtonsClickListener(
                 button0, button1, button2, button3, button4, button5, button6, button7, button8,
                 button9,
@@ -44,6 +54,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             buttonDivide.setOnClickListener { setOperatorButtonClickListener(Operator.Divide) }
             buttonDelete.setOnClickListener { setDeleteButtonClickListener() }
             buttonEquals.setOnClickListener { setEqualsButtonClickListener() }
+            buttonMemory.setOnClickListener { toggleViewType() }
         }
     }
 
@@ -65,5 +76,9 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     private fun setEqualsButtonClickListener() {
         presenter.calculate(expression)
+    }
+
+    private fun toggleViewType() {
+        presenter.toggleViewType()
     }
 }
