@@ -5,8 +5,8 @@ import edu.nextstep.camp.calculator.domain.*
 class MainPresenter(
     private val view: MainContract.View,
     private val calculator: Calculator,
-    private var expression: Expression,
-    override var history: History
+    private var expression: Expression = Expression.EMPTY,
+    override var history: History = History.EMPTY
 ) : MainContract.Presenter {
 
     override fun addToExpression(operand: Int) {

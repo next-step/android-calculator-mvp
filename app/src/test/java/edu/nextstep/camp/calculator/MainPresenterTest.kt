@@ -21,7 +21,7 @@ class MainPresenterTest {
     @Test
     fun `숫자가 입력되면 수식에 추가되고 변경된 수식을 보여줘야 한다`() {
         // given
-        presenter = MainPresenter(view, Calculator(), Expression.EMPTY, History.EMPTY)
+        presenter = MainPresenter(view, Calculator())
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } just Runs
 
@@ -37,7 +37,7 @@ class MainPresenterTest {
     @Test
     fun `연산자가 입력되면 수식에 추가되고 변경된 수식을 보여줘야 한다`() {
         // given
-        presenter = MainPresenter(view, Calculator(), Expression(listOf(1)), History.EMPTY)
+        presenter = MainPresenter(view, Calculator(), Expression(listOf(1)))
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } just Runs
 
@@ -53,7 +53,7 @@ class MainPresenterTest {
     @Test
     fun `지우기가 입력되면 마지막에 입력된 수식이 지워지고 변경된 수식을 보여줘야 한다`() {
         // given
-        presenter = MainPresenter(view, Calculator(), Expression(listOf(1, Operator.Plus)), History.EMPTY)
+        presenter = MainPresenter(view, Calculator(), Expression(listOf(1, Operator.Plus)))
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } just Runs
 
@@ -69,7 +69,7 @@ class MainPresenterTest {
     @Test
     fun `등호가 입력되면 수식이 계산되고 계산된 수식을 보여줘야 한다`() {
         // given
-        presenter = MainPresenter(view, Calculator(), Expression(listOf(1, Operator.Plus, 2)), History.EMPTY)
+        presenter = MainPresenter(view, Calculator(), Expression(listOf(1, Operator.Plus, 2)))
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } just Runs
         every { view.showHistory(any()) } just Runs
@@ -86,7 +86,7 @@ class MainPresenterTest {
     @Test
     fun `히스토리가 보이도록 디스플레이를 바꾸면 히스토리가 보여야 한다`() {
         // given
-        presenter = MainPresenter(view, Calculator(), Expression.EMPTY, History.EMPTY)
+        presenter = MainPresenter(view, Calculator())
         every { view.showCalculateDisplay() } just Runs
 
         // when
@@ -99,7 +99,7 @@ class MainPresenterTest {
     @Test
     fun `히스토리가 보이지 않도록 디스플레이를 바꾸면 수식 화면이 보여야 한다`() {
         // given
-        presenter = MainPresenter(view, Calculator(), Expression.EMPTY, History.EMPTY)
+        presenter = MainPresenter(view, Calculator())
         every { view.showHistoryDisplay() } just Runs
 
         // when

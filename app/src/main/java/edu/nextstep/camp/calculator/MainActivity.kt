@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        presenter = MainPresenter(this, Calculator(), Expression.EMPTY, History.EMPTY)
+        presenter = MainPresenter(this, Calculator())
         mainHistoryAdapter = MainHistoryAdapter(presenter.history)
         binding.recyclerView.adapter = mainHistoryAdapter
 
