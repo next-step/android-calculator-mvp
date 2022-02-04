@@ -15,7 +15,7 @@ class MainPresenterTest {
 
     @Before
     fun setUp() {
-        view = mockk()
+        view = mockk(relaxed = true)
     }
 
     @Test
@@ -72,7 +72,6 @@ class MainPresenterTest {
         presenter = MainPresenter(view, Calculator(), Expression(listOf(1, Operator.Plus, 2)))
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } just Runs
-        every { view.showHistory(any()) } just Runs
 
         // when
         presenter.calculate()
@@ -87,7 +86,6 @@ class MainPresenterTest {
     fun `히스토리가 보이도록 디스플레이를 바꾸면 히스토리가 보여야 한다`() {
         // given
         presenter = MainPresenter(view, Calculator())
-        every { view.showCalculateDisplay() } just Runs
 
         // when
         presenter.changeDisplay(true)
@@ -100,7 +98,6 @@ class MainPresenterTest {
     fun `히스토리가 보이지 않도록 디스플레이를 바꾸면 수식 화면이 보여야 한다`() {
         // given
         presenter = MainPresenter(view, Calculator())
-        every { view.showHistoryDisplay() } just Runs
 
         // when
         presenter.changeDisplay(false)
