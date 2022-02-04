@@ -31,7 +31,7 @@ class MainPresenterTest {
         // then
         val actual = expressionSlot.captured
         assertThat(actual).isEqualTo("1")
-        verify { view.showExpression(actual) }
+        verify(exactly = 1) { view.showExpression(actual) }
     }
 
     @Test
@@ -47,7 +47,7 @@ class MainPresenterTest {
         // then
         val actual = expressionSlot.captured
         assertThat(actual).isEqualTo("1 +")
-        verify { view.showExpression(actual) }
+        verify(exactly = 1) { view.showExpression(actual) }
     }
 
     @Test
@@ -63,7 +63,7 @@ class MainPresenterTest {
         // then
         val actual = expressionSlot.captured
         assertThat(actual).isEqualTo("1")
-        verify { view.showExpression(actual) }
+        verify(exactly = 1) { view.showExpression(actual) }
     }
 
     @Test
@@ -80,7 +80,7 @@ class MainPresenterTest {
         // then
         val actual = expressionSlot.captured
         assertThat(actual).isEqualTo("3")
-        verify { view.showExpression(actual) }
+        verify(exactly = 1) { view.showExpression(actual) }
     }
 
     @Test
@@ -93,7 +93,7 @@ class MainPresenterTest {
         presenter.changeDisplay(true)
 
         // then
-        verify { view.showCalculateDisplay() }
+        verify(exactly = 1) { view.showCalculateDisplay() }
     }
 
     @Test
@@ -106,6 +106,6 @@ class MainPresenterTest {
         presenter.changeDisplay(false)
 
         // then
-        verify { view.showHistoryDisplay() }
+        verify(exactly = 1) { view.showHistoryDisplay() }
     }
 }
