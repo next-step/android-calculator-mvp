@@ -19,8 +19,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         setContentView(binding.root)
         presenter = MainPresenter(this)
 
-        val mAdapter = ResultAdapter(presenter.getResults())
-        binding.recyclerView.adapter = mAdapter
+        val resultAdapter = ResultAdapter(presenter.getResults())
+        binding.recyclerView.adapter = resultAdapter
 
         val linearLayoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = linearLayoutManager
