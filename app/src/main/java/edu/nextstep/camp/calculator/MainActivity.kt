@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         setContentView(binding.root)
 
         presenter = MainPresenter(this, Calculator())
-        mainHistoryAdapter = MainHistoryAdapter(presenter.history)
+        mainHistoryAdapter = MainHistoryAdapter()
         binding.recyclerView.adapter = mainHistoryAdapter
 
         binding.button0.setOnClickListener { presenter.addToExpression(0) }
@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun showHistory(history: History) {
-        mainHistoryAdapter.refreshHistory(history)
+        mainHistoryAdapter.submitList(history.records)
     }
 
     override fun showIncompleteExpressionToast() {
