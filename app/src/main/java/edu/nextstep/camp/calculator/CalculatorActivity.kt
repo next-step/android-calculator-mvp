@@ -1,0 +1,61 @@
+package edu.nextstep.camp.calculator
+
+import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
+import edu.nextstep.camp.calculator.domain.Calculator
+import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.Operator
+
+class CalculatorActivity : AppCompatActivity(), CalculatorContract.View {
+    private lateinit var binding: ActivityMainBinding
+    private val calculator = Calculator()
+    private var expression = Expression.EMPTY
+    override lateinit var presenter: CalculatorContract.Presenter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setUpOnClickOperandListener()
+        setUPOnClickOperatorListener()
+        binding.buttonDelete.setOnClickListener {
+            expression = expression.removeLast()
+            binding.textView.text = expression.toString()
+        }
+        binding.buttonEquals.setOnClickListener {
+            val result = calculator.calculate(expression.toString())
+            if (result == null) {
+                Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            expression = Expression.EMPTY + result
+            binding.textView.text = result.toString()
+        }
+    }
+
+    private fun setUpOnClickOperandListener() {
+        binding.button0.setOnClickListener { presenter.addExpressionElement(0) }
+        binding.button1.setOnClickListener { presenter.addExpressionElement(1) }
+        binding.button2.setOnClickListener { presenter.addExpressionElement(2) }
+        binding.button3.setOnClickListener { presenter.addExpressionElement(3) }
+        binding.button4.setOnClickListener { presenter.addExpressionElement(4) }
+        binding.button5.setOnClickListener { presenter.addExpressionElement(5) }
+        binding.button6.setOnClickListener { presenter.addExpressionElement(6) }
+        binding.button7.setOnClickListener { presenter.addExpressionElement(7) }
+        binding.button8.setOnClickListener { presenter.addExpressionElement(8) }
+        binding.button9.setOnClickListener { presenter.addExpressionElement(9) }
+    }
+
+    private fun setUPOnClickOperatorListener() {
+        binding.buttonPlus.setOnClickListener { presenter.addToExpressionElement(Operator.Plus) }
+        binding.buttonMinus.setOnClickListener { presenter.addToExpressionElement(Operator.Minus) }
+        binding.buttonMultiply.setOnClickListener { presenter.addToExpressionElement(Operator.Multiply) }
+        binding.buttonDivide.setOnClickListener { presenter.addToExpressionElement(Operator.Divide) }
+    }
+
+    override fun refreshExpression(expression: Expression) {
+        binding.textView.text = expression.toString()
+    }
+}
