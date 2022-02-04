@@ -6,10 +6,10 @@ class MainPresenter(
     private val view: MainContract.View,
     private val calculator: Calculator,
     private var expression: Expression = Expression.EMPTY,
-    history: History = History.EMPTY
+    histories: Histories = Histories.EMPTY
 ) : MainContract.Presenter {
 
-    private var _history: History = history
+    private var _histories: Histories = histories
 
     override fun addToExpression(operand: Int) {
         expression += operand
@@ -32,8 +32,8 @@ class MainPresenter(
             view.showIncompleteExpressionToast()
             return
         }
-        _history += Record(expression.toString(), result.toString())
-        view.showHistory(_history)
+        _histories += Record(expression.toString(), result.toString())
+        view.showHistory(_histories)
 
         expression = Expression.EMPTY + result
         view.showExpression(expression.toString())

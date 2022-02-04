@@ -2,13 +2,11 @@ package edu.nextstep.camp.calculator
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.Calculator
-import edu.nextstep.camp.calculator.domain.Expression
-import edu.nextstep.camp.calculator.domain.History
+import edu.nextstep.camp.calculator.domain.Histories
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainActivity : AppCompatActivity(), MainContract.View {
@@ -53,8 +51,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.textView.text = expression
     }
 
-    override fun showHistory(history: History) {
-        mainHistoryAdapter.submitList(history.records)
+    override fun showHistory(histories: Histories) {
+        mainHistoryAdapter.submitList(histories.records)
     }
 
     override fun showIncompleteExpressionToast() {

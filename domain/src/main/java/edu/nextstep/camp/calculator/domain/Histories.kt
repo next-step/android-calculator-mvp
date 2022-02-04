@@ -2,11 +2,11 @@ package edu.nextstep.camp.calculator.domain
 
 import java.lang.StringBuilder
 
-data class History(
+data class Histories(
     val records: List<Record> = emptyList()
 ) {
-    operator fun plus(record: Record): History {
-        return History(records + record)
+    operator fun plus(record: Record): Histories {
+        return Histories(records + record)
     }
 
     override fun toString(): String {
@@ -19,6 +19,6 @@ data class History(
     }
 
     companion object {
-        val EMPTY = History()
+        val EMPTY = Histories()
     }
 }

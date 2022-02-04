@@ -1,6 +1,6 @@
 package edu.nextstep.camp.calculator
 
-import edu.nextstep.camp.calculator.domain.History
+import edu.nextstep.camp.calculator.domain.Histories
 import edu.nextstep.camp.calculator.domain.Operator
 
 interface MainContract {
@@ -9,7 +9,7 @@ interface MainContract {
         val presenter: Presenter
 
         fun showExpression(expression: String)
-        fun showHistory(history: History)
+        fun showHistory(histories: Histories)
         fun showIncompleteExpressionToast()
         fun showHistoryDisplay()
         fun showCalculateDisplay()
