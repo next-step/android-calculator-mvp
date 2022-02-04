@@ -45,16 +45,17 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
         val rawExpression = expression.toString()
         val result = calculator.calculate(rawExpression)
         histories.add(rawExpression, result)
+        showCalculated(result)
+    }
+
+    private fun showCalculated(result: Int?) {
+        view.notifyHistories(histories.map(::HistoryDto))
         if (result == null) {
             view.showExpressionError()
         } else {
-            showCalculated(result)
+            expression = Expression.EMPTY + result
+            showExpression()
         }
-    }
-
-    private fun showCalculated(answer: Int) {
-        expression = Expression.EMPTY + answer
-        showExpression()
     }
 
     private fun showExpression() {

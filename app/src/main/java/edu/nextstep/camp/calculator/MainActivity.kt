@@ -3,10 +3,12 @@ package edu.nextstep.camp.calculator
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var adapter: MainAdapter
     private lateinit var presenter: MainContract.Presenter
 
     override fun showExpression(expression: String) = with(binding) {
@@ -17,12 +19,18 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
     }
 
+    override fun notifyHistories(histories: List<HistoryDto>) {
+        adapter.notify(histories)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        adapter = MainAdapter()
         presenter = MainPresenter(this)
         setContentView(binding.root)
         setListener()
+        binding.recyclerView.adapter = adapter
     }
 
     private fun setListener() = with(binding) {
@@ -73,6 +81,11 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         }
         buttonEquals.setOnClickListener {
             presenter.calculate()
+        }
+        buttonMemory.setOnClickListener {
+            val isVisible = recyclerView.isVisible
+            textView.isVisible = isVisible
+            recyclerView.isVisible = !isVisible
         }
     }
 }

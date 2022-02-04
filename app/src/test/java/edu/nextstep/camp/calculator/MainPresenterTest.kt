@@ -163,7 +163,6 @@ internal class MainPresenterTest {
     @Test
     fun calculate() {
         // given
-        val expression = "2 + 3 * 4 / 2"
         presenter.inputNumber(2)
         presenter.inputPlus()
         presenter.inputNumber(3)
@@ -186,12 +185,37 @@ internal class MainPresenterTest {
         // given
         presenter.inputNumber(3)
         presenter.inputPlus()
-        val expression = "3 +"
 
         // when
         presenter.calculate()
 
         // then
         verify { view.showExpressionError() }
+    }
+
+    @DisplayName("3 + 5 =를 누르고 결과 8이 나온 다음 모두 지운 뒤 10 - 3 = 을 눌러 결과 7이 나온 상태에서 시계 버튼을 누르면 계산 기록이 보여한다.")
+    @Test
+    fun showHistories() {
+        // given
+        presenter.inputNumber(3)
+        presenter.inputPlus()
+        presenter.inputNumber(5)
+        presenter.calculate()
+
+        presenter.deleteLast()
+
+        presenter.inputNumber(10)
+        presenter.inputMinus()
+        presenter.inputNumber(3)
+        presenter.calculate()
+
+        // when
+        val expected = listOf(
+            HistoryDto("3 + 5", "= 8"),
+            HistoryDto("10 - 3", "= 7")
+        )
+
+        // then
+        verify { view.notifyHistories(expected) }
     }
 }
