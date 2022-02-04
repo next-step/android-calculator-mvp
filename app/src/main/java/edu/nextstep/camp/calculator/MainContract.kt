@@ -1,6 +1,7 @@
 package edu.nextstep.camp.calculator
 
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.Memory
 import edu.nextstep.camp.calculator.domain.Operator
 
 interface MainContract {
@@ -8,6 +9,8 @@ interface MainContract {
         fun onViewUpdated(newExpression: Expression)
 
         fun onExpressionIncomplete()
+
+        fun onViewTypeChanged(viewType: CalculatorViewType, memory: Memory)
     }
 
     interface Presenter {
@@ -18,5 +21,7 @@ interface MainContract {
         fun delete(expression: Expression)
 
         fun calculate(expression: Expression)
+
+        fun toggleViewType()
     }
 }
