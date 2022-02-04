@@ -2,11 +2,13 @@ package edu.nextstep.camp.calculator
 
 import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.Histories
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainPresenter(private val view: MainContract.View) : MainContract.Presenter {
     private val calculator = Calculator()
     private var expression = Expression.EMPTY
+    private val histories = Histories()
 
     override fun inputNumber(number: Int) {
         expression += number
@@ -40,7 +42,9 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
     }
 
     override fun calculate() {
-        val result = calculator.calculate(expression.toString())
+        val rawExpression = expression.toString()
+        val result = calculator.calculate(rawExpression)
+        histories.add(rawExpression, result)
         if (result == null) {
             view.showExpressionError()
         } else {
