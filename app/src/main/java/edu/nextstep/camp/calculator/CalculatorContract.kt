@@ -11,6 +11,7 @@ interface CalculatorContract {
 
     interface Presenter {
         fun addExpressionElement(element: Int)
-        fun addToExpressionElement(element: Operator)
+        fun addExpressionElement(element: Operator)
+        fun removeLastExpressionElement()
     }
 }

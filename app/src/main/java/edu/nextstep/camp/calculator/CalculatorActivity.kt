@@ -49,10 +49,10 @@ class CalculatorActivity : AppCompatActivity(), CalculatorContract.View {
     }
 
     private fun setUPOnClickOperatorListener() {
-        binding.buttonPlus.setOnClickListener { presenter.addToExpressionElement(Operator.Plus) }
-        binding.buttonMinus.setOnClickListener { presenter.addToExpressionElement(Operator.Minus) }
-        binding.buttonMultiply.setOnClickListener { presenter.addToExpressionElement(Operator.Multiply) }
-        binding.buttonDivide.setOnClickListener { presenter.addToExpressionElement(Operator.Divide) }
+        binding.buttonPlus.setOnClickListener { presenter.addExpressionElement(Operator.Plus) }
+        binding.buttonMinus.setOnClickListener { presenter.addExpressionElement(Operator.Minus) }
+        binding.buttonMultiply.setOnClickListener { presenter.addExpressionElement(Operator.Multiply) }
+        binding.buttonDivide.setOnClickListener { presenter.addExpressionElement(Operator.Divide) }
     }
 
     override fun refreshExpression(expression: Expression) {
