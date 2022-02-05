@@ -1,7 +1,7 @@
 package com.github.dodobest.domain
 
 class ResultHandler {
-    private val results: ArrayList<Result> = arrayListOf()
+    private val results: MutableList<Result> = mutableListOf()
 
     fun add(expression: String, result: String) {
         results.add(Result(expression, result))
