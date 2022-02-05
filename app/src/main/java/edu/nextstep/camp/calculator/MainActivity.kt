@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Memories
@@ -14,6 +15,8 @@ import edu.nextstep.camp.calculator.domain.Operator
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
     private var expression = Expression.EMPTY
+
+    private val memoryAdapter = MemoryAdapter()
 
     private lateinit var presenter: MainContract.Presenter
 
@@ -36,10 +39,22 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun onViewTypeChanged(viewType: CalculatorViewType, memories: Memories) {
-        binding.textView.text = when (viewType) {
-            is ExpressionView -> expression.toString()
-            is MemoryView -> memories.toString()
+        when (viewType) {
+            is ExpressionView -> showExpressionView()
+            is MemoryView -> showMemoryView(memories)
         }
+    }
+
+    private fun showExpressionView() {
+        binding.textView.visibility = View.VISIBLE
+        binding.recyclerView.visibility = View.INVISIBLE
+    }
+
+    private fun showMemoryView(memories: Memories) {
+        memoryAdapter.updateMemories(memories)
+
+        binding.textView.visibility = View.INVISIBLE
+        binding.recyclerView.visibility = View.VISIBLE
     }
 
     private fun initViews() {
@@ -56,6 +71,9 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             buttonDelete.setOnClickListener { setDeleteButtonClickListener() }
             buttonEquals.setOnClickListener { setEqualsButtonClickListener() }
             buttonMemory.setOnClickListener { toggleViewType() }
+
+            recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
+            recyclerView.adapter = memoryAdapter
         }
     }
 
