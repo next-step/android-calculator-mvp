@@ -41,7 +41,13 @@ class MainActivity : AppCompatActivity(), MainContract.View{
         }
 
         binding.buttonEquals.setOnClickListener {
-            if (binding.textView.isVisible) presenter.handleEquals()
+            if (binding.textView.isVisible) {
+                try {
+                    presenter.handleEquals()
+                } catch (e: IllegalStateException) {
+                    showToastMessage(getResourceValue(R.string.incomplete_expression))
+                }
+            }
         }
 
         binding.buttonMemory.setOnClickListener {

@@ -36,7 +36,7 @@ class MainPresenter(
             return
         }
 
-        view.showToastMessage(view.getResourceValue(R.string.incomplete_expression))
+        throw IllegalStateException()
     }
 
     override fun getResults(): ArrayList<Result> {
