@@ -25,9 +25,20 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         textView.text = expression
     }
 
-    override fun showExpressionError() = Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
+    override fun showExpressionError() =
+        Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
 
     override fun notifyHistories(histories: List<HistoryModel>) = adapter.submitList(histories)
+    
+    override fun showHistory() = with(binding) {
+        textView.isVisible = false
+        recyclerView.isVisible = true
+    }
+
+    override fun hideHistory() = with(binding) {
+        textView.isVisible = true
+        recyclerView.isVisible = false
+    }
 
     private fun setListener() = with(binding) {
         button0.setOnClickListener {
@@ -79,9 +90,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             presenter.calculate()
         }
         buttonMemory.setOnClickListener {
-            val isVisible = recyclerView.isVisible
-            textView.isVisible = isVisible
-            recyclerView.isVisible = !isVisible
+            presenter.toggleCalculator()
         }
     }
 }

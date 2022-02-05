@@ -10,8 +10,10 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
     private val calculator = Calculator()
     private var expression = Expression.EMPTY
     private var histories = Histories()
+    private var calculatorDisabled = false
 
     override fun inputNumber(number: Int) {
+        if (calculatorDisabled) return
         expression += number
         showExpression()
     }
@@ -33,16 +35,19 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
     }
 
     private fun inputOperator(operator: Operator) {
+        if (calculatorDisabled) return
         expression += operator
         showExpression()
     }
 
     override fun deleteLast() {
+        if (calculatorDisabled) return
         expression = expression.removeLast()
         showExpression()
     }
 
     override fun calculate() {
+        if (calculatorDisabled) return
         val rawExpression = expression.toString()
         val result = calculator.calculate(rawExpression)
         if (result == null) {
@@ -52,6 +57,15 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
             view.notifyHistories(histories.toModel())
             expression = Expression.EMPTY + result
             showExpression()
+        }
+    }
+
+    override fun toggleCalculator() {
+        calculatorDisabled = !calculatorDisabled
+        if (calculatorDisabled) {
+            view.showHistory()
+        } else {
+            view.hideHistory()
         }
     }
 
