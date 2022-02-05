@@ -48,6 +48,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     private fun showExpressionView() {
         binding.textView.visibility = View.VISIBLE
         binding.recyclerView.visibility = View.INVISIBLE
+        setViewsEnabled(true)
     }
 
     private fun showMemoryView(memories: Memories) {
@@ -55,6 +56,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
         binding.textView.visibility = View.INVISIBLE
         binding.recyclerView.visibility = View.VISIBLE
+        setViewsEnabled(false)
     }
 
     private fun initViews() {
@@ -99,5 +101,26 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     private fun toggleViewType() {
         presenter.toggleViewType()
+    }
+
+    private fun setViewsEnabled(enabled: Boolean) {
+        binding.run {
+            button0.isEnabled = enabled
+            button1.isEnabled = enabled
+            button2.isEnabled = enabled
+            button3.isEnabled = enabled
+            button4.isEnabled = enabled
+            button5.isEnabled = enabled
+            button6.isEnabled = enabled
+            button7.isEnabled = enabled
+            button8.isEnabled = enabled
+            button9.isEnabled = enabled
+            buttonPlus.isEnabled = enabled
+            buttonMinus.isEnabled = enabled
+            buttonMultiply.isEnabled = enabled
+            buttonDivide.isEnabled = enabled
+            buttonDelete.isEnabled = enabled
+            buttonEquals.isEnabled = enabled
+        }
     }
 }
