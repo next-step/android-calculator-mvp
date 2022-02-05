@@ -11,6 +11,16 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var adapter: MainAdapter
     private lateinit var presenter: MainContract.Presenter
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        adapter = MainAdapter()
+        binding.recyclerView.adapter = adapter
+        presenter = MainPresenter(this)
+        setContentView(binding.root)
+        setListener()
+    }
+
     override fun showExpression(expression: String) = with(binding) {
         textView.text = expression
     }
@@ -21,16 +31,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun notifyHistories(histories: List<HistoryModel>) {
         adapter.notify(histories)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        adapter = MainAdapter()
-        presenter = MainPresenter(this)
-        setContentView(binding.root)
-        setListener()
-        binding.recyclerView.adapter = adapter
     }
 
     private fun setListener() = with(binding) {
