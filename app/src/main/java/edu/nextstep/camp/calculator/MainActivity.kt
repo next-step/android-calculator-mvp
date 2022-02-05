@@ -8,13 +8,13 @@ import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var adapter: MainAdapter
+    private lateinit var adapter: HistoryAdapter
     private lateinit var presenter: MainContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        adapter = MainAdapter()
+        adapter = HistoryAdapter()
         binding.recyclerView.adapter = adapter
         presenter = MainPresenter(this)
         setContentView(binding.root)
@@ -25,13 +25,9 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         textView.text = expression
     }
 
-    override fun showExpressionError() {
-        Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
-    }
+    override fun showExpressionError() = Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
 
-    override fun notifyHistories(histories: List<HistoryModel>) {
-        adapter.notify(histories)
-    }
+    override fun notifyHistories(histories: List<HistoryModel>) = adapter.submitList(histories)
 
     private fun setListener() = with(binding) {
         button0.setOnClickListener {
