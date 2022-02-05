@@ -73,17 +73,13 @@ class MainPresenterTest {
     }
 
     @Test
-    fun `viewType을 toggle하면 viewType이 바뀌고 onViewTypeChanged() 콜백이 호출된다`() {
+    fun `viewType을 toggle하면 onViewTypeChanged() 콜백이 호출되고 viewType이 MemoryView로 들어온다`() {
         // when
         presenter.toggleViewType()
 
         // then
         val expectedViewType = MemoryView
-        val memory = Memory()
-        verify { view.onViewTypeChanged(expectedViewType, memory) }
-        //Verification failed: call 1 of 1: View(#1).onViewTypeChanged(eq(edu.nextstep.camp.calculator.MemoryView@791cd2fb), eq())). Only one matching call to View(#1)/onViewTypeChanged(CalculatorViewType, Memory) happened, but arguments are not matching:
-        //[0]: argument: edu.nextstep.camp.calculator.MemoryView@791cd2fb, matcher: eq(edu.nextstep.camp.calculator.MemoryView@791cd2fb), result: +
-        //[1]: argument: , matcher: eq(), result: -
-        // 콜백으로 받는 memory가 일치하지 않아서 실패하는 듯 함
+        val expectedMemory = memory
+        verify { view.onViewTypeChanged(expectedViewType, expectedMemory) }
     }
 }
