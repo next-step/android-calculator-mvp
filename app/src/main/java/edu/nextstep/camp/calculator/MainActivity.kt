@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity(), MainContract.View{
             if (binding.textView.isVisible) {
                 try {
                     presenter.handleEquals()
-                } catch (e: IllegalStateException) {
+                } catch (e: IllegalArgumentException) {
                     showToastMessage(getResourceValue(R.string.incomplete_expression))
                 }
             }

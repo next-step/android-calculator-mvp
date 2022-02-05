@@ -1,11 +1,12 @@
 package edu.nextstep.camp.calculator
 
-import android.content.res.Resources
+import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Before
 import org.junit.Test
+import org.junit.Assert.*
 
 class MainPresenterTest {
     private lateinit var presenter: MainContract.Presenter
@@ -116,7 +117,7 @@ class MainPresenterTest {
     }
 
     @Test
-    fun `이전에 입력 3+2x가 주어졌을 때, =를 누르면 토스트 메시지를 보여준다`() {
+    fun `이전에 입력 3+2x가 주어졌을 때, =를 누르면 IllegalArgumentException 을 발생시킨다`() {
         // given
         every { view.refreshTextView(any()) } answers { nothing }
         every { view.showToastMessage(any()) } answers { nothing }
@@ -128,9 +129,11 @@ class MainPresenterTest {
         presenter.handleInputArithmetic("*")
 
         // when
-        presenter.handleEquals()
+        val thrown: IllegalArgumentException = assertThrows(
+            IllegalArgumentException::class.java
+        ) { presenter.handleEquals() }
 
         // then
-        verify { view.showToastMessage("완성되지 않은 수식입니다.")}
+        assertThat(thrown).isInstanceOf(IllegalArgumentException::class.java)
     }
 }

@@ -37,7 +37,7 @@ class MainPresenter(
             return
         }
 
-        throw IllegalStateException()
+        throw IllegalArgumentException()
     }
 
     override fun getResultAdapter(): ResultAdapter {
