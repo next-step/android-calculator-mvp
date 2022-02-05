@@ -211,8 +211,8 @@ internal class MainPresenterTest {
 
         // when
         val expected = listOf(
-            HistoryDto("3 + 5", "= 8"),
-            HistoryDto("10 - 3", "= 7")
+            HistoryModel("3 + 5", "= 8"),
+            HistoryModel("10 - 3", "= 7")
         )
 
         // then

@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
     }
 
-    override fun notifyHistories(histories: List<HistoryDto>) {
+    override fun notifyHistories(histories: List<HistoryModel>) {
         adapter.notify(histories)
     }
 

@@ -4,7 +4,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 class MainAdapter : RecyclerView.Adapter<MainViewHolder>() {
-    private val histories = mutableListOf<HistoryDto>()
+    private val histories = mutableListOf<HistoryModel>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder =
         MainViewHolder(parent = parent)
@@ -15,7 +15,7 @@ class MainAdapter : RecyclerView.Adapter<MainViewHolder>() {
 
     override fun getItemCount(): Int = histories.size
 
-    fun notify(histories: List<HistoryDto>) {
+    fun notify(histories: List<HistoryModel>) {
         this.histories.run {
             clear()
             addAll(histories)

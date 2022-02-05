@@ -12,7 +12,7 @@ class MainViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
 ) {
     private val binding: ItemResultBinding = ItemResultBinding.bind(itemView)
 
-    fun bind(history: HistoryDto) = with(binding) {
+    fun bind(history: HistoryModel) = with(binding) {
         tvExpression.text = history.expression
         tvResult.text = history.result
     }

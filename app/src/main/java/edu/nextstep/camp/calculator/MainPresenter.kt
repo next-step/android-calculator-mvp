@@ -49,7 +49,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
     }
 
     private fun showCalculated(result: Int?) {
-        view.notifyHistories(histories.map(::HistoryDto))
+        view.notifyHistories(histories.map(::HistoryModel))
         if (result == null) {
             view.showExpressionError()
         } else {

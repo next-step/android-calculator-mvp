@@ -4,7 +4,7 @@ interface MainContract {
     interface View {
         fun showExpression(expression: String)
         fun showExpressionError()
-        fun notifyHistories(histories: List<HistoryDto>)
+        fun notifyHistories(histories: List<HistoryModel>)
     }
 
     interface Presenter {
