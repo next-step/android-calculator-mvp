@@ -11,9 +11,10 @@ import edu.nextstep.camp.calculator.domain.Operator
 class CalculatorActivity : AppCompatActivity(), CalculatorContract.View {
     private lateinit var binding: ActivityMainBinding
     private val calculator = Calculator()
+
+
     private var expression = Expression.EMPTY
     override lateinit var presenter: CalculatorContract.Presenter
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -57,5 +58,9 @@ class CalculatorActivity : AppCompatActivity(), CalculatorContract.View {
 
     override fun refreshExpression(expression: Expression) {
         binding.textView.text = expression.toString()
+    }
+
+    override fun notifyInCompleteExpression() {
+        Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
     }
 }
