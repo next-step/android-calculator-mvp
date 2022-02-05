@@ -8,4 +8,8 @@ class Memories {
     fun add(expression: Expression, result: Int) {
         memories.add(Memory(expression.toString(), result.toString()))
     }
+
+    override fun toString(): String {
+        return items.joinToString(",", "[", "]")
+    }
 }
