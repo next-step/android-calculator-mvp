@@ -3,6 +3,7 @@ package edu.nextstep.camp.calculator
 import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Histories
+import edu.nextstep.camp.calculator.domain.History
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainPresenter(private val view: MainContract.View) : MainContract.Presenter {
@@ -49,7 +50,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
     }
 
     private fun showCalculated(result: Int?) {
-        view.notifyHistories(histories.map(::HistoryModel))
+        view.notifyHistories(histories.map { it.toModel() })
         if (result == null) {
             view.showExpressionError()
         } else {
@@ -61,4 +62,6 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
     private fun showExpression() {
         view.showExpression(expression.toString())
     }
+
+    private fun History.toModel(): HistoryModel = HistoryModel(rawExpression, "= $result")
 }
