@@ -6,8 +6,7 @@ import edu.nextstep.camp.calculator.domain.Memory
 import edu.nextstep.camp.calculator.domain.Operator
 import java.lang.IllegalArgumentException
 
-class MainPresenter(private val view: MainContract.View) : MainContract.Presenter {
-    private val memory = Memory()
+class MainPresenter(private val view: MainContract.View, private val memory: Memory) : MainContract.Presenter {
     private val calculator = Calculator()
 
     private var viewType: CalculatorViewType = ExpressionView

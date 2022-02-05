@@ -11,11 +11,13 @@ import org.junit.jupiter.api.Test
 class MainPresenterTest {
     private lateinit var presenter: MainContract.Presenter
     private lateinit var view: MainContract.View
+    private lateinit var memory: Memory
 
     @BeforeEach
     fun setup() {
         view = mockk(relaxed = true)
-        presenter = MainPresenter(view)
+        memory = mockk(relaxed = true)
+        presenter = MainPresenter(view, memory)
     }
 
     @Test

@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        presenter = MainPresenter(this)
+        presenter = MainPresenter(this, Memory())
         initViews()
     }
 
