@@ -6,8 +6,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.github.dodobest.domain.Result
+import com.github.dodobest.domain.ResultHandler
 
-class ResultAdapter(private val expressionSet: ArrayList<Result>) :
+class ResultAdapter(private val resultHandler: ResultHandler) :
     RecyclerView.Adapter<ResultAdapter.ViewHolder>() {
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val expression: TextView
@@ -25,11 +26,11 @@ class ResultAdapter(private val expressionSet: ArrayList<Result>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.expression.text = expressionSet[position].expression
-        holder.result.text = expressionSet[position].result
+        holder.expression.text = resultHandler.getResults()[position].expression
+        holder.result.text = resultHandler.getResults()[position].result
     }
 
     override fun getItemCount(): Int {
-        return expressionSet.size
+        return resultHandler.getResults().size
     }
 }

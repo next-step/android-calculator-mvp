@@ -1,7 +1,5 @@
 package edu.nextstep.camp.calculator
 
-import com.github.dodobest.domain.Result
-
 interface MainContract {
     interface View {
 
@@ -16,7 +14,7 @@ interface MainContract {
         fun handleInputArithmetic(inputOperation: String)
         fun handleInputDelete()
         fun handleEquals()
-        fun getResults(): ArrayList<Result>
+        fun getResultAdapter(): ResultAdapter
     }
 
 }

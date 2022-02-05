@@ -7,7 +7,7 @@ class ResultHandler {
         results.add(Result(expression, result))
     }
 
-    fun getResults(): ArrayList<Result> {
-        return results
+    fun getResults(): List<Result> {
+        return results.toList()
     }
 }

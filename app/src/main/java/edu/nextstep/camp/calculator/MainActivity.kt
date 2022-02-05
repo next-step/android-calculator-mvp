@@ -16,10 +16,9 @@ class MainActivity : AppCompatActivity(), MainContract.View{
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        presenter = MainPresenter(this)
 
-        val resultAdapter = ResultAdapter(presenter.getResults())
-        binding.recyclerView.adapter = resultAdapter
+        presenter = MainPresenter(this)
+        binding.recyclerView.adapter = presenter.getResultAdapter()
 
         setButtonListener()
     }

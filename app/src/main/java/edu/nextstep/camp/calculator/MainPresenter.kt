@@ -7,7 +7,8 @@ import com.github.dodobest.domain.ResultHandler
 class MainPresenter(
     private val view: MainContract.View,
     private val resultHandler: ResultHandler = ResultHandler(),
-    private val inputHandler: InputHandler = InputHandler()
+    private val resultAdapter: ResultAdapter = ResultAdapter(resultHandler),
+    private val inputHandler: InputHandler = InputHandler(),
 ) : MainContract.Presenter {
 
     override fun handleInputNum(inputNum: String) {
@@ -39,7 +40,7 @@ class MainPresenter(
         throw IllegalStateException()
     }
 
-    override fun getResults(): ArrayList<Result> {
-        return resultHandler.getResults()
+    override fun getResultAdapter(): ResultAdapter {
+        return resultAdapter
     }
 }
