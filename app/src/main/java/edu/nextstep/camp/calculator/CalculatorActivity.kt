@@ -4,36 +4,21 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
-import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 
 class CalculatorActivity : AppCompatActivity(), CalculatorContract.View {
     private lateinit var binding: ActivityMainBinding
-    private val calculator = Calculator()
-
-
-    private var expression = Expression.EMPTY
     override lateinit var presenter: CalculatorContract.Presenter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        presenter = CalculatorPresenter(this)
         setContentView(binding.root)
         setUpOnClickOperandListener()
         setUPOnClickOperatorListener()
-        binding.buttonDelete.setOnClickListener {
-            expression = expression.removeLast()
-            binding.textView.text = expression.toString()
-        }
-        binding.buttonEquals.setOnClickListener {
-            val result = calculator.calculate(expression.toString())
-            if (result == null) {
-                Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            expression = Expression.EMPTY + result
-            binding.textView.text = result.toString()
-        }
+        binding.buttonDelete.setOnClickListener { presenter.removeLastExpressionElement() }
+        binding.buttonEquals.setOnClickListener { presenter.calculateExpression() }
     }
 
     private fun setUpOnClickOperandListener() {
