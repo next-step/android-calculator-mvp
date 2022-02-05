@@ -49,7 +49,7 @@ class CalculatorPresenterTest {
     fun `수식 1 에서 2를 추가하면 수식을 12로 갱신하는 함수를 호출한다`() {
         // given :
         val expressionSlot = slot<Expression>()
-        presenter.addExpressionElement(1)
+        presenter = CalculatorPresenter(view, Expression(listOf(1)))
         every { view.refreshExpression(capture(expressionSlot)) } answers { nothing }
         // when :
         presenter.addExpressionElement(2)
@@ -63,7 +63,7 @@ class CalculatorPresenterTest {
     fun `수식 1 에서 + 를 추가하면 수식을 1 + 로 갱신하는 함수를 호출한다`() {
         // given :
         val expressionSlot = slot<Expression>()
-        presenter.addExpressionElement(1)
+        presenter = CalculatorPresenter(view, Expression(listOf(1)))
         every { view.refreshExpression(capture(expressionSlot)) } answers { nothing }
         // when :
         presenter.addExpressionElement(Operator.Plus)
@@ -77,8 +77,7 @@ class CalculatorPresenterTest {
     fun `수식 1 + 에서 -를 추가하면 수식을 1 - 로 갱신하는 함수를 호출한다`() {
         // given :
         val expressionSlot = slot<Expression>()
-        presenter.addExpressionElement(1)
-        presenter.addExpressionElement(Operator.Plus)
+        presenter = CalculatorPresenter(view, Expression(listOf(1, Operator.Plus)))
         every { view.refreshExpression(capture(expressionSlot)) } answers { nothing }
         // when :
         presenter.addExpressionElement(Operator.Minus)
@@ -92,8 +91,7 @@ class CalculatorPresenterTest {
     fun `수식 12 에서 마지막을 제거하면 수식을 1로 갱신하는 함수를 호출한다`() {
         // given :
         val expressionSlot = slot<Expression>()
-        presenter.addExpressionElement(1)
-        presenter.addExpressionElement(2)
+        presenter = CalculatorPresenter(view, Expression(listOf(1, 2)))
         every { view.refreshExpression(capture(expressionSlot)) } answers { nothing }
         // when :
         presenter.removeLastExpressionElement()
@@ -107,8 +105,7 @@ class CalculatorPresenterTest {
     fun `1 +가 입력된 수식에서 마지막을 제거하면 뷰에 1 로 갱신하는 함수를 호출한다`() {
         // given :
         val expressionSlot = slot<Expression>()
-        presenter.addExpressionElement(1)
-        presenter.addExpressionElement(Operator.Plus)
+        presenter = CalculatorPresenter(view, Expression(listOf(1, Operator.Plus)))
         every { view.refreshExpression(capture(expressionSlot)) } answers { nothing }
         // when :
         presenter.removeLastExpressionElement()
@@ -131,9 +128,7 @@ class CalculatorPresenterTest {
     fun `완성된 수식에서 결과를 구하면 수식을 결과로 갱신하는 함수를 호출한다`() {
         // given :
         val expressionSlot = slot<Expression>()
-        presenter.addExpressionElement(5)
-        presenter.addExpressionElement(Operator.Multiply)
-        presenter.addExpressionElement(6)
+        presenter = CalculatorPresenter(view, Expression(listOf(5, Operator.Multiply, 6)))
         every { view.refreshExpression(capture(expressionSlot)) } answers { nothing }
         // when :
         presenter.calculateExpression()
@@ -146,6 +141,7 @@ class CalculatorPresenterTest {
     @Test
     fun `미완성 수식에서 결과를 구하면 수식을 갱신하는 함수는 호출하지 않고, 잘못된 수식을 알리는 함수를 호출한다`() {
         // given :
+        presenter = CalculatorPresenter(view, Expression(listOf(5, Operator.Multiply)))
         // when :
         presenter.calculateExpression()
         // then :
