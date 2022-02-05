@@ -193,29 +193,44 @@ internal class MainPresenterTest {
         verify { view.showExpressionError() }
     }
 
-    @DisplayName("3 + 5 =를 누르고 결과 8이 나온 다음 모두 지운 뒤 10 - 3 = 을 눌러 결과 7이 나온 상태에서 시계 버튼을 누르면 계산 기록이 보여한다.")
+    @DisplayName("계산기를 토글하면, 계산 기록이 보여지면서 계산기가 동작하지 않아야 한다.")
     @Test
-    fun showHistories() {
+    fun disableCalculator() {
         // given
-        presenter.inputNumber(3)
-        presenter.inputPlus()
-        presenter.inputNumber(5)
-        presenter.calculate()
-
-        presenter.deleteLast()
-
-        presenter.inputNumber(10)
-        presenter.inputMinus()
-        presenter.inputNumber(3)
-        presenter.calculate()
+        presenter.toggleCalculator()
 
         // when
-        val expected = listOf(
-            HistoryModel("3 + 5", "= 8"),
-            HistoryModel("10 - 3", "= 7")
-        )
+        presenter.inputNumber(1)
+        presenter.inputPlus()
+        presenter.inputMinus()
+        presenter.inputMultiply()
+        presenter.inputDivide()
+        presenter.deleteLast()
+        presenter.calculate()
 
         // then
-        verify { view.notifyHistories(expected) }
+        verify { view.showHistory() }
+        verify(exactly = 0) { view.showExpression(any()) }
+    }
+
+    @DisplayName("계산기를 두번 토글하면, 계산 기록이 다시 숨겨지고, 계산기가 동작해야 한다.")
+    @Test
+    fun enableCalculator() {
+        // given
+        presenter.toggleCalculator()
+        presenter.toggleCalculator()
+
+        // when
+        presenter.inputNumber(1)
+        presenter.inputPlus()
+        presenter.inputMinus()
+        presenter.inputMultiply()
+        presenter.inputDivide()
+        presenter.deleteLast()
+        presenter.calculate()
+
+        // then
+        verify { view.hideHistory() }
+        verify(exactly = 7) { view.showExpression(any()) }
     }
 }
