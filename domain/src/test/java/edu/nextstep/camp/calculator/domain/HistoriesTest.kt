@@ -15,20 +15,19 @@ internal class HistoriesTest {
         histories = Histories()
     }
 
-    @DisplayName("3 + 5 = 와 10 - 3 = 를 누른 결과에 대한 기록을 조회할 수 있어야 한다.")
+    @DisplayName("Expression 3 +5와 Result 8을 넣으면 History(3+5, 8)이 저장된다.")
     @Test
-    fun add() {
+    fun plus() {
         // given
-        listOf("3 + 5", "10 - 3").forEach {
-            histories.add(it, calculator.calculate(it))
-        }
+        val rawExpression = "3 + 5"
+        val result = calculator.calculate(rawExpression)
 
         // when
+        if (result != null) {
+            histories += History(rawExpression, result)
+        }
         val actual = histories.toList()
-        val expected = listOf(
-            History("3 + 5", 8),
-            History("10 - 3", 7)
-        )
+        val expected = listOf(History(rawExpression, 8))
 
         // then
         assertThat(actual).isEqualTo(expected)

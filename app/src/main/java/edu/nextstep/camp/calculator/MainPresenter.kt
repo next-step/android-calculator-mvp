@@ -9,7 +9,7 @@ import edu.nextstep.camp.calculator.domain.Operator
 class MainPresenter(private val view: MainContract.View) : MainContract.Presenter {
     private val calculator = Calculator()
     private var expression = Expression.EMPTY
-    private val histories = Histories()
+    private var histories = Histories()
 
     override fun inputNumber(number: Int) {
         expression += number
@@ -45,15 +45,11 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
     override fun calculate() {
         val rawExpression = expression.toString()
         val result = calculator.calculate(rawExpression)
-        histories.add(rawExpression, result)
-        showCalculated(result)
-    }
-
-    private fun showCalculated(result: Int?) {
-        view.notifyHistories(histories.map { it.toModel() })
         if (result == null) {
             view.showExpressionError()
         } else {
+            histories += History(rawExpression, result)
+            view.notifyHistories(histories.toModel())
             expression = Expression.EMPTY + result
             showExpression()
         }
@@ -64,4 +60,5 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
     }
 
     private fun History.toModel(): HistoryModel = HistoryModel(rawExpression, "= $result")
+    private fun Histories.toModel(): List<HistoryModel> = toList().map { it.toModel() }
 }
