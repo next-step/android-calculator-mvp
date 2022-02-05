@@ -1,7 +1,6 @@
 package edu.nextstep.camp.calculator
 
 import com.github.dodobest.domain.InputHandler
-import com.github.dodobest.domain.Result
 import com.github.dodobest.domain.ResultHandler
 
 class MainPresenter(
