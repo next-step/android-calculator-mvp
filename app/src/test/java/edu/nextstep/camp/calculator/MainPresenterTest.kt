@@ -1,7 +1,7 @@
 package edu.nextstep.camp.calculator
 
 import edu.nextstep.camp.calculator.domain.Expression
-import edu.nextstep.camp.calculator.domain.Memory
+import edu.nextstep.camp.calculator.domain.Memories
 import edu.nextstep.camp.calculator.domain.Operator
 import io.mockk.mockk
 import io.mockk.verify
@@ -11,13 +11,13 @@ import org.junit.jupiter.api.Test
 class MainPresenterTest {
     private lateinit var presenter: MainContract.Presenter
     private lateinit var view: MainContract.View
-    private lateinit var memory: Memory
+    private lateinit var memories: Memories
 
     @BeforeEach
     fun setup() {
         view = mockk(relaxed = true)
-        memory = mockk(relaxed = true)
-        presenter = MainPresenter(view, memory)
+        memories = mockk(relaxed = true)
+        presenter = MainPresenter(view, memories)
     }
 
     @Test
@@ -79,7 +79,7 @@ class MainPresenterTest {
 
         // then
         val expectedViewType = MemoryView
-        val expectedMemory = memory
+        val expectedMemory = memories
         verify { view.onViewTypeChanged(expectedViewType, expectedMemory) }
     }
 }

@@ -1,7 +1,7 @@
 package edu.nextstep.camp.calculator
 
 import edu.nextstep.camp.calculator.domain.Expression
-import edu.nextstep.camp.calculator.domain.Memory
+import edu.nextstep.camp.calculator.domain.Memories
 import edu.nextstep.camp.calculator.domain.Operator
 
 interface MainContract {
@@ -10,7 +10,7 @@ interface MainContract {
 
         fun onExpressionIncomplete()
 
-        fun onViewTypeChanged(viewType: CalculatorViewType, memory: Memory)
+        fun onViewTypeChanged(viewType: CalculatorViewType, memories: Memories)
     }
 
     interface Presenter {

@@ -2,11 +2,11 @@ package edu.nextstep.camp.calculator
 
 import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
-import edu.nextstep.camp.calculator.domain.Memory
+import edu.nextstep.camp.calculator.domain.Memories
 import edu.nextstep.camp.calculator.domain.Operator
 import java.lang.IllegalArgumentException
 
-class MainPresenter(private val view: MainContract.View, private val memory: Memory) : MainContract.Presenter {
+class MainPresenter(private val view: MainContract.View, private val memories: Memories) : MainContract.Presenter {
     private val calculator = Calculator()
 
     private var viewType: CalculatorViewType = ExpressionView
@@ -38,12 +38,12 @@ class MainPresenter(private val view: MainContract.View, private val memory: Mem
             return
         }
 
-        memory.add(expression, result)
+        memories.add(expression, result)
         view.onViewUpdated(Expression.EMPTY + result)
     }
 
     override fun toggleViewType() {
         viewType = viewType.toggle()
-        view.onViewTypeChanged(viewType, memory)
+        view.onViewTypeChanged(viewType, memories)
     }
 }

@@ -2,12 +2,13 @@ package edu.nextstep.camp.calculator
 
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
+import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.Expression
-import edu.nextstep.camp.calculator.domain.Memory
+import edu.nextstep.camp.calculator.domain.Memories
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainActivity : AppCompatActivity(), MainContract.View {
@@ -21,7 +22,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        presenter = MainPresenter(this, Memory())
+        presenter = MainPresenter(this, Memories())
         initViews()
     }
 
@@ -34,10 +35,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
     }
 
-    override fun onViewTypeChanged(viewType: CalculatorViewType, memory: Memory) {
+    override fun onViewTypeChanged(viewType: CalculatorViewType, memories: Memories) {
         binding.textView.text = when (viewType) {
             is ExpressionView -> expression.toString()
-            is MemoryView -> memory.toString()
+            is MemoryView -> memories.toString()
         }
     }
 
