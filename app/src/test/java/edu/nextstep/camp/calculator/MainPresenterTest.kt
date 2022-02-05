@@ -121,7 +121,6 @@ class MainPresenterTest {
         // given
         every { view.refreshTextView(any()) } answers { nothing }
         every { view.showToastMessage(any()) } answers { nothing }
-        every { view.getResourceValue(any()) } returns "완성되지 않은 수식입니다."
 
         presenter.handleInputNum("3")
         presenter.handleInputArithmetic("+")
