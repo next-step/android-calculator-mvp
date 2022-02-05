@@ -5,11 +5,10 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.recyclerview.widget.LinearLayoutManager
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 
 
-class MainActivity : AppCompatActivity(), MainContract.View {
+class MainActivity : AppCompatActivity(), MainContract.View{
     private lateinit var binding: ActivityMainBinding
     private lateinit var presenter: MainContract.Presenter
 
@@ -22,6 +21,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         val resultAdapter = ResultAdapter(presenter.getResults())
         binding.recyclerView.adapter = resultAdapter
 
+        setButtonListener()
+    }
+
+    private fun setButtonListener() {
         listOf(binding.button0, binding.button1, binding.button2, binding.button3, binding.button4,
             binding.button5, binding.button6, binding.button7, binding.button8, binding.button9)
             .forEach{ view -> view.setOnClickListener {
