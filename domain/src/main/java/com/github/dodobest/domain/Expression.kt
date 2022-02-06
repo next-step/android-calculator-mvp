@@ -9,7 +9,7 @@ class Expression {
         return extractor.extractNumAndSignAll(inputValue)
     }
 
-    private fun eraseBlank(inputString: String): String {
+    fun eraseBlank(inputString: String): String {
         return inputString.replace(" ", "")
     }
 
