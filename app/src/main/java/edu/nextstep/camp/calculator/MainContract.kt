@@ -1,6 +1,5 @@
 package edu.nextstep.camp.calculator
 
-import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 
 interface MainContract {
@@ -9,12 +8,11 @@ interface MainContract {
         fun showToast()
     }
 
-    interface Presenter{
+    interface Presenter {
         fun addToExpression(operand: Int)
         fun addToExpression(operator: Operator)
         fun removeLast()
         fun evaluate()
-
     }
 }
 

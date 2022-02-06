@@ -3,11 +3,10 @@ package edu.nextstep.camp.calculator
 import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
-import kotlin.math.exp
 
 class MainPresenter(
     private val view: MainContract.View
-): MainContract.Presenter {
+) : MainContract.Presenter {
     private val calculator = Calculator()
     private var expression = Expression.EMPTY
 
@@ -22,7 +21,8 @@ class MainPresenter(
     }
 
     override fun removeLast() {
-        TODO("Not yet implemented")
+        expression = expression.removeLast()
+        view.showExpression(expression.toString())
     }
 
     override fun evaluate() {

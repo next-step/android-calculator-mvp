@@ -4,15 +4,10 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
-import edu.nextstep.camp.calculator.domain.Calculator
-import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
-    private val calculator = Calculator()
-    private var expression = Expression.EMPTY
-
     override lateinit var presenter: MainContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,29 +27,12 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.button7.setOnClickListener { presenter.addToExpression(7) }
         binding.button8.setOnClickListener { presenter.addToExpression(8) }
         binding.button9.setOnClickListener { presenter.addToExpression(9) }
-        binding.buttonPlus.setOnClickListener {
-            expression += Operator.Plus
-            binding.textView.text = expression.toString()
-        }
-        binding.buttonMinus.setOnClickListener {
-            expression += Operator.Minus
-            binding.textView.text = expression.toString()
-        }
-        binding.buttonMultiply.setOnClickListener {
-            expression += Operator.Multiply
-            binding.textView.text = expression.toString()
-        }
-        binding.buttonDivide.setOnClickListener {
-            expression += Operator.Divide
-            binding.textView.text = expression.toString()
-        }
-        binding.buttonDelete.setOnClickListener {
-            expression = expression.removeLast()
-            binding.textView.text = expression.toString()
-        }
-        binding.buttonEquals.setOnClickListener {
-            presenter.evaluate()
-        }
+        binding.buttonPlus.setOnClickListener { presenter.addToExpression(Operator.Plus) }
+        binding.buttonMinus.setOnClickListener { presenter.addToExpression(Operator.Minus) }
+        binding.buttonMultiply.setOnClickListener { presenter.addToExpression(Operator.Multiply) }
+        binding.buttonDivide.setOnClickListener { presenter.addToExpression(Operator.Divide) }
+        binding.buttonDelete.setOnClickListener { presenter.removeLast() }
+        binding.buttonEquals.setOnClickListener { presenter.evaluate() }
     }
 
     override fun showExpression(expression: String) {
