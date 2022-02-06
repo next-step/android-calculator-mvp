@@ -6,12 +6,12 @@ import edu.nextstep.camp.calculator.domain.Histories
 import edu.nextstep.camp.calculator.domain.History
 import edu.nextstep.camp.calculator.domain.Operator
 
-class MainPresenter(private val view: MainContract.View) : MainContract.Presenter {
-    private val calculator = Calculator()
-    private var expression = Expression.EMPTY
-    private var histories = Histories()
-    private var calculatorDisabled = false
-
+class MainPresenter(
+    private val view: MainContract.View,
+    private var expression: Expression = Expression.EMPTY,
+    private var histories: Histories = Histories(),
+    private var calculatorDisabled: Boolean = false
+) : MainContract.Presenter {
     override fun inputNumber(number: Int) {
         if (calculatorDisabled) return
         expression += number
@@ -75,4 +75,8 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
 
     private fun History.toModel(): HistoryModel = HistoryModel(rawExpression, "= $result")
     private fun Histories.toModel(): List<HistoryModel> = toList().map { it.toModel() }
+
+    companion object {
+        private val calculator: Calculator = Calculator()
+    }
 }
