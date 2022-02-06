@@ -3,12 +3,18 @@ package edu.nextstep.camp.calculator
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.github.dodobest.domain.ResultHandler
+import com.github.dodobest.domain.Result
 import edu.nextstep.camp.calculator.databinding.ItemResultBinding
 
-class ResultAdapter(private val resultHandler: ResultHandler = ResultHandler()) : RecyclerView.Adapter<ViewHolder>() {
-    fun getResultHandler() : ResultHandler {
-        return resultHandler
+class ResultAdapter() : RecyclerView.Adapter<ViewHolder>() {
+    private val results: MutableList<Result> = mutableListOf()
+
+    fun add(expression: String, result: String) {
+        results.add(Result(expression, result))
+    }
+
+    fun getResults() : List<Result> {
+        return results.toList()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -17,11 +23,11 @@ class ResultAdapter(private val resultHandler: ResultHandler = ResultHandler()) 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.expression.text = resultHandler.getResults()[position].expression
-        holder.result.text = resultHandler.getResults()[position].result
+        holder.expression.text = results[position].expression
+        holder.result.text = results[position].result
     }
 
     override fun getItemCount(): Int {
-        return resultHandler.getResults().size
+        return results.size
     }
 }

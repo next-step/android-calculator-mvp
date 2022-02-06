@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity(), MainContract.View{
 
         val resultAdapter = ResultAdapter()
         binding.recyclerView.adapter = resultAdapter
-        presenter = MainPresenter(this, resultAdapter.getResultHandler())
+        presenter = MainPresenter(this, resultAdapter)
 
         setButtonListener()
     }

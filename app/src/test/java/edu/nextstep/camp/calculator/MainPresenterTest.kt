@@ -1,6 +1,5 @@
 package edu.nextstep.camp.calculator
 
-import com.github.dodobest.domain.ResultHandler
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockk
@@ -12,13 +11,13 @@ import org.junit.Assert.*
 class MainPresenterTest {
     private lateinit var presenter: MainContract.Presenter
     private lateinit var view: MainContract.View
-    private lateinit var resultHandler: ResultHandler
+    private lateinit var resultAdapter: ResultAdapter
 
     @Before
     fun setUp() {
         view = mockk()
-        resultHandler = mockk()
-        presenter = MainPresenter(view, resultHandler)
+        resultAdapter = mockk()
+        presenter = MainPresenter(view, resultAdapter)
     }
 
     @Test
@@ -102,7 +101,7 @@ class MainPresenterTest {
     fun `이전에 입력 3+2x4나누기2-5가 주어졌을 때, =를 누르면 5을 보여준다`() {
         // given
         every { view.refreshTextView(any()) } answers { nothing }
-        every { resultHandler.add(any(), any()) } answers { nothing }
+        every { resultAdapter.add(any(), any()) } answers { nothing }
 
         presenter.handleInputNum("3")
         presenter.handleInputArithmetic("+")

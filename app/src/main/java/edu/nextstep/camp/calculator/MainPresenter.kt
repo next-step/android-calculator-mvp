@@ -1,11 +1,10 @@
 package edu.nextstep.camp.calculator
 
 import com.github.dodobest.domain.InputHandler
-import com.github.dodobest.domain.ResultHandler
 
 class MainPresenter(
     private val view: MainContract.View,
-    private val resultHandler: ResultHandler,
+    private val resultAdapter: ResultAdapter,
     private val inputHandler: InputHandler = InputHandler(),
 ) : MainContract.Presenter {
 
@@ -34,10 +33,6 @@ class MainPresenter(
         val result = inputHandler.getString()
 
         view.refreshTextView(result)
-        resultHandler.add(expression, "= $result")
-    }
-
-    override fun getResultHandler() : ResultHandler {
-        return resultHandler
+        resultAdapter.add(expression, "= $result")
     }
 }
