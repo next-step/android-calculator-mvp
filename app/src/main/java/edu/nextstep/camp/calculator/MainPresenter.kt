@@ -12,6 +12,8 @@ class MainPresenter(
     private var histories: Histories = Histories(),
     private var calculatorDisabled: Boolean = false
 ) : MainContract.Presenter {
+    constructor(view: MainContract.View, expression: String): this(view, toExpression(expression))
+
     override fun inputNumber(number: Int) {
         if (calculatorDisabled) return
         expression += number
@@ -74,9 +76,21 @@ class MainPresenter(
     }
 
     private fun History.toModel(): HistoryModel = HistoryModel(rawExpression, "= $result")
+
     private fun Histories.toModel(): List<HistoryModel> = toList().map { it.toModel() }
 
     companion object {
         private val calculator: Calculator = Calculator()
+
+        private fun toExpression(rawExpression: String): Expression =
+            Expression(rawExpression.trim().split(" ").map { it.toExpressionValue() })
+
+        private fun String.toExpressionValue(): Any  {
+            val operator = Operator.of(this)
+            if (operator != null) {
+                return operator
+            }
+            return toInt()
+        }
     }
 }

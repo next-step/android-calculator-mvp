@@ -1,7 +1,5 @@
 package edu.nextstep.camp.calculator
 
-import edu.nextstep.camp.calculator.domain.Expression
-import edu.nextstep.camp.calculator.domain.Operator
 import io.mockk.mockk
 import io.mockk.verify
 import io.mockk.verifySequence
@@ -32,8 +30,7 @@ internal class MainPresenterTest {
     @ParameterizedTest(name = "5 + {0}을 입력하면 5 + {0}을 그리도록 요청해야 한다.")
     fun inputNumberAfterOperator(number: String) {
         // given
-        val expression = Expression(listOf(5, Operator.Plus))
-        presenter = MainPresenter(view, expression)
+        presenter = MainPresenter(view, "5 + ")
 
         // when
         val expected = "5 + $number"
@@ -65,8 +62,7 @@ internal class MainPresenterTest {
     fun inputPlus() {
         // given
         val number = 7
-        val expression = Expression(listOf(number))
-        presenter = MainPresenter(view, expression)
+        presenter = MainPresenter(view, number.toString())
 
         // when
         val expected = "$number +"
@@ -81,8 +77,7 @@ internal class MainPresenterTest {
     fun inputMinus() {
         // given
         val number = 7
-        val expression = Expression(listOf(number))
-        presenter = MainPresenter(view, expression)
+        presenter = MainPresenter(view, number.toString())
 
         // when
         val expected = "$number -"
@@ -97,8 +92,7 @@ internal class MainPresenterTest {
     fun inputMultiply() {
         // given
         val number = 7
-        val expression = Expression(listOf(number))
-        presenter = MainPresenter(view, expression)
+        presenter = MainPresenter(view, number.toString())
 
         // when
         val expected = "$number *"
@@ -113,8 +107,7 @@ internal class MainPresenterTest {
     fun inputDivide() {
         // given
         val number = 7
-        val expression = Expression(listOf(number))
-        presenter = MainPresenter(view, expression)
+        presenter = MainPresenter(view, number.toString())
 
         // when
         val expected = "$number /"
@@ -128,8 +121,7 @@ internal class MainPresenterTest {
     @Test
     fun deleteLast() {
         // given
-        val expression = Expression(listOf(32, Operator.Plus, 1))
-        presenter = MainPresenter(view, expression)
+        presenter = MainPresenter(view, "32 + 1")
 
         // when
         presenter.deleteLast()
@@ -152,8 +144,7 @@ internal class MainPresenterTest {
     @Test
     fun calculate() {
         // given
-        val expression = Expression(listOf(2, Operator.Plus, 3, Operator.Multiply, 4, Operator.Divide, 2))
-        presenter = MainPresenter(view, expression)
+        presenter = MainPresenter(view, "2 + 3 * 4 / 2")
 
         // when
         val expected = "10"
@@ -167,8 +158,7 @@ internal class MainPresenterTest {
     @Test
     fun calculateIncompleteExpression() {
         // given
-        val expression = Expression(listOf(3, Operator.Plus))
-        presenter = MainPresenter(view, expression)
+        presenter = MainPresenter(view, "3 + ")
 
         // when
         presenter.calculate()
