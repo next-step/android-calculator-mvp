@@ -17,8 +17,9 @@ class MainActivity : AppCompatActivity(), MainContract.View{
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        presenter = MainPresenter(this)
-        binding.recyclerView.adapter = ResultAdapter(presenter.getResultHandler())
+        val resultAdapter = ResultAdapter()
+        binding.recyclerView.adapter = resultAdapter
+        presenter = MainPresenter(this, resultAdapter.getResultHandler())
 
         setButtonListener()
     }

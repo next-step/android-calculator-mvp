@@ -6,7 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.dodobest.domain.ResultHandler
 import edu.nextstep.camp.calculator.databinding.ItemResultBinding
 
-class ResultAdapter(private val resultHandler: ResultHandler) : RecyclerView.Adapter<ViewHolder>() {
+class ResultAdapter(private val resultHandler: ResultHandler = ResultHandler()) : RecyclerView.Adapter<ViewHolder>() {
+    fun getResultHandler() : ResultHandler {
+        return resultHandler
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: ItemResultBinding = ItemResultBinding.inflate(LayoutInflater.from(parent.context))
         return ViewHolder(binding)

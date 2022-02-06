@@ -5,7 +5,7 @@ import com.github.dodobest.domain.ResultHandler
 
 class MainPresenter(
     private val view: MainContract.View,
-    private val resultHandler: ResultHandler = ResultHandler(),
+    private val resultHandler: ResultHandler,
     private val inputHandler: InputHandler = InputHandler(),
 ) : MainContract.Presenter {
 
