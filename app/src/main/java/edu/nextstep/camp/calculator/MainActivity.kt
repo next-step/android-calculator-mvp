@@ -5,6 +5,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
+import edu.nextstep.domain.Calculator
 import edu.nextstep.domain.Expression
 import edu.nextstep.domain.Operator
 
@@ -12,21 +13,11 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
     private lateinit var presenter: MainContract.Presenter
 
-    private val buttonNumberList: List<Button> by lazy {
-        listOf(
-            binding.button0, binding.button1,
-            binding.button2, binding.button3,
-            binding.button4, binding.button5,
-            binding.button6, binding.button7,
-            binding.button8, binding.button9,
-        )
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        presenter = MainPresenter(this)
+        presenter = MainPresenter(this, Calculator())
         initViews()
     }
 
@@ -37,7 +28,14 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     private fun addButtonListener() {
-        buttonNumberList.forEach { addOperandButtonListener(it) }
+        listOf(
+            binding.button0, binding.button1,
+            binding.button2, binding.button3,
+            binding.button4, binding.button5,
+            binding.button6, binding.button7,
+            binding.button8, binding.button9,
+        ).forEach { addOperandButtonListener(it) }
+
         binding.buttonPlus.setOnClickListener { presenter.addOperator(Operator.Plus) }
         binding.buttonMinus.setOnClickListener { presenter.addOperator(Operator.Minus) }
         binding.buttonMultiply.setOnClickListener { presenter.addOperator(Operator.Multiply) }

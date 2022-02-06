@@ -6,11 +6,9 @@ import edu.nextstep.domain.Operator
 
 class MainPresenter(
     private val view: MainContract.View,
+    private val calculator: Calculator,
     private var expression: Expression = Expression.EMPTY
 ) : MainContract.Presenter {
-
-    private val calculator = Calculator()
-
     override fun addOperand(operand: String) {
         expression += operand.toInt()
         view.refreshExpression(expression)
