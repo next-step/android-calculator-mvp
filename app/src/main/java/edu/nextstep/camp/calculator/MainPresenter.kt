@@ -26,17 +26,16 @@ class MainPresenter(
     }
 
     override fun handleEquals() {
-        if (inputHandler.checkExpressionCanCalculated()) {
-            val expression = inputHandler.getString()
-            inputHandler.handleEquals()
-            val result = inputHandler.getString()
-
-            view.refreshTextView(result)
-            resultHandler.add(expression, "= $result")
-            return
+        if (!inputHandler.checkExpressionCanCalculated()) {
+            throw IllegalArgumentException()
         }
 
-        throw IllegalArgumentException()
+        val expression = inputHandler.getString()
+        inputHandler.handleEquals()
+        val result = inputHandler.getString()
+
+        view.refreshTextView(result)
+        resultHandler.add(expression, "= $result")
     }
 
     override fun getResultAdapter(): ResultAdapter {
