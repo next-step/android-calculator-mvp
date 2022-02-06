@@ -9,8 +9,7 @@ import edu.nextstep.camp.calculator.databinding.ItemResultBinding
 class ResultAdapter(private val resultHandler: ResultHandler) : RecyclerView.Adapter<ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: ItemResultBinding = ItemResultBinding.inflate(LayoutInflater.from(parent.context))
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_result, parent, false)
-        return ViewHolder(view, binding)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
