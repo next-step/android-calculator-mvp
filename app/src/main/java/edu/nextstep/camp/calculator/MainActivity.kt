@@ -1,10 +1,13 @@
 package edu.nextstep.camp.calculator
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
+import edu.nextstep.domain.CalculateHistoryItem
 import edu.nextstep.domain.Calculator
 import edu.nextstep.domain.Expression
 import edu.nextstep.domain.Operator
@@ -12,6 +15,7 @@ import edu.nextstep.domain.Operator
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
     private lateinit var presenter: MainContract.Presenter
+    private val historyAdapter = HistoryAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,10 +46,13 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonDivide.setOnClickListener { presenter.addOperator(Operator.Divide) }
         binding.buttonDelete.setOnClickListener { presenter.removeLast() }
         binding.buttonEquals.setOnClickListener { presenter.calculate() }
+        binding.buttonMemory.setOnClickListener { toggleHistoryView() }
     }
 
     private fun initViews() {
         addButtonListener()
+        binding.recyclerView.adapter = historyAdapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
     }
 
     override fun refreshExpression(expression: Expression) {
@@ -54,6 +61,24 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun showToastIncompleteExpression() {
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun toggleHistoryView() {
+        if (binding.recyclerView.visibility == View.VISIBLE) {
+            binding.textView.visibility = View.VISIBLE
+            binding.recyclerView.visibility = View.GONE
+            return
+        }
+
+        if (binding.recyclerView.visibility == View.GONE) {
+            binding.textView.visibility = View.GONE
+            binding.recyclerView.visibility = View.VISIBLE
+            return
+        }
+    }
+
+    override fun refreshHistory(historyItem: CalculateHistoryItem) {
+        historyAdapter.setItem(historyItem)
     }
 
 }

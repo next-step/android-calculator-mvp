@@ -1,5 +1,6 @@
 package edu.nextstep.camp.calculator
 
+import edu.nextstep.domain.CalculateHistoryItem
 import edu.nextstep.domain.Calculator
 import edu.nextstep.domain.Expression
 import edu.nextstep.domain.Operator
@@ -31,7 +32,13 @@ class MainPresenter(
             view.showToastIncompleteExpression()
             return
         }
+        addHistory(result)
         expression = Expression.EMPTY + result
         view.refreshExpression(expression)
+    }
+
+    override fun addHistory(result: Int) {
+        val historyItem = CalculateHistoryItem(expression, Expression.EMPTY + result)
+        view.refreshHistory(historyItem)
     }
 }
