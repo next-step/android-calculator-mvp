@@ -11,6 +11,7 @@ import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity(), MainContract.View{
     private lateinit var binding: ActivityMainBinding
     private lateinit var presenter: MainContract.Presenter
+    private lateinit var resultAdapter: ResultAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,7 +19,8 @@ class MainActivity : AppCompatActivity(), MainContract.View{
         setContentView(binding.root)
 
         presenter = MainPresenter(this)
-        binding.recyclerView.adapter = presenter.getResultAdapter()
+        resultAdapter = ResultAdapter(presenter.getResultHandler())
+        binding.recyclerView.adapter = resultAdapter
 
         setButtonListener()
     }

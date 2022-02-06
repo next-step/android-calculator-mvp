@@ -6,7 +6,6 @@ import com.github.dodobest.domain.ResultHandler
 class MainPresenter(
     private val view: MainContract.View,
     private val resultHandler: ResultHandler = ResultHandler(),
-    private val resultAdapter: ResultAdapter = ResultAdapter(resultHandler),
     private val inputHandler: InputHandler = InputHandler(),
 ) : MainContract.Presenter {
 
@@ -38,7 +37,7 @@ class MainPresenter(
         resultHandler.add(expression, "= $result")
     }
 
-    override fun getResultAdapter(): ResultAdapter {
-        return resultAdapter
+    override fun getResultHandler() : ResultHandler {
+        return resultHandler
     }
 }
