@@ -53,7 +53,11 @@ class InputHandler {
     }
 
     fun handleEquals() {
-        val res: String = calculator.calculate(numAndSignArray).toString()
+        var res: String = calculator.calculate(numAndSignArray).toString()
+
+        if (res.toDouble() % 1 == 0.0) {
+            res = res.toDouble().toInt().toString()
+        }
 
         numAndSignArray.clear()
         numAndSignArray.add(res)
