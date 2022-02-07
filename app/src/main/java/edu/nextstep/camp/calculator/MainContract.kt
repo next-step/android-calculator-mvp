@@ -7,6 +7,7 @@ interface MainContract {
 
     interface View : BaseView<Presenter> {
         fun showExpression(expression: String)
+        fun showMemory(memory: String)
         fun showError()
     }
 
@@ -15,5 +16,6 @@ interface MainContract {
         fun addToExpression(operator: Operator)
         fun removeLastInExpression()
         fun evaluateByExpression()
+        fun toggleMode()
     }
 }

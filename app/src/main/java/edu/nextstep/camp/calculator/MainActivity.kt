@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         setupButtonOperators()
         setupButtonDelete()
         setupButtonEquals()
+        setupButtonMemory()
     }
 
     private fun setupButtonNumbers() {
@@ -73,11 +74,21 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         }
     }
 
+    private fun setupButtonMemory() {
+        binding.buttonMemory.setOnClickListener {
+            presenter.toggleMode()
+        }
+    }
+
     override fun showExpression(expression: String) {
         binding.textView.text = expression
     }
 
     override fun showError() {
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showMemory(memory: String) {
+        binding.textView.text = memory
     }
 }
