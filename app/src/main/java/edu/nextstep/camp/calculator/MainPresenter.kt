@@ -21,11 +21,14 @@ class MainPresenter(
     }
 
     override fun calculate() {
-        val calculatedValue = calculator.calculate(expression.toString())
-        calculatedValue?.let {
-            expression = Expression.EMPTY + it
+        try {
+            val calculatedValue = calculator.calculate(expression.toString())
+            expression = Expression.EMPTY + (calculatedValue ?: throw IllegalArgumentException("유효하지 않은 수식입니다.") )
+            view.showExpression(expression)
         }
-        view.showExpression(expression)
+        catch (e: IllegalArgumentException) {
+            view.onError(e)
+        }
     }
 
     override fun delete() {

@@ -1,10 +1,12 @@
 package edu.nextstep.camp.calculator
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
+import java.lang.IllegalArgumentException
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
@@ -68,6 +70,11 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun onError(exception: Exception) {
-        TODO("Not yet implemented")
+        val toastMessage: String = if(exception is IllegalArgumentException) {
+            getString(R.string.incomplete_expression)
+        } else {
+            exception.message ?: getString(R.string.unknown_exception)
+        }
+        Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show()
     }
 }
