@@ -11,22 +11,22 @@ class MainPresenter(
     private val calculator = Calculator()
 
     init {
-        view.refreshCount(expression.toString())
+        view.refreshExpression(expression.toString())
     }
 
     override fun inputNumber(value: Int) {
         expression += value
-        view.refreshCount(expression.toString())
+        view.refreshExpression(expression.toString())
     }
 
     override fun inputOperator(operator: Operator) {
         expression += operator
-        view.refreshCount(expression.toString())
+        view.refreshExpression(expression.toString())
     }
 
     override fun removeLast() {
         expression = expression.removeLast()
-        view.refreshCount(expression.toString())
+        view.refreshExpression(expression.toString())
     }
 
     override fun calculate() {
@@ -36,6 +36,6 @@ class MainPresenter(
             return
         }
         expression = Expression.EMPTY + result
-        view.refreshCount(result.toString())
+        view.refreshExpression(result.toString())
     }
 }

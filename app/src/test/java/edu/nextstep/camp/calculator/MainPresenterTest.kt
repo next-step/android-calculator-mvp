@@ -30,7 +30,7 @@ class MainPresenterTest {
         presenter.inputNumber(1)
 
         //then
-        verify { view.refreshCount("1") }
+        verify { view.refreshExpression("1") }
 
 
     }
@@ -44,7 +44,7 @@ class MainPresenterTest {
         presenter.inputOperator(Operator.Plus)
 
         //then
-        verify { view.refreshCount("+") }
+        verify { view.refreshExpression("+") }
 
 
     }
@@ -61,7 +61,7 @@ class MainPresenterTest {
         presenter.removeLast()
 
         //then
-        verify { view.refreshCount("13") }
+        verify { view.refreshExpression("13") }
 
 
     }
@@ -79,7 +79,7 @@ class MainPresenterTest {
         presenter.calculate()
 
         //then
-        verify { view.refreshCount("5") }
+        verify { view.refreshExpression("5") }
 
 
     }

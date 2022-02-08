@@ -5,7 +5,7 @@ import edu.nextstep.camp.calculator.domain.Operator
 interface MainContract {
     interface View {
 
-        fun refreshCount(text: String)
+        fun refreshExpression(text: String)
         fun showToast(message: Int)
     }
 

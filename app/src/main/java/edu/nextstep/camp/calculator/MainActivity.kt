@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         }
     }
 
-    override fun refreshCount(value: String) {
+    override fun refreshExpression(value: String) {
         binding.textView.text = value
     }
 
