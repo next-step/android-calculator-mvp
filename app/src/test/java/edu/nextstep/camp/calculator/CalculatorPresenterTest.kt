@@ -27,14 +27,12 @@ class CalculatorPresenterTest {
     @Test
     fun `빈 수식에 숫자가 입력되면 수식에 추가되고 수식을 갱신하는 함수를 호출한다`() {
         // given
-        val expressionSlot = slot<Expression>()
-        every { view.refreshExpression(capture(expressionSlot)) } answers { nothing }
+        val expected = Expression(listOf(1))
+        every { view.refreshExpression(expected) } answers { nothing }
         // when
         presenter.addExpressionElement(1)
         // then
-        val actualExpression = expressionSlot.captured
-        assertThat(actualExpression.toString()).isEqualTo("1")
-        verify { view.refreshExpression(actualExpression) }
+        verify { view.refreshExpression(expected) }
     }
 
     @Test
