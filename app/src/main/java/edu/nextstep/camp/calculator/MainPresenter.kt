@@ -5,37 +5,33 @@ import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainPresenter(
-    private val view: MainContract.View
+    private val view: MainContract.View,
+    private var expression: Expression = Expression.EMPTY
 ) : MainContract.Presenter {
-    private var expression = Expression.EMPTY
     private val calculator = Calculator()
 
-    init {
-        view.refreshExpression(expression.toString())
+    override fun addToExpression(operand: Int) {
+        expression += operand
+        view.showExpression(expression)
     }
 
-    override fun inputNumber(value: Int) {
-        expression += value
-        view.refreshExpression(expression.toString())
-    }
-
-    override fun inputOperator(operator: Operator) {
+    override fun addToExpression(operator: Operator) {
         expression += operator
-        view.refreshExpression(expression.toString())
+        view.showExpression(expression)
     }
 
     override fun removeLast() {
         expression = expression.removeLast()
-        view.refreshExpression(expression.toString())
+        view.showExpression(expression)
     }
 
     override fun calculate() {
         val result = calculator.calculate(expression.toString())
         if (result == null) {
-            view.showToast(R.string.incomplete_expression)
+            view.showIncompleteExpressionError()
             return
         }
         expression = Expression.EMPTY + result
-        view.refreshExpression(result.toString())
+        view.showResult(result)
     }
 }
