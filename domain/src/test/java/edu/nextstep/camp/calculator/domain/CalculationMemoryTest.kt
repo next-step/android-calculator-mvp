@@ -16,6 +16,7 @@ class CalculationMemoryTest {
         val expectedExpression = Expression(listOf(1, Operator.Plus, 2))
         assertThat(calculationMemory.records.lastOrNull()?.expression).isEqualTo(expectedExpression)
         assertThat(calculationMemory.records.lastOrNull()?.result).isEqualTo(3)
+        assertThat(calculationMemory.records.size).isEqualTo(1)
     }
 
     @Test
@@ -23,15 +24,16 @@ class CalculationMemoryTest {
         // given :
         val oldExpression = Expression(listOf(1, Operator.Plus, 2))
         val oldExpressionResult = 3
-        val calculationMemory =
-            CalculationMemory(CalculationMemory.Record(oldExpression, oldExpressionResult))
+        val oldRecord = CalculationMemory.Record(oldExpression, oldExpressionResult)
+        val calculationMemory = CalculationMemory(oldRecord)
+        // when :
         val newExpression = Expression(listOf(2, Operator.Minus, 1))
         val newExpressionResult = 1
-        // when :
         calculationMemory.addRecord(newExpression, newExpressionResult)
         // then :
         val expectedExpression = Expression(listOf(2, Operator.Minus, 1))
         assertThat(calculationMemory.records.lastOrNull()?.expression).isEqualTo(expectedExpression)
         assertThat(calculationMemory.records.lastOrNull()?.result).isEqualTo(1)
+        assertThat(calculationMemory.records.size).isEqualTo(2)
     }
 }
