@@ -9,13 +9,13 @@ import edu.nextstep.camp.calculator.domain.Operator
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
-    override val presenter: MainContract.Presenter = MainPresenter(this)
+    override lateinit var presenter: MainContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        presenter = MainPresenter(this)
         binding.button0.setOnClickListener {
             presenter.addToExpression(0)
         }
