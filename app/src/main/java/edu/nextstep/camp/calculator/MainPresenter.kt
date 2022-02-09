@@ -5,10 +5,10 @@ import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainPresenter(
-    private val view: MainContract.View,
-    private var expression: Expression = Expression.EMPTY
+    private val view: MainContract.View
 ) : MainContract.Presenter {
     private val calculator = Calculator()
+    private var expression: Expression = Expression.EMPTY
 
     override fun addToExpression(operand: Int) {
         expression += operand
