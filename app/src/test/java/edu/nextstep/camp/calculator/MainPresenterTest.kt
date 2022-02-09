@@ -27,7 +27,7 @@ class MainPresenterTest {
             "1", "2", "3", "4", "5", "6", "7", "8", "9",
         ]
     )
-    @ParameterizedTest(name = "숫자가 입력되면 수식에 {0} 추가되고 {0} 보여줘야 한다.")
+    @ParameterizedTest(name = "{0} 숫자를 입력하면 화면에 {0} 보여야 한다.")
     fun test1(input: Int) {
         // given
         val expressionSlot = slot<Expression>()
@@ -43,7 +43,7 @@ class MainPresenterTest {
     }
 
     @Test
-    @DisplayName("계산시 입력된 값이 없으면 토스트 메시지를 보여줘야 한다")
+    @DisplayName("입력된 값이 없으면 계산시 토스트 메시지를 보여줘야 한다")
     fun test2() {
         // given
         val toastIdSlot = slot<Int>()
@@ -67,16 +67,16 @@ class MainPresenterTest {
             "8,/,2",
         ]
     )
-    @ParameterizedTest(name = "계산시 불완전한 수식 {0} {1} 입력되면 토스트 메시지를 보여줘야 한다")
+    @ParameterizedTest(name = "불완전한 수식 {0} {1} 입력된 상태에서 계산하면 토스트 메시지를 보여줘야 한다")
     fun test3(operand: Int, operator: String, expected: String) {
         // given
         val toastIdSlot = slot<Int>()
         every { view.showExpression(any()) } just Runs
         every { view.showToast(capture(toastIdSlot)) } just Runs
-
-        // when
         presenter.addToExpression(operand)
         presenter.addToExpression(Operator.of(operator)!!)
+
+        // when
         presenter.calculateToExpression()
 
         // then
@@ -93,16 +93,16 @@ class MainPresenterTest {
             "8,/,4,2",
         ]
     )
-    @ParameterizedTest(name = "계산시 완전한 수식 {0} {1} {2} 입력되면 화면에 {3} 보여야 한다.")
+    @ParameterizedTest(name = "완전한 수식 {0} {1} {2} 입력된 상태에서 계산하면 화면에 {3} 보여야 한다.")
     fun test4(operand1: Int, operator: String, operand2: Int, expected: String) {
         // given
         val expressionSlot = slot<Expression>()
         every { view.showExpression(capture(expressionSlot)) } just Runs
-
-        // when
         presenter.addToExpression(operand1)
         presenter.addToExpression(Operator.of(operator)!!)
         presenter.addToExpression(operand2)
+
+        // when
         presenter.calculateToExpression()
 
         // then
