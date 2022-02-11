@@ -45,7 +45,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
 
     private fun updateMemory() {
         mode = memory
-        view.showMemory(memory.toString())
+        view.showMemory(memory.items)
     }
 
     private fun updateExpression() {
