@@ -30,7 +30,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
             return
         }
 
-        memory += expression.toString() to result
+        memory += Memory.Item(expression.toString(), result)
         expression = Expression.EMPTY + result
 
         updateExpression()
