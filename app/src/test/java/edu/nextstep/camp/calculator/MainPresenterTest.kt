@@ -1,6 +1,7 @@
 package edu.nextstep.camp.calculator
 
 import com.google.common.truth.Truth.assertThat
+import edu.nextstep.camp.calculator.domain.Memory
 import edu.nextstep.camp.calculator.domain.Operator
 import io.mockk.every
 import io.mockk.mockk
@@ -9,7 +10,6 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
@@ -28,7 +28,7 @@ internal class MainPresenterTest {
     @Test
     fun `빈 수식 모드인 경우 토글이 입력되면 메모리 모드로 변경되고 비어있는 메모리 값을 보여줘야 한다`() {
         // given
-        val memorySlot = ""
+        val memorySlot = emptyList<Memory.Item>()
         every { view.showMemory(memorySlot) } answers { nothing }
 
         // when
@@ -41,7 +41,7 @@ internal class MainPresenterTest {
     @Test
     fun `단일 완성된 수식 모드인 경우 토글이 입력되면 메모리 모드로 변경되고 입력된 메모리 값을 보여줘야 한다 (1)`() {
         // given
-        val memorySlot = "3 + 5\n= 8\n"
+        val memorySlot = listOf(Memory.Item("3 + 5", 8))
         every { view.showExpression(any()) } answers { nothing }
         every { view.showMemory(memorySlot) } answers { nothing }
 
@@ -63,7 +63,7 @@ internal class MainPresenterTest {
         presenter = MainPresenter(view)
 
         // given
-        val memorySlot = "3 + 5\n= 8\n"
+        val memorySlot = listOf(Memory.Item("3 + 5", 8))
 
         presenter.addToExpression(3)
         presenter.addToExpression(Operator.Plus)
@@ -80,7 +80,7 @@ internal class MainPresenterTest {
     @Test
     fun `복수개 완성된 수식 모드인 경우 토글이 입력되면 메모리 모드로 변경되고 입력된 메모리 값을 보여줘야 한다 (2)`() {
         // given
-        val memorySlot = slot<String>()
+        val memorySlot = slot<List<Memory.Item>>()
 
         every { view.showExpression(any()) } answers { nothing }
         every { view.showMemory(capture(memorySlot)) } answers { nothing }
@@ -102,7 +102,12 @@ internal class MainPresenterTest {
 
         // then
         val actual = memorySlot.captured
-        assertThat(actual).isEqualTo("3 + 5\n= 8\n\n10 - 3\n= 7\n")
+        assertThat(actual).isEqualTo(
+            listOf(
+                Memory.Item("3 + 5", 8),
+                Memory.Item("10 - 3", 7)
+            )
+        )
         verify { view.showMemory(memorySlot.captured) }
     }
 

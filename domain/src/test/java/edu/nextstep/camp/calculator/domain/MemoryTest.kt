@@ -12,26 +12,23 @@ internal class MemoryTest {
         val item = Memory.Item("3 + 5", 8)
 
         // when
-        val actual = memory + item
+        val actual = (memory + item).items
 
         // then
-        assertThat(actual.toString()).isEqualTo("3 + 5\n= 8\n")
+        assertThat(actual).isEqualTo(listOf(item))
     }
 
     @Test
     fun `메모리에 값이 있는 경우, 메모리에 값 추가시 연속적으로 추가될 수 있어야 한다`() {
         // given
-        val memory = Memory(
-            listOf(
-                Memory.Item("3 + 5", 8)
-            )
-        )
+        val default = Memory.Item("3 + 5", 8)
+        val memory = Memory(listOf(default))
         val item = Memory.Item("6 / 2", 3)
 
         // when
-        val actual = memory + item
+        val actual = (memory + item).items
 
         // then
-        assertThat(actual.toString()).isEqualTo("3 + 5\n= 8\n\n6 / 2\n= 3\n")
+        assertThat(actual).isEqualTo(listOf(default, item))
     }
 }
