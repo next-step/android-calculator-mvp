@@ -58,6 +58,26 @@ internal class MainPresenterTest {
     }
 
     @Test
+    fun `단일 완성된 수식 모드인 경우 토글이 입력되면 메모리 모드로 변경되고 입력된 메모리 값을 보여줘야 한다 (1 - relaxed 적용)`() {
+        view = mockk(relaxed = true, relaxUnitFun = true)
+        presenter = MainPresenter(view)
+
+        // given
+        val memorySlot = "3 + 5\n= 8\n"
+
+        presenter.addToExpression(3)
+        presenter.addToExpression(Operator.Plus)
+        presenter.addToExpression(5)
+        presenter.evaluateByExpression()
+
+        // when
+        presenter.toggleMode()
+
+        // then
+        verify { view.showMemory(memorySlot) }
+    }
+
+    @Test
     fun `복수개 완성된 수식 모드인 경우 토글이 입력되면 메모리 모드로 변경되고 입력된 메모리 값을 보여줘야 한다 (2)`() {
         // given
         val memorySlot = slot<String>()
