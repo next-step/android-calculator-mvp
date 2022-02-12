@@ -8,8 +8,8 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
     private val calculator = Calculator()
     private var expression = Expression.EMPTY
 
-    override fun addToNumber(number: Int) {
-        expression += number
+    override fun addToNumber(number: String) {
+        expression += number.toInt()
         view.showExpression(expression.toString())
     }
 

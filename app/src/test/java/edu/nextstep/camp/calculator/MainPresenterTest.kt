@@ -9,10 +9,12 @@ class MainPresenterTest {
     private lateinit var presenter: MainContract.Presenter
     private lateinit var view: MainContract.View
 
-
     @Before
     fun setUp() {
-        view = mockk()
+        // 1. 실제 객체를 사용 (UI 테스트)
+        // 2. Fake 객체를 사용
+        // 3. 최후의 수단으로 Mockk, spy 객체 사용
+        view = mockk( )
         presenter = MainPresenter(view)
     }
 
@@ -23,7 +25,7 @@ class MainPresenterTest {
         every { view.showExpression(capture(expressionSlot)) } just Runs
 
         // when
-        presenter.addToNumber(1)
+        presenter.addToNumber("1")
 
         // then
         val actual = expressionSlot.captured
@@ -36,7 +38,7 @@ class MainPresenterTest {
         // given
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } just Runs
-        presenter.addToNumber(5)
+        presenter.addToNumber("5")
 
         // when
         presenter.addToMinus()
@@ -52,9 +54,9 @@ class MainPresenterTest {
         // given
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } just Runs
-        presenter.addToNumber(1)
+        presenter.addToNumber("1")
         presenter.addToPlus()
-        presenter.addToNumber(2)
+        presenter.addToNumber("2")
 
         // when
         presenter.deleteLastInput()
@@ -70,9 +72,9 @@ class MainPresenterTest {
         // given
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } just Runs
-        presenter.addToNumber(1)
+        presenter.addToNumber("1")
         presenter.addToPlus()
-        presenter.addToNumber(2)
+        presenter.addToNumber("2")
 
         // when
         presenter.calculate()

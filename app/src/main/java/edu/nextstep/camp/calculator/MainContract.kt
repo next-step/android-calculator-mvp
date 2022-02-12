@@ -7,7 +7,7 @@ interface MainContract {
     }
 
     interface Presenter {
-        fun addToNumber(number: Int)
+        fun addToNumber(number: String)
         fun addToPlus()
         fun addToMinus()
         fun addToMultiply()
