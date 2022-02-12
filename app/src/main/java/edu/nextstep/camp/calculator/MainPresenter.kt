@@ -4,9 +4,11 @@ import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 
-class MainPresenter(private val view: MainContract.View) : MainContract.Presenter {
-    private val calculator = Calculator()
-    private var expression = Expression.EMPTY
+class MainPresenter(
+    private val view: MainContract.View,
+    private val calculator: Calculator = Calculator(),
+    private var expression: Expression = Expression.EMPTY
+) : MainContract.Presenter {
 
     override fun addToNumber(number: String) {
         expression += number.toInt()
