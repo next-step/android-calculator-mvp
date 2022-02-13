@@ -2,6 +2,7 @@ package edu.nextstep.camp.calculator
 
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
+import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Before
@@ -11,12 +12,10 @@ import org.junit.jupiter.api.DisplayName
 class MainPresenterTest {
     private lateinit var presenter: MainContract.Presenter
     private lateinit var view: MainContract.View
-    private lateinit var expression: Expression
 
     @Before
     fun setUp() {
-        view = mockk(relaxed = true)
-        expression = Expression.EMPTY
+        view = mockk()
         presenter = MainPresenter(view)
     }
 
@@ -25,62 +24,72 @@ class MainPresenterTest {
     @DisplayName("숫자1이 입력되면 숫자1이 보여야 한다")
     internal fun test1() {
         //give
+        val expected = Expression(listOf(1))
+        every { view.showExpression(expected) } answers { nothing }
 
         //when
-        presenter.inputNumber(1)
+        presenter.addToExpression(1)
 
         //then
-        verify { view.refreshExpression("1") }
+        verify { view.showExpression(expected) }
 
 
     }
 
     @Test
-    @DisplayName("+가 입력되면 +가 보여야 한다")
+    @DisplayName("1수식에 +가 입력되면 1 +가 보여야 한다")
     internal fun test2() {
         //give
+        val expected = Expression(listOf(1, Operator.Plus))
+        every { view.showExpression(Expression(listOf(1))) } answers { nothing }
+        every { view.showExpression(expected) } answers { nothing }
+        presenter.addToExpression(1)
 
         //when
-        presenter.inputOperator(Operator.Plus)
+        presenter.addToExpression(Operator.Plus)
 
         //then
-        verify { view.refreshExpression("+") }
+        verify { view.showExpression(expected) }
 
 
     }
 
     @Test
-    @DisplayName("13 + 일 때, 마지막을 제거하면 수식은 13 이어야 한다")
+    @DisplayName("1 + 2 수식이 있을 때,계산이 실행되면 3을 보여줘야 한다")
     internal fun test3() {
-        //give
-        presenter.inputNumber(1)
-        presenter.inputNumber(3)
-        presenter.inputOperator(Operator.Plus)
+        //given
 
-        //when
-        presenter.removeLast()
-
-        //then
-        verify { view.refreshExpression("13") }
-
-
-    }
-
-
-    @Test
-    @DisplayName("2 + 3이 입력 되었을때 = 을 누르면 5가 보여아 한다.")
-    internal fun test4() {
-        //give
-        presenter.inputNumber(2)
-        presenter.inputOperator(Operator.Plus)
-        presenter.inputNumber(3)
+        every { view.showExpression(any()) } answers { nothing }
+        every { view.showResult(3) } answers { nothing }
+        presenter.addToExpression(1)
+        presenter.addToExpression(Operator.Plus)
+        presenter.addToExpression(2)
 
         //when
         presenter.calculate()
 
         //then
-        verify { view.refreshExpression("5") }
+        verify { view.showResult(3) }
+    }
+
+    @Test
+    @DisplayName("1 + 2 일 때, 마지막을 제거하면 수식은 1 + 이어야 한다")
+    internal fun test4() {
+        //give
+        val expected = Expression(listOf(1, Operator.Plus,2))
+        every { view.showExpression(Expression(listOf(1))) } answers {nothing}
+        every { view.showExpression(Expression(listOf(1,Operator.Plus))) } answers {nothing}
+        every { view.showExpression(expected) } answers {nothing}
+        presenter.addToExpression(1)
+        presenter.addToExpression(Operator.Plus)
+        presenter.addToExpression(2)
+        //when
+        presenter.removeLast()
+
+        //then
+        verify { view.showExpression(expected) }
 
 
     }
+
 }
