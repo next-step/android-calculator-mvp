@@ -7,7 +7,7 @@ interface MainContract {
         // TextView 에 Expression 데이터를 보여준다
         fun showExpression(expression: String)
         // 에러 메시지 보여준다
-        fun showError()
+        fun showIncompleteExpressionError()
     }
 
     interface Presenter {

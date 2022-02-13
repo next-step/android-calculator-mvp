@@ -1,6 +1,7 @@
 package edu.nextstep.camp.calculator
 
 import android.os.Bundle
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
@@ -10,57 +11,27 @@ import edu.nextstep.camp.calculator.domain.Operator
 
 class MainActivity() : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
-    override val presenter: MainContract.Presenter = MainPresenter(this)
-    private val calculator = Calculator()
-    private var expression = Expression.EMPTY
+    override lateinit var presenter: MainContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        presenter = MainPresenter(this)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.button0.setOnClickListener {
-            presenter.addToExpression(binding.button0.text.toString().toInt())
-        }
-        binding.button1.setOnClickListener {
-            presenter.addToExpression(binding.button1.text.toString().toInt())
-        }
-        binding.button2.setOnClickListener {
-            presenter.addToExpression(binding.button2.text.toString().toInt())
-        }
-        binding.button3.setOnClickListener {
-            presenter.addToExpression(binding.button3.text.toString().toInt())
-        }
-        binding.button4.setOnClickListener {
-            presenter.addToExpression(binding.button4.text.toString().toInt())
-        }
-        binding.button5.setOnClickListener {
-            presenter.addToExpression(binding.button5.text.toString().toInt())
-        }
-        binding.button6.setOnClickListener {
-            presenter.addToExpression(binding.button6.text.toString().toInt())
-        }
-        binding.button7.setOnClickListener {
-            presenter.addToExpression(binding.button7.text.toString().toInt())
-        }
-        binding.button8.setOnClickListener {
-            presenter.addToExpression(binding.button8.text.toString().toInt())
-        }
-        binding.button9.setOnClickListener {
-            presenter.addToExpression(binding.button9.text.toString().toInt())
-        }
-        binding.buttonPlus.setOnClickListener {
-            presenter.addToExpression(Operator.Plus)
-        }
-        binding.buttonMinus.setOnClickListener {
-            presenter.addToExpression(Operator.Minus)
-        }
-        binding.buttonMultiply.setOnClickListener {
-            presenter.addToExpression(Operator.Multiply)
-        }
-        binding.buttonDivide.setOnClickListener {
-            presenter.addToExpression(Operator.Divide)
-        }
+        val numberButtonList: List<Button> = listOf(
+            binding.button0, binding.button1, binding.button2, binding.button3, binding.button4,
+            binding.button5, binding.button6, binding.button7, binding.button8, binding.button9
+        )
+        val operatorButtonList: List<Pair<Button, Operator>> = listOf(
+            binding.buttonPlus to Operator.Plus,
+            binding.buttonMinus to Operator.Minus,
+            binding.buttonMultiply to Operator.Multiply,
+            binding.buttonDivide to Operator.Divide
+        )
+
+        numberButtonList.forEach{button -> setNumberButtonOnClickListener(button)}
+        operatorButtonList.forEach { (button, operator) -> setOperatorButtonOnClickListener(button, operator) }
         binding.buttonDelete.setOnClickListener {
             presenter.removeLastInExpression()
         }
@@ -73,7 +44,19 @@ class MainActivity() : AppCompatActivity(), MainContract.View {
         binding.textView.text = expression
     }
 
-    override fun showError() {
+    override fun showIncompleteExpressionError() {
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun setNumberButtonOnClickListener(button: Button) {
+        button.setOnClickListener {
+            presenter.addToExpression(button.text.toString().toInt())
+        }
+    }
+
+    private fun setOperatorButtonOnClickListener(button: Button, operator: Operator) {
+        button.setOnClickListener {
+            presenter.addToExpression(operator)
+        }
     }
 }
