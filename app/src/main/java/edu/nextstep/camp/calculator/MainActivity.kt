@@ -7,10 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
-import edu.nextstep.domain.CalculateHistoryItem
-import edu.nextstep.domain.Calculator
-import edu.nextstep.domain.Expression
-import edu.nextstep.domain.Operator
+import edu.nextstep.domain.*
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
@@ -77,8 +74,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         }
     }
 
-    override fun refreshHistory(historyItem: CalculateHistoryItem) {
-        historyAdapter.setItem(historyItem)
+    override fun refreshHistory(historyItems: CalculateHistoryItems) {
+        historyAdapter.submitList(historyItems.getItems())
     }
 
 }
