@@ -1,6 +1,7 @@
 package edu.nextstep.camp.calculator
 
 import com.google.common.truth.Truth.assertThat
+import edu.nextstep.camp.calculator.domain.Calculator
 import io.mockk.*
 import org.junit.Before
 import org.junit.Test
@@ -14,8 +15,8 @@ class MainPresenterTest {
         // 1. 실제 객체를 사용 (UI 테스트)
         // 2. Fake 객체를 사용
         // 3. 최후의 수단으로 Mockk, spy 객체 사용
-        view = mockk( )
-        presenter = MainPresenter(view)
+        view = mockk(relaxed = true)
+        presenter = MainPresenter(view, Calculator())
     }
 
     @Test
@@ -71,10 +72,10 @@ class MainPresenterTest {
     fun `equal 을 입력하면 수식이 계산되고 계산된 수식을 보여줘야 한다`() {
         // given
         val expressionSlot = slot<String>()
-        every { view.showExpression(capture(expressionSlot)) } just Runs
         presenter.addToNumber("1")
         presenter.addToPlus()
         presenter.addToNumber("2")
+        every { view.showExpression(capture(expressionSlot)) } just Runs
 
         // when
         presenter.calculate()
@@ -83,5 +84,24 @@ class MainPresenterTest {
         val actual = expressionSlot.captured
         assertThat(actual).isEqualTo("3")
         verify { view.showExpression(actual) }
+    }
+
+    @Test
+    fun `히스토리가 보이도록 디스플레이를 바꾸면 히스토리가 보여야 한다`() {
+
+        // when
+        presenter.isHistoryVisible(true)
+
+        // then
+        verify { view.showHistory() }
+    }
+
+    @Test
+    fun `히스토리가 보이지 않도록 디스플레이를 바꾸면 수식 화면이 보여야 한다`() {
+        // when
+        presenter.isHistoryVisible(false)
+
+        // then
+        verify { view.showCalculate() }
     }
 }
