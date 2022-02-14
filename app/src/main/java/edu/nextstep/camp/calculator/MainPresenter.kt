@@ -1,13 +1,12 @@
 package edu.nextstep.camp.calculator
 
-import edu.nextstep.camp.calculator.domain.Calculator
-import edu.nextstep.camp.calculator.domain.Expression
-import edu.nextstep.camp.calculator.domain.Operator
+import edu.nextstep.camp.calculator.domain.*
 
 class MainPresenter(
     private val view: MainContract.View,
     private val calculator: Calculator = Calculator(),
-    private var expression: Expression = Expression.EMPTY
+    private var expression: Expression = Expression.EMPTY,
+    private var memory: Memory = Memory.EMPTY
 ) : MainContract.Presenter {
 
     override fun addToNumber(number: String) {
@@ -46,7 +45,17 @@ class MainPresenter(
             view.showExpressionError()
             return
         }
+        memory += History(expression.toString(), result.toString())
+        view.memorizeHistory(memory)
+
         expression = Expression.EMPTY + result
         view.showExpression(expression.toString())
+    }
+
+    override fun isHistoryVisible(isVisible: Boolean) {
+        when (isVisible) {
+            true -> view.showHistory()
+            false -> view.showCalculate()
+        }
     }
 }
