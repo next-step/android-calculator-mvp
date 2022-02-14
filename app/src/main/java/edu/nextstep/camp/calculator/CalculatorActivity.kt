@@ -61,12 +61,12 @@ class CalculatorActivity : AppCompatActivity(), CalculatorContract.View {
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
     }
 
-    override fun visibleCalculationMemory() = with(binding) {
+    override fun showCalculationMemory() = with(binding) {
         recyclerView.visibility = View.VISIBLE
         textView.visibility = View.GONE
     }
 
-    override fun invisibleCalculationMemory() = with(binding) {
+    override fun hideCalculationMemory() = with(binding) {
         recyclerView.visibility = View.GONE
         textView.visibility = View.VISIBLE
     }

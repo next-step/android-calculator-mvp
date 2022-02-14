@@ -9,8 +9,8 @@ interface CalculatorContract {
     interface View : BaseView<Presenter> {
         fun refreshExpression(expression: Expression)
         fun notifyInCompleteExpression()
-        fun visibleCalculationMemory()
-        fun invisibleCalculationMemory()
+        fun showCalculationMemory()
+        fun hideCalculationMemory()
         fun refreshCalculationMemory(records: List<CalculationMemory.Record>)
     }
 

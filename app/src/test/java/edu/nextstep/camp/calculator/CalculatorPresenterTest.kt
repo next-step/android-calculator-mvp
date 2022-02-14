@@ -167,8 +167,8 @@ class CalculatorPresenterTest {
         // when :
         presenter.toggleCalculationMemory(true)
         // then :
-        verify { view.invisibleCalculationMemory() }
-        verify(exactly = 0) { view.visibleCalculationMemory() }
+        verify { view.hideCalculationMemory() }
+        verify(exactly = 0) { view.showCalculationMemory() }
     }
 
     @Test
@@ -177,7 +177,7 @@ class CalculatorPresenterTest {
         // when :
         presenter.toggleCalculationMemory(false)
         // then :
-        verify { view.visibleCalculationMemory() }
-        verify(exactly = 0) { view.invisibleCalculationMemory() }
+        verify { view.showCalculationMemory() }
+        verify(exactly = 0) { view.hideCalculationMemory() }
     }
 }

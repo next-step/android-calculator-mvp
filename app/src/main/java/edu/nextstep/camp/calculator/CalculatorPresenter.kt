@@ -47,9 +47,9 @@ class CalculatorPresenter(
 
     override fun toggleCalculationMemory(isVisible: Boolean) {
         if (isVisible) {
-            view.invisibleCalculationMemory()
+            view.hideCalculationMemory()
             return
         }
-        view.visibleCalculationMemory()
+        view.showCalculationMemory()
     }
 }
