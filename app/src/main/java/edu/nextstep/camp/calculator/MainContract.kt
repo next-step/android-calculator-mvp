@@ -9,7 +9,15 @@ interface MainContract {
     interface View : BaseView<Presenter> {
         fun showExpression(expression: Expression)
 
+        fun hideExpression()
+
         fun showToast(@StringRes stringId: Int)
+
+        fun showMemoryList(items: List<Pair<String, Int>>)
+
+        fun hideMemoryList()
+
+        fun getMemoryListVisible(): Boolean
     }
 
     interface Presenter {
@@ -20,5 +28,7 @@ interface MainContract {
         fun removeLastToExpression()
 
         fun calculateToExpression()
+
+        fun checkMemoryListVisible()
     }
 }

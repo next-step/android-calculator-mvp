@@ -1,6 +1,7 @@
 package edu.nextstep.camp.calculator
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
@@ -10,12 +11,18 @@ import edu.nextstep.camp.calculator.domain.Operator
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
     override lateinit var presenter: MainContract.Presenter
+    private val adapter by lazy { CalculatorAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         presenter = MainPresenter(this)
+        initButton()
+        initRecyclerView()
+    }
+
+    private fun initButton() {
         binding.button0.setOnClickListener {
             presenter.addToExpression(0)
         }
@@ -64,13 +71,36 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonEquals.setOnClickListener {
             presenter.calculateToExpression()
         }
+        binding.buttonMemory.setOnClickListener {
+            presenter.checkMemoryListVisible()
+        }
+    }
+
+    private fun initRecyclerView() {
+        binding.recyclerView.adapter = adapter
     }
 
     override fun showExpression(expression: Expression) {
+        binding.textView.visibility = View.VISIBLE
         binding.textView.text = expression.toString()
+    }
+
+    override fun hideExpression() {
+        binding.textView.visibility = View.INVISIBLE
     }
 
     override fun showToast(stringId: Int) {
         Toast.makeText(this, stringId, Toast.LENGTH_SHORT).show()
     }
+
+    override fun showMemoryList(items: List<Pair<String, Int>>) {
+        binding.recyclerView.visibility = View.VISIBLE
+        adapter.replaceAll(items)
+    }
+
+    override fun hideMemoryList() {
+        binding.recyclerView.visibility = View.INVISIBLE
+    }
+
+    override fun getMemoryListVisible() = binding.recyclerView.visibility == View.VISIBLE
 }
