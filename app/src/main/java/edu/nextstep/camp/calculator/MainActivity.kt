@@ -58,10 +58,9 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             binding.button7,
             binding.button8,
             binding.button9
-        ).forEachIndexed { index, button ->
-            button.setOnClickListener {
-                presenter.addToExpression(index)
-            }
+        ).forEach {
+            val operandString = it.text.toString()
+            presenter.addToExpression(operandString.toInt())
         }
     }
 
