@@ -122,6 +122,25 @@ internal class MainPresenterTest {
         assertThat(exceptionSlot.captured).isInstanceOf(IllegalArgumentException::class.java)
     }
 
+    @Test
+    @DisplayName("calculate 한 결과가 리스트 형태로 보여진다.")
+    fun calculateHistoryTest() {
+        val presenterHasInitExpression = MainPresenter(mockView, expression = Expression(listOf(12, Operator.Plus, 3)))
+        val historySlot = slot<List<String>>()
+        every { mockView.showCalculateHistory(capture(historySlot)) } returns mockk()
+        every { mockView.showExpression(any()) } returns mockk()
+
+        presenterHasInitExpression.calculate()
+        presenterHasInitExpression.addToExpression(Operator.Multiply)
+        presenterHasInitExpression.addToExpression(12)
+        presenterHasInitExpression.calculate()
+
+        presenterHasInitExpression.displayCalculateHistory()
+
+        assertThat(historySlot.captured).containsExactly("12 + 3\n= 15", "15 * 12\n= 180")
+    }
+
+
     companion object {
         @JvmStatic
         private fun provideArgumentForSequenceInputOperandTest() = listOf(

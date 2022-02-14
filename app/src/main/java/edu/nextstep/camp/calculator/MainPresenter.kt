@@ -1,13 +1,12 @@
 package edu.nextstep.camp.calculator
 
-import edu.nextstep.camp.calculator.domain.Calculator
-import edu.nextstep.camp.calculator.domain.Expression
-import edu.nextstep.camp.calculator.domain.Operator
+import edu.nextstep.camp.calculator.domain.*
 
 class MainPresenter(
     private val view: MainContract.View,
     private val calculator: Calculator = Calculator(),
-    private var expression: Expression = Expression.EMPTY
+    private var expression: Expression = Expression.EMPTY,
+    private val calculateStorage: CalculateStorage = MemoryCalculateStorage()
 ): MainContract.Presenter {
 
     override fun addToExpression(operand: Int) {
@@ -20,13 +19,21 @@ class MainPresenter(
         view.showExpression(expression)
     }
 
+    override fun displayCalculateHistory() {
+        view.showCalculateHistory(calculateStorage.getAll())
+    }
+
     override fun calculate() {
         val calculatedValue = calculator.calculate(expression.toString())
         if(calculatedValue == null) {
             view.onError(IllegalArgumentException("유효하지 않은 수식입니다."))
             return
         }
-        expression = Expression.EMPTY + calculatedValue
+        val calculatedExpression = Expression(listOf(calculatedValue))
+
+        calculateStorage.save(expression, calculatedExpression)
+        expression = calculatedExpression
+
         view.showExpression(expression)
     }
 
@@ -34,5 +41,6 @@ class MainPresenter(
         expression = expression.removeLast()
         view.showExpression(expression)
     }
+
 
 }
