@@ -5,7 +5,7 @@ import edu.nextstep.camp.calculator.domain.Operator
 import java.lang.Exception
 
 interface BaseView<T> {
-    var presenter: T
+    val presenter: T
 }
 
 interface MainContract {
