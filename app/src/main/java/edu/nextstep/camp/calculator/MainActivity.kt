@@ -1,22 +1,30 @@
 package edu.nextstep.camp.calculator
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.History
+import edu.nextstep.camp.calculator.domain.HistoryData
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
     override lateinit var presenter: MainContract.Presenter
+    private val historyAdapter= HistoryAdapter()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        presenter = MainPresenter(this)
+        binding.recyclerView.adapter = historyAdapter
+
+
+        presenter = MainPresenter(this, History())
 
         binding.button0.setOnClickListener {
             presenter.addToExpression(0)
@@ -79,10 +87,23 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonEquals.setOnClickListener {
             presenter.calculate()
         }
+        binding.buttonMemory.setOnClickListener {
+            presenter.addHistoryResult()
+        }
     }
 
     override fun showIncompleteExpressionError() {
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showHistory(history: History) {
+        if(binding.recyclerView.visibility==View.GONE){
+            historyAdapter.updateHistory(history)
+            binding.recyclerView.visibility = View.VISIBLE
+        }else{
+            binding.recyclerView.visibility = View.GONE
+        }
+
     }
 
     override fun showExpression(expression: Expression) {
