@@ -1,10 +1,9 @@
 package edu.nextstep.camp.calculator
 
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.History
 import edu.nextstep.camp.calculator.domain.Operator
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.verify
+import io.mockk.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.jupiter.api.DisplayName
@@ -12,11 +11,13 @@ import org.junit.jupiter.api.DisplayName
 class MainPresenterTest {
     private lateinit var presenter: MainContract.Presenter
     private lateinit var view: MainContract.View
+    private lateinit var history: History
 
     @Before
     fun setUp() {
-        view = mockk()
-        presenter = MainPresenter(view)
+        view = mockk(relaxed = true)
+        history = History()
+        presenter = MainPresenter(view, history)
     }
 
 
@@ -25,7 +26,7 @@ class MainPresenterTest {
     internal fun test1() {
         //give
         val expected = Expression(listOf(1))
-        every { view.showExpression(expected) } answers { nothing }
+        //   every { view.showExpression(expected) } just Runs
 
         //when
         presenter.addToExpression(1)
@@ -41,8 +42,8 @@ class MainPresenterTest {
     internal fun test2() {
         //give
         val expected = Expression(listOf(1, Operator.Plus))
-        every { view.showExpression(Expression(listOf(1))) } answers { nothing }
-        every { view.showExpression(expected) } answers { nothing }
+        /*  every { view.showExpression(Expression(listOf(1))) } answers { nothing }
+          every { view.showExpression(expected) } answers { nothing }*/
         presenter.addToExpression(1)
 
         //when
@@ -59,8 +60,8 @@ class MainPresenterTest {
     internal fun test3() {
         //given
 
-        every { view.showExpression(any()) } answers { nothing }
-        every { view.showResult(3) } answers { nothing }
+        //  every { view.showExpression(any()) } answers { nothing }
+        //   every { view.showResult(3) } answers { nothing }
         presenter.addToExpression(1)
         presenter.addToExpression(Operator.Plus)
         presenter.addToExpression(2)
@@ -76,10 +77,10 @@ class MainPresenterTest {
     @DisplayName("1 + 2 일 때, 마지막을 제거하면 수식은 1 + 이어야 한다")
     internal fun test4() {
         //give
-        val expected = Expression(listOf(1, Operator.Plus,2))
-        every { view.showExpression(Expression(listOf(1))) } answers {nothing}
-        every { view.showExpression(Expression(listOf(1,Operator.Plus))) } answers {nothing}
-        every { view.showExpression(expected) } answers {nothing}
+        val expected = Expression(listOf(1, Operator.Plus, 2))
+        //   every { view.showExpression(Expression(listOf(1))) } answers {nothing}
+        //    every { view.showExpression(Expression(listOf(1,Operator.Plus))) } answers {nothing}
+        //    every { view.showExpression(expected) } answers {nothing}
         presenter.addToExpression(1)
         presenter.addToExpression(Operator.Plus)
         presenter.addToExpression(2)
