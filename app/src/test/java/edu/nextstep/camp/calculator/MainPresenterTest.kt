@@ -1,10 +1,7 @@
 package edu.nextstep.camp.calculator
 
 import com.google.common.truth.Truth.assertThat
-import edu.nextstep.camp.calculator.domain.CalculateStorage
-import edu.nextstep.camp.calculator.domain.Expression
-import edu.nextstep.camp.calculator.domain.MemoryCalculateStorage
-import edu.nextstep.camp.calculator.domain.Operator
+import edu.nextstep.camp.calculator.domain.*
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
@@ -155,12 +152,12 @@ internal class MainPresenterTest {
     }
 
     private fun getCalculateStorageWithSomeHistory(): CalculateStorage =
-        MemoryCalculateStorage()
-            .apply {
-                save(Expression(listOf(12, Operator.Plus, 3)), Expression(listOf(15)))
-                save(Expression(listOf(15, Operator.Multiply, 12)), Expression(listOf(180)))
-            }
-
+        MemoryCalculateStorage(
+            listOf(
+                HistoryItem(Expression(listOf(12, Operator.Plus, 3)), Expression(listOf(15))),
+                HistoryItem(Expression(listOf(15, Operator.Multiply, 12)), Expression(listOf(180)))
+            )
+        )
 
     companion object {
         @JvmStatic
