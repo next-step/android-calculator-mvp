@@ -45,16 +45,4 @@ internal class MemoryCalculateStorageTest {
 
         assertThat(value).containsExactly("1 + 5\n= 6", "10 - 2 * 5\n= 40", "1 + 5\n= 6")
     }
-
-    @DisplayName("저장된 결과가 모두 초기화된다")
-    @Test
-    fun clearTest() {
-        val formula = Expression(listOf(1, Operator.Plus, 5))
-        val result = Expression(listOf(6))
-        storage.save(formula, result)
-
-        storage.clear()
-
-        assertThat(storage.getAll()).isEmpty()
-    }
 }

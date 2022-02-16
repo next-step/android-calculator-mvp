@@ -10,8 +10,4 @@ class MemoryCalculateStorage(): CalculateStorage {
     override fun getAll(): List<String> {
         return history
     }
-
-    override fun clear() {
-        history.clear()
-    }
 }
