@@ -29,20 +29,19 @@ internal class MemoryCalculateStorageTest {
     @DisplayName("저장된 결과가 오래된 것이 가장 먼저 나오도록 조회된다")
     @Test
     fun multipleSaveTest() {
-        val formulas = listOf(
-            Expression(listOf(1, Operator.Plus, 5)),
-            Expression(listOf(10, Operator.Minus, 2, Operator.Multiply, 5)),
-            Expression(listOf(1, Operator.Plus, 5))
-        )
-        val results = listOf(
-            Expression(listOf(6)),
-            Expression(listOf(40)),
-            Expression(listOf(6))
-        )
-        formulas.zip(results) { a, b -> storage.save(a, b) }
+        initStorageBySave()
 
-        val actual = storage.history
-
-        assertThat(actual).containsExactly("1 + 5$NEW_LINE$EQUAL${SPACE}6", "10 - 2 * 5$NEW_LINE$EQUAL${SPACE}40", "1 + 5$NEW_LINE$EQUAL${SPACE}6")
+        assertThat(storage.history).containsExactly(
+            "1 + 5$NEW_LINE$EQUAL${SPACE}6",
+            "10 - 2 * 5$NEW_LINE$EQUAL${SPACE}40",
+            "1 + 5$NEW_LINE$EQUAL${SPACE}6"
+        )
     }
+
+    private fun initStorageBySave() =
+        storage.apply {
+                save(Expression(listOf(1, Operator.Plus, 5)), Expression(listOf(6)))
+                save(Expression(listOf(10, Operator.Minus, 2, Operator.Multiply, 5)), Expression(listOf(40)))
+                save(Expression(listOf(1, Operator.Plus, 5)), Expression(listOf(6)))
+        }
 }
