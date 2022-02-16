@@ -14,9 +14,11 @@ interface MainContract {
 
         fun showToast(@StringRes stringId: Int)
 
-        fun showMemoryList(items: List<CalculatorMemoryItem>)
+        fun showMemoryList()
 
         fun hideMemoryList()
+
+        fun notifyMemoryList(items: List<CalculatorMemoryItem>)
 
         fun getMemoryListVisible(): Boolean
     }
@@ -31,5 +33,7 @@ interface MainContract {
         fun calculateToExpression()
 
         fun checkMemoryListVisible()
+
+        fun updateMemoryList()
     }
 }

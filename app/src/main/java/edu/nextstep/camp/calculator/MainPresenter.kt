@@ -49,9 +49,13 @@ class MainPresenter(
             view.hideMemoryList()
             view.showExpression(expression)
         } else {
-            view.showMemoryList(calculatorMemory)
+            view.showMemoryList()
             view.hideExpression()
         }
+    }
+
+    override fun updateMemoryList() {
+        view.notifyMemoryList(calculatorMemory)
     }
 
     private fun saveCalculatorInMemory(expression: String, result: Int) {

@@ -123,15 +123,18 @@ class MainPresenterTest {
     fun test5() {
         // given
         every { view.getMemoryListVisible() } returns false
-        every { view.showMemoryList(any()) } answers { nothing }
+        every { view.showMemoryList() } answers { nothing }
         every { view.hideExpression() } answers { nothing }
+        every { view.notifyMemoryList(any()) } answers { nothing }
 
         // when
         presenter.checkMemoryListVisible()
+        presenter.updateMemoryList()
 
         // then
-        verify(exactly = 1) { view.showMemoryList(any()) }
+        verify(exactly = 1) { view.showMemoryList() }
         verify(exactly = 1) { view.hideExpression() }
+        verify(exactly = 1) { view.notifyMemoryList(any()) }
     }
 
     @Test
@@ -142,7 +145,8 @@ class MainPresenterTest {
         every { view.getMemoryListVisible() } returns false
         every { view.showExpression(any()) } answers { nothing }
         every { view.hideExpression() } answers { nothing }
-        every { view.showMemoryList(capture(calculatorMemoryItemSlot)) } answers { nothing }
+        every { view.showMemoryList() } answers { nothing }
+        every { view.notifyMemoryList(capture(calculatorMemoryItemSlot)) } answers { nothing }
         every { view.hideMemoryList() } answers { nothing }
 
         presenter.addToExpression(10)
@@ -156,6 +160,7 @@ class MainPresenterTest {
 
         // when
         presenter.checkMemoryListVisible()
+        presenter.updateMemoryList()
 
         // then
         val actual = calculatorMemoryItemSlot.captured.size

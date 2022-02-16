@@ -74,6 +74,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         }
         binding.buttonMemory.setOnClickListener {
             presenter.checkMemoryListVisible()
+            presenter.updateMemoryList()
         }
     }
 
@@ -94,13 +95,16 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         Toast.makeText(this, stringId, Toast.LENGTH_SHORT).show()
     }
 
-    override fun showMemoryList(items: List<CalculatorMemoryItem>) {
+    override fun showMemoryList() {
         binding.recyclerView.visibility = View.VISIBLE
-        adapter.replaceAll(items)
     }
 
     override fun hideMemoryList() {
         binding.recyclerView.visibility = View.INVISIBLE
+    }
+
+    override fun notifyMemoryList(items: List<CalculatorMemoryItem>) {
+        adapter.replaceAll(items)
     }
 
     override fun getMemoryListVisible() = binding.recyclerView.visibility == View.VISIBLE
