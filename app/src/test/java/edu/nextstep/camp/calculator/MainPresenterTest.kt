@@ -1,7 +1,9 @@
 package edu.nextstep.camp.calculator
 
 import com.google.common.truth.Truth.assertThat
+import edu.nextstep.camp.calculator.domain.CalculateStorage
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.MemoryCalculateStorage
 import edu.nextstep.camp.calculator.domain.Operator
 import io.mockk.every
 import io.mockk.mockk
@@ -123,22 +125,41 @@ internal class MainPresenterTest {
     }
 
     @Test
-    @DisplayName("calculate 한 결과가 리스트 형태로 보여진다.")
-    fun calculateHistoryTest() {
-        val presenterWithInitExpression = MainPresenter(mockView, expression = Expression(listOf(12, Operator.Plus, 3)))
+    @DisplayName("calculate 를 하면 결과가 저장된다.")
+    fun calculateHistorySaveTest() {
+        val presenterWithInitExpression = MainPresenter(mockView, expression = Expression(listOf(15, Operator.Multiply, 12)))
         val historySlot = slot<List<String>>()
         every { mockView.showCalculateHistory(capture(historySlot)) } returns mockk()
         every { mockView.showExpression(any()) } returns mockk()
 
         presenterWithInitExpression.calculate()
-        presenterWithInitExpression.addToExpression(Operator.Multiply)
-        presenterWithInitExpression.addToExpression(12)
-        presenterWithInitExpression.calculate()
-
         presenterWithInitExpression.displayCalculateHistory()
+
+        assertThat(historySlot.captured).containsExactly("15 * 12\n= 180")
+    }
+
+    @Test
+    @DisplayName("calculate 하여 저장되어 있던 결과가 리스트 형태로 보여진다.")
+    fun calculateHistoryDisplayTest() {
+        val presenterWithInits = MainPresenter(
+            view = mockView,
+            expression = Expression(listOf(15, Operator.Multiply, 12)),
+            calculateStorage = getCalculateStorageWithSomeHistory(),
+        )
+        val historySlot = slot<List<String>>()
+        every { mockView.showCalculateHistory(capture(historySlot)) } returns mockk()
+
+        presenterWithInits.displayCalculateHistory()
 
         assertThat(historySlot.captured).containsExactly("12 + 3\n= 15", "15 * 12\n= 180")
     }
+
+    private fun getCalculateStorageWithSomeHistory(): CalculateStorage =
+        MemoryCalculateStorage()
+            .apply {
+                save(Expression(listOf(12, Operator.Plus, 3)), Expression(listOf(15)))
+                save(Expression(listOf(15, Operator.Multiply, 12)), Expression(listOf(180)))
+            }
 
 
     companion object {
