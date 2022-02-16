@@ -20,7 +20,7 @@ class MainPresenter(
     }
 
     override fun displayCalculateHistory() {
-        view.showCalculateHistory(calculateStorage.history)
+        view.showCalculateHistory(calculateStorage.history.map { it.toString() })
     }
 
     override fun calculate() {

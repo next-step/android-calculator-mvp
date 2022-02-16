@@ -21,8 +21,7 @@ internal class MemoryCalculateStorageTest {
 
         storage.save(formula, result)
 
-        val actual = storage.history.first()
-
+        val actual = storage.history.first().toString()
         assertThat(actual).isEqualTo("1 + 5\n= 6")
     }
 
@@ -31,7 +30,8 @@ internal class MemoryCalculateStorageTest {
     fun multipleSaveTest() {
         initStorageBySave()
 
-        assertThat(storage.history).containsExactly(
+        val actual = storage.history.map { it.toString() }
+        assertThat(actual).containsExactly(
             "1 + 5\n= 6",
             "10 - 2 * 5\n= 40",
             "1 + 5\n= 6"
