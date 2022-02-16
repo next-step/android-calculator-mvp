@@ -13,7 +13,7 @@ internal class MemoryCalculateStorageTest {
         storage = MemoryCalculateStorage()
     }
 
-    @DisplayName("수식과 계산된 결과가 '수식\n= 결과' 형태로 정상 저장된다")
+    @DisplayName("수식과 계산된 결과가 '수식$NEW_LINE$EQUAL${SPACE}결과' 형태로 정상 저장된다")
     @Test
     fun saveTest() {
         val formula = Expression(listOf(1, Operator.Plus, 5))
@@ -23,7 +23,7 @@ internal class MemoryCalculateStorageTest {
 
         val actual = storage.history.first()
 
-        assertThat(actual).isEqualTo("1 + 5\n= 6")
+        assertThat(actual).isEqualTo("1 + 5$NEW_LINE$EQUAL${SPACE}6")
     }
 
     @DisplayName("저장된 결과가 오래된 것이 가장 먼저 나오도록 조회된다")
@@ -43,6 +43,6 @@ internal class MemoryCalculateStorageTest {
 
         val actual = storage.history
 
-        assertThat(actual).containsExactly("1 + 5\n= 6", "10 - 2 * 5\n= 40", "1 + 5\n= 6")
+        assertThat(actual).containsExactly("1 + 5$NEW_LINE$EQUAL${SPACE}6", "10 - 2 * 5$NEW_LINE$EQUAL${SPACE}40", "1 + 5$NEW_LINE$EQUAL${SPACE}6")
     }
 }

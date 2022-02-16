@@ -7,6 +7,6 @@ class MemoryCalculateStorage: CalculateStorage {
         get() = _history
 
     override fun save(formula: Expression, result: Expression) {
-        _history.add("$formula\n= $result")
+        _history.add("${formula}$NEW_LINE$EQUAL$SPACE${result}")
     }
 }
