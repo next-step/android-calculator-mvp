@@ -87,7 +87,7 @@ class MainPresenterTest {
     }
 
     @Test
-    fun `히스토리가 보이도록 디스플레이를 바꾸면 히스토리가 보여야 한다`() {
+    fun `히스토리 내역이 보이지 않는 상태에서 히스토리 버튼을 누르면 디스플레이에 히스토리 내역을 보여줘야 한다`() {
 
         // when
         presenter.isHistoryVisible(true)
@@ -97,7 +97,7 @@ class MainPresenterTest {
     }
 
     @Test
-    fun `히스토리가 보이지 않도록 디스플레이를 바꾸면 수식 화면이 보여야 한다`() {
+    fun `히스토리 내역이 보이는 상태에서 히스토리 버튼을 누르면 디스플레이에 히스토리 내역이 보이지 않아야 한다`() {
         // when
         presenter.isHistoryVisible(false)
 
