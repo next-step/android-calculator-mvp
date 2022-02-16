@@ -19,6 +19,6 @@ interface MainContract {
         fun addToExpression(operator: Operator)
         fun removeLast()
         fun calculate()
-        fun addHistoryResult()
+        fun setHistoryData()
     }
 }

@@ -35,7 +35,7 @@ class MainPresenter(
         view.showResult(result)
     }
 
-    override fun addHistoryResult() {
+    override fun setHistoryData() {
         view.showHistory(history)
     }
 

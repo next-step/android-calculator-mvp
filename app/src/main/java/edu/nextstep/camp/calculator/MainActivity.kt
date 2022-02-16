@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.History
-import edu.nextstep.camp.calculator.domain.HistoryData
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainActivity : AppCompatActivity(), MainContract.View {
@@ -88,7 +87,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             presenter.calculate()
         }
         binding.buttonMemory.setOnClickListener {
-            presenter.addHistoryResult()
+            presenter.setHistoryData()
         }
     }
 
