@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import edu.nextstep.camp.calculator.base.BaseView
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
+import edu.nextstep.camp.calculator.model.CalculatorMemoryItem
 
 interface MainContract {
     interface View : BaseView<Presenter> {
@@ -13,7 +14,7 @@ interface MainContract {
 
         fun showToast(@StringRes stringId: Int)
 
-        fun showMemoryList(items: List<Pair<String, Int>>)
+        fun showMemoryList(items: List<CalculatorMemoryItem>)
 
         fun hideMemoryList()
 

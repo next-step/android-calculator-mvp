@@ -3,6 +3,7 @@ package edu.nextstep.camp.calculator
 import com.google.common.truth.Truth.assertThat
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
+import edu.nextstep.camp.calculator.model.CalculatorMemoryItem
 import io.mockk.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -137,11 +138,11 @@ class MainPresenterTest {
     @DisplayName("완전한 수식 2개를 계산 후 시계버튼을 누르면 2개의 저장 기록을 보여준다.")
     fun test6() {
         // given
-        val calculatorMemorySlot = slot<List<Pair<String, Int>>>()
+        val calculatorMemoryItemSlot = slot<List<CalculatorMemoryItem>>()
         every { view.getMemoryListVisible() } returns false
         every { view.showExpression(any()) } answers { nothing }
         every { view.hideExpression() } answers { nothing }
-        every { view.showMemoryList(capture(calculatorMemorySlot)) } answers { nothing }
+        every { view.showMemoryList(capture(calculatorMemoryItemSlot)) } answers { nothing }
         every { view.hideMemoryList() } answers { nothing }
 
         presenter.addToExpression(10)
@@ -157,7 +158,7 @@ class MainPresenterTest {
         presenter.checkMemoryListVisible()
 
         // then
-        val actual = calculatorMemorySlot.captured.size
-        assertThat(actual.toString()).isEqualTo(2)
+        val actual = calculatorMemoryItemSlot.captured.size
+        assertThat(actual).isEqualTo(2)
     }
 }

@@ -3,6 +3,7 @@ package edu.nextstep.camp.calculator
 import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
+import edu.nextstep.camp.calculator.model.CalculatorMemoryItem
 
 class MainPresenter(
     private val view: MainContract.View
@@ -11,7 +12,7 @@ class MainPresenter(
 
     private val calculator = Calculator()
 
-    private val calculatorMemory = mutableListOf<Pair<String, Int>>()
+    private val calculatorMemory = mutableListOf<CalculatorMemoryItem>()
 
     override fun addToExpression(operand: Int) {
         expression += operand
@@ -54,6 +55,6 @@ class MainPresenter(
     }
 
     private fun saveCalculatorInMemory(expression: String, result: Int) {
-        calculatorMemory.add(Pair(expression, result))
+        calculatorMemory.add(CalculatorMemoryItem(expression, result))
     }
 }

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
+import edu.nextstep.camp.calculator.model.CalculatorMemoryItem
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
@@ -93,7 +94,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         Toast.makeText(this, stringId, Toast.LENGTH_SHORT).show()
     }
 
-    override fun showMemoryList(items: List<Pair<String, Int>>) {
+    override fun showMemoryList(items: List<CalculatorMemoryItem>) {
         binding.recyclerView.visibility = View.VISIBLE
         adapter.replaceAll(items)
     }
