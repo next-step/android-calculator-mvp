@@ -1,12 +1,12 @@
 package edu.nextstep.camp.calculator.domain
 
 class MemoryCalculateStorage: CalculateStorage {
-    private val _history: MutableList<String> = mutableListOf()
+    private val _history: MutableList<HistoryItem> = mutableListOf()
 
     override val history: List<String>
-        get() = _history
+        get() = _history.map { it.toString() }
 
     override fun save(formula: Expression, result: Expression) {
-        _history.add("${formula}$NEW_LINE$EQUAL$SPACE${result}")
+        _history.add(HistoryItem(formula, result))
     }
 }
