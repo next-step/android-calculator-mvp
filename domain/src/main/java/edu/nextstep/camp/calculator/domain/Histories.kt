@@ -1,6 +1,6 @@
 package edu.nextstep.camp.calculator.domain
 
-class History {
+class Histories {
     private val memories = mutableListOf<HistoryData>()
 
     val items: List<HistoryData> get() = memories

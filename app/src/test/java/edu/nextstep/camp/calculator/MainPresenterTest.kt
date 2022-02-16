@@ -1,7 +1,7 @@
 package edu.nextstep.camp.calculator
 
 import edu.nextstep.camp.calculator.domain.Expression
-import edu.nextstep.camp.calculator.domain.History
+import edu.nextstep.camp.calculator.domain.Histories
 import edu.nextstep.camp.calculator.domain.Operator
 import io.mockk.*
 import org.junit.Before
@@ -11,13 +11,13 @@ import org.junit.jupiter.api.DisplayName
 class MainPresenterTest {
     private lateinit var presenter: MainContract.Presenter
     private lateinit var view: MainContract.View
-    private lateinit var history: History
+    private lateinit var histories: Histories
 
     @Before
     fun setUp() {
         view = mockk(relaxed = true)
-        history = History()
-        presenter = MainPresenter(view, history)
+        histories = Histories()
+        presenter = MainPresenter(view, histories)
     }
 
 

@@ -4,7 +4,7 @@ import edu.nextstep.camp.calculator.domain.*
 
 class MainPresenter(
     private val view: MainContract.View,
-    private val history: History
+    private val histories: Histories
 ) : MainContract.Presenter {
     private val calculator = Calculator()
     private var expression: Expression = Expression.EMPTY
@@ -30,13 +30,13 @@ class MainPresenter(
             view.showIncompleteExpressionError()
             return
         }
-        history.add(expression,result)
+        histories.add(expression,result)
         expression = Expression.EMPTY + result
         view.showResult(result)
     }
 
     override fun setHistoryData() {
-        view.showHistory(history)
+        view.showHistory(histories)
     }
 
 }

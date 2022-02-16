@@ -4,14 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import edu.nextstep.camp.calculator.databinding.ItemResultBinding
-import edu.nextstep.camp.calculator.domain.History
+import edu.nextstep.camp.calculator.domain.Histories
 import edu.nextstep.camp.calculator.domain.HistoryData
 
 class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
-    private var history: History = History()
+    private var histories: Histories = Histories()
 
-    fun updateHistory(history: History) {
-        this.history = history
+    fun updateHistory(histories: Histories) {
+        this.histories = histories
         notifyDataSetChanged()
     }
 
@@ -21,11 +21,11 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() 
     }
 
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
-        holder.bind(history.items[position])
+        holder.bind(histories.items[position])
 
     }
 
-    override fun getItemCount(): Int = history.items.size
+    override fun getItemCount(): Int = histories.items.size
 
     class HistoryViewHolder(private val binding: ItemResultBinding) :
         RecyclerView.ViewHolder(binding.root) {
