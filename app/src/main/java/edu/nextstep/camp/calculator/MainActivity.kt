@@ -8,22 +8,18 @@ import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.Calculator
-import edu.nextstep.camp.calculator.domain.History
 import edu.nextstep.camp.calculator.domain.Memory
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
     private lateinit var presenter: MainContract.Presenter
-    private val mainHistoryAdapter by lazy {
-        MainHistoryAdapter()
-    }
+    private val mainHistoryAdapter = MainHistoryAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        presenter = MainPresenter(this,Calculator())
+        presenter = MainPresenter(this, Calculator())
         binding.recyclerView.adapter = mainHistoryAdapter
         setClickListener()
     }
@@ -78,7 +74,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             presenter.calculate()
         }
         buttonMemory.setOnClickListener {
-            presenter.isHistoryVisible(binding.recyclerView.visibility != View.VISIBLE)
+            presenter.isHistoryVisible(binding.recyclerView.isVisible)
         }
     }
 
