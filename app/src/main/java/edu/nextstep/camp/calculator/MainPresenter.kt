@@ -20,7 +20,7 @@ class MainPresenter(
     }
 
     override fun displayCalculateHistory() {
-        view.showCalculateHistory(calculateStorage.getAll())
+        view.showCalculateHistory(calculateStorage.history)
     }
 
     override fun calculate() {
@@ -41,6 +41,4 @@ class MainPresenter(
         expression = expression.removeLast()
         view.showExpression(expression)
     }
-
-
 }

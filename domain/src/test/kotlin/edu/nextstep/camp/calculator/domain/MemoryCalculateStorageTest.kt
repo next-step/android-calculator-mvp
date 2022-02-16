@@ -21,7 +21,7 @@ internal class MemoryCalculateStorageTest {
 
         storage.save(formula, result)
 
-        val value = storage.getAll().first()
+        val value = storage.history.first()
 
         assertThat(value).isEqualTo("1 + 5\n= 6")
     }
@@ -41,7 +41,7 @@ internal class MemoryCalculateStorageTest {
         )
         formulas.zip(results) { a, b -> storage.save(a, b) }
 
-        val value = storage.getAll()
+        val value = storage.history
 
         assertThat(value).containsExactly("1 + 5\n= 6", "10 - 2 * 5\n= 40", "1 + 5\n= 6")
     }
