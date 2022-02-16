@@ -2,13 +2,23 @@ package edu.nextstep.camp.calculator
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import edu.nextstep.camp.calculator.databinding.ItemResultBinding
 import edu.nextstep.camp.calculator.model.CalculatorMemoryItem
 
-class CalculatorAdapter : RecyclerView.Adapter<CalculatorAdapter.ViewHolder>() {
+class CalculatorAdapter : ListAdapter<CalculatorMemoryItem, CalculatorAdapter.ViewHolder>(
+    object : DiffUtil.ItemCallback<CalculatorMemoryItem>() {
+        override fun areItemsTheSame(oldItem: CalculatorMemoryItem, newItem: CalculatorMemoryItem) =
+            oldItem == newItem
 
-    private val items = mutableListOf<CalculatorMemoryItem>()
+        override fun areContentsTheSame(oldItem: CalculatorMemoryItem, newItem: CalculatorMemoryItem) =
+            oldItem == newItem
+
+
+    }
+) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemResultBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -16,15 +26,13 @@ class CalculatorAdapter : RecyclerView.Adapter<CalculatorAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(getItem(position))
     }
 
-    override fun getItemCount() = items.size
-
     fun replaceAll(items: List<CalculatorMemoryItem>) {
-        this.items.clear()
-        this.items.addAll(items)
-        notifyDataSetChanged()
+        submitList(items) {
+            notifyDataSetChanged()
+        }
     }
 
     class ViewHolder(private val binding: ItemResultBinding) : RecyclerView.ViewHolder(binding.root) {
