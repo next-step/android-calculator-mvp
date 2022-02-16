@@ -21,8 +21,8 @@ internal class MemoryCalculateStorageTest {
 
         storage.save(formula, result)
 
-        val actual = storage.history.first().toString()
-        assertThat(actual).isEqualTo("1 + 5\n= 6")
+        val actual = storage.history.first()
+        assertThat(actual).isEqualTo(HistoryItem(formula, result))
     }
 
     @DisplayName("저장된 결과가 오래된 것이 가장 먼저 나오도록 조회된다")
@@ -30,11 +30,11 @@ internal class MemoryCalculateStorageTest {
     fun multipleSaveTest() {
         initStorageBySave()
 
-        val actual = storage.history.map { it.toString() }
+        val actual = storage.history
         assertThat(actual).containsExactly(
-            "1 + 5\n= 6",
-            "10 - 2 * 5\n= 40",
-            "1 + 5\n= 6"
+            HistoryItem(Expression(listOf(1, Operator.Plus, 5)), Expression(listOf(6))),
+            HistoryItem(Expression(listOf(10, Operator.Minus, 2, Operator.Multiply, 5)), Expression(listOf(40))),
+            HistoryItem(Expression(listOf(1, Operator.Plus, 5)), Expression(listOf(6)))
         )
     }
 
