@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 internal class MemoryCalculateStorageTest {
-    lateinit var storage: MemoryCalculateStorage
+    private lateinit var storage: MemoryCalculateStorage
 
     @BeforeEach
     fun setUp() {
