@@ -1,7 +1,9 @@
 package edu.nextstep.camp.calculator.domain
 
-internal data class HistoryItem(val formula: Expression, val result: Expression) {
+data class HistoryItem(val formula: Expression, val result: Expression) {
+    private val historyFormat = "$formula\n= $result"
+
     override fun toString(): String {
-        return "${formula}$NEW_LINE$EQUAL$SPACE${result}"
+        return historyFormat
     }
 }
