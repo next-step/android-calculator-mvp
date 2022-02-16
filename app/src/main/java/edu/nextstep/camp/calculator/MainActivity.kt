@@ -85,9 +85,9 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
 
     override fun showCalculateHistory(history: List<String>) {
-        val builder = AlertDialog.Builder(this).apply {
-            setMessage(history.joinToString(separator = "\n\n"))
-        }
-        builder.create().show()
+        AlertDialog.Builder(this)
+            .apply { setMessage(history.joinToString(separator = "\n\n")) }
+            .create()
+            .show()
     }
 }
