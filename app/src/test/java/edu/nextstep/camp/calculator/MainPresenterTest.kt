@@ -54,12 +54,12 @@ internal class MainPresenterTest {
     @MethodSource("provideArgumentForSequenceInputOperandTest")
     @DisplayName("{0} 입력된 상태에서 피연산자 {1}를 입력하면 {2} 된다")
     fun sequenceInputOperandTest(initExpression: Expression, inputs: List<Int>, expected: String) {
-        val presenterHasInitExpression = MainPresenter(mockView, expression = initExpression)
+        val presenterWithInitExpression = MainPresenter(mockView, expression = initExpression)
         val expressionSlot = slot<Expression>()
         every { mockView.showExpression(capture(expressionSlot)) } returns mockk()
 
         inputs.forEach {
-            presenterHasInitExpression.addToExpression(it)
+            presenterWithInitExpression.addToExpression(it)
         }
 
         assertThat(expressionSlot.captured.toString()).isEqualTo(expected)
