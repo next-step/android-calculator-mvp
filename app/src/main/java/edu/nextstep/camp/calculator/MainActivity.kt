@@ -12,7 +12,7 @@ import edu.nextstep.camp.calculator.domain.Operator
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
     override lateinit var presenter: MainContract.Presenter
-    private val historyAdapter= HistoryAdapter()
+    private val historyAdapter = HistoryAdapter()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,10 +96,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun showHistory(histories: Histories) {
-        if(binding.recyclerView.visibility==View.GONE){
-            historyAdapter.updateHistory(histories)
+        if (binding.recyclerView.visibility == View.GONE) {
+            historyAdapter.submitList(histories.items)
             binding.recyclerView.visibility = View.VISIBLE
-        }else{
+        } else {
             binding.recyclerView.visibility = View.GONE
         }
 

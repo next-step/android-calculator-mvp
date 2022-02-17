@@ -2,18 +2,14 @@ package edu.nextstep.camp.calculator
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import edu.nextstep.camp.calculator.databinding.ItemResultBinding
-import edu.nextstep.camp.calculator.domain.Histories
+
 import edu.nextstep.camp.calculator.domain.HistoryData
 
-class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
-    private var histories: Histories = Histories()
-
-    fun updateHistory(histories: Histories) {
-        this.histories = histories
-        notifyDataSetChanged()
-    }
+class HistoryAdapter : ListAdapter<HistoryData, HistoryAdapter.HistoryViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
         val binding = ItemResultBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -21,11 +17,11 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() 
     }
 
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
-        holder.bind(histories.items[position])
+            val data = getItem(position) as HistoryData
+            holder.bind(data)
 
     }
 
-    override fun getItemCount(): Int = histories.items.size
 
     class HistoryViewHolder(private val binding: ItemResultBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -36,5 +32,18 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() 
         }
 
     }
+
+    companion object {
+        val diffUtil = object : DiffUtil.ItemCallback<HistoryData>() {
+            override fun areItemsTheSame(oldItem: HistoryData, newItem: HistoryData) =
+                oldItem.hashCode() == newItem.hashCode()
+
+            override fun areContentsTheSame(oldItem: HistoryData, newItem: HistoryData) =
+                oldItem == newItem
+
+
+        }
+    }
+
 
 }
