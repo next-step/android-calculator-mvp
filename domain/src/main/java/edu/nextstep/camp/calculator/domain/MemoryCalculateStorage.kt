@@ -5,7 +5,7 @@ class MemoryCalculateStorage(history: List<HistoryItem> = emptyList()) : Calcula
     override val history: List<HistoryItem>
         get() = _history.toList()
 
-    override fun save(formula: Expression, result: Expression) {
-        _history.add(HistoryItem(formula, result))
+    override fun save(historyItem: HistoryItem) {
+        _history.add(historyItem)
     }
 }

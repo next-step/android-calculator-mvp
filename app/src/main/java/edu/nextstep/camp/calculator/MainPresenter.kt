@@ -37,7 +37,7 @@ class MainPresenter(
         }
         val calculatedExpression = Expression(listOf(calculatedValue))
 
-        calculateStorage.save(expression, calculatedExpression)
+        calculateStorage.save(HistoryItem(expression, calculatedExpression))
         expression = calculatedExpression
 
         view.showExpression(expression)

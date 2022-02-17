@@ -19,7 +19,7 @@ internal class MemoryCalculateStorageTest {
         val formula = Expression(listOf(1, Operator.Plus, 5))
         val result = Expression(listOf(6))
 
-        storage.save(formula, result)
+        storage.save(HistoryItem(formula, result))
 
         val actual = storage.history.first()
         assertThat(actual).isEqualTo(HistoryItem(formula, result))
@@ -40,8 +40,8 @@ internal class MemoryCalculateStorageTest {
 
     private fun initStorageBySave() =
         storage.apply {
-                save(Expression(listOf(1, Operator.Plus, 5)), Expression(listOf(6)))
-                save(Expression(listOf(10, Operator.Minus, 2, Operator.Multiply, 5)), Expression(listOf(40)))
-                save(Expression(listOf(1, Operator.Plus, 5)), Expression(listOf(6)))
+                save(HistoryItem(Expression(listOf(1, Operator.Plus, 5)), Expression(listOf(6))))
+                save(HistoryItem(Expression(listOf(10, Operator.Minus, 2, Operator.Multiply, 5)), Expression(listOf(40))))
+                save(HistoryItem(Expression(listOf(1, Operator.Plus, 5)), Expression(listOf(6))))
         }
 }
