@@ -21,12 +21,12 @@ class MainPresenter(
 
     override fun displayCalculateHistory() {
         view.showCalculateHistory(
-            calculateStorage.history.map { it.toStringForDisplay() }
+            calculateStorage.history.map { historyItem ->  getStringForDisplay(historyItem) }
         )
     }
 
-    private fun HistoryItem.toStringForDisplay(): String {
-        return "${formula}\n= $result"
+    private fun getStringForDisplay(historyItem: HistoryItem): String {
+        return "${historyItem.formula}\n= ${historyItem.result}"
     }
 
     override fun calculate() {
