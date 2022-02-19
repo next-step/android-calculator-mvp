@@ -30,9 +30,7 @@ class CalculatorAdapter : ListAdapter<CalculatorMemoryItem, CalculatorAdapter.Vi
     }
 
     fun replaceAll(items: List<CalculatorMemoryItem>) {
-        submitList(items) {
-            notifyDataSetChanged()
-        }
+        submitList(items.toList())
     }
 
     class ViewHolder(private val binding: ItemResultBinding) : RecyclerView.ViewHolder(binding.root) {
