@@ -1,14 +1,13 @@
 package edu.nextstep.camp.calculator.domain
 
 import com.google.common.truth.Truth.assertThat
-import edu.nextstep.camp.calculator.domain.Expression.Companion.EMPTY
 import org.junit.jupiter.api.Test
 
 class ExpressionTest {
     @Test
     fun `빈 수식일 때, 피연산자를 추가할 수 있어야한다`() {
         // given
-        val expression = EMPTY
+        val expression = Expression.EMPTY
 
         // when
         val actual = expression + 1
@@ -32,7 +31,7 @@ class ExpressionTest {
     @Test
     fun `빈 수식일 때, + 연산자를 추가할 수 없어야 한다`() {
         // given
-        val expression = EMPTY
+        val expression = Expression.EMPTY
 
         // when
         val actual = expression + Operator.Plus
@@ -120,7 +119,7 @@ class ExpressionTest {
     @Test
     fun `빈 수식일 때, 마지막을 제거해도 빈 수식이어야 한다`() {
         // given
-        val expression = EMPTY
+        val expression = Expression.EMPTY
 
         // when
         val actual = expression.removeLast()
