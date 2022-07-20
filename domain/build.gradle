@@ -17,6 +17,8 @@ dependencies {
 //    testImplementation 'junit:junit:4.13.2'
 //    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.7.1' // junit4 지원
 //    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
+    testImplementation 'io.mockk:mockk:1.12.3'
+    testImplementation "org.junit.jupiter:junit-jupiter-params:5.8.1"
 }
 
 test {
