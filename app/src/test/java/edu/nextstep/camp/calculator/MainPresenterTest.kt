@@ -37,7 +37,7 @@ class MainPresenterTest {
     @ParameterizedTest
     @EnumSource(Operator::class)
     fun `숫자가 있는 상황에서 연산자 입력시 해당 연산자가 잘 보인다`(source: Operator) {
-        // gives : 숫자가 있는 상황에서
+        // given : 숫자가 있는 상황에서
         presenter.enterNumber(1)
 
         // when : 연산자 입력시
@@ -46,5 +46,18 @@ class MainPresenterTest {
         // then : 화면에 해당 연산자가 잘 보인다
         val result = Expression.EMPTY + 1 + source
         verify { view.showExpression(result.toString()) }
+    }
+
+    @Test
+    fun `숫자와 연산자가 있는 상황에서 지우기를 누르면 마지막 글자가 지워진다`() {
+        // given : 숫자와 연산자가 있는 상황에서
+        presenter.enterNumber(1)
+        presenter.enterOperator(Operator.Plus)
+
+        // when : 지우기를 누르면
+        presenter.delete()
+
+        // then : 마지막 글자가 지워진다
+        verify { view.showExpression("1") }
     }
 }

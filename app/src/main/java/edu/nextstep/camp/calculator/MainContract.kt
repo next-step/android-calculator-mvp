@@ -13,5 +13,6 @@ interface MainContract {
     interface Presenter {
         fun enterNumber(number: Int)
         fun enterOperator(operator: Operator)
+        fun delete()
     }
 }

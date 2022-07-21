@@ -35,10 +35,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonMultiply.setOnClickListener { presenter.enterOperator(Operator.Multiply) }
         binding.buttonDivide.setOnClickListener { presenter.enterOperator(Operator.Divide) }
 
-        binding.buttonDelete.setOnClickListener {
-            expression = expression.removeLast()
-            binding.textView.text = expression.toString()
-        }
+        binding.buttonDelete.setOnClickListener { presenter.delete() }
+
         binding.buttonEquals.setOnClickListener {
             val result = calculator.calculate(expression.toString())
             if (result == null) {
