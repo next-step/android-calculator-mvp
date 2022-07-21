@@ -63,4 +63,13 @@ class MainPresenterTest {
         // then
         verify { view.showExpression("12") }
     }
+
+    @Test
+    fun `아무것도 입력하지 않았을 때 기호를 누르면 화면에 빈 값이 표시된다`() {
+        // when
+        presenter.enterOperator(Operator.Plus)
+
+        // then
+        verify { view.showExpression("") }
+    }
 }
