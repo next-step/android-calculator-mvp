@@ -8,6 +8,7 @@ class MainPresenter(
     private val view: MainContract.View
 ) : MainContract.Presenter {
 
+    private val calculator = Calculator()
     private var expression = Expression.EMPTY
 
     override fun enterNumber(number: Int) {
@@ -21,7 +22,9 @@ class MainPresenter(
     }
 
     override fun calculate() {
-        TODO("Not yet implemented")
+        val result = calculator.calculate(expression.toString()) ?: return
+        expression = Expression.EMPTY + result
+        view.showExpression(expression.toString())
     }
 
     override fun removeLast() {
