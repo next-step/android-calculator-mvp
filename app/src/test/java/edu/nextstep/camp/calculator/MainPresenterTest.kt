@@ -72,4 +72,22 @@ class MainPresenterTest {
         // then
         verify { view.showExpression("") }
     }
+
+    @Test
+    fun `숫자가 입력되어 있을 때 지우기를 하면 한 자리가 지워진다`() {
+        // given
+        presenter.enterNumber(1)
+        presenter.enterNumber(2)
+
+        // when
+        presenter.removeLast()
+
+        // then
+        /* -- 질문 --
+         * 여기에서 verify가 removeLast 때문에 호출된게 아니라 given에서 enterNumber(1) 했을 때 호출된 것으로 확인됨
+         * removeLast를 구현하지 않고 비워둔 상태로 이 테스트를 실행해도 pass 됨
+         * enterNumber(1)에서의 호출은 무시하고 when에서의 호출만 확인할 수는 없는지..?
+         */
+        verify { view.showExpression("1") }
+    }
 }
