@@ -1,13 +1,17 @@
 package edu.nextstep.camp.calculator.domain
 
 import com.google.common.truth.Truth.assertThat
+import edu.nextstep.camp.calculator.domain.expression.EMPTY
+import edu.nextstep.camp.calculator.domain.expression.Expressions
+import edu.nextstep.camp.calculator.domain.expression.Operator
+import edu.nextstep.camp.calculator.domain.expression.operand
 import org.junit.jupiter.api.Test
 
 class ExpressionTest {
     @Test
     fun `빈 수식일 때, 피연산자를 추가할 수 있어야한다`() {
         // given
-        val expression = Expression.EMPTY
+        val expression = EMPTY
 
         // when
         val actual = expression + 1
@@ -19,7 +23,7 @@ class ExpressionTest {
     @Test
     fun `'8' 수식이 있을 때, 9를 입력하면 89로 바뀌어야 한다`() {
         // given
-        val expression = Expression(listOf(8))
+        val expression = Expressions(listOf(8.operand()))
 
         // when
         val actual = expression + 9
@@ -31,7 +35,7 @@ class ExpressionTest {
     @Test
     fun `빈 수식일 때, + 연산자를 추가할 수 없어야 한다`() {
         // given
-        val expression = Expression.EMPTY
+        val expression = EMPTY
 
         // when
         val actual = expression + Operator.Plus
@@ -43,7 +47,7 @@ class ExpressionTest {
     @Test
     fun `'1' 수식이 있을 때, + 연산자를 추가할 수 있어야 한다`() {
         // given
-        val expression = Expression(listOf(1))
+        val expression = Expressions(listOf(1.operand()))
 
         // when
         val actual = expression + Operator.Plus
@@ -55,7 +59,7 @@ class ExpressionTest {
     @Test
     fun `'8 +' 수식이 있을 때, + 연산자를 - 연산자로 변경할 수 있어야 한다`() {
         // given
-        val expression = Expression(listOf(8, Operator.Plus))
+        val expression = Expressions(listOf(8.operand(), Operator.Plus))
 
         // when
         val actual = expression + Operator.Minus
@@ -67,7 +71,7 @@ class ExpressionTest {
     @Test
     fun `'32 + 1' 수식이 있을 때, 마지막 1을 제거할 수 있어야 한다`() {
         // given
-        val expression = Expression(listOf(32, Operator.Plus, 1))
+        val expression = Expressions(listOf(32.operand(), Operator.Plus, 1.operand()))
 
         // when
         val actual = expression.removeLast()
@@ -79,7 +83,7 @@ class ExpressionTest {
     @Test
     fun `'32 +' 수식이 있을 때, 마지막 +를 제거할 수 있어야 한다`() {
         // given
-        val expression = Expression(listOf(32, Operator.Plus))
+        val expression = Expressions(listOf(32.operand(), Operator.Plus))
 
         // when
         val actual = expression.removeLast()
@@ -91,7 +95,7 @@ class ExpressionTest {
     @Test
     fun `'32' 수식이 있을 때, 마지막 2를 제거할 수 있어야 한다`() {
         // given
-        val expression = Expression(listOf(32))
+        val expression = Expressions(listOf(3.operand(), 2.operand()))
 
         // when
         val actual = expression.removeLast()
@@ -103,7 +107,7 @@ class ExpressionTest {
     @Test
     fun `'3' 수식이 있을 때, 마지막 3을 제거할 수 있어야 한다`() {
         // given
-        val expression = Expression(listOf(3))
+        val expression = Expressions(listOf(3.operand()))
 
         // when
         val actual = expression.removeLast()
@@ -115,7 +119,7 @@ class ExpressionTest {
     @Test
     fun `빈 수식일 때, 마지막을 제거해도 빈 수식이어야 한다`() {
         // given
-        val expression = Expression.EMPTY
+        val expression = Expressions(listOf(EMPTY))
 
         // when
         val actual = expression.removeLast()

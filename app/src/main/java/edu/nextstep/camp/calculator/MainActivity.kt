@@ -4,14 +4,14 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
-import edu.nextstep.camp.calculator.domain.Calculator
-import edu.nextstep.camp.calculator.domain.Expression
-import edu.nextstep.camp.calculator.domain.Operator
+import edu.nextstep.camp.calculator.domain.*
+import edu.nextstep.camp.calculator.domain.expression.Expressions
+import edu.nextstep.camp.calculator.domain.expression.Operand
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val calculator = Calculator()
-    private var expression = Expression.EMPTY
+    private var expression = Expressions()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,19 +59,19 @@ class MainActivity : AppCompatActivity() {
             binding.textView.text = expression.toString()
         }
         binding.buttonPlus.setOnClickListener {
-            expression += Operator.Plus
+            expression += edu.nextstep.camp.calculator.domain.expression.Operator.Plus
             binding.textView.text = expression.toString()
         }
         binding.buttonMinus.setOnClickListener {
-            expression += Operator.Minus
+            expression += edu.nextstep.camp.calculator.domain.expression.Operator.Minus
             binding.textView.text = expression.toString()
         }
         binding.buttonMultiply.setOnClickListener {
-            expression += Operator.Multiply
+            expression += edu.nextstep.camp.calculator.domain.expression.Operator.Mult
             binding.textView.text = expression.toString()
         }
         binding.buttonDivide.setOnClickListener {
-            expression += Operator.Divide
+            expression += edu.nextstep.camp.calculator.domain.expression.Operator.Div
             binding.textView.text = expression.toString()
         }
         binding.buttonDelete.setOnClickListener {
@@ -79,13 +79,14 @@ class MainActivity : AppCompatActivity() {
             binding.textView.text = expression.toString()
         }
         binding.buttonEquals.setOnClickListener {
-            val result = calculator.calculate(expression.toString())
-            if (result == null) {
+            kotlin.runCatching {
+                calculator.evalute(expression.toString())
+            }.onFailure {
                 Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+            }.onSuccess {
+                expression = Expressions(mutableListOf(Operand(it.toDouble())))
+                binding.textView.text = it
             }
-            expression = Expression.EMPTY + result
-            binding.textView.text = result.toString()
         }
     }
 }
