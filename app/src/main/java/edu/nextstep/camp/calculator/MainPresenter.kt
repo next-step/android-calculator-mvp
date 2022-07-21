@@ -22,7 +22,13 @@ class MainPresenter(
     }
 
     override fun calculate() {
-        val result = calculator.calculate(expression.toString()) ?: return
+        val result = calculator.calculate(expression.toString())
+
+        if (result == null) {
+            view.showIncomplete()
+            return
+        }
+
         expression = Expression.EMPTY + result
         view.showExpression(expression.toString())
     }
