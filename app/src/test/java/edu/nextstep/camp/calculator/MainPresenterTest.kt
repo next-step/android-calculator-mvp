@@ -117,4 +117,17 @@ class MainPresenterTest {
         // then
         verify { view.showExpression("4") }
     }
+
+    @Test
+    fun `완성되지 않은 수식을 계산하면 오류 메세지를 표시한다`() {
+        // given
+        presenter.enterNumber(1)
+        presenter.enterOperator(Operator.Plus)
+
+        // when
+        presenter.calculate()
+
+        // then
+        verify { view.showIncomplete() }
+    }
 }
