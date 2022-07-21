@@ -1,13 +1,18 @@
 package edu.nextstep.camp.calculator
 
+import edu.nextstep.camp.calculator.domain.Calculator
+import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainPresenter(
     private val view: MainContract.View
 ) : MainContract.Presenter {
 
+    private var expression = Expression.EMPTY
+
     override fun enterNumber(number: Int) {
-        TODO("Not yet implemented")
+        expression += number
+        view.showExpression(expression.toString())
     }
 
     override fun enterOperator(operator: Operator) {
