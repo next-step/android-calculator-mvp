@@ -14,5 +14,6 @@ interface MainContract {
         fun enterNumber(number: Int)
         fun enterOperator(operator: Operator)
         fun delete()
+        fun calculate()
     }
 }

@@ -60,4 +60,18 @@ class MainPresenterTest {
         // then : 마지막 글자가 지워진다
         verify { view.showExpression("1") }
     }
+
+    @Test
+    fun `완성된 식이 있는 상황에서 Eqauls를 누르면 계산 결과가 보인다`() {
+        // given : 완성된 식이 있는 상황에서
+        presenter.enterNumber(1)
+        presenter.enterOperator(Operator.Plus)
+        presenter.enterNumber(5)
+
+        // when : Equals를 누르면
+        presenter.calculate()
+
+        // then : 계산 결과가 보인다.
+        verify { view.showExpression("6") }
+    }
 }

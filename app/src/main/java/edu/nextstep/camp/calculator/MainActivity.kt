@@ -1,7 +1,6 @@
 package edu.nextstep.camp.calculator
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.Calculator
@@ -36,16 +35,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonDivide.setOnClickListener { presenter.enterOperator(Operator.Divide) }
 
         binding.buttonDelete.setOnClickListener { presenter.delete() }
-
-        binding.buttonEquals.setOnClickListener {
-            val result = calculator.calculate(expression.toString())
-            if (result == null) {
-                Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            expression = Expression.EMPTY + result
-            binding.textView.text = result.toString()
-        }
+        binding.buttonEquals.setOnClickListener { presenter.calculate() }
     }
 
     override fun showExpression(expression: String) {
