@@ -30,22 +30,11 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.button8.setOnClickListener { presenter.enterNumber(8) }
         binding.button9.setOnClickListener { presenter.enterNumber(9) }
 
-        binding.buttonPlus.setOnClickListener {
-            expression += Operator.Plus
-            binding.textView.text = expression.toString()
-        }
-        binding.buttonMinus.setOnClickListener {
-            expression += Operator.Minus
-            binding.textView.text = expression.toString()
-        }
-        binding.buttonMultiply.setOnClickListener {
-            expression += Operator.Multiply
-            binding.textView.text = expression.toString()
-        }
-        binding.buttonDivide.setOnClickListener {
-            expression += Operator.Divide
-            binding.textView.text = expression.toString()
-        }
+        binding.buttonPlus.setOnClickListener { presenter.enterOperator(Operator.Plus) }
+        binding.buttonMinus.setOnClickListener { presenter.enterOperator(Operator.Minus) }
+        binding.buttonMultiply.setOnClickListener { presenter.enterOperator(Operator.Multiply) }
+        binding.buttonDivide.setOnClickListener { presenter.enterOperator(Operator.Divide) }
+
         binding.buttonDelete.setOnClickListener {
             expression = expression.removeLast()
             binding.textView.text = expression.toString()
