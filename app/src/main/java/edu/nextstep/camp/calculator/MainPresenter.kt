@@ -25,6 +25,7 @@ class MainPresenter(
     }
 
     override fun removeLast() {
-        TODO("Not yet implemented")
+        expression = expression.removeLast()
+        view.showExpression(expression.toString())
     }
 }
