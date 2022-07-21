@@ -55,7 +55,7 @@ class MainPresenterTest {
         presenter.enterOperator(Operator.Plus)
 
         // when : 지우기를 누르면
-        presenter.delete()
+        presenter.removeLast()
 
         // then : 마지막 글자가 지워진다
         verify { view.showExpression("1") }

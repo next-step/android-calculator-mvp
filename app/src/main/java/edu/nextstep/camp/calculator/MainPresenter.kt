@@ -23,7 +23,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
         view.showExpression(expression.toString())
     }
 
-    override fun delete() {
+    override fun removeLast() {
         expression = expression.removeLast()
 
         view.showExpression(expression.toString())

@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonMultiply.setOnClickListener { presenter.enterOperator(Operator.Multiply) }
         binding.buttonDivide.setOnClickListener { presenter.enterOperator(Operator.Divide) }
 
-        binding.buttonDelete.setOnClickListener { presenter.delete() }
+        binding.buttonDelete.setOnClickListener { presenter.removeLast() }
         binding.buttonEquals.setOnClickListener { presenter.calculate() }
     }
 
