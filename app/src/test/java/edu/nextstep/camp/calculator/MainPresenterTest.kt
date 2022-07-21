@@ -99,4 +99,22 @@ class MainPresenterTest {
         // then
         verify { view.showExpression("") }
     }
+
+    @Test
+    fun `1 더하기 2 나누기 3 곱하기 4가 입력되어 있을 때 계산을 하면 4가 표시된다`() {
+        // given
+        presenter.enterNumber(1)
+        presenter.enterOperator(Operator.Plus)
+        presenter.enterNumber(2)
+        presenter.enterOperator(Operator.Divide)
+        presenter.enterNumber(3)
+        presenter.enterOperator(Operator.Multiply)
+        presenter.enterNumber(4)
+
+        // when
+        presenter.calculate()
+
+        // then
+        verify { view.showExpression("4") }
+    }
 }
