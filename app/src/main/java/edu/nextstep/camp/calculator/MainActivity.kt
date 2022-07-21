@@ -8,7 +8,7 @@ import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
     private val calculator = Calculator()
     private var expression = Expression.EMPTY
@@ -87,5 +87,13 @@ class MainActivity : AppCompatActivity() {
             expression = Expression.EMPTY + result
             binding.textView.text = result.toString()
         }
+    }
+
+    override fun showExpression(expression: String) {
+        binding.textView.text = expression
+    }
+
+    override fun showIncomplete() {
+        Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
     }
 }
