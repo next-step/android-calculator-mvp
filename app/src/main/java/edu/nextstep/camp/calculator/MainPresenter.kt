@@ -16,7 +16,8 @@ class MainPresenter(
     }
 
     override fun enterOperator(operator: Operator) {
-        TODO("Not yet implemented")
+        expression += operator
+        view.showExpression(expression.toString())
     }
 
     override fun calculate() {
