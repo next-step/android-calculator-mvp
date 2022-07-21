@@ -12,52 +12,24 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
     private val calculator = Calculator()
     private var expression = Expression.EMPTY
+    private val presenter = MainPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.button0.setOnClickListener {
-            expression += 0
-            binding.textView.text = expression.toString()
-        }
-        binding.button1.setOnClickListener {
-            expression += 1
-            binding.textView.text = expression.toString()
-        }
-        binding.button2.setOnClickListener {
-            expression += 2
-            binding.textView.text = expression.toString()
-        }
-        binding.button3.setOnClickListener {
-            expression += 3
-            binding.textView.text = expression.toString()
-        }
-        binding.button4.setOnClickListener {
-            expression += 4
-            binding.textView.text = expression.toString()
-        }
-        binding.button5.setOnClickListener {
-            expression += 5
-            binding.textView.text = expression.toString()
-        }
-        binding.button6.setOnClickListener {
-            expression += 6
-            binding.textView.text = expression.toString()
-        }
-        binding.button7.setOnClickListener {
-            expression += 7
-            binding.textView.text = expression.toString()
-        }
-        binding.button8.setOnClickListener {
-            expression += 8
-            binding.textView.text = expression.toString()
-        }
-        binding.button9.setOnClickListener {
-            expression += 9
-            binding.textView.text = expression.toString()
-        }
+        binding.button0.setOnClickListener { presenter.enterNumber(0) }
+        binding.button1.setOnClickListener { presenter.enterNumber(1) }
+        binding.button2.setOnClickListener { presenter.enterNumber(2) }
+        binding.button3.setOnClickListener { presenter.enterNumber(3) }
+        binding.button4.setOnClickListener { presenter.enterNumber(4) }
+        binding.button5.setOnClickListener { presenter.enterNumber(5) }
+        binding.button6.setOnClickListener { presenter.enterNumber(6) }
+        binding.button7.setOnClickListener { presenter.enterNumber(7) }
+        binding.button8.setOnClickListener { presenter.enterNumber(8) }
+        binding.button9.setOnClickListener { presenter.enterNumber(9) }
+
         binding.buttonPlus.setOnClickListener {
             expression += Operator.Plus
             binding.textView.text = expression.toString()
@@ -87,5 +59,9 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             expression = Expression.EMPTY + result
             binding.textView.text = result.toString()
         }
+    }
+
+    override fun showExpression(expression: String) {
+        binding.textView.text = expression
     }
 }

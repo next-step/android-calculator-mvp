@@ -5,10 +5,10 @@ package edu.nextstep.camp.calculator
  */
 interface MainContract {
     interface View {
-
+        fun showExpression(expression: String)
     }
 
     interface Presenter {
-
+        fun enterNumber(number: Int)
     }
 }
