@@ -74,4 +74,17 @@ class MainPresenterTest {
         // then : 계산 결과가 보인다.
         verify { view.showExpression("6") }
     }
+
+    @Test
+    fun `제대로 완성되지 않은 식이 있는 상황에서 Eqauls를 누르면 토스트를 띄운다`() {
+        // given : 제대로 완성되지 않은 식이 있는 상황에서
+        presenter.enterNumber(1)
+        presenter.enterOperator(Operator.Plus)
+
+        // when : Equals를 누르면
+        presenter.calculate()
+
+        // then : 계산 결과가 보인다.
+        verify { view.showInCompleteExpressionMessage() }
+    }
 }

@@ -8,6 +8,7 @@ import edu.nextstep.camp.calculator.domain.Operator
 interface MainContract {
     interface View {
         fun showExpression(expression: String)
+        fun showInCompleteExpressionMessage()
     }
 
     interface Presenter {

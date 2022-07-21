@@ -1,6 +1,5 @@
 package edu.nextstep.camp.calculator
 
-import android.widget.Toast
 import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
@@ -31,12 +30,11 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
     }
 
     override fun calculate() {
-        val result = calculator.calculate(expression.toString()) ?: return
-// TODO 오류 메세지
-//        if (result == null) {
-//            Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
-//            return@setOnClickListener
-//        }
+        val result = calculator.calculate(expression.toString())
+        if (result == null) {
+            view.showInCompleteExpressionMessage()
+            return
+        }
         expression = Expression.EMPTY + result
 
         view.showExpression(expression.toString())
