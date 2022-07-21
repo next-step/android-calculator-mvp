@@ -6,16 +6,15 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
-import edu.nextstep.camp.calculator.domain.ExpressionTokenProcessor
+import edu.nextstep.camp.calculator.domain.contract.MainContract
 import edu.nextstep.camp.calculator.domain.exception.ExpressionNotCompleteException
 import edu.nextstep.camp.calculator.domain.model.OtherExpressionToken
 import edu.nextstep.camp.calculator.domain.model.ExpressionToken
-import org.jetbrains.annotations.TestOnly
 import kotlin.runCatching
 
-class MainActivity : AppCompatActivity(), UserInputActionReceiver {
+class MainActivity : AppCompatActivity(), UserInputActionReceiver, MainContract.View {
+    override var presenter: MainContract.Presenter = MainContract.PresenterImpl(this)
     private lateinit var binding: ActivityMainBinding
-    private val expressionTokenProcessor by lazy { ExpressionTokenProcessor() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,15 +35,15 @@ class MainActivity : AppCompatActivity(), UserInputActionReceiver {
 
     private fun processInputButton(btn: Button) {
         when {
-            !btn.text.isNullOrBlank() -> processInputAction(ExpressionToken.getFromValue(btn.text.toString()))
-            btn.id == R.id.buttonDelete -> processInputAction(OtherExpressionToken.DEL)
+            !btn.text.isNullOrBlank() -> onExpressionTokenInput(ExpressionToken.getFromValue(btn.text.toString()))
+            btn.id == R.id.buttonDelete -> onExpressionTokenInput(OtherExpressionToken.DEL)
             else -> handleExceptions(IllegalArgumentException("Unknown Input"))
         }
     }
 
-    private fun processInputAction(inputAction: ExpressionToken) {
+    override fun onExpressionTokenInput(expressionToken: ExpressionToken) {
         runCatching {
-            binding.textView.text = expressionTokenProcessor.processUserInputAction(inputAction)
+            presenter.processToken(expressionToken)
         }
             .onFailure {
                 handleExceptions(it)
@@ -65,8 +64,7 @@ class MainActivity : AppCompatActivity(), UserInputActionReceiver {
         }
     }
 
-    @TestOnly
-    fun setDisplayedText(displayedText: String) {
-        binding.textView.text = expressionTokenProcessor.setCurrentDisplayedText(displayedText)
+    override fun displayExpression(expression: String) {
+        binding.textView.text = expression
     }
 }

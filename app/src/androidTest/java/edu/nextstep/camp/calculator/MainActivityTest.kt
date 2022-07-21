@@ -55,7 +55,7 @@ class MainActivityTest {
     ) {
         // given
         scenario.onActivity { activity ->
-            activity.setDisplayedText(displayedText)
+            activity.presenter.setCurrentDisplayedText(displayedText)
         }
         // when
         onView(allOf(withText(buttonText), withClassName(Matchers.hasToString(MaterialButton::class.java.canonicalName)))).perform(click())
@@ -81,7 +81,7 @@ class MainActivityTest {
     ) {
         // given
         scenario.onActivity { activity ->
-            activity.setDisplayedText(displayedText)
+            activity.presenter.setCurrentDisplayedText(displayedText)
         }
         // when
         onView(withText(buttonText)).perform(click())
@@ -101,7 +101,7 @@ class MainActivityTest {
         displayedText: String, expected: String?, scenario: ActivityScenario<MainActivity>
     ) {
         scenario.onActivity {
-            it.setDisplayedText(displayedText)
+            it.presenter.setCurrentDisplayedText(displayedText)
         }
         onView(withId(R.id.textView)).check(matches(withText(displayedText)))
         onView(withId(R.id.buttonDelete)).perform(click())
@@ -119,7 +119,7 @@ class MainActivityTest {
         displayedText: String, expected: String, scenario: ActivityScenario<MainActivity>
     ) {
         scenario.onActivity {
-            it.setDisplayedText(displayedText)
+            it.presenter.setCurrentDisplayedText(displayedText)
         }
         onView(withId(R.id.textView)).check(matches(withText(displayedText)))
         onView(withId(R.id.buttonEquals)).perform(click())
