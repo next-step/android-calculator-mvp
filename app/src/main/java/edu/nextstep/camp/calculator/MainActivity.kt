@@ -9,7 +9,10 @@ import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainActivity : AppCompatActivity(), MainContract.View {
+
     private lateinit var binding: ActivityMainBinding
+    private lateinit var presenter: MainContract.Presenter
+
     private val calculator = Calculator()
     private var expression = Expression.EMPTY
 
@@ -17,6 +20,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        presenter = MainPresenter(this)
 
         binding.button0.setOnClickListener {
             expression += 0
