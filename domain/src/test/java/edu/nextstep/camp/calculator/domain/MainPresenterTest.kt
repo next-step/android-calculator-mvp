@@ -49,7 +49,7 @@ internal class MainPresenterTest {
         presenter.addToExpression(Operator.Plus)
 
         // when
-        presenter.delete()
+        presenter.removeLast()
 
         // then
         val expected = Expression.EMPTY + 1 + 2

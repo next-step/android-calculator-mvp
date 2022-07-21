@@ -9,7 +9,7 @@ interface MainContract {
     interface Presenter {
         fun addToExpression(operand: Int)
         fun addToExpression(operator: Operator)
-        fun delete()
+        fun removeLast()
         fun calculate()
     }
 }
@@ -31,7 +31,7 @@ class MainPresenter(
         view.showExpression(expression)
     }
 
-    override fun delete() {
+    override fun removeLast() {
         expression.removeLast()
         view.showExpression(expression)
     }

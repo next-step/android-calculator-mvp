@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonMinus.setOnClickListener { presenter.addToExpression(Operator.Minus) }
         binding.buttonMultiply.setOnClickListener { presenter.addToExpression(Operator.Multiply) }
         binding.buttonDivide.setOnClickListener { presenter.addToExpression(Operator.Divide) }
-        binding.buttonDelete.setOnClickListener { presenter.delete() }
+        binding.buttonDelete.setOnClickListener { presenter.removeLast() }
         binding.buttonEquals.setOnClickListener { presenter.calculate() }
     }
 
