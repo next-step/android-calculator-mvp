@@ -51,4 +51,16 @@ class MainPresenterTest {
             verify { view.showExpression("1 $sign") }
         }
     }
+
+    @Test
+    fun `숫자가 입력되어 있을 때 숫자를 입력하면 화면에 표시된다`() {
+        // given
+        presenter.enterNumber(1)
+
+        // when
+        presenter.enterNumber(2)
+
+        // then
+        verify { view.showExpression("12") }
+    }
 }
