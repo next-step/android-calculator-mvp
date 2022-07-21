@@ -1,5 +1,6 @@
 package edu.nextstep.camp.calculator
 
+import edu.nextstep.camp.calculator.domain.Operator
 import io.mockk.MockKAnnotations
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
@@ -28,6 +29,26 @@ class MainPresenterTest {
 
             // then
             verify { view.showExpression("$number") }
+        }
+    }
+
+    @Test
+    fun `숫자가 입력되어 있을 때 기호를 입력하면 화면에 표시된다`() {
+        listOf(
+            Operator.Plus to "+",
+            Operator.Minus to "-",
+            Operator.Multiply to "*",
+            Operator.Divide to "/",
+        ).forEach { (operator, sign) ->
+            // given
+            presenter = MainPresenter(view)
+            presenter.enterNumber(1)
+
+            // when
+            presenter.enterOperator(operator)
+
+            // then
+            verify { view.showExpression("1 $sign") }
         }
     }
 }
