@@ -90,4 +90,13 @@ class MainPresenterTest {
          */
         verify { view.showExpression("1") }
     }
+
+    @Test
+    fun `아무 입력이 없을 때 지우기를 누르면 빈 값이 표시된다`() {
+        // when
+        presenter.removeLast()
+
+        // then
+        verify { view.showExpression("") }
+    }
 }
