@@ -67,7 +67,8 @@ class ExpressionTest {
     @Test
     fun `'32 + 1' 수식이 있을 때, 마지막 1을 제거할 수 있어야 한다`() {
         // given
-        val expression = Expression(listOf(32, Operator.Plus, 1))
+        val expression =
+            Expression(listOf(32, Operator.Plus, 1))
 
         // when
         val actual = expression.removeLast()
