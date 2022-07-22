@@ -66,4 +66,19 @@ class MainPresenterTest {
         assertThat(actual).isEqualTo("1")
         verify { view.showExpression(actual) }
     }
+
+    @Test
+    fun `식의 결과를 호출했을 때 수식에는 최종 결과만 남는다`() {
+        // given
+        val expressionSlot = slot<String>()
+        every { view.showExpression(capture(expressionSlot)) } answers { nothing }
+
+        // when
+        presenter.input(1)
+        presenter.input(Operator.Plus)
+        presenter.input(1)
+
+        // then
+        assertThat(presenter.calculate()).isEqualTo(2)
+    }
 }
