@@ -68,7 +68,7 @@ class MainPresenterTest {
     }
 
     @Test
-    fun `식의 결과를 호출했을 때 수식에는 최종 결과만 남는다`() {
+    fun `식의 결과를 호출했을 때 수식의 결과값을 반환한다`() {
         // given
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } answers { nothing }
