@@ -49,4 +49,21 @@ class MainPresenterTest {
         assertThat(actual).isEqualTo("1 +")
         verify { view.showExpression(actual) }
     }
+
+    @Test
+    fun `지우기 액션이 입력되면 수식의 마지막을 제거한다`() {
+        // given
+        val expressionSlot = slot<String>()
+        every { view.showExpression(capture(expressionSlot)) } answers { nothing }
+
+        // when
+        presenter.input(1)
+        presenter.input(Operator.Plus)
+        presenter.removeLast()
+
+        // then
+        val actual = expressionSlot.captured
+        assertThat(actual).isEqualTo("1")
+        verify { view.showExpression(actual) }
+    }
 }
