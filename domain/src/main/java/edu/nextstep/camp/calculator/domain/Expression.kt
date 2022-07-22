@@ -41,5 +41,9 @@ data class Expression(
 
     companion object {
         val EMPTY = Expression()
+
+        fun newInstance(operand: Int): Expression {
+            return Expression.EMPTY + operand
+        }
     }
 }
