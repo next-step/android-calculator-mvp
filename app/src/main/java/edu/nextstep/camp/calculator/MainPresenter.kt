@@ -5,11 +5,10 @@ import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainPresenter(
-    private val view: MainContract.View
+    private val view: MainContract.View,
+    private val calculator: Calculator,
+    private var expression: Expression,
 ) : MainContract.Presenter {
-
-    private val calculator = Calculator()
-    private var expression = Expression.EMPTY
 
     override fun enterNumber(number: Int) {
         expression += number
