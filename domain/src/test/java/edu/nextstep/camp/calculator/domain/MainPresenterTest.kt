@@ -26,7 +26,7 @@ internal class MainPresenterTest {
         presenter.addToExpression(operand)
 
         // then
-        val expected = Expression.EMPTY + operand
+        val expected = Expression(listOf(operand))
         verify { view.showExpression(expected) }
     }
 
@@ -37,7 +37,7 @@ internal class MainPresenterTest {
         presenter.addToExpression(operator)
 
         // then
-        val expected = Expression.EMPTY + operator
+        val expected = Expression()
         verify { view.showExpression(expected) }
     }
 
@@ -52,7 +52,7 @@ internal class MainPresenterTest {
         presenter.removeLast()
 
         // then
-        val expected = Expression.EMPTY + 1 + 2
+        val expected = Expression(listOf(12))
         verify { view.showExpression(expected) }
     }
 
@@ -69,7 +69,7 @@ internal class MainPresenterTest {
         presenter.calculate()
 
         // then
-        val expected = Expression.newInstance(24)
+        val expected = Expression(listOf(24))
         verify { view.showExpression(expected) }
     }
 

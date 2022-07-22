@@ -32,7 +32,7 @@ class MainPresenter(
     }
 
     override fun removeLast() {
-        expression.removeLast()
+        expression = expression.removeLast()
         view.showExpression(expression)
     }
 
