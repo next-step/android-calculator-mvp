@@ -1,18 +1,8 @@
-package edu.nextstep.camp.calculator.domain
+package edu.nextstep.camp.calculator
 
-interface MainContract {
-    interface View {
-        fun showExpression(expression: Expression)
-        fun showCalculationFailMessage()
-    }
-
-    interface Presenter {
-        fun addToExpression(operand: Int)
-        fun addToExpression(operator: Operator)
-        fun removeLast()
-        fun calculate()
-    }
-}
+import edu.nextstep.camp.calculator.domain.Calculator
+import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.Operator
 
 class MainPresenter(
     private val view: MainContract.View,

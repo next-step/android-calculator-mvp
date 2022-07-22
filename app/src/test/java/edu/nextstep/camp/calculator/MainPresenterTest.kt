@@ -1,5 +1,7 @@
-package edu.nextstep.camp.calculator.domain
+package edu.nextstep.camp.calculator
 
+import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.Operator
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
