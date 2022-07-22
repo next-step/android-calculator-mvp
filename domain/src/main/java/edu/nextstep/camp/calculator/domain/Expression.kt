@@ -1,4 +1,4 @@
-package com.port.domain
+package edu.nextstep.camp.calculator.domain
 
 data class Expression(
     private val values: List<Any> = emptyList()
@@ -41,5 +41,9 @@ data class Expression(
 
     companion object {
         val EMPTY = Expression()
+
+        fun newInstance(operand: Int) : Expression {
+            return Expression.EMPTY + operand;
+        }
     }
 }
