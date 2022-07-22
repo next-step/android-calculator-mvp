@@ -17,17 +17,17 @@ class MainPresenter(
 
     override fun addOperand(operand: Int) {
         expression += operand
-        view.showExpression(expression.toString())
+        view.showExpression(expression)
     }
 
     override fun addOperator(operator: Operator) {
         expression += operator
-        view.showExpression(expression.toString())
+        view.showExpression(expression)
     }
 
     override fun removeLast() {
         expression = expression.removeLast()
-        view.showExpression(expression.toString())
+        view.showExpression(expression)
     }
 
     override fun calculateExpression() {
@@ -37,7 +37,7 @@ class MainPresenter(
             return
         }
         expression = Expression.EMPTY + result
-        view.showExpression(result.toString())
+        view.showExpression(expression)
     }
 
 }
