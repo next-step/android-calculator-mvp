@@ -10,10 +10,6 @@ class MainPresenter(
     private val calculator = Calculator()
     private var expression = Expression.EMPTY
 
-    init {
-        view.showExpression(expression.toString())
-    }
-
     override fun input(operand: Int) {
         expression += operand
         view.showExpression(expression.toString())
