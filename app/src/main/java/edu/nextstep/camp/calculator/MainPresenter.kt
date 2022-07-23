@@ -5,10 +5,10 @@ import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainPresenter(
-    private val view: MainContract.View
+    private val view: MainContract.View,
+    private var expression: Expression = Expression.EMPTY,
 ) : MainContract.Presenter {
     private val calculator = Calculator()
-    private var expression = Expression.EMPTY
 
     override fun input(operand: Int) {
         expression += operand
@@ -25,8 +25,19 @@ class MainPresenter(
         view.showExpression(expression.toString())
     }
 
-    override fun calculate(): Int? {
-        return calculator.calculate(expression.toString())
+    override fun calculate() {
+        when (val calculateResult = calculator.calculate(expression.toString())) {
+            null -> { onFailCalculate() }
+            else -> onSuccessCalculate(calculateResult)
+        }
+    }
+
+    private fun onSuccessCalculate(result: Int) {
+        initExpression(result)
+    }
+
+    private fun onFailCalculate() {
+        view.onFailCalculate()
     }
 
     override fun initExpression(result : Int) {

@@ -65,16 +65,15 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             mainPresenter.removeLast()
         }
         binding.buttonEquals.setOnClickListener {
-            val result = mainPresenter.calculate()
-            if (result == null) {
-                Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            mainPresenter.initExpression(result)
+            mainPresenter.calculate()
         }
     }
 
     override fun showExpression(expression: String) {
         binding.textView.text = expression
+    }
+
+    override fun onFailCalculate() {
+        Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
     }
 }
