@@ -55,9 +55,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
     }
 
-    override fun setItems(items: List<History>) {
+    override fun loadHistories(items: List<History>) {
         adapter.setItems(items)
-        adapter.notifyDataSetChanged()
     }
 
     override fun showHistory() {

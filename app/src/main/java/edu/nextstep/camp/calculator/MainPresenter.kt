@@ -46,7 +46,7 @@ class MainPresenter(
     }
 
     override fun loadHistory() {
-        view.setItems(histories)
+        view.loadHistories(histories)
     }
 
     override fun clickHistory(isShown: Boolean) {

@@ -12,7 +12,7 @@ interface MainContract {
         fun showInCompleteExpressionMessage()
         fun showHistory()
         fun hideHistory()
-        fun setItems(items: List<History>)
+        fun loadHistories(items: List<History>)
     }
 
     interface Presenter {

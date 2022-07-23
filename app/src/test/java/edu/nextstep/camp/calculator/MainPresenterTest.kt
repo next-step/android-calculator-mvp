@@ -108,6 +108,6 @@ class MainPresenterTest {
         presenter.loadHistory()
 
         // then : 기록을 잘 보여준다.
-        verify { view.setItems(listOf(History("1 + 5", 6))) }
+        verify { view.loadHistories(listOf(History("1 + 5", 6))) }
     }
 }
