@@ -5,9 +5,10 @@ import edu.nextstep.camp.calculator.domain.Operator
 interface MainContract {
     interface View {
         fun showExpression(rawExpression: String)
-        fun showCalculationHistories(histories: List<LItem>)
-        fun closeCalculationHistories()
         fun showCalculationFailMessage()
+
+        fun openCalculationHistories(histories: List<CalculationHistoryItem>)
+        fun closeCalculationHistories()
     }
 
     interface Presenter {

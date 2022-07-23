@@ -109,10 +109,10 @@ internal class MainPresenterTest {
 
         // then
         val expected = listOf(
-            LItem("3 + 5", 8),
-            LItem("10 - 3", 7),
+            CalculationHistoryItem("3 + 5", 8),
+            CalculationHistoryItem("10 - 3", 7),
         )
-        verify { view.showCalculationHistories(expected) }
+        verify { view.openCalculationHistories(expected) }
     }
 
     @Test
