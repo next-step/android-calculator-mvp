@@ -1,8 +1,10 @@
 package edu.nextstep.camp.calculator
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
@@ -14,10 +16,15 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
     private lateinit var presenter: MainContract.Presenter
 
+    private val historyListAdapter = HistoryListAdapter()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.adapter = historyListAdapter
 
         presenter = MainPresenter(this, Calculator(), Expression.EMPTY)
 
@@ -69,6 +76,9 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonEquals.setOnClickListener {
             presenter.calculate()
         }
+        binding.buttonMemory.setOnClickListener {
+            presenter.toggleHistory()
+        }
     }
 
     override fun showExpression(expression: String) {
@@ -80,10 +90,13 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun showHistory(historyList: List<History>) {
-        TODO("Not yet implemented")
+        historyListAdapter.submitList(historyList)
+        binding.recyclerView.visibility = View.VISIBLE
+        binding.textView.visibility = View.INVISIBLE
     }
 
     override fun hideHistory() {
-        TODO("Not yet implemented")
+        binding.recyclerView.visibility = View.GONE
+        binding.textView.visibility = View.VISIBLE
     }
 }
