@@ -2,6 +2,7 @@ package edu.nextstep.camp.calculator
 
 import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.History
 import edu.nextstep.camp.calculator.domain.Operator
 
 /**
@@ -12,6 +13,7 @@ class MainPresenter(
     private val calculator: Calculator = Calculator(),
     private var expression: Expression = Expression.EMPTY,
 ) : MainContract.Presenter {
+    private val histories = mutableListOf<History>()
 
     override fun enterNumber(number: Int) {
         expression += number
@@ -37,13 +39,14 @@ class MainPresenter(
             view.showInCompleteExpressionMessage()
             return
         }
+        histories.add(History(expression.toString(), result))
         expression = Expression.EMPTY + result
 
         view.showExpression(expression.toString())
     }
 
     override fun loadHistory() {
-        view.setItems(calculator.history)
+        view.setItems(histories)
     }
 
     override fun clickHistory(isShown: Boolean) {

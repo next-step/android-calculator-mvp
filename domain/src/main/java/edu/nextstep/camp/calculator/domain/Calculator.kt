@@ -1,7 +1,6 @@
 package edu.nextstep.camp.calculator.domain
 
 class Calculator {
-    val history = mutableListOf<History>()
     fun calculate(rawExpression: String): Int? {
         if (rawExpression.isBlank()) return null
 
@@ -15,7 +14,6 @@ class Calculator {
             acc = operator.operation(acc, secondOperand)
         }
 
-        history.add(History(rawExpression, acc))
         return acc
     }
 }
