@@ -11,7 +11,6 @@ interface MainContract {
         fun showExpression(expression: String)
         fun showInCompleteExpressionMessage()
         fun setItems(items: List<History>)
-        fun updateItems()
     }
 
     interface Presenter {

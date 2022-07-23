@@ -44,6 +44,5 @@ class MainPresenter(
 
     override fun loadHistory() {
         view.setItems(calculator.history)
-        view.updateItems()
     }
 }

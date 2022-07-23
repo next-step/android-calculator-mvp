@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.History
@@ -19,7 +20,9 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.historyRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.historyRecyclerView.layoutManager = LinearLayoutManager(this).apply {
+            this.stackFromEnd = true
+        }
         binding.historyRecyclerView.adapter = adapter
 
         binding.button0.setOnClickListener { presenter.enterNumber(0) }
@@ -61,9 +64,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun setItems(items: List<History>) {
         adapter.setItems(items)
-    }
-
-    override fun updateItems() {
         adapter.notifyDataSetChanged()
     }
 }
