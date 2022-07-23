@@ -13,6 +13,7 @@ class Calculator {
             val secondOperand = values[i + 1].toIntOrNull() ?: return null
             acc = operator.operation(acc, secondOperand)
         }
+
         return acc
     }
 }

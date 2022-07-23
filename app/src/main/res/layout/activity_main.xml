@@ -25,16 +25,19 @@
         />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/historyRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:visibility="gone"
+        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/textView"
         app:layout_constraintEnd_toEndOf="@id/textView"
         app:layout_constraintStart_toStartOf="@id/textView"
         app:layout_constraintTop_toTopOf="@id/textView"
         tools:listitem="@layout/item_result"
         tools:visibility="visible"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:stackFromEnd="true"
         />
 
     <View
