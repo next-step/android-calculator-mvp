@@ -10,6 +10,8 @@ interface MainContract {
     interface View {
         fun showExpression(expression: String)
         fun showInCompleteExpressionMessage()
+        fun showHistory()
+        fun hideHistory()
         fun setItems(items: List<History>)
     }
 
@@ -19,5 +21,6 @@ interface MainContract {
         fun removeLast()
         fun calculate()
         fun loadHistory()
+        fun clickHistory(isShown: Boolean)
     }
 }

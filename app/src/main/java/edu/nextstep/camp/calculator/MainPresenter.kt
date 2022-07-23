@@ -45,4 +45,12 @@ class MainPresenter(
     override fun loadHistory() {
         view.setItems(calculator.history)
     }
+
+    override fun clickHistory(isShown: Boolean) {
+        if (isShown) {
+            view.hideHistory()
+        } else {
+            view.showHistory()
+        }
+    }
 }

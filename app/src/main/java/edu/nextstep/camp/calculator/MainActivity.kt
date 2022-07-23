@@ -44,14 +44,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonDelete.setOnClickListener { presenter.removeLast() }
         binding.buttonEquals.setOnClickListener { presenter.calculate() }
 
-        binding.buttonMemory.setOnClickListener {
-            if (binding.historyRecyclerView.isVisible) {
-                binding.historyRecyclerView.visibility = View.GONE
-            } else {
-                presenter.loadHistory()
-                binding.historyRecyclerView.visibility = View.VISIBLE
-            }
-        }
+        binding.buttonMemory.setOnClickListener { presenter.clickHistory(binding.historyRecyclerView.isVisible) }
     }
 
     override fun showExpression(expression: String) {
@@ -65,5 +58,14 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     override fun setItems(items: List<History>) {
         adapter.setItems(items)
         adapter.notifyDataSetChanged()
+    }
+
+    override fun showHistory() {
+        presenter.loadHistory()
+        binding.historyRecyclerView.visibility = View.VISIBLE
+    }
+
+    override fun hideHistory() {
+        binding.historyRecyclerView.visibility = View.GONE
     }
 }
