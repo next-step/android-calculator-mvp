@@ -1,8 +1,5 @@
 package edu.nextstep.camp.calculator
 
-import edu.nextstep.camp.calculator.domain.Expression
-import edu.nextstep.camp.calculator.domain.Operator
-
 import com.google.common.truth.Truth.assertThat
 import org.junit.jupiter.api.Test
 
