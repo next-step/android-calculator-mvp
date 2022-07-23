@@ -20,9 +20,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.historyRecyclerView.layoutManager = LinearLayoutManager(this).apply {
-            this.stackFromEnd = true
-        }
         binding.historyRecyclerView.adapter = adapter
 
         binding.button0.setOnClickListener { presenter.enterNumber(0) }

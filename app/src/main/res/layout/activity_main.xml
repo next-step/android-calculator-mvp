@@ -36,6 +36,8 @@
         app:layout_constraintTop_toTopOf="@id/textView"
         tools:listitem="@layout/item_result"
         tools:visibility="visible"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:stackFromEnd="true"
         />
 
     <View
