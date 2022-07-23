@@ -33,7 +33,6 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryViewHolder>() {
 
 class HistoryViewHolder(private val binding: ItemResultBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(history: History) {
-        binding.tvExpression.text = history.expression
-        binding.tvResult.text = "= ${history.result}"
+        binding.history = history
     }
 }
