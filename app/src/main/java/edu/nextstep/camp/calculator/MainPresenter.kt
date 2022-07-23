@@ -41,4 +41,9 @@ class MainPresenter(
 
         view.showExpression(expression.toString())
     }
+
+    override fun loadHistory() {
+        view.setItems(calculator.history)
+        view.updateItems()
+    }
 }

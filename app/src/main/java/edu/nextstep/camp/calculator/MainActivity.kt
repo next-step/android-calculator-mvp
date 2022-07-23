@@ -4,18 +4,23 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
+import edu.nextstep.camp.calculator.domain.History
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
     private val presenter = MainPresenter(this)
+    private val adapter = HistoryAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.historyRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.historyRecyclerView.adapter = adapter
 
         binding.button0.setOnClickListener { presenter.enterNumber(0) }
         binding.button1.setOnClickListener { presenter.enterNumber(1) }
@@ -40,6 +45,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             if (binding.historyRecyclerView.isVisible) {
                 binding.historyRecyclerView.visibility = View.GONE
             } else {
+                presenter.loadHistory()
                 binding.historyRecyclerView.visibility = View.VISIBLE
             }
         }
@@ -51,5 +57,13 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun showInCompleteExpressionMessage() {
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun setItems(items: List<History>) {
+        adapter.setItems(items)
+    }
+
+    override fun updateItems() {
+        adapter.notifyDataSetChanged()
     }
 }
