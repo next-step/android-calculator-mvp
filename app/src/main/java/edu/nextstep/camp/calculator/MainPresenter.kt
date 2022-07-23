@@ -1,8 +1,8 @@
 package edu.nextstep.camp.calculator
 
 import edu.nextstep.camp.calculator.domain.Calculator
-import edu.nextstep.camp.calculator.domain.ExpressionHistorySaver
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.ExpressionHistorySaver
 import edu.nextstep.camp.calculator.domain.MemoryHistorySaver
 import edu.nextstep.camp.calculator.domain.Operator
 
@@ -46,10 +46,11 @@ class MainPresenter(
     override fun toggleExpressionHistory() {
         isHistoryDisplayed = !isHistoryDisplayed
         if (isHistoryDisplayed) {
-            val histories = historySaver.loadAll()
-            view.showCalculationHistories(histories)
+            historySaver.loadHistories()
+                .map { (rawExp, result) -> LItem(rawExp, result) }
+                .also { view.showCalculationHistories(it) }
         } else {
-            view.showExpression(expression.toString())
+            view.closeCalculationHistories()
         }
     }
 }

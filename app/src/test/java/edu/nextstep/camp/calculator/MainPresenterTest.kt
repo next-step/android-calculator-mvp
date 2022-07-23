@@ -108,32 +108,23 @@ internal class MainPresenterTest {
         presenter.toggleExpressionHistory()
 
         // then
-        val expected = """
-3 + 5
-= 8
-
-10 - 3
-= 7
-        """.trimIndent()
+        val expected = listOf(
+            LItem("3 + 5", 8),
+            LItem("10 - 3", 7),
+        )
         verify { view.showCalculationHistories(expected) }
     }
 
     @Test
     fun `toggle off histories display when click show history button where histories are already displayed`() {
         // given
-        presenter.addToExpression(3)
-        presenter.addToExpression(Operator.Plus)
-        presenter.addToExpression(5)
-        presenter.calculateExpression()
         presenter.toggleExpressionHistory()
 
         // when
         presenter.toggleExpressionHistory()
 
         // then
-        val expectedCurrentDisplay = "8"
-        // FIXME: 최종 호출본을 검증하고 싶다.
-        verify(exactly = 2) { view.showExpression(expectedCurrentDisplay) }
+        verify { view.closeCalculationHistories() }
     }
 
 }

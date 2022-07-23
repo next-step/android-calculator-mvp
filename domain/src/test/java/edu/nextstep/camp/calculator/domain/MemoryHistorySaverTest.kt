@@ -11,7 +11,7 @@ internal class MemoryHistorySaverTest {
     @Test
     fun `load nothing on empty history`() {
         // when
-        val actual = saver.loadAll()
+        val actual = saver.loadHistories()
 
         // then
         assertThat(actual).isEmpty()
@@ -24,11 +24,10 @@ internal class MemoryHistorySaverTest {
         saver.save("3 + 5", "8")
 
         // then
-        val expected = """
-3 + 5
-= 8
-        """.trimIndent()
-        assertThat(saver.loadAll()).isEqualTo(expected)
+        val expected = listOf(
+            "3 + 5" to 8,
+        )
+        assertThat(saver.loadHistories()).isEqualTo(expected)
     }
 
     @Test
@@ -38,14 +37,10 @@ internal class MemoryHistorySaverTest {
         saver.save("10 * 6", "60")
 
         // then
-        val expected = """
-3 + 5
-= 8
-
-10 * 6
-= 60
-        """.trimIndent()
-        assertThat(saver.loadAll()).isEqualTo(expected)
+        val expected = listOf(
+            "3 + 5" to 8,
+            "10 * 6" to 60,
+        )
+        assertThat(saver.loadHistories()).isEqualTo(expected)
     }
-
 }

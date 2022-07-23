@@ -2,15 +2,13 @@ package edu.nextstep.camp.calculator.domain
 
 class MemoryHistorySaver : ExpressionHistorySaver {
 
-    private val lines = mutableListOf<String>()
+    private val histories = mutableListOf<Pair<String, Int>>()
 
     override fun save(rawExpression: String, rawResult: String) {
-        lines.add(rawExpression)
-        lines.add("= $rawResult")
-        lines.add("")
+        histories.add(rawExpression to rawResult.toInt())
     }
 
-    override fun loadAll(): String {
-        return lines.dropLast(1).joinToString("\n")
+    override fun loadHistories(): List<Pair<String, Int>> {
+        return histories
     }
 }
