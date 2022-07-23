@@ -1,5 +1,6 @@
 package edu.nextstep.camp.calculator
 
+import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.History
 import edu.nextstep.camp.calculator.domain.Operator
 import io.mockk.mockk
@@ -99,9 +100,7 @@ class MainPresenterTest {
     @Test
     fun `기록이 있는 상황에서 불러오는 경우 기록을 잘 보여준다`() {
         // given : 기록이 있는 상황에서
-        presenter.enterNumber(1)
-        presenter.enterOperator(Operator.Plus)
-        presenter.enterNumber(5)
+        presenter = MainPresenter(view = view, expression = Expression(listOf(1, Operator.Plus, 5)))
         presenter.calculate()
 
         // when : 기록을 불러오는 경우
