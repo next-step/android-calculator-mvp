@@ -50,7 +50,7 @@ internal class MainPresenterTest {
         presenter.addToExpression(Operator.Plus)
 
         // when
-        presenter.removeLast()
+        presenter.removeLastFromExpression()
 
         // then
         val expected = "12"
@@ -67,7 +67,7 @@ internal class MainPresenterTest {
         presenter.addToExpression(6)
 
         // when
-        presenter.calculate()
+        presenter.calculateExpression()
 
         // then
         val expected = "24"
@@ -82,7 +82,7 @@ internal class MainPresenterTest {
         verify(exactly = 2) { view.showExpression(any()) }
 
         // when
-        presenter.calculate()
+        presenter.calculateExpression()
 
         // then
         verify { view.showCalculationFailMessage() }

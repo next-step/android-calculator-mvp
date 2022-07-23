@@ -30,8 +30,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonMinus.setOnClickListener { presenter.addToExpression(Operator.Minus) }
         binding.buttonMultiply.setOnClickListener { presenter.addToExpression(Operator.Multiply) }
         binding.buttonDivide.setOnClickListener { presenter.addToExpression(Operator.Divide) }
-        binding.buttonDelete.setOnClickListener { presenter.removeLast() }
-        binding.buttonEquals.setOnClickListener { presenter.calculate() }
+        binding.buttonDelete.setOnClickListener { presenter.removeLastFromExpression() }
+        binding.buttonEquals.setOnClickListener { presenter.calculateExpression() }
     }
 
     override fun showExpression(rawExpression: String) {

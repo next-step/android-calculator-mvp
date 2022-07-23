@@ -21,12 +21,12 @@ class MainPresenter(
         view.showExpression(expression.toString())
     }
 
-    override fun removeLast() {
+    override fun removeLastFromExpression() {
         expression = expression.removeLast()
         view.showExpression(expression.toString())
     }
 
-    override fun calculate() {
+    override fun calculateExpression() {
         val result = calculator.calculate(expression.toString())
 
         if (result == null) {
