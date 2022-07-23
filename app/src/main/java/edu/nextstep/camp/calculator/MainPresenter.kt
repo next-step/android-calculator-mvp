@@ -12,9 +12,8 @@ class MainPresenter(
     private val view: MainContract.View,
     private val calculator: Calculator = Calculator(),
     private var expression: Expression = Expression.EMPTY,
+    private val histories: MutableList<History> = mutableListOf()
 ) : MainContract.Presenter {
-    private val histories = mutableListOf<History>()
-
     override fun enterNumber(number: Int) {
         expression += number
 
