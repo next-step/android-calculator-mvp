@@ -1,6 +1,5 @@
 package edu.nextstep.camp.calculator
 
-import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 import io.mockk.mockk
 import io.mockk.verify
@@ -28,7 +27,7 @@ internal class MainPresenterTest {
         presenter.addToExpression(operand)
 
         // then
-        val expected = Expression(listOf(operand))
+        val expected = operand.toString()
         verify { view.showExpression(expected) }
     }
 
@@ -39,7 +38,7 @@ internal class MainPresenterTest {
         presenter.addToExpression(operator)
 
         // then
-        val expected = Expression()
+        val expected = ""
         verify { view.showExpression(expected) }
     }
 
@@ -54,7 +53,7 @@ internal class MainPresenterTest {
         presenter.removeLast()
 
         // then
-        val expected = Expression(listOf(12))
+        val expected = "12"
         verify { view.showExpression(expected) }
     }
 
@@ -71,7 +70,7 @@ internal class MainPresenterTest {
         presenter.calculate()
 
         // then
-        val expected = Expression(listOf(24))
+        val expected = "24"
         verify { view.showExpression(expected) }
     }
 

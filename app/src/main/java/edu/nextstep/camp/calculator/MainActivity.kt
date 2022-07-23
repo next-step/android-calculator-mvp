@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
-import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainActivity : AppCompatActivity(), MainContract.View {
@@ -35,8 +34,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonEquals.setOnClickListener { presenter.calculate() }
     }
 
-    override fun showExpression(expression: Expression) {
-        binding.textView.text = expression.toString()
+    override fun showExpression(rawExpression: String) {
+        binding.textView.text = rawExpression
     }
 
     override fun showCalculationFailMessage() {
