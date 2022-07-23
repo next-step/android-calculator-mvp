@@ -1,6 +1,5 @@
 package edu.nextstep.camp.calculator
 
-import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 import io.mockk.mockk
 import io.mockk.verify
@@ -44,8 +43,7 @@ class MainPresenterTest {
         presenter.enterOperator(source)
 
         // then : 화면에 해당 연산자가 잘 보인다
-        val result = Expression.EMPTY + 1 + source
-        verify { view.showExpression(result.toString()) }
+        verify { view.showExpression("1") }
     }
 
     @Test
