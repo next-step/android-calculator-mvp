@@ -1,6 +1,10 @@
 package edu.nextstep.camp.calculator.domain
 
 class Calculator {
+
+    var historyList = listOf<History>()
+        private set
+
     fun calculate(rawExpression: String): Int? {
         if (rawExpression.isBlank()) return null
 
@@ -13,6 +17,9 @@ class Calculator {
             val secondOperand = values[i + 1].toIntOrNull() ?: return null
             acc = operator.operation(acc, secondOperand)
         }
+
+        historyList = historyList + History(rawExpression, acc)
+
         return acc
     }
 }
