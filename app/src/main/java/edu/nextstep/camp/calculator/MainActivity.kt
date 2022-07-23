@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.History
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainActivity : AppCompatActivity(), MainContract.View {
@@ -76,5 +77,13 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun showIncomplete() {
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showHistory(historyList: List<History>) {
+        TODO("Not yet implemented")
+    }
+
+    override fun hideHistory() {
+        TODO("Not yet implemented")
     }
 }
