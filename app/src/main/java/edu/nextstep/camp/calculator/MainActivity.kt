@@ -1,9 +1,12 @@
 package edu.nextstep.camp.calculator
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
+import edu.nextstep.camp.calculator.view.MemoryRecyclerViewAdapter
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
@@ -17,6 +20,22 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
         presenter = MainPresenter(this)
 
+        initView()
+    }
+
+    private fun initView() {
+        initRecyclerView()
+        setClickListener()
+    }
+
+    private fun initRecyclerView() {
+        binding.recyclerView.apply {
+            adapter = MemoryRecyclerViewAdapter(presenter.getItemList())
+            layoutManager = LinearLayoutManager(this@MainActivity)
+        }
+    }
+
+    private fun setClickListener() {
         binding.button0.setOnClickListener {
             presenter.onClickNumberButton(0)
         }
@@ -65,6 +84,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonEquals.setOnClickListener {
             presenter.onClickEqualButton()
         }
+
+        binding.buttonMemory.setOnClickListener {
+            presenter.onClickMemoryButton()
+        }
     }
 
     override fun setResultTextView(text: String) {
@@ -73,6 +96,16 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun showToastIncompleteExpression() {
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showExpressionMemoryView() {
+        binding.recyclerView.visibility = View.VISIBLE
+        val adapter = binding.recyclerView.adapter as MemoryRecyclerViewAdapter
+        adapter.appendItems(presenter.getItemList())
+    }
+
+    override fun hideExpressionMemoryView() {
+        binding.recyclerView.visibility = View.GONE
     }
 
     companion object {
