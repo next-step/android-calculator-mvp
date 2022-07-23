@@ -37,10 +37,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonEquals.setOnClickListener { presenter.calculate() }
 
         binding.buttonMemory.setOnClickListener {
-            if (binding.recyclerView.isVisible) {
-                binding.recyclerView.visibility = View.GONE
+            if (binding.historyRecyclerView.isVisible) {
+                binding.historyRecyclerView.visibility = View.GONE
             } else {
-                binding.recyclerView.visibility = View.VISIBLE
+                binding.historyRecyclerView.visibility = View.VISIBLE
             }
         }
     }
