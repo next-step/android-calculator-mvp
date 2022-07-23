@@ -118,4 +118,22 @@ internal class MainPresenterTest {
         verify { view.showCalculationHistories(expected) }
     }
 
+    @Test
+    fun `toggle off histories display when click show history button where histories are already displayed`() {
+        // given
+        presenter.addToExpression(3)
+        presenter.addToExpression(Operator.Plus)
+        presenter.addToExpression(5)
+        presenter.calculateExpression()
+        presenter.searchExpressionHistory()
+
+        // when
+        presenter.searchExpressionHistory()
+
+        // then
+        val expectedCurrentDisplay = "8"
+        // FIXME: 최종 호출본을 검증하고 싶다.
+        verify(exactly = 2) { view.showExpression(expectedCurrentDisplay) }
+    }
+
 }

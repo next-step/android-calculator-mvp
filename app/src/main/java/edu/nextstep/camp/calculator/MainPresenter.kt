@@ -13,6 +13,7 @@ class MainPresenter(
 
     private val calculator = Calculator()
     private var expression = Expression.EMPTY
+    private var isHistoryDisplayed = false
 
     override fun addToExpression(operand: Int) {
         expression += operand
@@ -43,7 +44,12 @@ class MainPresenter(
     }
 
     override fun searchExpressionHistory() {
-        val histories = historySaver.loadAll()
-        view.showCalculationHistories(histories)
+        isHistoryDisplayed = !isHistoryDisplayed
+        if (isHistoryDisplayed) {
+            val histories = historySaver.loadAll()
+            view.showCalculationHistories(histories)
+        } else {
+            view.showExpression(expression.toString())
+        }
     }
 }
