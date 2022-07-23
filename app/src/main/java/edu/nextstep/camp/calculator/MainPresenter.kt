@@ -10,7 +10,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
     }
 
     override fun onClickOperandButton(operator: String) {
-        expression += Operator.of(operator) ?: throw IllegalArgumentException()
+        expression += Operator.of(operator) ?: throw IllegalArgumentException("it is not operator")
         view.setResultTextView(expression.toString())
     }
 

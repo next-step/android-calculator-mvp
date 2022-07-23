@@ -16,7 +16,9 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.mockkStatic
+import io.mockk.slot
 import io.mockk.verify
+import io.mockk.verifyAll
 import org.junit.Rule
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -41,8 +43,10 @@ class MainPresenterTest {
         mainPresenter.onClickNumberButton(1)
         mainPresenter.onClickNumberButton(0)
 
-        verify(exactly = 1) { mainMockActivity.setResultTextView("1") }
-        verify(exactly = 1) { mainMockActivity.setResultTextView("10") }
+        verifyAll {
+            mainMockActivity.setResultTextView("1")
+            mainMockActivity.setResultTextView("10")
+        }
     }
 
     @Test
@@ -63,8 +67,7 @@ class MainPresenterTest {
         mainPresenter.onClickDeleteButton()
         mainPresenter.onClickDeleteButton()
 
-        verify(exactly = 1) { mainMockActivity.setResultTextView("1 +") }
-        verify(exactly = 1) { mainMockActivity.setResultTextView("1") }
+        verify { mainMockActivity.setResultTextView("1") }
     }
 
     @Test
