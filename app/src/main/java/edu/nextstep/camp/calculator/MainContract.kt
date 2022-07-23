@@ -25,8 +25,6 @@ interface MainContract {
 
         fun onClickMemoryButton()
 
-        //fun saveExpressions(expression: Expression, result: String)
-
         fun getItemList(): List<MemoryUIModel>
     }
 }
