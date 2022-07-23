@@ -5,6 +5,7 @@ import edu.nextstep.camp.calculator.domain.Operator
 interface MainContract {
     interface View {
         fun showExpression(rawExpression: String)
+        fun showCalculationHistories(histories: String)
         fun showCalculationFailMessage()
     }
 
@@ -13,5 +14,6 @@ interface MainContract {
         fun addToExpression(operator: Operator)
         fun removeLastFromExpression()
         fun calculateExpression()
+        fun searchExpressionHistory()
     }
 }

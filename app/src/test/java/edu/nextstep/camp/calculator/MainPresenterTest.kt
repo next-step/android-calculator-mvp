@@ -88,4 +88,34 @@ internal class MainPresenterTest {
         verify { view.showCalculationFailMessage() }
         verify(exactly = 2) { view.showExpression(any()) }
     }
+
+    @Test
+    fun `show calculation history`() {
+        // given "3 + 5 =" 를 누르고 결과 8이 나온 다음 모두 지운 뒤 "10 - 3 =" 을 눌러 결과 7이 나온 상태
+        presenter.addToExpression(3)
+        presenter.addToExpression(Operator.Plus)
+        presenter.addToExpression(5)
+        presenter.calculateExpression()
+
+        presenter.removeLastFromExpression()
+
+        presenter.addToExpression(10)
+        presenter.addToExpression(Operator.Minus)
+        presenter.addToExpression(3)
+        presenter.calculateExpression()
+
+        // when
+        presenter.searchExpressionHistory()
+
+        // then
+        val expected = """
+3 + 5
+= 8
+
+10 - 3
+= 7
+        """.trimIndent()
+        verify { view.showCalculationHistories(expected) }
+    }
+
 }

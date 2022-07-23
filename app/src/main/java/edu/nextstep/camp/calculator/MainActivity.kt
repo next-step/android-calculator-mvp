@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonDivide.setOnClickListener { presenter.addToExpression(Operator.Divide) }
         binding.buttonDelete.setOnClickListener { presenter.removeLastFromExpression() }
         binding.buttonEquals.setOnClickListener { presenter.calculateExpression() }
+        binding.buttonMemory.setOnClickListener { presenter.searchExpressionHistory() }
     }
 
     override fun showExpression(rawExpression: String) {
@@ -40,5 +41,9 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun showCalculationFailMessage() {
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showCalculationHistories(histories: String) {
+        binding.textView.text = histories
     }
 }

@@ -37,4 +37,8 @@ class MainPresenter(
         expression = Expression.newInstance(result)
         view.showExpression(expression.toString())
     }
+
+    override fun searchExpressionHistory() {
+        TODO("Not yet implemented")
+    }
 }
