@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 
 internal class MemoryHistorySaverTest {
 
-    private val saver: CalculatorHistorySaver = MemoryHistorySaver()
+    private val saver: ExpressionHistorySaver = MemoryHistorySaver()
 
     @Test
     fun `save one pair of expression and result`() {

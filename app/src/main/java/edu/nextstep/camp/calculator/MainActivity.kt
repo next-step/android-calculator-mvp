@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonDivide.setOnClickListener { presenter.addToExpression(Operator.Divide) }
         binding.buttonDelete.setOnClickListener { presenter.removeLastFromExpression() }
         binding.buttonEquals.setOnClickListener { presenter.calculateExpression() }
-        binding.buttonMemory.setOnClickListener { presenter.searchExpressionHistory() }
+        binding.buttonMemory.setOnClickListener { presenter.toggleExpressionHistory() }
     }
 
     override fun showExpression(rawExpression: String) {

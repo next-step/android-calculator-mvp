@@ -1,14 +1,14 @@
 package edu.nextstep.camp.calculator
 
 import edu.nextstep.camp.calculator.domain.Calculator
-import edu.nextstep.camp.calculator.domain.CalculatorHistorySaver
+import edu.nextstep.camp.calculator.domain.ExpressionHistorySaver
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.MemoryHistorySaver
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainPresenter(
     private val view: MainContract.View,
-    private val historySaver: CalculatorHistorySaver = MemoryHistorySaver(),
+    private val historySaver: ExpressionHistorySaver = MemoryHistorySaver(),
 ) : MainContract.Presenter {
 
     private val calculator = Calculator()
@@ -43,7 +43,7 @@ class MainPresenter(
         view.showExpression(expression.toString())
     }
 
-    override fun searchExpressionHistory() {
+    override fun toggleExpressionHistory() {
         isHistoryDisplayed = !isHistoryDisplayed
         if (isHistoryDisplayed) {
             val histories = historySaver.loadAll()

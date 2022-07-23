@@ -1,6 +1,6 @@
 package edu.nextstep.camp.calculator.domain
 
-interface CalculatorHistorySaver {
+interface ExpressionHistorySaver {
     fun save(rawExpression: String, rawResult: String)
     fun loadAll(): String
 }

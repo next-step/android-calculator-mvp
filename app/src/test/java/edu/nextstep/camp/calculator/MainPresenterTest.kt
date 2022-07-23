@@ -105,7 +105,7 @@ internal class MainPresenterTest {
         presenter.calculateExpression()
 
         // when
-        presenter.searchExpressionHistory()
+        presenter.toggleExpressionHistory()
 
         // then
         val expected = """
@@ -125,10 +125,10 @@ internal class MainPresenterTest {
         presenter.addToExpression(Operator.Plus)
         presenter.addToExpression(5)
         presenter.calculateExpression()
-        presenter.searchExpressionHistory()
+        presenter.toggleExpressionHistory()
 
         // when
-        presenter.searchExpressionHistory()
+        presenter.toggleExpressionHistory()
 
         // then
         val expectedCurrentDisplay = "8"
