@@ -1,6 +1,8 @@
 package edu.nextstep.camp.calculator
 
 import edu.nextstep.camp.calculator.domain.Operator
+import io.mockk.Called
+import io.mockk.clearMocks
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
@@ -79,14 +81,14 @@ internal class MainPresenterTest {
         // given "1 *"
         presenter.addToExpression(1)
         presenter.addToExpression(Operator.Multiply)
-        verify(exactly = 2) { view.showExpression(any()) }
+        clearMocks(view)
 
         // when
         presenter.calculateExpression()
 
         // then
         verify { view.showCalculationFailMessage() }
-        verify(exactly = 2) { view.showExpression(any()) }
+        verify(exactly = 0) { view.showExpression(any()) }
     }
 
     @Test
