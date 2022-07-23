@@ -1,5 +1,6 @@
 package edu.nextstep.camp.calculator
 
+import edu.nextstep.camp.calculator.domain.History
 import edu.nextstep.camp.calculator.domain.Operator
 import io.mockk.mockk
 import io.mockk.verify
@@ -84,5 +85,29 @@ class MainPresenterTest {
 
         // then : 계산 결과가 보인다.
         verify { view.showInCompleteExpressionMessage() }
+    }
+
+    @Test
+    fun `기록창이 보이는 경우 기록버튼을 누르면 기록창이 사라진다`() {
+        // when : 기록창이 보이는 경우 기록버튼을 누르면
+        presenter.clickHistory(true)
+
+        // then : 기록창이 사라진다.
+        verify { view.hideHistory() }
+    }
+
+    @Test
+    fun `기록이 있는 상황에서 불러오는 경우 기록을 잘 보여준다`() {
+        // given : 기록이 있는 상황에서
+        presenter.enterNumber(1)
+        presenter.enterOperator(Operator.Plus)
+        presenter.enterNumber(5)
+        presenter.calculate()
+
+        // when : 기록을 불러오는 경우
+        presenter.loadHistory()
+
+        // then : 기록을 잘 보여준다.
+        verify { view.setItems(listOf(History("1 + 5", 6))) }
     }
 }
