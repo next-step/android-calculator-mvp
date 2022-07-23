@@ -1,8 +1,10 @@
 package edu.nextstep.camp.calculator
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.Operator
 
@@ -33,6 +35,14 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
         binding.buttonDelete.setOnClickListener { presenter.removeLast() }
         binding.buttonEquals.setOnClickListener { presenter.calculate() }
+
+        binding.buttonMemory.setOnClickListener {
+            if (binding.recyclerView.isVisible) {
+                binding.recyclerView.visibility = View.GONE
+            } else {
+                binding.recyclerView.visibility = View.VISIBLE
+            }
+        }
     }
 
     override fun showExpression(expression: String) {
