@@ -4,8 +4,8 @@ class MemoryHistorySaver : ExpressionHistorySaver {
 
     private val histories = mutableListOf<Pair<String, Int>>()
 
-    override fun save(rawExpression: String, rawResult: String) {
-        histories.add(rawExpression to rawResult.toInt())
+    override fun save(rawExpression: String, result: Int) {
+        histories.add(rawExpression to result)
     }
 
     override fun loadHistories(): List<Pair<String, Int>> {

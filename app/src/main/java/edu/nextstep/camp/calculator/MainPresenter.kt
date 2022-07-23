@@ -38,7 +38,7 @@ class MainPresenter(
             return
         }
 
-        historySaver.save(expression.toString(), result.toString())
+        historySaver.save(expression.toString(), result)
         expression = Expression.newInstance(result)
         view.showExpression(expression.toString())
     }
