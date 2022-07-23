@@ -2,8 +2,10 @@ package edu.nextstep.camp.calculator
 
 import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.History
 import edu.nextstep.camp.calculator.domain.Operator
 import io.mockk.MockKAnnotations
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.verify
 import org.junit.Before
@@ -93,5 +95,22 @@ class MainPresenterTest {
 
         // then
         verify { view.showIncomplete() }
+    }
+
+    @Test
+    fun `계산된 기록이 있을 때 버튼을 누르면 화면에 표시한다`() {
+        // given
+        presenter = MainPresenter(view, calculator, Expression.EMPTY)
+
+        val historyList = listOf(History("3 + 5", 8), History("10 - 3", 7))
+        every {
+            calculator.historyList
+        } returns historyList
+
+        // when
+        presenter.toggleHistory()
+
+        // then
+        verify { view.showHistory(historyList) }
     }
 }
