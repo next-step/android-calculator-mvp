@@ -9,6 +9,16 @@ internal class MemoryHistorySaverTest {
     private val saver: ExpressionHistorySaver = MemoryHistorySaver()
 
     @Test
+    fun `load nothing on empty history`() {
+        // when
+        val actual = saver.loadAll()
+
+        // then
+        assertThat(actual).isEmpty()
+    }
+
+
+    @Test
     fun `save one pair of expression and result`() {
         // when
         saver.save("3 + 5", "8")
