@@ -3,10 +3,7 @@ package edu.nextstep.camp.calculator
 import com.google.common.truth.Truth.assertThat
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.slot
-import io.mockk.verify
+import io.mockk.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -29,7 +26,7 @@ class MainPresenterTest {
     fun `숫자가 입력되면 수식에 추가되고 변경된 수식을 보여줘야 한다`() {
         // given
         val expressionSlot = slot<Expression>()
-        every { view.showExpression(capture(expressionSlot)) } answers { nothing }
+        every { view.showExpression(capture(expressionSlot)) } just Runs
 
         // when
         presenter.addOperand(1)
@@ -44,7 +41,7 @@ class MainPresenterTest {
     fun `연산자가 입력되면 수식에 추가되고 변경된 수식을 보여줘야 한다`() {
         // given
         val expressionSlot = slot<Expression>()
-        every { view.showExpression(capture(expressionSlot)) } answers { nothing }
+        every { view.showExpression(capture(expressionSlot)) } just Runs
         presenter.addOperand(1)
         // when
         presenter.addOperator(Operator.Plus)
@@ -59,7 +56,7 @@ class MainPresenterTest {
     fun `삭제명령이 입력되면 마지막 문자가 삭제된채로 보여줘야 한다`() {
         // given
         val expressionSlot = slot<Expression>()
-        every { view.showExpression(capture(expressionSlot)) } answers { nothing }
+        every { view.showExpression(capture(expressionSlot)) } just Runs
         presenter.addOperand(1)
         presenter.addOperator(Operator.Plus)
         // when
@@ -75,7 +72,7 @@ class MainPresenterTest {
     fun `등호가 입력되면 계산된 결과값을 보여줘야 한다`() {
         // given
         val expressionSlot = slot<Expression>()
-        every { view.showExpression(capture(expressionSlot)) } answers { nothing }
+        every { view.showExpression(capture(expressionSlot)) } just Runs
         presenter.addOperand(1)
         presenter.addOperator(Operator.Plus)
         presenter.addOperand(1)
@@ -91,8 +88,8 @@ class MainPresenterTest {
     fun `수식이 완성되지 않은채로 등호가 입력되면 토스트를 보여줘야 한다`() {
         // given
         val expressionSlot = slot<Expression>()
-        every { view.showExpression(capture(expressionSlot)) } answers { nothing }
-        every { view.showIncompleteExpressionToast() } answers { nothing }
+        every { view.showExpression(capture(expressionSlot)) } just Runs
+        every { view.showIncompleteExpressionToast() } just Runs
         presenter.addOperand(1)
         presenter.addOperator(Operator.Plus)
         // when

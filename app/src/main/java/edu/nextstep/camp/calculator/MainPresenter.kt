@@ -9,11 +9,10 @@ import edu.nextstep.camp.calculator.domain.Operator
  * Created by jeongjinhong on 2022. 07. 22..
  */
 class MainPresenter(
-    private val view: MainContract.View
+    private val view: MainContract.View,
+    private var expression: Expression = Expression.EMPTY,
+    private val calculator: Calculator = Calculator()
 ) : MainContract.Presenter {
-
-    private var expression = Expression.EMPTY
-    private val calculator = Calculator()
 
     override fun addOperand(operand: Int) {
         expression += operand
