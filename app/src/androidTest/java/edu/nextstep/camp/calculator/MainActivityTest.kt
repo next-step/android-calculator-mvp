@@ -54,8 +54,8 @@ class MainActivityTest {
         displayedText:String, buttonText: String, expected: String, scenario: ActivityScenario<MainActivity>
     ) {
         // given
-        scenario.onActivity { activity ->
-            activity.presenter.setCurrentDisplayedText(displayedText)
+        displayedText.forEach {
+            onView(allOf(withText(it.toString()), withClassName(Matchers.hasToString(MaterialButton::class.java.canonicalName)))).perform(click())
         }
         // when
         onView(allOf(withText(buttonText), withClassName(Matchers.hasToString(MaterialButton::class.java.canonicalName)))).perform(click())
@@ -80,8 +80,8 @@ class MainActivityTest {
         displayedText: String, buttonText: String, expected: String, scenario: ActivityScenario<MainActivity>
     ) {
         // given
-        scenario.onActivity { activity ->
-            activity.presenter.setCurrentDisplayedText(displayedText)
+        displayedText.forEach {
+            onView(allOf(withText(it.toString()), withClassName(Matchers.hasToString(MaterialButton::class.java.canonicalName)))).perform(click())
         }
         // when
         onView(withText(buttonText)).perform(click())
@@ -100,8 +100,9 @@ class MainActivityTest {
     fun givenDisplayedText_WhenDelBtnPressed_ThenDelLastElement(
         displayedText: String, expected: String?, scenario: ActivityScenario<MainActivity>
     ) {
-        scenario.onActivity {
-            it.presenter.setCurrentDisplayedText(displayedText)
+        displayedText.forEach {
+            if (it.isWhitespace()) return
+            onView(allOf(withText(it.toString()), withClassName(Matchers.hasToString(MaterialButton::class.java.canonicalName)))).perform(click())
         }
         onView(withId(R.id.textView)).check(matches(withText(displayedText)))
         onView(withId(R.id.buttonDelete)).perform(click())
@@ -118,8 +119,9 @@ class MainActivityTest {
     fun givenCompleteExpression_WhenEqualsBtnPressed_ThenResultIsDisplayed(
         displayedText: String, expected: String, scenario: ActivityScenario<MainActivity>
     ) {
-        scenario.onActivity {
-            it.presenter.setCurrentDisplayedText(displayedText)
+        displayedText.forEach {
+            if (it.isWhitespace()) return
+            onView(allOf(withText(it.toString()), withClassName(Matchers.hasToString(MaterialButton::class.java.canonicalName)))).perform(click())
         }
         onView(withId(R.id.textView)).check(matches(withText(displayedText)))
         onView(withId(R.id.buttonEquals)).perform(click())

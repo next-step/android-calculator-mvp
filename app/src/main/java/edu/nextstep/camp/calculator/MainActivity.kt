@@ -6,14 +6,14 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
-import edu.nextstep.camp.calculator.domain.contract.MainContract
+import edu.nextstep.camp.calculator.contract.MainContract
 import edu.nextstep.camp.calculator.domain.exception.ExpressionNotCompleteException
 import edu.nextstep.camp.calculator.domain.model.OtherExpressionToken
 import edu.nextstep.camp.calculator.domain.model.ExpressionToken
 import kotlin.runCatching
 
 class MainActivity : AppCompatActivity(), UserInputActionReceiver, MainContract.View {
-    override var presenter: MainContract.Presenter = MainContract.PresenterImpl(this)
+    override lateinit var presenter: MainContract.Presenter
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +25,8 @@ class MainActivity : AppCompatActivity(), UserInputActionReceiver, MainContract.
             lifecycleOwner = this@MainActivity
             userInputActionReceiver = this@MainActivity
         }
+
+        presenter = MainContract.MainPresenter(this)
     }
 
     override fun onReceiveUserInputAction(v: View) {
@@ -41,9 +43,9 @@ class MainActivity : AppCompatActivity(), UserInputActionReceiver, MainContract.
         }
     }
 
-    override fun onExpressionTokenInput(expressionToken: ExpressionToken) {
+    private fun onExpressionTokenInput(expressionToken: ExpressionToken) {
         runCatching {
-            presenter.processToken(expressionToken)
+            presenter.addExpressionToken(expressionToken)
         }
             .onFailure {
                 handleExceptions(it)
