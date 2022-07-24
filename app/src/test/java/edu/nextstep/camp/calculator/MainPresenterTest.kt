@@ -1,7 +1,9 @@
 package edu.nextstep.camp.calculator
 
-import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.ExpressionHistoryItem
 import edu.nextstep.camp.calculator.domain.Operator
+import io.mockk.Called
+import io.mockk.clearMocks
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
@@ -28,7 +30,7 @@ internal class MainPresenterTest {
         presenter.addToExpression(operand)
 
         // then
-        val expected = Expression(listOf(operand))
+        val expected = operand.toString()
         verify { view.showExpression(expected) }
     }
 
@@ -39,7 +41,7 @@ internal class MainPresenterTest {
         presenter.addToExpression(operator)
 
         // then
-        val expected = Expression()
+        val expected = ""
         verify { view.showExpression(expected) }
     }
 
@@ -51,10 +53,10 @@ internal class MainPresenterTest {
         presenter.addToExpression(Operator.Plus)
 
         // when
-        presenter.removeLast()
+        presenter.removeLastFromExpression()
 
         // then
-        val expected = Expression(listOf(12))
+        val expected = "12"
         verify { view.showExpression(expected) }
     }
 
@@ -68,10 +70,10 @@ internal class MainPresenterTest {
         presenter.addToExpression(6)
 
         // when
-        presenter.calculate()
+        presenter.calculateExpression()
 
         // then
-        val expected = Expression(listOf(24))
+        val expected = "24"
         verify { view.showExpression(expected) }
     }
 
@@ -80,13 +82,52 @@ internal class MainPresenterTest {
         // given "1 *"
         presenter.addToExpression(1)
         presenter.addToExpression(Operator.Multiply)
-        verify(exactly = 2) { view.showExpression(any()) }
+        clearMocks(view)
 
         // when
-        presenter.calculate()
+        presenter.calculateExpression()
 
         // then
         verify { view.showCalculationFailMessage() }
-        verify(exactly = 2) { view.showExpression(any()) }
+        verify(exactly = 0) { view.showExpression(any()) }
     }
+
+    @Test
+    fun `show calculation history`() {
+        // given "3 + 5 =" 를 누르고 결과 8이 나온 다음 모두 지운 뒤 "10 - 3 =" 을 눌러 결과 7이 나온 상태
+        presenter.addToExpression(3)
+        presenter.addToExpression(Operator.Plus)
+        presenter.addToExpression(5)
+        presenter.calculateExpression()
+
+        presenter.removeLastFromExpression()
+
+        presenter.addToExpression(10)
+        presenter.addToExpression(Operator.Minus)
+        presenter.addToExpression(3)
+        presenter.calculateExpression()
+
+        // when
+        presenter.toggleExpressionHistory()
+
+        // then
+        val expected = listOf(
+            ExpressionHistoryItem("3 + 5", 8),
+            ExpressionHistoryItem("10 - 3", 7),
+        )
+        verify { view.openCalculationHistories(expected) }
+    }
+
+    @Test
+    fun `toggle off histories display when click show history button where histories are already displayed`() {
+        // given
+        presenter.toggleExpressionHistory()
+
+        // when
+        presenter.toggleExpressionHistory()
+
+        // then
+        verify { view.closeCalculationHistories() }
+    }
+
 }

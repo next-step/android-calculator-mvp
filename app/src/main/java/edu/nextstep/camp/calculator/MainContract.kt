@@ -1,18 +1,22 @@
 package edu.nextstep.camp.calculator
 
-import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.ExpressionHistoryItem
 import edu.nextstep.camp.calculator.domain.Operator
 
 interface MainContract {
     interface View {
-        fun showExpression(expression: Expression)
+        fun showExpression(rawExpression: String)
         fun showCalculationFailMessage()
+
+        fun openCalculationHistories(histories: List<ExpressionHistoryItem>)
+        fun closeCalculationHistories()
     }
 
     interface Presenter {
         fun addToExpression(operand: Int)
         fun addToExpression(operator: Operator)
-        fun removeLast()
-        fun calculate()
+        fun removeLastFromExpression()
+        fun calculateExpression()
+        fun toggleExpressionHistory()
     }
 }
