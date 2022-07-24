@@ -1,93 +1,94 @@
 import edu.nextstep.camp.calculator.domain.Expression
-import edu.nextstep.camp.calculator.domain.MainContract
+import edu.nextstep.camp.calculator.domain.MainContractInterface
 import edu.nextstep.camp.calculator.domain.MainPresenter
 import edu.nextstep.camp.calculator.domain.Operator
 import io.mockk.mockk
 import io.mockk.verify
+import org.junit.Before
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.EnumSource
 import org.junit.jupiter.params.provider.ValueSource
 
-internal class MainPresenterTest {
+class MainPresenterTest {
 
-    private lateinit var view: MainContract.View
-    private lateinit var presenter: MainPresenter
+    private lateinit var mPresenter: MainPresenter
+    private lateinit var mView: MainContractInterface.View
 
     @BeforeEach
-    fun setup() {
-        view = mockk(relaxUnitFun = true)
-        presenter = MainPresenter(view)
+    fun setUp() {
+        mView = mockk(relaxUnitFun = true)
+        mPresenter = MainPresenter(mView)
     }
 
     @ParameterizedTest
     @ValueSource(ints = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0])
-    fun `display_operand_added_expression_when_add_operand_on_empty_expression`(operand: Int) {
+    fun `0부터 9까지 입력 시 정상 노출됨`(inputNumberData: Int) {
         // when
-        presenter.addToExpression(operand)
+        mPresenter.inputNumber(inputNumberData)
 
         // then
-        val expected = Expression.EMPTY + operand
-        verify { view.showExpression(expected) }
+        if (!(inputNumberData.toString().equals(""))) {
+            verify { mView.showCalculateExpression(inputNumberData.toString()) }
+        } else {
+            // inputNumberData.toString()이 빈 값("")이면
+            // 아무것도 실행하지 않기 위해 else문을 비움.
+        }
     }
 
     @ParameterizedTest
     @EnumSource(Operator::class)
-    fun `display_operator_added_expression_when_add_operator_on_empty_expression`(operator: Operator) {
+    fun `숫자와 연산자가 섞였을 때 연산자 정상 노출됨`(inputOperatorData: Operator) {
+        // given
+        mPresenter.inputNumber(1)
+
         // when
-        presenter.addToExpression(operator)
+        mPresenter.inputOperator(inputOperatorData)
 
         // then
-        val expected = Expression.EMPTY + operator
-        verify { view.showExpression(expected) }
+        val result = Expression.EMPTY + 1 + inputOperatorData
+        verify { mView.showCalculateExpression(result.toString()) }
     }
 
     @Test
-    fun `display_last_piece_deleted_expression_when_delete`() {
-        // given "12 +"
-        presenter.addToExpression(1)
-        presenter.addToExpression(2)
-        presenter.addToExpression(Operator.Plus)
+    fun `숫자와 연산자가 섞여 있을 때 삭제 버튼을 누르면 마지막 글자가 지워짐`() {
+        // given
+        mPresenter.inputNumber(1)
+        mPresenter.inputOperator(Operator.Minus)
 
         // when
-        presenter.delete()
+        mPresenter.removeLastIndexData()
 
         // then
-        val expected = Expression.EMPTY + 1 + 2
-        verify { view.showExpression(expected) }
+        verify { mView.showCalculateExpression("1") }
     }
 
     @Test
-    fun `display_final_answer_when_calculate`() {
-        // given "1 + 3 * 6"
-        presenter.addToExpression(1)
-        presenter.addToExpression(Operator.Plus)
-        presenter.addToExpression(3)
-        presenter.addToExpression(Operator.Multiply)
-        presenter.addToExpression(6)
+    fun `식이 완성되고 등호 버튼을 누르면 결과가 정상 노출됨`() {
+        // given
+        mPresenter.inputNumber(1)
+        mPresenter.inputOperator(Operator.Plus)
+        mPresenter.inputNumber(5)
 
         // when
-        presenter.calculate()
+        mPresenter.calculateInputValue()
 
         // then
-        val expected = Expression.newInstance(24)
-        verify { view.showExpression(expected) }
+        verify { mView.showCalculateExpression("6") }
     }
 
     @Test
-    fun `show_fail_message_and_do_nothing_with_display_when_calculate_on_uncompleted_expression`() {
-        // given "1 *"
-        presenter.addToExpression(1)
-        presenter.addToExpression(Operator.Multiply)
-        verify(exactly = 2) { view.showExpression(any()) }
+    fun `미완성된 식이 있는 상태에서 등호 버튼을 누르면 토스트 알림이 노출됨`() {
+        // given
+        mPresenter.inputNumber(1)
+        mPresenter.inputOperator(Operator.Plus)
 
         // when
-        presenter.calculate()
+        mPresenter.calculateInputValue()
 
         // then
-        verify { view.showCalculationFailMessage() }
-        verify(exactly = 2) { view.showExpression(any()) }
+        verify { mView.showCompletionOfExpressionDataMessage() }
     }
 
 }
