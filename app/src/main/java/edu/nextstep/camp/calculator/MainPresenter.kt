@@ -43,12 +43,20 @@ class MainPresenter(
     }
 
     override fun toggleExpressionHistory() {
-        isHistoryDisplayed = !isHistoryDisplayed
-        if (isHistoryDisplayed) {
-            historySaver.loadHistories()
-                .also { view.openCalculationHistories(it) }
-        } else {
-            view.closeCalculationHistories()
+        when (isHistoryDisplayed) {
+            true -> closeExpressionHistories()
+            false -> openExpressionHistories()
         }
+    }
+
+    private fun openExpressionHistories() {
+        historySaver.loadHistories()
+            .also { view.openCalculationHistories(it) }
+        isHistoryDisplayed = true
+    }
+
+    private fun closeExpressionHistories() {
+        view.closeCalculationHistories()
+        isHistoryDisplayed = false
     }
 }
