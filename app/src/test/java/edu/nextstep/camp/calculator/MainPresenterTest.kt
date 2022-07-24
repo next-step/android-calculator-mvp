@@ -1,5 +1,6 @@
 package edu.nextstep.camp.calculator
 
+import edu.nextstep.camp.calculator.domain.CalculatorMemoryImpl
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 import io.mockk.mockk
@@ -115,5 +116,55 @@ internal class MainPresenterTest {
 
         //then
         verify { view.succeedCalculate(expected) }
+    }
+
+    @Test
+    internal fun `계산 기록이 표시되지 않은 상태에서 계산 기록을 활성화하면 계산 기록이 노출된다`() {
+        //given
+        val expected: List<String> = listOf(CalculatorMemoryImpl.SAVE_FORMAT.format("1 + 32", "33"))
+        presenter = MainPresenter(
+            view = view,
+            calculatorMemory = CalculatorMemoryImpl(arrayListOf(CalculatorMemoryImpl.SAVE_FORMAT.format("1 + 32", "33"))),
+            isRecordsMode = false)
+
+        //when
+        presenter.toggleDisplayRecords()
+
+        //then
+        verify { view.showExpression(expected) }
+    }
+
+    @Test
+    internal fun `계산 기록이 표시된 상태에서 계산 기록을 비활성화하면 이전 계산 진행이 노출된다`() {
+        //given
+        val expected = Expression(listOf(1, Operator.Plus))
+        presenter = MainPresenter(
+            view = view,
+            expression = Expression(listOf(1, Operator.Plus)),
+            calculatorMemory = CalculatorMemoryImpl(arrayListOf(CalculatorMemoryImpl.SAVE_FORMAT.format("1 + 32", "33"))),
+            isRecordsMode = true)
+
+        //when
+        presenter.toggleDisplayRecords()
+
+        //then
+        verify { view.disableExpression(expected) }
+    }
+
+    @Test
+    internal fun `연산을 할 때 마다 계산 기록이 저장되어야 한다`() {
+        //given
+        val memory: CalculatorMemoryImpl = mockk(relaxed = true)
+        presenter = MainPresenter(
+            view = view,
+            expression = Expression(listOf(1, Operator.Plus, 32)),
+            calculatorMemory = memory,
+            isRecordsMode = true)
+
+        //when
+        presenter.calculate()
+
+        //then
+        verify { memory.saveExpressionRecord(Expression(listOf(1, Operator.Plus, 32)), 33)}
     }
 }

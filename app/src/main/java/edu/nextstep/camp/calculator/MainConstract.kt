@@ -9,10 +9,14 @@ interface MainConstract {
         fun addToExpression(expression: Int)
         fun removeLast()
         fun calculate()
+        fun toggleDisplayRecords()
     }
 
     interface View {
         fun succeedCalculate(expression: Expression)
         fun failedCalculate()
+
+        fun showExpression(records: List<String>)
+        fun disableExpression(expression: Expression)
     }
 }
