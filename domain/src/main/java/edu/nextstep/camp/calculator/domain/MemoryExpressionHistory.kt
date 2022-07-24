@@ -1,6 +1,6 @@
 package edu.nextstep.camp.calculator.domain
 
-class MemoryHistorySaver : ExpressionHistorySaver {
+class MemoryExpressionHistory : ExpressionHistory {
 
     private val histories = mutableListOf<Pair<String, Int>>()
 

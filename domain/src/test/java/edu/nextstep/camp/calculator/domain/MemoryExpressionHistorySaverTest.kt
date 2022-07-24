@@ -4,9 +4,9 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.jupiter.api.Test
 
 
-internal class MemoryHistorySaverTest {
+internal class MemoryExpressionHistorySaverTest {
 
-    private val saver: ExpressionHistorySaver = MemoryHistorySaver()
+    private val saver: ExpressionHistory = MemoryExpressionHistory()
 
     @Test
     fun `load nothing on empty history`() {

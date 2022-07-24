@@ -2,13 +2,13 @@ package edu.nextstep.camp.calculator
 
 import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
-import edu.nextstep.camp.calculator.domain.ExpressionHistorySaver
-import edu.nextstep.camp.calculator.domain.MemoryHistorySaver
+import edu.nextstep.camp.calculator.domain.ExpressionHistory
+import edu.nextstep.camp.calculator.domain.MemoryExpressionHistory
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainPresenter(
     private val view: MainContract.View,
-    private val historySaver: ExpressionHistorySaver = MemoryHistorySaver(),
+    private val historySaver: ExpressionHistory = MemoryExpressionHistory(),
 ) : MainContract.Presenter {
 
     private val calculator = Calculator()
