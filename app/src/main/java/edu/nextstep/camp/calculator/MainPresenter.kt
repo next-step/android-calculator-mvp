@@ -2,31 +2,34 @@ package edu.nextstep.camp.calculator
 
 import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.ExpressionHistory
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainPresenter(
     private val view: MainContract.View,
+    private val historySaver: ExpressionHistory = ExpressionHistory(),
 ) : MainContract.Presenter {
 
     private val calculator = Calculator()
     private var expression = Expression.EMPTY
+    private var isHistoryDisplayed = false
 
     override fun addToExpression(operand: Int) {
         expression += operand
-        view.showExpression(expression)
+        view.showExpression(expression.toString())
     }
 
     override fun addToExpression(operator: Operator) {
         expression += operator
-        view.showExpression(expression)
+        view.showExpression(expression.toString())
     }
 
-    override fun removeLast() {
+    override fun removeLastFromExpression() {
         expression = expression.removeLast()
-        view.showExpression(expression)
+        view.showExpression(expression.toString())
     }
 
-    override fun calculate() {
+    override fun calculateExpression() {
         val result = calculator.calculate(expression.toString())
 
         if (result == null) {
@@ -34,7 +37,26 @@ class MainPresenter(
             return
         }
 
+        historySaver.save(expression.toString(), result)
         expression = Expression.newInstance(result)
-        view.showExpression(expression)
+        view.showExpression(expression.toString())
+    }
+
+    override fun toggleExpressionHistory() {
+        when (isHistoryDisplayed) {
+            true -> closeExpressionHistories()
+            false -> openExpressionHistories()
+        }
+    }
+
+    private fun openExpressionHistories() {
+        historySaver.loadHistories()
+            .also { view.openCalculationHistories(it) }
+        isHistoryDisplayed = true
+    }
+
+    private fun closeExpressionHistories() {
+        view.closeCalculationHistories()
+        isHistoryDisplayed = false
     }
 }
