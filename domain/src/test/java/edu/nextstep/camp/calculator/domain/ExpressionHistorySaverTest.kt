@@ -17,7 +17,6 @@ internal class ExpressionHistorySaverTest {
         assertThat(actual).isEmpty()
     }
 
-
     @Test
     fun `save one pair of expression and result`() {
         // when
@@ -25,7 +24,7 @@ internal class ExpressionHistorySaverTest {
 
         // then
         val expected = listOf(
-            "3 + 5" to 8,
+            ExpressionHistoryItem("3 + 5", 8)
         )
         assertThat(expressionHistory.loadHistories()).isEqualTo(expected)
     }
@@ -38,8 +37,8 @@ internal class ExpressionHistorySaverTest {
 
         // then
         val expected = listOf(
-            "3 + 5" to 8,
-            "10 * 6" to 60,
+            ExpressionHistoryItem("3 + 5", 8),
+            ExpressionHistoryItem("10 * 6", 60)
         )
         assertThat(expressionHistory.loadHistories()).isEqualTo(expected)
     }

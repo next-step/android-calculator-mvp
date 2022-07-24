@@ -46,7 +46,6 @@ class MainPresenter(
         isHistoryDisplayed = !isHistoryDisplayed
         if (isHistoryDisplayed) {
             historySaver.loadHistories()
-                .map { (rawExp, result) -> CalculationHistoryItem(rawExp, result) }
                 .also { view.openCalculationHistories(it) }
         } else {
             view.closeCalculationHistories()

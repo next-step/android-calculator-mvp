@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
+import edu.nextstep.camp.calculator.domain.ExpressionHistoryItem
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainActivity : AppCompatActivity(), MainContract.View {
@@ -52,7 +53,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.textView.text = rawExpression
     }
 
-    override fun openCalculationHistories(histories: List<CalculationHistoryItem>) {
+    override fun openCalculationHistories(histories: List<ExpressionHistoryItem>) {
         binding.recyclerView.isVisible = true
         calculatorHistoryAdapter.data = histories
     }

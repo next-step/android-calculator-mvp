@@ -1,5 +1,6 @@
 package edu.nextstep.camp.calculator
 
+import edu.nextstep.camp.calculator.domain.ExpressionHistoryItem
 import edu.nextstep.camp.calculator.domain.Operator
 import io.mockk.Called
 import io.mockk.clearMocks
@@ -111,8 +112,8 @@ internal class MainPresenterTest {
 
         // then
         val expected = listOf(
-            CalculationHistoryItem("3 + 5", 8),
-            CalculationHistoryItem("10 - 3", 7),
+            ExpressionHistoryItem("3 + 5", 8),
+            ExpressionHistoryItem("10 - 3", 7),
         )
         verify { view.openCalculationHistories(expected) }
     }

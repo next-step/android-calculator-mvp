@@ -2,13 +2,13 @@ package edu.nextstep.camp.calculator.domain
 
 class ExpressionHistory {
 
-    private val histories = mutableListOf<Pair<String, Int>>()
+    private val histories = mutableListOf<ExpressionHistoryItem>()
 
     fun save(rawExpression: String, result: Int) {
-        histories.add(rawExpression to result)
+        histories.add(ExpressionHistoryItem(rawExpression, result))
     }
 
-    fun loadHistories(): List<Pair<String, Int>> {
+    fun loadHistories(): List<ExpressionHistoryItem> {
         return histories
     }
 }
