@@ -1,6 +1,7 @@
 package edu.nextstep.camp.calculator
 
 import android.os.Bundle
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
@@ -17,63 +18,40 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setButtons()
+    }
 
-        binding.button0.setOnClickListener {
-            expression += 0
-            binding.textView.text = expression.toString()
+    private fun setButtons() {
+        setOperandButtons()
+        setOperatorButtons()
+        setFunctionalButtons()
+    }
+
+    private fun setOperandButtons() {
+        with(binding) {
+            button0 setExpressionOperandAddClickListener 0
+            button1 setExpressionOperandAddClickListener 1
+            button2 setExpressionOperandAddClickListener 2
+            button3 setExpressionOperandAddClickListener 3
+            button4 setExpressionOperandAddClickListener 4
+            button5 setExpressionOperandAddClickListener 5
+            button6 setExpressionOperandAddClickListener 6
+            button7 setExpressionOperandAddClickListener 7
+            button8 setExpressionOperandAddClickListener 8
+            button9 setExpressionOperandAddClickListener 9
         }
-        binding.button1.setOnClickListener {
-            expression += 1
-            binding.textView.text = expression.toString()
+    }
+
+    private fun setOperatorButtons() {
+        with(binding) {
+            buttonPlus setExpressionOperatorAddClickListener Operator.Plus
+            buttonMinus setExpressionOperatorAddClickListener Operator.Minus
+            buttonMultiply setExpressionOperatorAddClickListener Operator.Multiply
+            buttonDivide setExpressionOperatorAddClickListener Operator.Divide
         }
-        binding.button2.setOnClickListener {
-            expression += 2
-            binding.textView.text = expression.toString()
-        }
-        binding.button3.setOnClickListener {
-            expression += 3
-            binding.textView.text = expression.toString()
-        }
-        binding.button4.setOnClickListener {
-            expression += 4
-            binding.textView.text = expression.toString()
-        }
-        binding.button5.setOnClickListener {
-            expression += 5
-            binding.textView.text = expression.toString()
-        }
-        binding.button6.setOnClickListener {
-            expression += 6
-            binding.textView.text = expression.toString()
-        }
-        binding.button7.setOnClickListener {
-            expression += 7
-            binding.textView.text = expression.toString()
-        }
-        binding.button8.setOnClickListener {
-            expression += 8
-            binding.textView.text = expression.toString()
-        }
-        binding.button9.setOnClickListener {
-            expression += 9
-            binding.textView.text = expression.toString()
-        }
-        binding.buttonPlus.setOnClickListener {
-            expression += Operator.Plus
-            binding.textView.text = expression.toString()
-        }
-        binding.buttonMinus.setOnClickListener {
-            expression += Operator.Minus
-            binding.textView.text = expression.toString()
-        }
-        binding.buttonMultiply.setOnClickListener {
-            expression += Operator.Multiply
-            binding.textView.text = expression.toString()
-        }
-        binding.buttonDivide.setOnClickListener {
-            expression += Operator.Divide
-            binding.textView.text = expression.toString()
-        }
+    }
+
+    private fun setFunctionalButtons() {
         binding.buttonDelete.setOnClickListener {
             expression = expression.removeLast()
             binding.textView.text = expression.toString()
@@ -88,4 +66,16 @@ class MainActivity : AppCompatActivity() {
             binding.textView.text = result.toString()
         }
     }
+
+    private infix fun Button.setExpressionOperandAddClickListener(value: Int) =
+        setOnClickListener {
+            expression += value
+            binding.textView.text = expression.toString()
+        }
+
+    private infix fun Button.setExpressionOperatorAddClickListener(operator: Operator) =
+        setOnClickListener {
+            expression += operator
+            binding.textView.text = expression.toString()
+        }
 }
