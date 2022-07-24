@@ -12,7 +12,7 @@ interface MainConstract {
     }
 
     interface View {
-        fun showExpression(expression: Expression)
-        fun showToast(resId: Int)
+        fun succeedCalculate(expression: Expression)
+        fun failedCalculate()
     }
 }

@@ -34,11 +34,11 @@ class MainActivity : AppCompatActivity(), MainConstract.View {
         binding.buttonEquals.setOnClickListener { presenter.calculate() }
     }
 
-    override fun showToast(resId: Int) {
-        Toast.makeText(this, resId, Toast.LENGTH_SHORT).show()
+    override fun failedCalculate() {
+        Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
     }
 
-    override fun showExpression(expression: Expression) {
+    override fun succeedCalculate(expression: Expression) {
         binding.textView.text = expression.toString()
     }
 }
