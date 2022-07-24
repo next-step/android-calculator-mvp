@@ -4,14 +4,14 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.jupiter.api.Test
 
 
-internal class MemoryExpressionHistorySaverTest {
+internal class ExpressionHistorySaverTest {
 
-    private val saver: ExpressionHistory = MemoryExpressionHistory()
+    private val expressionHistory = ExpressionHistory()
 
     @Test
     fun `load nothing on empty history`() {
         // when
-        val actual = saver.loadHistories()
+        val actual = expressionHistory.loadHistories()
 
         // then
         assertThat(actual).isEmpty()
@@ -21,26 +21,26 @@ internal class MemoryExpressionHistorySaverTest {
     @Test
     fun `save one pair of expression and result`() {
         // when
-        saver.save("3 + 5", 8)
+        expressionHistory.save("3 + 5", 8)
 
         // then
         val expected = listOf(
             "3 + 5" to 8,
         )
-        assertThat(saver.loadHistories()).isEqualTo(expected)
+        assertThat(expressionHistory.loadHistories()).isEqualTo(expected)
     }
 
     @Test
     fun `save multiple pairs of expression and result`() {
         // when
-        saver.save("3 + 5", 8)
-        saver.save("10 * 6", 60)
+        expressionHistory.save("3 + 5", 8)
+        expressionHistory.save("10 * 6", 60)
 
         // then
         val expected = listOf(
             "3 + 5" to 8,
             "10 * 6" to 60,
         )
-        assertThat(saver.loadHistories()).isEqualTo(expected)
+        assertThat(expressionHistory.loadHistories()).isEqualTo(expected)
     }
 }
