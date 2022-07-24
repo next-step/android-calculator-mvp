@@ -99,4 +99,20 @@ class MainPresenterTest {
         assertThat(actual.toString()).isEqualTo("1 +")
         verify { view.showExpression(actual) }
     }
+
+    @Test
+    fun `계산기록이 클릭되면 계산된 기록들이 보여져야 한다`() {
+        // given
+        every { view.showExpression(capture(slot())) } just Runs
+        every { view.showCalculationMemory(listOf(Pair("1 + 1", 2))) } just Runs
+        every { view.showCalculationRecord(true) } just Runs
+        presenter.addOperand(1)
+        presenter.addOperator(Operator.Plus)
+        presenter.addOperand(1)
+        presenter.calculateExpression()
+        // when
+        presenter.clickCalculationMemory(false)
+        // then
+        verify { view.showCalculationMemory(listOf(Pair("1 + 1", 2))) }
+    }
 }

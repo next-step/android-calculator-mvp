@@ -42,8 +42,13 @@ class MainPresenter(
         view.showExpression(expression)
     }
 
-    override fun showCalculationMemory() {
-        view.showCalculationMemory(calculationRecord.calculationRecordList)
+    override fun clickCalculationMemory(isMemoryVisible: Boolean) {
+        if (isMemoryVisible) {
+            view.showCalculationRecord(false)
+        } else {
+            view.showCalculationRecord(true)
+            view.showCalculationMemory(calculationRecord.calculationRecordList)
+        }
     }
 
 }

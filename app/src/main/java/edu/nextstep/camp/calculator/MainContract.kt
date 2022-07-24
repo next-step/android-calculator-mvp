@@ -12,6 +12,7 @@ interface MainContract {
         fun showExpression(expression: Expression)
         fun showIncompleteExpressionToast()
         fun showCalculationMemory(calculationRecordList: List<Pair<String, Int>>)
+        fun showCalculationRecord(showRecord: Boolean)
     }
 
     interface Presenter {
@@ -19,6 +20,6 @@ interface MainContract {
         fun addOperator(operator: Operator)
         fun removeLast()
         fun calculateExpression()
-        fun showCalculationMemory()
+        fun clickCalculationMemory(isMemoryVisible: Boolean)
     }
 }

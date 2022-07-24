@@ -37,7 +37,9 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonDivide.setOnClickListener { presenter.addOperator(Operator.Divide) }
         binding.buttonDelete.setOnClickListener { presenter.removeLast() }
         binding.buttonEquals.setOnClickListener { presenter.calculateExpression() }
-        binding.buttonMemory.setOnClickListener { presenter.showCalculationMemory() }
+        binding.buttonMemory.setOnClickListener {
+            presenter.clickCalculationMemory(binding.recyclerView.visibility == View.VISIBLE)
+        }
 
         calculationMemoryAdapter = CalculationMemoryAdapter()
         binding.recyclerView.adapter = calculationMemoryAdapter
@@ -53,13 +55,14 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun showCalculationMemory(calculationRecordList: List<Pair<String, Int>>) {
+        calculationMemoryAdapter.submitList(calculationRecordList)
+    }
 
-        if (binding.recyclerView.visibility == View.VISIBLE) {
-            binding.recyclerView.visibility = View.GONE
-        } else {
+    override fun showCalculationRecord(showRecord: Boolean) {
+        if (showRecord) {
             binding.recyclerView.visibility = View.VISIBLE
-            calculationMemoryAdapter.submitList(calculationRecordList)
+        } else {
+            binding.recyclerView.visibility = View.GONE
         }
-
     }
 }
