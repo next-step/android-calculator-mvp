@@ -1,5 +1,6 @@
 package edu.nextstep.camp.calculator
 
+import edu.nextstep.camp.calculator.domain.CalculationRecord
 import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
@@ -11,7 +12,8 @@ import edu.nextstep.camp.calculator.domain.Operator
 class MainPresenter(
     private val view: MainContract.View,
     private var expression: Expression = Expression.EMPTY,
-    private val calculator: Calculator = Calculator()
+    private val calculator: Calculator = Calculator(),
+    private val calculationRecord: CalculationRecord = CalculationRecord()
 ) : MainContract.Presenter {
 
     override fun addOperand(operand: Int) {
@@ -35,8 +37,13 @@ class MainPresenter(
             view.showIncompleteExpressionToast()
             return
         }
+        calculationRecord.addCalculationRecord(expression.toString(), result)
         expression = Expression.EMPTY + result
         view.showExpression(expression)
+    }
+
+    override fun showCalculationMemory() {
+        view.showCalculationMemory(calculationRecord.toString())
     }
 
 }

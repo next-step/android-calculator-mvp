@@ -1,5 +1,6 @@
 package edu.nextstep.camp.calculator
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonDivide.setOnClickListener { presenter.addOperator(Operator.Divide) }
         binding.buttonDelete.setOnClickListener { presenter.removeLast() }
         binding.buttonEquals.setOnClickListener { presenter.calculateExpression() }
+        binding.buttonMemory.setOnClickListener { presenter.showCalculationMemory() }
     }
 
     override fun showExpression(expression: Expression) {
@@ -42,5 +44,17 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun showIncompleteExpressionToast() {
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showCalculationMemory(totalRecord: String) {
+
+
+        val dialog = AlertDialog.Builder(this)
+            .setMessage(totalRecord)
+            .create()
+            .show()
+
+        //dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL, WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+
     }
 }
