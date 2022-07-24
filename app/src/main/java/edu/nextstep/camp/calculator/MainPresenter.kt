@@ -1,5 +1,6 @@
 package edu.nextstep.camp.calculator
 
+import edu.nextstep.camp.calculator.domain.CalculationRecord
 import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
@@ -9,11 +10,11 @@ import edu.nextstep.camp.calculator.domain.Operator
  * Created by jeongjinhong on 2022. 07. 22..
  */
 class MainPresenter(
-    private val view: MainContract.View
+    private val view: MainContract.View,
+    private var expression: Expression = Expression.EMPTY,
+    private val calculator: Calculator = Calculator(),
+    private val calculationRecord: CalculationRecord = CalculationRecord()
 ) : MainContract.Presenter {
-
-    private var expression = Expression.EMPTY
-    private val calculator = Calculator()
 
     override fun addOperand(operand: Int) {
         expression += operand
@@ -36,8 +37,18 @@ class MainPresenter(
             view.showIncompleteExpressionToast()
             return
         }
+        calculationRecord.addCalculationRecord(expression.toString(), result)
         expression = Expression.EMPTY + result
         view.showExpression(expression)
+    }
+
+    override fun clickCalculationMemory(isMemoryVisible: Boolean) {
+        if (isMemoryVisible) {
+            view.showCalculationRecord(false)
+        } else {
+            view.showCalculationRecord(true)
+            view.showCalculationMemory(calculationRecord.calculationRecordList)
+        }
     }
 
 }
