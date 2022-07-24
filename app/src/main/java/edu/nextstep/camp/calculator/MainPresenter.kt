@@ -11,12 +11,12 @@ class MainPresenter(view: MainContract.View) : MainContract.Presenter {
     var view = view
 
     override fun clickOperand(operand: Int) {
-        expression += operand
+        expression = expression.plus(operand)
         view.showExpression(expression.toString())
     }
 
     override fun clickOperator(operator: Operator) {
-        expression += operator
+        expression = expression.plus(operator)
         view.showExpression(expression.toString())
     }
 
