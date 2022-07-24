@@ -43,7 +43,7 @@ class MainPresenter(
     }
 
     override fun showCalculationMemory() {
-        view.showCalculationMemory(calculationRecord.toString())
+        view.showCalculationMemory(calculationRecord.calculationRecordList)
     }
 
 }

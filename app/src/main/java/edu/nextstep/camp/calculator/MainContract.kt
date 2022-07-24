@@ -11,7 +11,7 @@ interface MainContract {
     interface View {
         fun showExpression(expression: Expression)
         fun showIncompleteExpressionToast()
-        fun showCalculationMemory(totalRecord: String)
+        fun showCalculationMemory(calculationRecordList: List<Pair<String, Int>>)
     }
 
     interface Presenter {

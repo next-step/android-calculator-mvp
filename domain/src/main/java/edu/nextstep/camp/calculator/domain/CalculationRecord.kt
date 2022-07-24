@@ -5,7 +5,7 @@ package edu.nextstep.camp.calculator.domain
  * Created by jeongjinhong on 2022. 07. 23..
  */
 class CalculationRecord(
-    private val calculationRecordList: MutableList<Pair<String, Int>> = mutableListOf()
+    val calculationRecordList: MutableList<Pair<String, Int>> = mutableListOf()
 ) {
 
     fun addCalculationRecord(expression: String, result: Int) {

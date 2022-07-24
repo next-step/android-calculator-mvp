@@ -1,9 +1,10 @@
 package edu.nextstep.camp.calculator
 
-import android.app.AlertDialog
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
@@ -11,6 +12,7 @@ import edu.nextstep.camp.calculator.domain.Operator
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
     private lateinit var presenter: MainContract.Presenter
+    private lateinit var calculationMemoryAdapter: CalculationMemoryAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +38,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonDelete.setOnClickListener { presenter.removeLast() }
         binding.buttonEquals.setOnClickListener { presenter.calculateExpression() }
         binding.buttonMemory.setOnClickListener { presenter.showCalculationMemory() }
+
+        calculationMemoryAdapter = CalculationMemoryAdapter()
+        binding.recyclerView.adapter = calculationMemoryAdapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
     }
 
     override fun showExpression(expression: Expression) {
@@ -46,15 +52,14 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
     }
 
-    override fun showCalculationMemory(totalRecord: String) {
+    override fun showCalculationMemory(calculationRecordList: List<Pair<String, Int>>) {
 
-
-        val dialog = AlertDialog.Builder(this)
-            .setMessage(totalRecord)
-            .create()
-            .show()
-
-        //dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL, WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+        if (binding.recyclerView.visibility == View.VISIBLE) {
+            binding.recyclerView.visibility = View.GONE
+        } else {
+            binding.recyclerView.visibility = View.VISIBLE
+            calculationMemoryAdapter.submitList(calculationRecordList)
+        }
 
     }
 }
