@@ -9,16 +9,24 @@ import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
-    private val calculator = Calculator()
-    private var expression = Expression.EMPTY
+    private lateinit var presenter: MainContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        presenter =
+            MainPresenter(view = this, calculator = Calculator(), expression = Expression.EMPTY)
         setButtons()
+    }
+
+    override fun showIncompleteExpression(): Unit =
+        Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
+
+    override fun showExpression(string: String) {
+        binding.textView.text = string
     }
 
     private fun setButtons() {
@@ -29,53 +37,37 @@ class MainActivity : AppCompatActivity() {
 
     private fun setOperandButtons() {
         with(binding) {
-            button0 setExpressionOperandAddClickListener 0
-            button1 setExpressionOperandAddClickListener 1
-            button2 setExpressionOperandAddClickListener 2
-            button3 setExpressionOperandAddClickListener 3
-            button4 setExpressionOperandAddClickListener 4
-            button5 setExpressionOperandAddClickListener 5
-            button6 setExpressionOperandAddClickListener 6
-            button7 setExpressionOperandAddClickListener 7
-            button8 setExpressionOperandAddClickListener 8
-            button9 setExpressionOperandAddClickListener 9
+            button0 setOperandAddClickListener 0
+            button1 setOperandAddClickListener 1
+            button2 setOperandAddClickListener 2
+            button3 setOperandAddClickListener 3
+            button4 setOperandAddClickListener 4
+            button5 setOperandAddClickListener 5
+            button6 setOperandAddClickListener 6
+            button7 setOperandAddClickListener 7
+            button8 setOperandAddClickListener 8
+            button9 setOperandAddClickListener 9
         }
     }
 
     private fun setOperatorButtons() {
         with(binding) {
-            buttonPlus setExpressionOperatorAddClickListener Operator.Plus
-            buttonMinus setExpressionOperatorAddClickListener Operator.Minus
-            buttonMultiply setExpressionOperatorAddClickListener Operator.Multiply
-            buttonDivide setExpressionOperatorAddClickListener Operator.Divide
+            buttonPlus setOperatorAddClickListener Operator.Plus
+            buttonMinus setOperatorAddClickListener Operator.Minus
+            buttonMultiply setOperatorAddClickListener Operator.Multiply
+            buttonDivide setOperatorAddClickListener Operator.Divide
         }
     }
 
     private fun setFunctionalButtons() {
-        binding.buttonDelete.setOnClickListener {
-            expression = expression.removeLast()
-            binding.textView.text = expression.toString()
-        }
-        binding.buttonEquals.setOnClickListener {
-            val result = calculator.calculate(expression.toString())
-            if (result == null) {
-                Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            expression = Expression.EMPTY + result
-            binding.textView.text = result.toString()
-        }
+        binding.buttonDelete.setOnClickListener { presenter.removeLast() }
+        binding.buttonEquals.setOnClickListener { presenter.proceedCalculation() }
     }
 
-    private infix fun Button.setExpressionOperandAddClickListener(value: Int) =
-        setOnClickListener {
-            expression += value
-            binding.textView.text = expression.toString()
-        }
+    private infix fun Button.setOperandAddClickListener(operand: Int) =
+        setOnClickListener { presenter.addOperandToExpression(operand) }
 
-    private infix fun Button.setExpressionOperatorAddClickListener(operator: Operator) =
-        setOnClickListener {
-            expression += operator
-            binding.textView.text = expression.toString()
-        }
+    private infix fun Button.setOperatorAddClickListener(operator: Operator) =
+        setOnClickListener { presenter.addOperatorToExpression(operator) }
+
 }
