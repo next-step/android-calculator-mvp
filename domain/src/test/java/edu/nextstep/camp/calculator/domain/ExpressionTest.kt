@@ -81,7 +81,7 @@ class ExpressionTest {
         )
 
         // when
-        val actual = expression.removeLast()
+        val actual = expression.dropLast()
 
         // then
         assertThat(actual.toString()).isEqualTo("32 +")
@@ -98,7 +98,7 @@ class ExpressionTest {
         )
 
         // when
-        val actual = expression.removeLast()
+        val actual = expression.dropLast()
 
         // then
         assertThat(actual.toString()).isEqualTo("32")
@@ -110,7 +110,7 @@ class ExpressionTest {
         val expression = Expression(listOf(32))
 
         // when
-        val actual = expression.removeLast()
+        val actual = expression.dropLast()
 
         // then
         assertThat(actual.toString()).isEqualTo("3")
@@ -122,7 +122,7 @@ class ExpressionTest {
         val expression = Expression(listOf(3))
 
         // when
-        val actual = expression.removeLast()
+        val actual = expression.dropLast()
 
         // then
         assertThat(actual.toString()).isEqualTo("")
@@ -134,7 +134,7 @@ class ExpressionTest {
         val expression = Expression.EMPTY
 
         // when
-        val actual = expression.removeLast()
+        val actual = expression.dropLast()
 
         // then
         assertThat(actual.toString()).isEqualTo("")
