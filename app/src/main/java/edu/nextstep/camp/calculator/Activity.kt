@@ -7,10 +7,13 @@ import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainContract.MainView {
+
     private lateinit var binding: ActivityMainBinding
     private val calculator = Calculator()
     private var expression = Expression.EMPTY
+
+    private val presenter = MainPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,5 +89,13 @@ class MainActivity : AppCompatActivity() {
             expression = Expression.EMPTY + result
             binding.textView.text = result.toString()
         }
+    }
+
+    override fun showCurrentExpression(expression: Expression) {
+        TODO("Not yet implemented")
+    }
+
+    override fun showCalculateValue(expression: Expression) {
+        TODO("Not yet implemented")
     }
 }

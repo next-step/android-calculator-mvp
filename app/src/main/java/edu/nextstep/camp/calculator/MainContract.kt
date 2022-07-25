@@ -4,7 +4,7 @@ import edu.nextstep.camp.calculator.domain.Expression
 
 interface MainContract {
 
-    interface MainPresenter {
+    interface Presenter {
 
         fun addOperand()
 
@@ -16,7 +16,7 @@ interface MainContract {
 
     }
 
-    interface MainView {
+    interface View {
 
         fun showCurrentExpression(expression: Expression)
 
