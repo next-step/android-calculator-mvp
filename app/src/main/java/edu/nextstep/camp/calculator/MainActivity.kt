@@ -1,91 +1,74 @@
 package edu.nextstep.camp.calculator
 
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
-import edu.nextstep.camp.calculator.domain.Calculator
-import edu.nextstep.camp.calculator.domain.Expression
-import edu.nextstep.camp.calculator.domain.Operator
+import edu.nextstep.camp.calculator.domain.exception.ExpressionNotCompleteException
+import edu.nextstep.camp.calculator.domain.model.OtherExpressionToken
+import edu.nextstep.camp.calculator.domain.model.ExpressionToken
+import edu.nextstep.camp.calculator.domain.model.Operand
+import edu.nextstep.camp.calculator.domain.model.Operator
+import kotlin.runCatching
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), UserInputActionReceiver, MainContract.View {
+    override lateinit var presenter: MainContract.Presenter
     private lateinit var binding: ActivityMainBinding
-    private val calculator = Calculator()
-    private var expression = Expression.EMPTY
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.button0.setOnClickListener {
-            expression += 0
-            binding.textView.text = expression.toString()
+        binding.apply {
+            lifecycleOwner = this@MainActivity
+            userInputActionReceiver = this@MainActivity
         }
-        binding.button1.setOnClickListener {
-            expression += 1
-            binding.textView.text = expression.toString()
+
+        presenter = MainPresenter(this)
+    }
+
+    override fun onReceiveUserInputAction(v: View) {
+        kotlin.runCatching { v as Button }
+            .onFailure { handleExceptions(IllegalArgumentException("Input action view type must be Button")) }
+            .onSuccess { processInputButton(it) }
+    }
+
+    private fun processInputButton(btn: Button) {
+        when {
+            !btn.text.isNullOrBlank() -> onExpressionTokenInput(ExpressionToken.getFromValue(btn.text.toString()))
+            btn.id == R.id.buttonDelete -> onExpressionTokenInput(OtherExpressionToken.DEL)
+            else -> handleExceptions(IllegalArgumentException("Unknown Input"))
         }
-        binding.button2.setOnClickListener {
-            expression += 2
-            binding.textView.text = expression.toString()
+    }
+
+    private fun onExpressionTokenInput(expressionToken: ExpressionToken) {
+        when (expressionToken) {
+            is Operand -> presenter.addOperandToken(expressionToken)
+            is Operator -> presenter.addOperatorToken(expressionToken)
+            OtherExpressionToken.DEL -> presenter.delete()
+            OtherExpressionToken.EQUALS -> presenter.evaluate()
+            else -> handleExceptions(IllegalArgumentException("Unknown Token"))
         }
-        binding.button3.setOnClickListener {
-            expression += 3
-            binding.textView.text = expression.toString()
-        }
-        binding.button4.setOnClickListener {
-            expression += 4
-            binding.textView.text = expression.toString()
-        }
-        binding.button5.setOnClickListener {
-            expression += 5
-            binding.textView.text = expression.toString()
-        }
-        binding.button6.setOnClickListener {
-            expression += 6
-            binding.textView.text = expression.toString()
-        }
-        binding.button7.setOnClickListener {
-            expression += 7
-            binding.textView.text = expression.toString()
-        }
-        binding.button8.setOnClickListener {
-            expression += 8
-            binding.textView.text = expression.toString()
-        }
-        binding.button9.setOnClickListener {
-            expression += 9
-            binding.textView.text = expression.toString()
-        }
-        binding.buttonPlus.setOnClickListener {
-            expression += Operator.Plus
-            binding.textView.text = expression.toString()
-        }
-        binding.buttonMinus.setOnClickListener {
-            expression += Operator.Minus
-            binding.textView.text = expression.toString()
-        }
-        binding.buttonMultiply.setOnClickListener {
-            expression += Operator.Multiply
-            binding.textView.text = expression.toString()
-        }
-        binding.buttonDivide.setOnClickListener {
-            expression += Operator.Divide
-            binding.textView.text = expression.toString()
-        }
-        binding.buttonDelete.setOnClickListener {
-            expression = expression.removeLast()
-            binding.textView.text = expression.toString()
-        }
-        binding.buttonEquals.setOnClickListener {
-            val result = calculator.calculate(expression.toString())
-            if (result == null) {
-                Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+    }
+
+    override fun handleExceptions(throwable: Throwable) {
+        when (throwable) {
+            is ExpressionNotCompleteException -> {
+                Toast.makeText(this, R.string.expression_not_complete_message, Toast.LENGTH_SHORT).show()
             }
-            expression = Expression.EMPTY + result
-            binding.textView.text = result.toString()
+            is ArithmeticException -> {
+                Toast.makeText(this, R.string.div_by_zero_message, Toast.LENGTH_SHORT).show()
+            }
+            else -> {
+                Toast.makeText(this, R.string.unknown_error_message, Toast.LENGTH_SHORT).show()
+            }
         }
+    }
+
+    override fun displayExpression(expression: String) {
+        binding.textView.text = expression
     }
 }
