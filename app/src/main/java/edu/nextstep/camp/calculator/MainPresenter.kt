@@ -25,10 +25,7 @@ class MainPresenter(
         StringExpressionState
             .of(rawExpression)
             .removeElement()
-            .let {
-                val a = it
-                view.setExpression(a)
-            }
+            .let(view::setExpression)
 
     override fun calculate(rawExpression: String) {
         runCatching {
