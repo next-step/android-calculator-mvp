@@ -1,13 +1,16 @@
 package edu.nextstep.camp.calculator
 
-import edu.nextstep.camp.calculator.domain.*
+import edu.nextstep.camp.calculator.domain.Calculator
+import edu.nextstep.camp.calculator.domain.CalculatorMemory
+import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.Operator
 
 class MainPresenter(
     private val view: MainConstract.View,
     private var expression: Expression = Expression.EMPTY,
     private val calculator: Calculator = Calculator(),
     private val calculatorMemory: CalculatorMemory = CalculatorMemory(),
-    private var isRecordsMode: Boolean = false
+    private var isRecordsMode: Boolean = false,
 ) : MainConstract.Presenter {
 
     override fun addToExpression(expression: Operator) {
@@ -39,12 +42,12 @@ class MainPresenter(
     }
 
     override fun toggleDisplayRecords() {
-        when(isRecordsMode) {
+        when (isRecordsMode) {
             true -> view.disableExpression(this.expression)
             false -> view.showExpression(calculatorMemory.loadExpressionRecords())
-        }.also {
-            isRecordsMode = !isRecordsMode
         }
+
+        isRecordsMode = !isRecordsMode
     }
 
     private fun showExpressionToView() {
