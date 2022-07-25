@@ -16,6 +16,6 @@ class CalculatorMemory(
     }
 
     override fun toString(): String {
-        return calcHistory.joinToString("\n") { it }
+        return calcHistory.joinToString("\n")
     }
 }

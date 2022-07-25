@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity(), MainConstract.View {
     }
 
     override fun showExpression(records: List<String>) {
-        binding.textView.text = records.joinToString("\n") { it }
+        binding.textView.text = records.joinToString("\n")
     }
 
     override fun disableExpression(expression: Expression) {
