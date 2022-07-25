@@ -15,23 +15,18 @@ class MainPresenterTest {
 
     @Before
     fun setUp() {
-        view = mockk()
+        view = mockk(relaxed = true)
         presenter = MainPresenter(view)
     }
 
     @Test
     fun `숫자가 입력되면 수식에 추가되고 변경된 수식을 보여줘야 한다`() {
-        // given
-        val expressionSlot = slot<String>()
-        every { view.showExpression(capture(expressionSlot)) } answers { nothing }
-
+        //given
         // when
         presenter.addToExpression(1)
 
         // then
-        val actual = expressionSlot.captured
-        assertThat(actual).isEqualTo("1")
-        verify { view.showExpression(actual) }
+        verify { view.showExpression("1") }
     }
 
     @Test
