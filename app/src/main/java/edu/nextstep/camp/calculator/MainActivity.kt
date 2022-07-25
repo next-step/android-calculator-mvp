@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.History
 import edu.nextstep.camp.calculator.domain.Operator
@@ -21,7 +20,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = historyListAdapter
 
         presenter = MainPresenter(this)
