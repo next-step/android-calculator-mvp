@@ -1,6 +1,7 @@
 package edu.nextstep.camp.calculator
 
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.History
 import edu.nextstep.camp.calculator.domain.Operator
 import io.mockk.mockk
 import io.mockk.verify
@@ -44,8 +45,7 @@ class MainPresenterTest {
         presenter.enterOperator(source)
 
         // then : 화면에 해당 연산자가 잘 보인다
-        val result = Expression.EMPTY + 1 + source
-        verify { view.showExpression(result.toString()) }
+        verify { view.showExpression("1") }
     }
 
     @Test
@@ -86,5 +86,27 @@ class MainPresenterTest {
 
         // then : 계산 결과가 보인다.
         verify { view.showInCompleteExpressionMessage() }
+    }
+
+    @Test
+    fun `기록창이 보이는 경우 기록버튼을 누르면 기록창이 사라진다`() {
+        // when : 기록창이 보이는 경우 기록버튼을 누르면
+        presenter.clickHistory(true)
+
+        // then : 기록창이 사라진다.
+        verify { view.hideHistory() }
+    }
+
+    @Test
+    fun `기록이 있는 상황에서 불러오는 경우 기록을 잘 보여준다`() {
+        // given : 기록이 있는 상황에서
+        presenter = MainPresenter(view = view, expression = Expression(listOf(1, Operator.Plus, 5)))
+        presenter.calculate()
+
+        // when : 기록을 불러오는 경우
+        presenter.loadHistory()
+
+        // then : 기록을 잘 보여준다.
+        verify { view.loadHistories(listOf(History("1 + 5", 6))) }
     }
 }

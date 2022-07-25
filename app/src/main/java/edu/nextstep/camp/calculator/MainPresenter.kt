@@ -2,15 +2,18 @@ package edu.nextstep.camp.calculator
 
 import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.History
 import edu.nextstep.camp.calculator.domain.Operator
 
 /**
  * Created by link.js on 2022. 07. 20..
  */
-class MainPresenter(private val view: MainContract.View) : MainContract.Presenter {
-    private val calculator = Calculator()
-    private var expression = Expression.EMPTY
-
+class MainPresenter(
+    private val view: MainContract.View,
+    private val calculator: Calculator = Calculator(),
+    private var expression: Expression = Expression.EMPTY,
+    private val histories: MutableList<History> = mutableListOf()
+) : MainContract.Presenter {
     override fun enterNumber(number: Int) {
         expression += number
 
@@ -35,8 +38,21 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
             view.showInCompleteExpressionMessage()
             return
         }
+        histories.add(History(expression.toString(), result))
         expression = Expression.EMPTY + result
 
         view.showExpression(expression.toString())
+    }
+
+    override fun loadHistory() {
+        view.loadHistories(histories)
+    }
+
+    override fun clickHistory(isShown: Boolean) {
+        if (isShown) {
+            view.hideHistory()
+        } else {
+            view.showHistory()
+        }
     }
 }
