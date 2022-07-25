@@ -7,7 +7,7 @@ import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
 
-class MainActivity : AppCompatActivity(), MainContract.MainView {
+class Activity : AppCompatActivity(), MainContract.View {
 
     private lateinit var binding: ActivityMainBinding
     private val calculator = Calculator()
