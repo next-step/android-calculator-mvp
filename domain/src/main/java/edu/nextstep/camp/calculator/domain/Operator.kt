@@ -10,8 +10,9 @@ enum class Operator(
     Divide("/", { x, y -> x / y });
 
     companion object {
-        fun of(sign: String): Operator? {
-            return values().find { it.sign == sign }
-        }
+        fun of(sign: String): Operator =
+            values().find { it.sign == sign }
+                ?: throw IllegalArgumentException("연산자가 아닌 값입니다. value : $sign")
+
     }
 }
