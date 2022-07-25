@@ -5,7 +5,7 @@ import edu.nextstep.camp.calculator.domain.Operator
 interface MainContract {
     interface View {
         fun showExpression(result: String)
-        fun showToast(message: String)
+        fun showError(message: String)
     }
 
     interface Presenter {

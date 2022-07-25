@@ -15,52 +15,52 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         setContentView(binding.root)
 
         binding.button0.setOnClickListener {
-            presenter.clickOperand(0)
+            presenter.addToExpression(0)
         }
         binding.button1.setOnClickListener {
-            presenter.clickOperand(1)
+            presenter.addToExpression(1)
         }
         binding.button2.setOnClickListener {
-            presenter.clickOperand(2)
+            presenter.addToExpression(2)
         }
         binding.button3.setOnClickListener {
-            presenter.clickOperand(3)
+            presenter.addToExpression(3)
         }
         binding.button4.setOnClickListener {
-            presenter.clickOperand(4)
+            presenter.addToExpression(4)
         }
         binding.button5.setOnClickListener {
-            presenter.clickOperand(5)
+            presenter.addToExpression(5)
         }
         binding.button6.setOnClickListener {
-            presenter.clickOperand(6)
+            presenter.addToExpression(6)
         }
         binding.button7.setOnClickListener {
-            presenter.clickOperand(7)
+            presenter.addToExpression(7)
         }
         binding.button8.setOnClickListener {
-            presenter.clickOperand(8)
+            presenter.addToExpression(8)
         }
         binding.button9.setOnClickListener {
-            presenter.clickOperand(9)
+            presenter.addToExpression(9)
         }
         binding.buttonPlus.setOnClickListener {
-            presenter.clickOperator(Operator.Plus)
+            presenter.addToExpression(Operator.Plus)
         }
         binding.buttonMinus.setOnClickListener {
-            presenter.clickOperator(Operator.Minus)
+            presenter.addToExpression(Operator.Minus)
         }
         binding.buttonMultiply.setOnClickListener {
-            presenter.clickOperator(Operator.Multiply)
+            presenter.addToExpression(Operator.Multiply)
         }
         binding.buttonDivide.setOnClickListener {
-            presenter.clickOperator(Operator.Divide)
+            presenter.addToExpression(Operator.Divide)
         }
         binding.buttonDelete.setOnClickListener {
-            presenter.clickDelete()
+            presenter.removeLastFromExpression()
         }
         binding.buttonEquals.setOnClickListener {
-            presenter.clickEqual()
+            presenter.calculateExpression()
         }
     }
 
@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.textView.text = result
     }
 
-    override fun showToast(message: String) {
+    override fun showError(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }
