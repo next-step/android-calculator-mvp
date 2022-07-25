@@ -6,8 +6,8 @@ import edu.nextstep.camp.calculator.domain.Operator
 
 class MainPresenter(
     private val view: MainContract.View,
-    private val calculator: Calculator,
-    private var expression: Expression,
+    private val calculator: Calculator = Calculator(),
+    private var expression: Expression = Expression.EMPTY,
 ) : MainContract.Presenter {
 
     private var isShowingHistory = false

@@ -6,8 +6,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
-import edu.nextstep.camp.calculator.domain.Calculator
-import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.History
 import edu.nextstep.camp.calculator.domain.Operator
 
@@ -26,7 +24,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = historyListAdapter
 
-        presenter = MainPresenter(this, Calculator(), Expression.EMPTY)
+        presenter = MainPresenter(this)
 
         binding.button0.setOnClickListener {
             presenter.enterNumber(0)
