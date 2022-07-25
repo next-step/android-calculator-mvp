@@ -142,4 +142,32 @@ internal class MainPresenterTest {
         //then
         verify { view.showResult(20) }
     }
+
+    @Test
+    fun 수식이_계산되었을_때_결과가_화면에_보이고_식과_결과가_저장된다() {
+        //given
+        every { view.showResult(3) } just Runs
+        presenter = MainPresenter(view, expression = Expression(listOf(1, Operator.Plus, 2)))
+
+        //when
+        presenter.expressionCalculate()
+
+        //then
+        verify { view.showResult(3) }
+        assertThat(presenter.getCalculateHistory().size).isEqualTo(1)
+    }
+
+    @Test
+    fun 잘못된_수식을_계산하려고_했을_때는_기록이_남지_않는다() {
+        //given
+        every { view.showIncompleteExpression() } just Runs
+        presenter = MainPresenter(view, expression = Expression(listOf(1, Operator.Plus)))
+
+        //when
+        presenter.expressionCalculate()
+
+        //then
+        verify { view.showIncompleteExpression() }
+        assertThat(presenter.getCalculateHistory().size).isEqualTo(0)
+    }
 }
