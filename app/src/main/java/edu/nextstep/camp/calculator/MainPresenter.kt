@@ -6,7 +6,7 @@ class MainPresenter(
     private val view: MainConstract.View,
     private var expression: Expression = Expression.EMPTY,
     private val calculator: Calculator = Calculator(),
-    private val calculatorMemory: CalculatorMemory = CalculatorMemoryImpl(),
+    private val calculatorMemory: CalculatorMemory = CalculatorMemory(),
     private var isRecordsMode: Boolean = false
 ) : MainConstract.Presenter {
 
