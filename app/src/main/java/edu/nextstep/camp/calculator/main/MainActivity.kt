@@ -1,8 +1,11 @@
 package edu.nextstep.camp.calculator.main
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
 import edu.nextstep.camp.calculator.R
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.Operator
@@ -10,12 +13,17 @@ import edu.nextstep.camp.calculator.domain.Operator
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
     private lateinit var presenter: MainContract.Presenter
+    private lateinit var historyAdapter: ExpressionHistoryRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         presenter = MainPresenter(this)
+
+        historyAdapter = ExpressionHistoryRecyclerAdapter()
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.adapter = historyAdapter
 
         binding.button0.setOnClickListener {
             presenter.addOperand(0)
@@ -64,6 +72,16 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         }
         binding.buttonEquals.setOnClickListener {
             presenter.expressionCalculate()
+        }
+        binding.buttonMemory.setOnClickListener {
+            if (binding.recyclerView.isVisible) {
+                binding.recyclerView.visibility = View.GONE
+                binding.textView.visibility = View.VISIBLE
+            } else {
+                historyAdapter.submitList(presenter.getCalculateHistory())
+                binding.recyclerView.visibility = View.VISIBLE
+                binding.textView.visibility = View.INVISIBLE
+            }
         }
     }
 

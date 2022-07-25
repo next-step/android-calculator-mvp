@@ -1,5 +1,6 @@
 package edu.nextstep.camp.calculator.main
 
+import edu.nextstep.camp.calculator.domain.ExpressionHistory
 import edu.nextstep.camp.calculator.domain.Operator
 
 interface MainContract {
@@ -14,5 +15,6 @@ interface MainContract {
         fun addOperator(operator: Operator)
         fun removeLast()
         fun expressionCalculate()
+        fun getCalculateHistory(): List<ExpressionHistory>
     }
 }
