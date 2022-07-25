@@ -9,12 +9,12 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
     val calculator: Calculator = Calculator()
 
     override fun addToExpression(operand: Int) {
-        expression = expression.plus(operand)
+        expression += operand
         view.showExpression(expression.toString())
     }
 
     override fun addToExpression(operator: Operator) {
-        expression = expression.plus(operator)
+        expression += operator
         view.showExpression(expression.toString())
     }
 
