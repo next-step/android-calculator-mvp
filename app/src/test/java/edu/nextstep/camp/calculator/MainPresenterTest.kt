@@ -1,13 +1,10 @@
 package edu.nextstep.camp.calculator
 
-import com.google.common.truth.Truth.*
-import edu.nextstep.camp.calculator.contract.MainContract
 import edu.nextstep.camp.calculator.domain.model.ExpressionToken
 import edu.nextstep.camp.calculator.domain.model.Operand
 import edu.nextstep.camp.calculator.domain.model.Operator
-import io.mockk.every
+import edu.nextstep.camp.calculator.domain.model.OtherExpressionToken
 import io.mockk.mockk
-import io.mockk.slot
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.params.ParameterizedTest
@@ -16,20 +13,27 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
 class MainPresenterTest {
-    private lateinit var presenter: MainContract.MainPresenter
+    private lateinit var presenter: MainPresenter
     private lateinit var view: MainContract.View
 
     @BeforeEach
     fun setUp() {
         view = mockk(relaxed = true)
-        presenter = MainContract.MainPresenter(view)
+        presenter = MainPresenter(view)
     }
 
     @ParameterizedTest(name = "#{index}) when {1} is received, displayedText is {0}")
     @MethodSource("provideInputList")
     fun whenInputListReceived_outputIsExpected(userInputActionList: List<ExpressionToken>, expected: String) {
         // given & when
-        userInputActionList.forEach(presenter::addExpressionToken)
+        userInputActionList.forEach {
+            when (it) {
+                is Operand -> presenter.addOperandToken(it)
+                is Operator -> presenter.addOperatorToken(it)
+                OtherExpressionToken.DEL -> presenter.delete()
+                else -> presenter.evaluate()
+            }
+        }
 
         // then
         verify { view.displayExpression(expected) }

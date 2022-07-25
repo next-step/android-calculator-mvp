@@ -4,6 +4,7 @@ import com.google.common.truth.Truth.*
 import edu.nextstep.camp.calculator.domain.model.ExpressionToken
 import edu.nextstep.camp.calculator.domain.model.Operand
 import edu.nextstep.camp.calculator.domain.model.Operator
+import edu.nextstep.camp.calculator.domain.model.OtherExpressionToken
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -17,7 +18,12 @@ class UserInputActionProcessorTest {
         val inputController = ExpressionTokenProcessor()
         var actual = ""
         userInputActionList.forEach {
-            actual = inputController.addExpressionToken(it)
+            actual = when (it) {
+                is Operand -> inputController.processNumberInput(it)
+                is Operator -> inputController.processOperatorInput(it)
+                OtherExpressionToken.DEL -> inputController.delete()
+                else -> inputController.evaluate()
+            }
         }
         assertThat(actual).isEqualTo(expected)
     }
