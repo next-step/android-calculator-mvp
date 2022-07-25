@@ -5,9 +5,8 @@ import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainPresenter(view: MainContract.View) : MainContract.Presenter {
-    override var expression: Expression = Expression()
-    override var calculator: Calculator = Calculator()
-    override lateinit var operator: Operator
+    private var expression: Expression = Expression()
+    val calculator: Calculator = Calculator()
     var view = view
 
     override fun clickOperand(operand: Int) {
@@ -21,7 +20,7 @@ class MainPresenter(view: MainContract.View) : MainContract.Presenter {
     }
 
     override fun clickEqual() {
-        var result = calculator.calculate(expression.toString())
+        val result = calculator.calculate(expression.toString())
             ?: return view.showToast("완성되지 않은 수식입니다.")
         expression = Expression.EMPTY + result
         view.showExpression(expression.toString())
