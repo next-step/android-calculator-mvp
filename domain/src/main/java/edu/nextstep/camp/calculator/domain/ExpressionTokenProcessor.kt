@@ -11,23 +11,14 @@ import org.jetbrains.annotations.TestOnly
 class ExpressionTokenProcessor {
     private val expressionTokenList = mutableListOf<ExpressionToken>()
 
-    fun addExpressionToken(expressionToken: ExpressionToken) : String {
-        return when (expressionToken) {
-            is OtherExpressionToken -> processOtherInput(expressionToken)
-            is Operator -> processOperatorInput(expressionToken)
-            is Operand -> processNumberInput(expressionToken)
-            else -> throw IllegalArgumentException("Unknown Input Type")
-        }
-    }
-
-    private fun processNumberInput(input: Operand) : String {
+    fun processNumberInput(input: Operand) : String {
         return expressionTokenList.run {
             add(input)
             toExpression()
         }
     }
 
-    private fun processOperatorInput(input: Operator) : String {
+    fun processOperatorInput(input: Operator) : String {
         return expressionTokenList.run {
             lastOrNull().also { lastToken ->
                 when {
@@ -40,18 +31,14 @@ class ExpressionTokenProcessor {
         }
     }
 
-    private fun processOtherInput(input: OtherExpressionToken) : String {
-        return when (input) {
-            OtherExpressionToken.DEL -> expressionTokenList.run {
-                removeLastOrNull()
-                toExpression()
-            }
-            OtherExpressionToken.EQUALS -> evaluate()
-            else -> throw IllegalArgumentException("Unknown Input")
+    fun delete() : String {
+        return expressionTokenList.run {
+            removeLastOrNull()
+            toExpression()
         }
     }
 
-    private fun evaluate(): String {
+    fun evaluate(): String {
         val parsedStr = expressionTokenList.toExpression()
         if (!RegexUtils.checkExpressionIsValid(parsedStr)) {
             throw ExpressionNotCompleteException()

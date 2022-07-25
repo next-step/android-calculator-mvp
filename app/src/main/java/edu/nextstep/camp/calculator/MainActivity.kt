@@ -6,10 +6,11 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
-import edu.nextstep.camp.calculator.contract.MainContract
 import edu.nextstep.camp.calculator.domain.exception.ExpressionNotCompleteException
 import edu.nextstep.camp.calculator.domain.model.OtherExpressionToken
 import edu.nextstep.camp.calculator.domain.model.ExpressionToken
+import edu.nextstep.camp.calculator.domain.model.Operand
+import edu.nextstep.camp.calculator.domain.model.Operator
 import kotlin.runCatching
 
 class MainActivity : AppCompatActivity(), UserInputActionReceiver, MainContract.View {
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity(), UserInputActionReceiver, MainContract.
             userInputActionReceiver = this@MainActivity
         }
 
-        presenter = MainContract.MainPresenter(this)
+        presenter = MainPresenter(this)
     }
 
     override fun onReceiveUserInputAction(v: View) {
@@ -44,15 +45,16 @@ class MainActivity : AppCompatActivity(), UserInputActionReceiver, MainContract.
     }
 
     private fun onExpressionTokenInput(expressionToken: ExpressionToken) {
-        runCatching {
-            presenter.addExpressionToken(expressionToken)
+        when (expressionToken) {
+            is Operand -> presenter.addOperandToken(expressionToken)
+            is Operator -> presenter.addOperatorToken(expressionToken)
+            OtherExpressionToken.DEL -> presenter.delete()
+            OtherExpressionToken.EQUALS -> presenter.evaluate()
+            else -> handleExceptions(IllegalArgumentException("Unknown Token"))
         }
-            .onFailure {
-                handleExceptions(it)
-            }
     }
 
-    private fun handleExceptions(throwable: Throwable) {
+    override fun handleExceptions(throwable: Throwable) {
         when (throwable) {
             is ExpressionNotCompleteException -> {
                 Toast.makeText(this, R.string.expression_not_complete_message, Toast.LENGTH_SHORT).show()
