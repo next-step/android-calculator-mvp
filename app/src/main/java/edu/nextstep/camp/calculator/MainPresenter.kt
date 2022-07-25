@@ -9,24 +9,24 @@ class MainPresenter(view: MainContract.View) : MainContract.Presenter {
     val calculator: Calculator = Calculator()
     var view = view
 
-    override fun clickOperand(operand: Int) {
+    override fun addToExpression(operand: Int) {
         expression = expression.plus(operand)
         view.showExpression(expression.toString())
     }
 
-    override fun clickOperator(operator: Operator) {
+    override fun addToExpression(operator: Operator) {
         expression = expression.plus(operator)
         view.showExpression(expression.toString())
     }
 
-    override fun clickEqual() {
+    override fun calculateExpression() {
         val result = calculator.calculate(expression.toString())
             ?: return view.showToast("완성되지 않은 수식입니다.")
         expression = Expression.EMPTY + result
         view.showExpression(expression.toString())
     }
 
-    override fun clickDelete() {
+    override fun removeLastFromExpression() {
         expression = expression.removeLast()
         view.showExpression(expression.toString())
     }

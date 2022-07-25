@@ -26,7 +26,7 @@ class MainPresenterTest {
         every { view.showExpression(capture(expressionSlot)) } answers { nothing }
 
         // when
-        presenter.clickOperand(1)
+        presenter.addToExpression(1)
 
         // then
         val actual = expressionSlot.captured
@@ -39,10 +39,10 @@ class MainPresenterTest {
         // given
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } answers { nothing }
-        presenter.clickOperand(1)
+        presenter.addToExpression(1)
 
         // when
-        presenter.clickOperand(2)
+        presenter.addToExpression(2)
 
         // then
         val actual = expressionSlot.captured
@@ -55,11 +55,11 @@ class MainPresenterTest {
         // given
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } answers { nothing }
-        presenter.clickOperand(1)
-        presenter.clickOperand(2)
+        presenter.addToExpression(1)
+        presenter.addToExpression(2)
 
         // when
-        presenter.clickOperator(Operator.Plus)
+        presenter.addToExpression(Operator.Plus)
 
         // then
         val actual = expressionSlot.captured
@@ -72,11 +72,11 @@ class MainPresenterTest {
         // given
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } answers { nothing }
-        presenter.clickOperand(1)
-        presenter.clickOperand(2)
+        presenter.addToExpression(1)
+        presenter.addToExpression(2)
 
         // when
-        presenter.clickOperator(Operator.Minus)
+        presenter.addToExpression(Operator.Minus)
 
         // then
         val actual = expressionSlot.captured
@@ -89,13 +89,13 @@ class MainPresenterTest {
         // given
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } answers { nothing }
-        presenter.clickOperand(1)
-        presenter.clickOperand(2)
-        presenter.clickOperator(Operator.Minus)
-        presenter.clickOperand(2)
+        presenter.addToExpression(1)
+        presenter.addToExpression(2)
+        presenter.addToExpression(Operator.Minus)
+        presenter.addToExpression(2)
 
         // when
-        presenter.clickEqual()
+        presenter.calculateExpression()
 
         // then
         val actual = expressionSlot.captured
@@ -110,7 +110,7 @@ class MainPresenterTest {
         every { view.showExpression(capture(expressionSlot)) } answers { nothing }
 
         // when
-        presenter.clickOperator(Operator.Plus)
+        presenter.addToExpression(Operator.Plus)
 
         // then
         val actual = expressionSlot.captured
@@ -125,7 +125,7 @@ class MainPresenterTest {
         every { view.showExpression(capture(expressionSlot)) } answers { nothing }
 
         // when
-        presenter.clickDelete()
+        presenter.removeLastFromExpression()
 
         // then
         val actual = expressionSlot.captured
@@ -138,11 +138,11 @@ class MainPresenterTest {
         // given
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } answers { nothing }
-        presenter.clickOperand(1)
-        presenter.clickOperand(2)
+        presenter.addToExpression(1)
+        presenter.addToExpression(2)
 
         // when
-        presenter.clickDelete()
+        presenter.removeLastFromExpression()
 
         // then
         val actual = expressionSlot.captured

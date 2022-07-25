@@ -9,9 +9,9 @@ interface MainContract {
     }
 
     interface Presenter {
-        fun clickOperator(operator: Operator)
-        fun clickOperand(operand : Int)
-        fun clickEqual()
-        fun clickDelete()
+        fun addToExpression(operator: Operator)
+        fun addToExpression(operand : Int)
+        fun calculateExpression()
+        fun removeLastFromExpression()
     }
 }
