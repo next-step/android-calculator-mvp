@@ -71,11 +71,11 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.textView.text = expression
     }
 
-    override fun showResult(result: Int?) {
-        if (result == null) {
-            Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
-            return
-        }
+    override fun showResult(result: Int) {
         binding.textView.text = result.toString()
+    }
+
+    override fun showIncompleteExpression() {
+        Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
     }
 }

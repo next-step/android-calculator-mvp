@@ -1,6 +1,7 @@
 package edu.nextstep.camp.calculator.main
 
 import com.google.common.truth.Truth.assertThat
+import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 import io.mockk.*
 import org.junit.jupiter.api.BeforeEach
@@ -13,7 +14,6 @@ internal class MainPresenterTest {
     @BeforeEach
     fun setUp() {
         view = mockk()
-        presenter = MainPresenter(view)
     }
 
     @Test
@@ -21,6 +21,7 @@ internal class MainPresenterTest {
         //given
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } just Runs
+        presenter = MainPresenter(view)
 
         //when
         presenter.addOperand(1)
@@ -36,7 +37,7 @@ internal class MainPresenterTest {
         //given
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } answers { nothing }
-        presenter.addOperand(1)
+        presenter = MainPresenter(view, expression = Expression(listOf(1)))
 
         //when
         presenter.addOperand(2)
@@ -52,7 +53,7 @@ internal class MainPresenterTest {
         //given
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } answers { nothing }
-        presenter.addOperand(1)
+        presenter = MainPresenter(view, expression = Expression(listOf(1)))
 
         //when
         presenter.addOperator(Operator.Plus)
@@ -68,6 +69,7 @@ internal class MainPresenterTest {
         //given
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } answers { nothing }
+        presenter = MainPresenter(view)
 
         //when
         presenter.addOperator(Operator.Minus)
@@ -83,8 +85,7 @@ internal class MainPresenterTest {
         //given
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } answers { nothing }
-        presenter.addOperand(9)
-        presenter.addOperator(Operator.Plus)
+        presenter = MainPresenter(view, expression = Expression(listOf(9, Operator.Plus)))
 
         //when
         presenter.addOperator(Operator.Minus)
@@ -100,9 +101,7 @@ internal class MainPresenterTest {
         //given
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } answers { nothing }
-        presenter.addOperand(10)
-        presenter.addOperator(Operator.Multiply)
-        presenter.addOperand(3)
+        presenter = MainPresenter(view, expression = Expression(listOf(10, Operator.Multiply, 3)))
 
         //when
         presenter.removeLast()
@@ -115,20 +114,18 @@ internal class MainPresenterTest {
     }
 
     @Test
-    fun 잘못된_수식을_계산하려고_했을_때_계산이_수행되지_않는다() {
+    fun 완성되지_않은_수식을_계산하면_에러문구를_보여준다() {
         //given
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } answers { nothing }
-        every { view.showResult(null) } answers { nothing }
-
-        presenter.addOperand(10)
-        presenter.addOperator(Operator.Multiply)
+        every { view.showIncompleteExpression() } answers { nothing }
+        presenter = MainPresenter(view, expression = Expression(listOf(10, Operator.Multiply)))
 
         //when
         presenter.expressionCalculate()
 
         //then
-        verify { view.showResult(null) }
+        verify { view.showIncompleteExpression() }
     }
 
     @Test
@@ -137,10 +134,7 @@ internal class MainPresenterTest {
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } answers { nothing }
         every { view.showResult(20) } answers { nothing }
-
-        presenter.addOperand(10)
-        presenter.addOperator(Operator.Multiply)
-        presenter.addOperand(2)
+        presenter = MainPresenter(view, expression = Expression(listOf(10, Operator.Multiply, 2)))
 
         //when
         presenter.expressionCalculate()
