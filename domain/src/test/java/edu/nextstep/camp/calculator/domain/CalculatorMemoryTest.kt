@@ -25,7 +25,7 @@ internal class CalculatorMemoryTest {
         //given
         val expression1 = CalculatorMemory.SAVE_FORMAT.format(Expression(listOf(3, Operator.Plus, 5)), 8)
         val expression2 = CalculatorMemory.SAVE_FORMAT.format(Expression(listOf(4, Operator.Plus, 2)), 6)
-        calculatorMemory = CalculatorMemory(arrayListOf(expression1, expression2))
+        calculatorMemory = CalculatorMemory(mutableListOf(expression1, expression2))
         val expected = listOf(expression1, expression2)
 
         //when

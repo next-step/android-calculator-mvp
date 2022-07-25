@@ -124,7 +124,7 @@ internal class MainPresenterTest {
         val expected: List<String> = listOf(CalculatorMemory.SAVE_FORMAT.format("1 + 32", "33"))
         presenter = MainPresenter(
             view = view,
-            calculatorMemory = CalculatorMemory(arrayListOf(CalculatorMemory.SAVE_FORMAT.format("1 + 32", "33"))),
+            calculatorMemory = CalculatorMemory(mutableListOf(CalculatorMemory.SAVE_FORMAT.format("1 + 32", "33"))),
             isRecordsMode = false)
 
         //when
@@ -141,7 +141,7 @@ internal class MainPresenterTest {
         presenter = MainPresenter(
             view = view,
             expression = Expression(listOf(1, Operator.Plus)),
-            calculatorMemory = CalculatorMemory(arrayListOf(CalculatorMemory.SAVE_FORMAT.format("1 + 32", "33"))),
+            calculatorMemory = CalculatorMemory(mutableListOf(CalculatorMemory.SAVE_FORMAT.format("1 + 32", "33"))),
             isRecordsMode = true)
 
         //when

@@ -1,7 +1,7 @@
 package edu.nextstep.camp.calculator.domain
 
 class CalculatorMemory(
-    private val calcHistory: ArrayList<String> = arrayListOf()
+    private val calcHistory: MutableList<String> = mutableListOf()
 ) {
     companion object {
         const val SAVE_FORMAT = "%s\n= %s\n"
