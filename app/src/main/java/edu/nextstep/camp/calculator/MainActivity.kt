@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
+import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 
@@ -16,7 +17,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        presenter = MainPresenter(this)
+        presenter = MainPresenter(this, Calculator(), Expression.EMPTY)
 
         binding.button0.setOnClickListener { presenter.addToExpression(0) }
         binding.button1.setOnClickListener { presenter.addToExpression(1) }
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.textView.text = expression.toString()
     }
 
-    override fun showIncompleteExpressionToast() {
+    override fun showIncompleteExpression() {
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
     }
 }

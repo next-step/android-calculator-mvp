@@ -8,7 +8,7 @@ interface MainContract {
     interface View {
         var presenter: Presenter
         fun showExpression(expression: Expression)
-        fun showIncompleteExpressionToast()
+        fun showIncompleteExpression()
     }
 
     interface Presenter {
