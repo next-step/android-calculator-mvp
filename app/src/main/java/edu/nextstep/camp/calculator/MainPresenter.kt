@@ -20,7 +20,7 @@ class MainPresenter(
         showExpression()
     }
 
-    override fun removeLast() {
+    override fun removeLastFromExpression() {
         expression = expression.removeLast()
         showExpression()
     }

@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     private fun setFunctionalButtons() {
-        binding.buttonDelete.setOnClickListener { presenter.removeLast() }
+        binding.buttonDelete.setOnClickListener { presenter.removeLastFromExpression() }
         binding.buttonEquals.setOnClickListener { presenter.proceedCalculation() }
     }
 

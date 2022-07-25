@@ -76,7 +76,7 @@ class MainPresenterTest {
         mainPresenter.addOperatorToExpression(Operator.Plus)
         mainPresenter.addOperandToExpression(1)
         // when
-        mainPresenter.removeLast()
+        mainPresenter.removeLastFromExpression()
         // then
         verify { view.showExpression("32 +") }
     }
@@ -88,7 +88,7 @@ class MainPresenterTest {
         mainPresenter.addOperandToExpression(2)
         mainPresenter.addOperatorToExpression(Operator.Plus)
         // when
-        mainPresenter.removeLast()
+        mainPresenter.removeLastFromExpression()
         // then
         verify { view.showExpression("32") }
     }
@@ -99,7 +99,7 @@ class MainPresenterTest {
         mainPresenter.addOperandToExpression(3)
         mainPresenter.addOperandToExpression(2)
         // when
-        mainPresenter.removeLast()
+        mainPresenter.removeLastFromExpression()
         // then
         verify { view.showExpression("3") }
     }
@@ -109,7 +109,7 @@ class MainPresenterTest {
         // given
         mainPresenter.addOperandToExpression(3)
         // when
-        mainPresenter.removeLast()
+        mainPresenter.removeLastFromExpression()
         // then
         verify { view.showExpression("") }
     }
@@ -118,7 +118,7 @@ class MainPresenterTest {
     fun `빈 수식일 때, 마지막을 제거요청시 빈 수식이어야 한다`() {
         // given
         // when
-        mainPresenter.removeLast()
+        mainPresenter.removeLastFromExpression()
         // then
         verify { view.showExpression("") }
     }

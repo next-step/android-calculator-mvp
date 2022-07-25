@@ -11,7 +11,7 @@ interface MainContract {
     interface Presenter {
         fun addOperatorToExpression(operator: Operator)
         fun addOperandToExpression(operand: Int)
-        fun removeLast()
+        fun removeLastFromExpression()
         fun proceedCalculation()
     }
 }
