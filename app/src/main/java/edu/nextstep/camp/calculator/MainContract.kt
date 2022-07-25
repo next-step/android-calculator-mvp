@@ -11,7 +11,7 @@ interface MainContract {
 
         fun addOperator(operator: Operator)
 
-        fun deleteLast()
+        fun dropLast()
 
         fun calculate()
 
