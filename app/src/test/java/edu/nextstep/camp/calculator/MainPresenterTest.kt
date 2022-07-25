@@ -95,4 +95,18 @@ internal class MainPresenterTest {
         verify(exactly = 1) { view.setExpression(actual) }
     }
 
+    @ParameterizedTest(name = "적절한 형식의 {0} 수식의 계산 결과가 요청되면 계산된 수식 {1}을 보여줘야 한다")
+    @CsvSource(
+        "1 + 2 + 3 + 4 + 5, 15",
+        "1004 - 4 / 2, 500",
+        "10 * 5 / 10, 5",
+    )
+    fun `적절한 형식의 수식 계산 결과가 요청되면 계산된 수식을 보여줘야 한다`(given: String, expected: String) {
+        // when
+        presenter.calculate(given)
+
+        // then
+        verify(exactly = 1) { view.setCalculationResult(Operand.of(expected)) }
+    }
+
 }

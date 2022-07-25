@@ -13,11 +13,17 @@ interface MainContract {
         fun addElement(rawExpression: String, operand: Operand)
 
         fun removeElement(rawExpression: String)
+
+        fun calculate(rawExpression: String)
     }
 
     interface View {
 
         fun setExpression(state: StringExpressionState)
+
+        fun setCalculationResult(result: Operand)
+
+        fun calculationFailed()
     }
 }
 
