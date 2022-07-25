@@ -1,9 +1,11 @@
 package edu.nextstep.camp.calculator
 
-import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.CalculatorMemory
-import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
+import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.ExpressionRecord
+import edu.nextstep.camp.calculator.domain.Calculator
+
 
 class MainPresenter(
     private val view: MainConstract.View,
@@ -39,7 +41,7 @@ class MainPresenter(
             return
         }
 
-        calculatorMemory.saveExpressionRecord(expression, result)
+        calculatorMemory.saveExpressionRecord(ExpressionRecord(expression, result))
         expression = Expression.EMPTY + result
         view.succeedCalculate(expression)
     }

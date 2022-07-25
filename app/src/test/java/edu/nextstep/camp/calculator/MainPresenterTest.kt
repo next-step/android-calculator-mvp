@@ -2,6 +2,7 @@ package edu.nextstep.camp.calculator
 
 import edu.nextstep.camp.calculator.domain.CalculatorMemory
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.ExpressionRecord
 import edu.nextstep.camp.calculator.domain.Operator
 import io.mockk.mockk
 import io.mockk.verify
@@ -121,10 +122,11 @@ internal class MainPresenterTest {
     @Test
     internal fun `계산 기록이 표시되지 않은 상태에서 계산 기록을 활성화하면 계산 기록이 노출된다`() {
         //given
-        val expected: List<String> = listOf(CalculatorMemory.SAVE_FORMAT.format("1 + 32", "33"))
+        val expressionRecord = ExpressionRecord(Expression(listOf(1, Operator.Plus, 32)), 33)
+        val expected: List<ExpressionRecord> = listOf(expressionRecord)
         presenter = MainPresenter(
             view = view,
-            calculatorMemory = CalculatorMemory(arrayListOf(CalculatorMemory.SAVE_FORMAT.format("1 + 32", "33"))),
+            calculatorMemory = CalculatorMemory(listOf(expressionRecord)),
             isRecordsMode = false)
 
         //when
@@ -141,7 +143,7 @@ internal class MainPresenterTest {
         presenter = MainPresenter(
             view = view,
             expression = Expression(listOf(1, Operator.Plus)),
-            calculatorMemory = CalculatorMemory(arrayListOf(CalculatorMemory.SAVE_FORMAT.format("1 + 32", "33"))),
+            calculatorMemory = CalculatorMemory(listOf(ExpressionRecord(Expression(listOf(1, Operator.Plus, 34)), 35))),
             isRecordsMode = true)
 
         //when
@@ -149,6 +151,7 @@ internal class MainPresenterTest {
 
         //then
         verify { view.hideExpressionRecords() }
+        verify { view.showExpression(expected) }
     }
 
     @Test
@@ -165,6 +168,6 @@ internal class MainPresenterTest {
         presenter.calculate()
 
         //then
-        verify { memory.saveExpressionRecord(Expression(listOf(1, Operator.Plus, 32)), 33)}
+        verify { memory.saveExpressionRecord(ExpressionRecord(Expression(listOf(1, Operator.Plus, 32)), 33)) }
     }
 }

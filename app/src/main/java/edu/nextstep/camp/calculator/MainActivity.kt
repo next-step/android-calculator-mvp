@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.ExpressionRecord
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainActivity : AppCompatActivity(), MainConstract.View {
@@ -38,7 +39,7 @@ class MainActivity : AppCompatActivity(), MainConstract.View {
         binding.buttonMemory.setOnClickListener { presenter.toggleDisplayRecords() }
     }
 
-    override fun showExpressionRecords(records: List<String>) {
+    override fun showExpressionRecords(records: List<ExpressionRecord>) {
         binding.textView.text = records.joinToString("\n")
     }
 

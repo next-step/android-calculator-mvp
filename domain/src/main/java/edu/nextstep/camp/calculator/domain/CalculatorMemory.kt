@@ -1,21 +1,19 @@
 package edu.nextstep.camp.calculator.domain
 
 class CalculatorMemory(
-    private val calcHistory: ArrayList<String> = arrayListOf()
+    calculatorRecords: List<ExpressionRecord> = listOf()
 ) {
-    fun saveExpressionRecord(expression: Expression, result: Int) {
-        calcHistory.add(SAVE_FORMAT.format(expression, result))
+    private val expressionRecords: MutableList<ExpressionRecord> = calculatorRecords.toMutableList()
+
+    fun saveExpressionRecord(vararg records: ExpressionRecord) {
+        expressionRecords.addAll(records)
     }
 
-    fun loadExpressionRecords(): List<String> {
-        return calcHistory.toList()
+    fun loadExpressionRecords(): List<ExpressionRecord> {
+        return expressionRecords.toList()
     }
 
     override fun toString(): String {
-        return calcHistory.joinToString("\n")
-    }
-
-    companion object {
-        const val SAVE_FORMAT = "%s\n= %s\n"
+        return expressionRecords.joinToString("\n")
     }
 }

@@ -14,7 +14,7 @@ internal class CalculatorMemoryTest {
         val result = 8
 
         //when
-        calculatorMemory.saveExpressionRecord(expression, result)
+        calculatorMemory.saveExpressionRecord(ExpressionRecord(expression, result))
 
         //then
         Truth.assertThat(calculatorMemory.toString()).isEqualTo("3 + 5\n= 8\n")
@@ -23,9 +23,9 @@ internal class CalculatorMemoryTest {
     @Test
     internal fun `저장된 계산 수식을 가져올 수 있어야 한다`() {
         //given
-        val expression1 = CalculatorMemory.SAVE_FORMAT.format(Expression(listOf(3, Operator.Plus, 5)), 8)
-        val expression2 = CalculatorMemory.SAVE_FORMAT.format(Expression(listOf(4, Operator.Plus, 2)), 6)
-        calculatorMemory = CalculatorMemory(arrayListOf(expression1, expression2))
+        val expression1 = ExpressionRecord(Expression(listOf(3, Operator.Plus, 5)), 8)
+        val expression2 = ExpressionRecord(Expression(listOf(4, Operator.Plus, 2)), 6)
+        calculatorMemory = CalculatorMemory(mutableListOf(expression1, expression2))
         val expected = listOf(expression1, expression2)
 
         //when

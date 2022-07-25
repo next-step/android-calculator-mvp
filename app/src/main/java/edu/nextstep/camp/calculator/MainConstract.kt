@@ -1,6 +1,7 @@
 package edu.nextstep.camp.calculator
 
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.ExpressionRecord
 import edu.nextstep.camp.calculator.domain.Operator
 
 interface MainConstract {
@@ -17,7 +18,7 @@ interface MainConstract {
         fun failedCalculate()
 
         fun showExpression(expression: Expression)
-        fun showExpressionRecords(records: List<String>)
+        fun showExpressionRecords(records: List<ExpressionRecord>)
         fun hideExpressionRecords()
     }
 }
