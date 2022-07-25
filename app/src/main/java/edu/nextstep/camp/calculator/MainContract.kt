@@ -23,6 +23,8 @@ interface MainContract {
 
         fun showCalculateValue(expression: Expression)
 
+        fun showExpressionErrorToast()
+
     }
 
 }
