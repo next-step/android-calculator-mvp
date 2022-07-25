@@ -109,4 +109,19 @@ internal class MainPresenterTest {
         verify(exactly = 1) { view.setCalculationResult(Operand.of(expected)) }
     }
 
+    @ParameterizedTest(name = "적절하지 않은 형식의 {0} 수식의 계산 결과가 요청되면 수식 계산이 실패했음을 알려줘야 한다")
+    @CsvSource(
+        "1 @ 2",
+        "1 + 2 ( 3",
+        "- + 3",
+        "1(3)",
+    )
+    fun `적절하지 않은 형식의 수식 계산 결과가 요청되면 수식 계산이 실패했음을 알려줘야 한다`(given: String) {
+        // when
+        presenter.calculate(given)
+
+        // then
+        verify(exactly = 1) { view.calculationFailed() }
+    }
+
 }
