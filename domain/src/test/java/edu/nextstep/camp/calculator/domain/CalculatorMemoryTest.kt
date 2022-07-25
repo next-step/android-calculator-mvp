@@ -4,7 +4,7 @@ import com.google.common.truth.Truth
 import org.junit.jupiter.api.Test
 
 internal class CalculatorMemoryTest {
-    private lateinit var calculatorMemory : CalculatorMemory
+    private lateinit var calculatorMemory: CalculatorMemory
 
     @Test
     internal fun `완성된 수식이 주어질 때 계산 기록이 저장되어야 한다`() {

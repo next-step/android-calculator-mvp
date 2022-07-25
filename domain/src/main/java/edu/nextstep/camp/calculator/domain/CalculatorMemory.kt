@@ -3,10 +3,6 @@ package edu.nextstep.camp.calculator.domain
 class CalculatorMemory(
     private val calcHistory: MutableList<String> = mutableListOf()
 ) {
-    companion object {
-        const val SAVE_FORMAT = "%s\n= %s\n"
-    }
-
     fun saveExpressionRecord(expression: Expression, result: Int) {
         calcHistory.add(SAVE_FORMAT.format(expression, result))
     }
@@ -17,5 +13,9 @@ class CalculatorMemory(
 
     override fun toString(): String {
         return calcHistory.joinToString("\n")
+    }
+
+    companion object {
+        const val SAVE_FORMAT = "%s\n= %s\n"
     }
 }
