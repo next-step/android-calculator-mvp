@@ -11,6 +11,8 @@ interface MainContract {
         fun addElement(rawExpression: String, operator: Operator)
 
         fun addElement(rawExpression: String, operand: Operand)
+
+        fun removeElement(rawExpression: String)
     }
 
     interface View {

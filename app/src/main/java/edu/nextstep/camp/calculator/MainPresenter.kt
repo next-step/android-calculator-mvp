@@ -20,4 +20,12 @@ class MainPresenter(
             .addElement(operand)
             .let(view::setExpression)
 
+    override fun removeElement(rawExpression: String) =
+        StringExpressionState
+            .of(rawExpression)
+            .removeElement()
+            .let {
+                val a = it
+                view.setExpression(a)
+            }
 }

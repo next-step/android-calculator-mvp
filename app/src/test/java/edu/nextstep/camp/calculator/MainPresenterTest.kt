@@ -75,4 +75,24 @@ internal class MainPresenterTest {
         verify(exactly = 1) { view.setExpression(actual) }
     }
 
+    @ParameterizedTest(name = "{0} 수식의 마지막 요소 제거가 요청되면 제거한 후 변경된 수식 {1}을 보여줘야 한다")
+    @CsvSource(
+        "9, ''",
+        "123 -, 123",
+        "'', ''",
+    )
+    fun `수식의 마지막 요소 제거가 요청되면 제거한 후 변경된 수식을 보여줘야 한다`(given: String, expected: String) {
+        // given
+        val stateSlot = slot<StringExpressionState>()
+        every { view.setExpression(capture(stateSlot)) } answers { nothing }
+
+        // when
+        presenter.removeElement(given)
+
+        // then
+        val actual = stateSlot.captured
+        assertThat(actual.toString()).isEqualTo(expected)
+        verify(exactly = 1) { view.setExpression(actual) }
+    }
+
 }
