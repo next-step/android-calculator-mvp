@@ -1,8 +1,10 @@
 package edu.nextstep.camp.calculator.domain
 
-class Calculator {
+class Calculator(
+    historyList: HistoryList = HistoryList()
+) {
 
-    var historyList = listOf<History>()
+    var historyList = historyList
         private set
 
     fun calculate(rawExpression: String): Int? {
@@ -18,7 +20,7 @@ class Calculator {
             acc = operator.operation(acc, secondOperand)
         }
 
-        historyList = historyList + History(rawExpression, acc)
+        historyList += History(rawExpression, acc)
 
         return acc
     }

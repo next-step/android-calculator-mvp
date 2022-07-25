@@ -69,19 +69,20 @@ class CalculatorTest {
 
     @Test
     fun `계산 결과 기록`() {
-        // given
-        calculator.calculate("3 + 5")
-        calculator.calculate("10 - 3")
-
-        // when
-        val actual = calculator.historyList
-
-        // then
-        assertThat(actual).isEqualTo(
+        val expected = HistoryList(
             listOf(
                 History("3 + 5", 8),
                 History("10 - 3", 7)
             )
         )
+
+        // given
+        calculator = Calculator(expected)
+
+        // when
+        val actual = calculator.historyList
+
+        // then
+        assertThat(actual).isEqualTo(expected)
     }
 }
