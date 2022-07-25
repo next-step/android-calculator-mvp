@@ -38,20 +38,24 @@ class MainActivity : AppCompatActivity(), MainConstract.View {
         binding.buttonMemory.setOnClickListener { presenter.toggleDisplayRecords() }
     }
 
-    override fun failedCalculate() {
-        Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
-    }
-
-    override fun showExpression(records: List<String>) {
+    override fun showExpressionRecords(records: List<String>) {
         binding.textView.text = records.joinToString("\n")
     }
 
-    override fun disableExpression(expression: Expression) {
-        binding.textView.text = expression.toString()
+    override fun hideExpressionRecords() {
         binding.textView.scrollY = 0
+        binding.textView.text = Expression.EMPTY.toString()
+    }
+
+    override fun showExpression(expression: Expression) {
+        binding.textView.text = expression.toString()
     }
 
     override fun succeedCalculate(expression: Expression) {
         binding.textView.text = expression.toString()
+    }
+
+    override fun failedCalculate() {
+        Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
     }
 }

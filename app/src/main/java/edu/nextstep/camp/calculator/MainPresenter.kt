@@ -15,16 +15,19 @@ class MainPresenter(
 
     override fun addToExpression(expression: Operator) {
         this.expression += expression
+        hideExpressionRecords()
         showExpressionToView()
     }
 
     override fun addToExpression(expression: Int) {
         this.expression += expression
+        hideExpressionRecords()
         showExpressionToView()
     }
 
     override fun removeLast() {
         this.expression = expression.removeLast()
+        hideExpressionRecords()
         showExpressionToView()
     }
 
@@ -38,24 +41,29 @@ class MainPresenter(
 
         calculatorMemory.saveExpressionRecord(expression, result)
         expression = Expression.EMPTY + result
-        showExpressionToView()
+        view.succeedCalculate(expression)
     }
 
     override fun toggleDisplayRecords() {
         when (isRecordsMode) {
-            true -> view.disableExpression(this.expression)
-            false -> view.showExpression(calculatorMemory.loadExpressionRecords())
+            true -> {
+                view.hideExpressionRecords()
+                view.showExpression(expression)
+            }
+            false -> view.showExpressionRecords(calculatorMemory.loadExpressionRecords())
         }
 
         isRecordsMode = !isRecordsMode
     }
 
-    private fun showExpressionToView() {
+    private fun hideExpressionRecords() {
         if (isRecordsMode) {
             isRecordsMode = false
-            view.disableExpression(this.expression)
+            view.hideExpressionRecords()
         }
+    }
 
-        view.succeedCalculate(this.expression)
+    private fun showExpressionToView() {
+        view.showExpression(this.expression)
     }
 }

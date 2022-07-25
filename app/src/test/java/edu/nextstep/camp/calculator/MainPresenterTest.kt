@@ -33,7 +33,7 @@ internal class MainPresenterTest {
 
 
         //then
-        verify { view.succeedCalculate(expected) }
+        verify { view.showExpression(expected) }
     }
 
     @ParameterizedTest
@@ -47,7 +47,7 @@ internal class MainPresenterTest {
         presenter.addToExpression(value)
 
         //then
-        verify { view.succeedCalculate(expected) }
+        verify { view.showExpression(expected) }
     }
 
     @Test
@@ -60,7 +60,7 @@ internal class MainPresenterTest {
         presenter.addToExpression(9)
 
         //then
-        verify { view.succeedCalculate(expected) }
+        verify { view.showExpression(expected) }
     }
 
 
@@ -77,7 +77,7 @@ internal class MainPresenterTest {
         presenter.addToExpression(Operator.Multiply)
 
         //then
-        verify { view.succeedCalculate(expected) }
+        verify { view.showExpression(expected) }
     }
 
     @Test
@@ -115,7 +115,7 @@ internal class MainPresenterTest {
         presenter.removeLast()
 
         //then
-        verify { view.succeedCalculate(expected) }
+        verify { view.showExpression(expected) }
     }
 
     @Test
@@ -131,7 +131,7 @@ internal class MainPresenterTest {
         presenter.toggleDisplayRecords()
 
         //then
-        verify { view.showExpression(expected) }
+        verify { view.showExpressionRecords(expected) }
     }
 
     @Test
@@ -148,7 +148,7 @@ internal class MainPresenterTest {
         presenter.toggleDisplayRecords()
 
         //then
-        verify { view.disableExpression(expected) }
+        verify { view.hideExpressionRecords() }
     }
 
     @Test

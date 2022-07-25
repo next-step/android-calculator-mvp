@@ -16,7 +16,8 @@ interface MainConstract {
         fun succeedCalculate(expression: Expression)
         fun failedCalculate()
 
-        fun showExpression(records: List<String>)
-        fun disableExpression(expression: Expression)
+        fun showExpression(expression: Expression)
+        fun showExpressionRecords(records: List<String>)
+        fun hideExpressionRecords()
     }
 }
