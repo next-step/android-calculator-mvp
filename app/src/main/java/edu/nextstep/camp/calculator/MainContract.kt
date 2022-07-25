@@ -6,13 +6,13 @@ interface MainContract {
 
     interface MainPresenter {
 
-        fun addOperand(): Expression
+        fun addOperand()
 
-        fun addOperator(): Expression
+        fun addOperator()
 
-        fun deleteLast(): Expression
+        fun deleteLast()
 
-        fun calculate(): Expression
+        fun calculate()
 
     }
 
