@@ -1,6 +1,7 @@
 package edu.nextstep.camp.calculator.domain
 
 import edu.nextstep.camp.calculator.domain.exception.ExpressionNotCompleteException
+import edu.nextstep.camp.calculator.domain.model.EvaluationRecord
 import edu.nextstep.camp.calculator.domain.model.Operand
 import edu.nextstep.camp.calculator.domain.model.Operator
 import edu.nextstep.camp.calculator.domain.model.ExpressionToken
@@ -50,6 +51,8 @@ class ExpressionTokenProcessor {
             if (token == Operator.SUBTRACTION) NegativeExpressionToken else token
         }
         expressionTokenList.addAll(calculatedTokens)
+
+        EvaluationRecordStore.getInstance().record(EvaluationRecord(parsedStr, result.toString()))
 
         return expressionTokenList.toExpression()
     }

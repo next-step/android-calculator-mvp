@@ -1,5 +1,6 @@
 package edu.nextstep.camp.calculator
 
+import edu.nextstep.camp.calculator.domain.EvaluationRecordStore
 import edu.nextstep.camp.calculator.domain.ExpressionTokenProcessor
 import edu.nextstep.camp.calculator.domain.model.Operand
 import edu.nextstep.camp.calculator.domain.model.Operator
@@ -28,6 +29,15 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
     override fun delete() {
         processToken {
             view.displayExpression(expressionTokenProcessor.delete())
+        }
+    }
+
+    override fun showOrHideEvaluationHistory(show: Boolean) {
+        if (show) {
+            view.showEvaluationHistory(EvaluationRecordStore.getInstance().getEvaluationHistory())
+        }
+        else {
+            view.hideEvaluationHistory()
         }
     }
 
