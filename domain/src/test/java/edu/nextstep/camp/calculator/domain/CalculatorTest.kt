@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class CalculatorTest {
+
     private lateinit var calculator: Calculator
 
     @BeforeEach
@@ -64,5 +65,24 @@ class CalculatorTest {
 
         // then
         assertThat(actual).isNull()
+    }
+
+    @Test
+    fun `계산 결과 기록`() {
+        val expected = HistoryList(
+            listOf(
+                History("3 + 5", 8),
+                History("10 - 3", 7)
+            )
+        )
+
+        // given
+        calculator = Calculator(expected)
+
+        // when
+        val actual = calculator.historyList
+
+        // then
+        assertThat(actual).isEqualTo(expected)
     }
 }

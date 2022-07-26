@@ -5,23 +5,30 @@ import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainPresenter(
-    private val view: MainContract.View
+    private val view: MainContract.View,
+    private val calculator: Calculator = Calculator(),
+    private var expression: Expression = Expression.EMPTY,
 ) : MainContract.Presenter {
 
-    private val calculator = Calculator()
-    private var expression = Expression.EMPTY
+    private var isShowingHistory = false
 
     override fun enterNumber(number: Int) {
+        if (isShowingHistory) return
+
         expression += number
         view.showExpression(expression.toString())
     }
 
     override fun enterOperator(operator: Operator) {
+        if (isShowingHistory) return
+
         expression += operator
         view.showExpression(expression.toString())
     }
 
     override fun calculate() {
+        if (isShowingHistory) return
+
         val result = calculator.calculate(expression.toString())
 
         if (result == null) {
@@ -34,7 +41,19 @@ class MainPresenter(
     }
 
     override fun removeLast() {
+        if (isShowingHistory) return
+
         expression = expression.removeLast()
         view.showExpression(expression.toString())
+    }
+
+    override fun toggleHistory() {
+        isShowingHistory = !isShowingHistory
+
+        if (isShowingHistory) {
+            view.showHistory(calculator.historyList)
+        } else {
+            view.hideHistory()
+        }
     }
 }
