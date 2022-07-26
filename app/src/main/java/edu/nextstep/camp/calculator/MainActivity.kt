@@ -1,90 +1,74 @@
 package edu.nextstep.camp.calculator
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
-import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.Operator
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainContract.View {
+
     private lateinit var binding: ActivityMainBinding
-    private val calculator = Calculator()
-    private var expression = Expression.EMPTY
+
+    private val presenter = MainPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.button0.setOnClickListener {
-            expression += 0
-            binding.textView.text = expression.toString()
-        }
-        binding.button1.setOnClickListener {
-            expression += 1
-            binding.textView.text = expression.toString()
-        }
-        binding.button2.setOnClickListener {
-            expression += 2
-            binding.textView.text = expression.toString()
-        }
-        binding.button3.setOnClickListener {
-            expression += 3
-            binding.textView.text = expression.toString()
-        }
-        binding.button4.setOnClickListener {
-            expression += 4
-            binding.textView.text = expression.toString()
-        }
-        binding.button5.setOnClickListener {
-            expression += 5
-            binding.textView.text = expression.toString()
-        }
-        binding.button6.setOnClickListener {
-            expression += 6
-            binding.textView.text = expression.toString()
-        }
-        binding.button7.setOnClickListener {
-            expression += 7
-            binding.textView.text = expression.toString()
-        }
-        binding.button8.setOnClickListener {
-            expression += 8
-            binding.textView.text = expression.toString()
-        }
-        binding.button9.setOnClickListener {
-            expression += 9
-            binding.textView.text = expression.toString()
-        }
-        binding.buttonPlus.setOnClickListener {
-            expression += edu.nextstep.camp.calculator.domain.Operator.Plus
-            binding.textView.text = expression.toString()
-        }
-        binding.buttonMinus.setOnClickListener {
-            expression += edu.nextstep.camp.calculator.domain.Operator.Minus
-            binding.textView.text = expression.toString()
-        }
-        binding.buttonMultiply.setOnClickListener {
-            expression += edu.nextstep.camp.calculator.domain.Operator.Multiply
-            binding.textView.text = expression.toString()
-        }
-        binding.buttonDivide.setOnClickListener {
-            expression += edu.nextstep.camp.calculator.domain.Operator.Divide
-            binding.textView.text = expression.toString()
-        }
+        val operandButtonArray = arrayOf(
+            binding.button0, binding.button1, binding.button2, binding.button3, binding.button4,
+            binding.button5, binding.button6, binding.button7, binding.button8, binding.button9,
+        )
+
+        bindOnClickOperand(buttons = operandButtonArray)
+
+        val operatorButtonArray = arrayOf(
+            binding.buttonPlus, binding.buttonMinus, binding.buttonMultiply, binding.buttonDivide,
+        )
+
+        bindOnClickOperator(buttons = operatorButtonArray)
+
         binding.buttonDelete.setOnClickListener {
-            expression = expression.removeLast()
-            binding.textView.text = expression.toString()
+            presenter.dropLast()
         }
+
         binding.buttonEquals.setOnClickListener {
-            val result = calculator.calculate(expression.toString())
-            if (result == null) {
-                Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            expression = Expression.EMPTY + result
-            binding.textView.text = result.toString()
+            presenter.calculate()
         }
     }
+
+    private fun bindOnClickOperand(vararg buttons: Button) {
+        buttons.forEachIndexed { index, button ->
+            button.setOnClickListener {
+                presenter.addOperand(button.text.toString().toInt())
+            }
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun bindOnClickOperator(vararg buttons: Button) {
+        buttons.forEach { button ->
+            button.setOnClickListener {
+                presenter.addOperator(Operator.of(button.text.toString()))
+            }
+        }
+    }
+
+    override fun showCurrentExpression(expression: Expression) {
+        binding.textView.text = expression.toString()
+    }
+
+    override fun showCalculateValue(expression: Expression) {
+        binding.textView.text = expression.toString()
+    }
+
+    override fun showExpressionErrorToast() {
+        Toast.makeText(applicationContext, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
+    }
+
 }

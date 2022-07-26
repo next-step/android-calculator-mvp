@@ -21,7 +21,7 @@ data class Expression(
         }
     }
 
-    fun removeLast(): Expression {
+    fun dropLast(): Expression {
         return when (val last = values.lastOrNull()) {
             is Operator -> Expression(values.dropLast(1))
             is Int -> {
