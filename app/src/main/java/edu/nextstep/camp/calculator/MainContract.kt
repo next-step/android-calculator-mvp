@@ -9,7 +9,7 @@ interface MainContract {
 
         fun showToastIncompleteExpression()
 
-        fun showExpressionMemoryView()
+        fun showExpressionMemoryView(items: List<MemoryUIModel>)
 
         fun hideExpressionMemoryView()
     }
@@ -24,7 +24,5 @@ interface MainContract {
         fun onClickEqualButton()
 
         fun onClickMemoryButton()
-
-        fun getItemList(): List<MemoryUIModel>
     }
 }

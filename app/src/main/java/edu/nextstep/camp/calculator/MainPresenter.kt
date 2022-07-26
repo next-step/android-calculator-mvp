@@ -2,11 +2,15 @@ package edu.nextstep.camp.calculator
 
 import edu.nextstep.camp.calculator.view.MemoryUIModel
 
-class MainPresenter(private val view: MainContract.View) : MainContract.Presenter {
-    private val calculator = Calculator()
-    private var expression = Expression.EMPTY
+class MainPresenter(
+    private val view: MainContract.View,
+    private val calculator: Calculator = Calculator(),
+    private var expression: Expression = Expression.EMPTY
+) : MainContract.Presenter {
     private var isMemoryViewDisplayed = true
-    private var logs: List<MemoryUIModel> = arrayListOf()
+    private val _logs = mutableListOf<MemoryUIModel>()
+    private val logs: List<MemoryUIModel>
+        get() = _logs
 
     override fun onClickNumberButton(number: Int) {
         expression += number
@@ -37,11 +41,10 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
     override fun onClickMemoryButton() {
         if (isMemoryViewDisplayed) {
             isMemoryViewDisplayed = false
-            view.showExpressionMemoryView()
+            view.showExpressionMemoryView(logs)
             view.setResultTextView(" ")
         }
         else {
-            clearExpressions()
             isMemoryViewDisplayed = true
             view.hideExpressionMemoryView()
             view.setResultTextView(expression.toString())
@@ -49,16 +52,6 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
     }
 
     private fun saveExpression(expression: String, result: String) {
-        val _logs = logs.toMutableList()
-        _logs.add(MemoryUIModel(expression, "= $result"))
-        logs = _logs
+        _logs.add(MemoryUIModel(logs.size, expression, "= $result"))
     }
-
-    private fun clearExpressions() {
-        val _logs = logs.toMutableList()
-        _logs.clear()
-        logs = _logs
-    }
-
-    override fun getItemList(): List<MemoryUIModel> = logs
 }

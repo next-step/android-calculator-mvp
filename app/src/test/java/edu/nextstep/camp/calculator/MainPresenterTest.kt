@@ -1,6 +1,7 @@
 package edu.nextstep.camp.calculator
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import edu.nextstep.camp.calculator.view.MemoryUIModel
 import io.mockk.MockKAnnotations
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.verify
@@ -76,12 +77,13 @@ class MainPresenterTest {
         mainPresenter.onClickOperandButton("+")
         mainPresenter.onClickNumberButton(5)
         mainPresenter.onClickEqualButton()
+        val list = listOf(MemoryUIModel(0, "1 + 5", "= 6"))
 
         //when
         mainPresenter.onClickMemoryButton()
 
         //then
-        verify { mainMockActivity.showExpressionMemoryView() }
+        verify { mainMockActivity.showExpressionMemoryView(list) }
     }
 
     @Test

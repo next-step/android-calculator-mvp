@@ -6,12 +6,18 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
+import edu.nextstep.camp.calculator.view.MemoryDiffCallback
 import edu.nextstep.camp.calculator.view.MemoryRecyclerViewAdapter
+import edu.nextstep.camp.calculator.view.MemoryUIModel
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var presenter: MainContract.Presenter
+
+    private lateinit var memoryAdapter: MemoryRecyclerViewAdapter
+
+    private val diffUtil = MemoryDiffCallback()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,8 +36,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     private fun initRecyclerView() {
         binding.recyclerView.apply {
-            adapter = MemoryRecyclerViewAdapter(presenter.getItemList())
-            layoutManager = LinearLayoutManager(this@MainActivity)
+            adapter = MemoryRecyclerViewAdapter()
+            memoryAdapter = adapter as MemoryRecyclerViewAdapter
         }
     }
 
@@ -98,10 +104,9 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
     }
 
-    override fun showExpressionMemoryView() {
+    override fun showExpressionMemoryView(items: List<MemoryUIModel>) {
         binding.recyclerView.visibility = View.VISIBLE
-        val adapter = binding.recyclerView.adapter as MemoryRecyclerViewAdapter
-        adapter.appendItems(presenter.getItemList())
+        memoryAdapter.submitList(items)
     }
 
     override fun hideExpressionMemoryView() {
