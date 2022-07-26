@@ -1,15 +1,18 @@
 package edu.nextstep.camp.calculator
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
+import edu.nextstep.camp.calculator.domain.CalculationRecordItem
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
     private lateinit var presenter: MainContract.Presenter
+    private lateinit var calculationMemoryAdapter: CalculationMemoryAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +37,12 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonDivide.setOnClickListener { presenter.addOperator(Operator.Divide) }
         binding.buttonDelete.setOnClickListener { presenter.removeLast() }
         binding.buttonEquals.setOnClickListener { presenter.calculateExpression() }
+        binding.buttonMemory.setOnClickListener {
+            presenter.clickCalculationMemory(binding.recyclerView.visibility == View.VISIBLE)
+        }
+
+        calculationMemoryAdapter = CalculationMemoryAdapter()
+        binding.recyclerView.adapter = calculationMemoryAdapter
     }
 
     override fun showExpression(expression: Expression) {
@@ -42,5 +51,17 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun showIncompleteExpressionToast() {
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showCalculationMemory(calculationRecordList: List<CalculationRecordItem>) {
+        calculationMemoryAdapter.submitList(calculationRecordList)
+    }
+
+    override fun showCalculationRecord(showRecord: Boolean) {
+        if (showRecord) {
+            binding.recyclerView.visibility = View.VISIBLE
+        } else {
+            binding.recyclerView.visibility = View.GONE
+        }
     }
 }
