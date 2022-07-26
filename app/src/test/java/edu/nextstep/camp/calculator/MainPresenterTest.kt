@@ -5,6 +5,7 @@ import edu.nextstep.camp.calculator.domain.CalculationRecordItem
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 import io.mockk.*
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -34,8 +35,11 @@ class MainPresenterTest {
 
         // then
         val actual = expressionSlot.captured
-        assertThat(actual.toString()).isEqualTo("1")
-        verify { view.showExpression(actual) }
+
+        Assertions.assertAll(
+            { assertThat(actual.toString()).isEqualTo("1") },
+            { verify { view.showExpression(actual) } }
+        )
     }
 
     @Test
@@ -49,8 +53,10 @@ class MainPresenterTest {
 
         // then
         val actual = expressionSlot.captured
-        assertThat(actual.toString()).isEqualTo("1 +")
-        verify { view.showExpression(actual) }
+        Assertions.assertAll(
+            { assertThat(actual.toString()).isEqualTo("1 +") },
+            { verify { view.showExpression(actual) } }
+        )
     }
 
     @Test
@@ -65,8 +71,10 @@ class MainPresenterTest {
 
         // then
         val actual = expressionSlot.captured
-        assertThat(actual.toString()).isEqualTo("1")
-        verify { view.showExpression(actual) }
+        Assertions.assertAll(
+            { assertThat(actual.toString()).isEqualTo("1") },
+            { verify { view.showExpression(actual) } }
+        )
     }
 
     @Test
@@ -81,8 +89,10 @@ class MainPresenterTest {
         presenter.calculateExpression()
         // then
         val actual = expressionSlot.captured
-        assertThat(actual.toString()).isEqualTo("2")
-        verify { view.showExpression(actual) }
+        Assertions.assertAll(
+            { assertThat(actual.toString()).isEqualTo("2") },
+            { verify { view.showExpression(actual) } }
+        )
     }
 
     @Test
@@ -97,8 +107,10 @@ class MainPresenterTest {
         presenter.calculateExpression()
         // then
         val actual = expressionSlot.captured
-        assertThat(actual.toString()).isEqualTo("1 +")
-        verify { view.showExpression(actual) }
+        Assertions.assertAll(
+            { assertThat(actual.toString()).isEqualTo("1 +") },
+            { verify { view.showExpression(actual) } }
+        )
     }
 
     @Test
