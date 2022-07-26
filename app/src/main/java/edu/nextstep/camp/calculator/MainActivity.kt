@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
+import edu.nextstep.camp.calculator.domain.CalculationRecordItem
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 
@@ -43,7 +43,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
         calculationMemoryAdapter = CalculationMemoryAdapter()
         binding.recyclerView.adapter = calculationMemoryAdapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
     }
 
     override fun showExpression(expression: Expression) {
@@ -54,7 +53,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
     }
 
-    override fun showCalculationMemory(calculationRecordList: List<Pair<String, Int>>) {
+    override fun showCalculationMemory(calculationRecordList: List<CalculationRecordItem>) {
         calculationMemoryAdapter.submitList(calculationRecordList)
     }
 

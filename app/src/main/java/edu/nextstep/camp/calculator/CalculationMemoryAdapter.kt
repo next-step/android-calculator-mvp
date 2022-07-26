@@ -6,13 +6,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import edu.nextstep.camp.calculator.databinding.ItemResultBinding
+import edu.nextstep.camp.calculator.domain.CalculationRecordItem
 
 /**
  * 계산기록리스트 adapter
  * Created by jeongjinhong on 2022. 07. 24..
  */
 class CalculationMemoryAdapter() :
-    ListAdapter<Pair<String, Int>, RecyclerView.ViewHolder>(ItemDiffCallback()) {
+    ListAdapter<CalculationRecordItem, RecyclerView.ViewHolder>(ItemDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val itemResultBinding =
@@ -27,27 +28,27 @@ class CalculationMemoryAdapter() :
         }
     }
 
-    inner class Holder(
+    class Holder(
         private val binding: ItemResultBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun setData(data: Pair<String, Int>) {
-            binding.tvExpression.text = data.first
-            binding.tvResult.text = "= ${data.second}"
+        fun setData(data: CalculationRecordItem) {
+            binding.tvExpression.text = data.expression
+            binding.tvResult.text = "= ${data.result}"
         }
     }
 
-    class ItemDiffCallback : DiffUtil.ItemCallback<Pair<String, Int>>() {
+    class ItemDiffCallback : DiffUtil.ItemCallback<CalculationRecordItem>() {
         override fun areItemsTheSame(
-            oldItem: Pair<String, Int>,
-            newItem: Pair<String, Int>
+            oldItem: CalculationRecordItem,
+            newItem: CalculationRecordItem
         ): Boolean {
-            return oldItem.first == newItem.first
+            return oldItem.expression == newItem.expression
         }
 
         override fun areContentsTheSame(
-            oldItem: Pair<String, Int>,
-            newItem: Pair<String, Int>
+            oldItem: CalculationRecordItem,
+            newItem: CalculationRecordItem
         ): Boolean {
             return oldItem == newItem
         }

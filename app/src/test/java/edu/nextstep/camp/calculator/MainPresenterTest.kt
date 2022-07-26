@@ -1,6 +1,7 @@
 package edu.nextstep.camp.calculator
 
 import com.google.common.truth.Truth.assertThat
+import edu.nextstep.camp.calculator.domain.CalculationRecordItem
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 import io.mockk.*
@@ -104,7 +105,7 @@ class MainPresenterTest {
     fun `계산기록이 클릭되면 계산된 기록들이 보여져야 한다`() {
         // given
         every { view.showExpression(capture(slot())) } just Runs
-        every { view.showCalculationMemory(listOf(Pair("1 + 1", 2))) } just Runs
+        every { view.showCalculationMemory(listOf(CalculationRecordItem("1 + 1", 2))) } just Runs
         every { view.showCalculationRecord(true) } just Runs
         presenter.addOperand(1)
         presenter.addOperator(Operator.Plus)
@@ -113,6 +114,6 @@ class MainPresenterTest {
         // when
         presenter.clickCalculationMemory(false)
         // then
-        verify { view.showCalculationMemory(listOf(Pair("1 + 1", 2))) }
+        verify { view.showCalculationMemory(listOf(CalculationRecordItem("1 + 1", 2))) }
     }
 }

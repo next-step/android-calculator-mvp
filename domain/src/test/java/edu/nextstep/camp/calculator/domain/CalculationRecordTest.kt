@@ -23,8 +23,8 @@ class CalculationRecordTest {
 
         // then
         val record = calculationRecord.calculationRecordList[0]
-        Truth.assertThat(record.first).isEqualTo("1 + 1")
-        Truth.assertThat(record.second).isEqualTo(2)
+        Truth.assertThat(record.expression).isEqualTo("1 + 1")
+        Truth.assertThat(record.result).isEqualTo(2)
     }
 
 
