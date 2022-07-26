@@ -1,10 +1,12 @@
 package edu.nextstep.camp.calculator
 
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.ExpressionRecord
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainActivity : AppCompatActivity(), MainConstract.View {
@@ -15,6 +17,8 @@ class MainActivity : AppCompatActivity(), MainConstract.View {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.textView.movementMethod = ScrollingMovementMethod()
 
         binding.button0.setOnClickListener { presenter.addToExpression(0) }
         binding.button1.setOnClickListener { presenter.addToExpression(1) }
@@ -32,13 +36,27 @@ class MainActivity : AppCompatActivity(), MainConstract.View {
         binding.buttonDivide.setOnClickListener { presenter.addToExpression(Operator.Divide) }
         binding.buttonDelete.setOnClickListener { presenter.removeLast() }
         binding.buttonEquals.setOnClickListener { presenter.calculate() }
+        binding.buttonMemory.setOnClickListener { presenter.toggleDisplayRecords() }
     }
 
-    override fun failedCalculate() {
-        Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
+    override fun showExpressionRecords(records: List<ExpressionRecord>) {
+        binding.textView.text = records.joinToString("\n")
+    }
+
+    override fun hideExpressionRecords() {
+        binding.textView.scrollY = 0
+        binding.textView.text = Expression.EMPTY.toString()
+    }
+
+    override fun showExpression(expression: Expression) {
+        binding.textView.text = expression.toString()
     }
 
     override fun succeedCalculate(expression: Expression) {
         binding.textView.text = expression.toString()
+    }
+
+    override fun failedCalculate() {
+        Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
     }
 }

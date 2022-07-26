@@ -1,6 +1,8 @@
 package edu.nextstep.camp.calculator
 
+import edu.nextstep.camp.calculator.domain.CalculatorMemory
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.ExpressionRecord
 import edu.nextstep.camp.calculator.domain.Operator
 import io.mockk.mockk
 import io.mockk.verify
@@ -32,7 +34,7 @@ internal class MainPresenterTest {
 
 
         //then
-        verify { view.succeedCalculate(expected) }
+        verify { view.showExpression(expected) }
     }
 
     @ParameterizedTest
@@ -46,7 +48,7 @@ internal class MainPresenterTest {
         presenter.addToExpression(value)
 
         //then
-        verify { view.succeedCalculate(expected) }
+        verify { view.showExpression(expected) }
     }
 
     @Test
@@ -59,7 +61,7 @@ internal class MainPresenterTest {
         presenter.addToExpression(9)
 
         //then
-        verify { view.succeedCalculate(expected) }
+        verify { view.showExpression(expected) }
     }
 
 
@@ -76,7 +78,7 @@ internal class MainPresenterTest {
         presenter.addToExpression(Operator.Multiply)
 
         //then
-        verify { view.succeedCalculate(expected) }
+        verify { view.showExpression(expected) }
     }
 
     @Test
@@ -114,6 +116,58 @@ internal class MainPresenterTest {
         presenter.removeLast()
 
         //then
-        verify { view.succeedCalculate(expected) }
+        verify { view.showExpression(expected) }
+    }
+
+    @Test
+    internal fun `계산 기록이 표시되지 않은 상태에서 계산 기록을 활성화하면 계산 기록이 노출된다`() {
+        //given
+        val expressionRecord = ExpressionRecord(Expression(listOf(1, Operator.Plus, 32)), 33)
+        val expected: List<ExpressionRecord> = listOf(expressionRecord)
+        presenter = MainPresenter(
+            view = view,
+            calculatorMemory = CalculatorMemory(listOf(expressionRecord)),
+            isRecordsMode = false)
+
+        //when
+        presenter.toggleDisplayRecords()
+
+        //then
+        verify { view.showExpressionRecords(expected) }
+    }
+
+    @Test
+    internal fun `계산 기록이 표시된 상태에서 계산 기록을 비활성화하면 이전 계산 진행이 노출된다`() {
+        //given
+        val expected = Expression(listOf(1, Operator.Plus))
+        presenter = MainPresenter(
+            view = view,
+            expression = Expression(listOf(1, Operator.Plus)),
+            calculatorMemory = CalculatorMemory(listOf(ExpressionRecord(Expression(listOf(1, Operator.Plus, 34)), 35))),
+            isRecordsMode = true)
+
+        //when
+        presenter.toggleDisplayRecords()
+
+        //then
+        verify { view.hideExpressionRecords() }
+        verify { view.showExpression(expected) }
+    }
+
+    @Test
+    internal fun `연산을 할 때 마다 계산 기록이 저장되어야 한다`() {
+        //given
+        val memory: CalculatorMemory = mockk(relaxed = true)
+        presenter = MainPresenter(
+            view = view,
+            expression = Expression(listOf(1, Operator.Plus, 32)),
+            calculatorMemory = memory,
+            isRecordsMode = true)
+
+        //when
+        presenter.calculate()
+
+        //then
+        verify { memory.saveExpressionRecord(ExpressionRecord(Expression(listOf(1, Operator.Plus, 32)), 33)) }
     }
 }
