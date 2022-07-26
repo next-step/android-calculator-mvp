@@ -1,15 +1,19 @@
 package edu.nextstep.camp.calculator
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.History
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
     override lateinit var presenter: MainContract.Presenter
+    private val historyAdapter = HistoryAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,6 +21,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         setContentView(binding.root)
 
         presenter = MainPresenter(this)
+
+        initAdapter()
 
         binding.button0.setOnClickListener { presenter.addToExpression(0) }
         binding.button1.setOnClickListener { presenter.addToExpression(1) }
@@ -34,13 +40,27 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonDivide.setOnClickListener { presenter.addToExpression(Operator.Divide) }
         binding.buttonDelete.setOnClickListener { presenter.removeLast() }
         binding.buttonEquals.setOnClickListener { presenter.calculate() }
+        binding.buttonMemory.setOnClickListener { presenter.toggleHistory(binding.recyclerView.isVisible) }
+    }
+
+    private fun initAdapter() {
+        binding.recyclerView.adapter = historyAdapter
     }
 
     override fun showExpression(expression: Expression) {
         binding.textView.text = expression.toString()
     }
 
-    override fun showIncompleteExpressionToast() {
+    override fun showIncompleteExpression() {
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showHistory(historyList: List<History>) {
+        binding.recyclerView.visibility = View.VISIBLE
+        historyAdapter.submitList(historyList)
+    }
+
+    override fun hideHistory() {
+        binding.recyclerView.visibility = View.GONE
     }
 }

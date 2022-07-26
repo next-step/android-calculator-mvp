@@ -1,6 +1,7 @@
 package edu.nextstep.camp.calculator
 
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.History
 import edu.nextstep.camp.calculator.domain.Operator
 
 interface MainContract {
@@ -8,7 +9,9 @@ interface MainContract {
     interface View {
         var presenter: Presenter
         fun showExpression(expression: Expression)
-        fun showIncompleteExpressionToast()
+        fun showIncompleteExpression()
+        fun showHistory(historyList: List<History>)
+        fun hideHistory()
     }
 
     interface Presenter {
@@ -16,5 +19,6 @@ interface MainContract {
         fun addToExpression(operator: Operator)
         fun removeLast()
         fun calculate()
+        fun toggleHistory(isHistoryVisible: Boolean)
     }
 }
