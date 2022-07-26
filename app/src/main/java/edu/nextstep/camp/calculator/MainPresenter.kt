@@ -7,31 +7,32 @@ import edu.nextstep.camp.calculator.domain.StringExpressionState
 
 class MainPresenter(
     private val view: MainContract.View,
+    initialState: StringExpressionState
 ) : MainContract.Presenter {
 
-    override fun addElement(rawExpression: String, operator: Operator) =
-        StringExpressionState
-            .of(rawExpression)
+    private var state: StringExpressionState = initialState
+
+    override fun addElement(operator: Operator) {
+        state = state
             .addElement(operator)
-            .let(view::setExpression)
+            .also(view::setExpression)
+    }
 
-    override fun addElement(rawExpression: String, operand: Operand) =
-        StringExpressionState
-            .of(rawExpression)
+    override fun addElement(operand: Operand) {
+        state = state
             .addElement(operand)
-            .let(view::setExpression)
+            .also(view::setExpression)
+    }
 
-    override fun removeElement(rawExpression: String) =
-        StringExpressionState
-            .of(rawExpression)
+    override fun removeElement() {
+        state = state
             .removeElement()
-            .let(view::setExpression)
+            .also(view::setExpression)
+    }
 
-    override fun calculate(rawExpression: String) {
+    override fun calculate() {
         runCatching {
-            StringExpressionState
-                .of(rawExpression)
-                .let(StringCalculator::calculate)
+            StringCalculator.calculate(state)
         }
             .onSuccess(view::setCalculationResult)
             .onFailure {

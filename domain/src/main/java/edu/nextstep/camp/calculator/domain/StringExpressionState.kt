@@ -10,7 +10,7 @@ sealed interface StringExpressionState {
 
     fun removeElement(): StringExpressionState
 
-    class EmptyState(override val value: Terms = Terms(emptyList())) : StringExpressionState {
+    data class EmptyState(override val value: Terms = Terms(emptyList())) : StringExpressionState {
         override fun addElement(operand: Operand): OperandLastState =
             OperandLastState(value + operand)
 
@@ -25,11 +25,9 @@ sealed interface StringExpressionState {
 
         override fun addElement(operator: Operator): OperatorLastState =
             OperatorLastState(value + operator)
-
-        override fun toString(): String = value.toString()
     }
 
-    class OperandLastState(override val value: Terms) : NotEmptyState() {
+    data class OperandLastState(override val value: Terms) : NotEmptyState() {
         override fun addElement(operand: Operand): OperandLastState {
             val lastOperand = value.last() as Operand
             val newOperand = Operand(concatInt(lastOperand.value.toInt(), operand.value.toInt()))
@@ -43,6 +41,8 @@ sealed interface StringExpressionState {
             return of(value.dropLast() + newOperand)
         }
 
+        override fun toString(): String = value.toString()
+
         private fun dropLastDigit(operand: Operand) =
             Operand(operand.value / LAST_DIGIT_HANDLE_UNIT)
 
@@ -53,11 +53,13 @@ sealed interface StringExpressionState {
         }
     }
 
-    class OperatorLastState(override val value: Terms) : NotEmptyState() {
+    data class OperatorLastState(override val value: Terms) : NotEmptyState() {
         override fun addElement(operand: Operand): OperandLastState =
             OperandLastState(value + operand)
 
         override fun removeElement(): StringExpressionState = of(value.dropLast())
+
+        override fun toString(): String = value.toString()
     }
 
     companion object {

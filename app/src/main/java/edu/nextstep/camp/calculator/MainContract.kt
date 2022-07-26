@@ -8,13 +8,13 @@ interface MainContract {
 
     interface Presenter {
 
-        fun addElement(rawExpression: String, operator: Operator)
+        fun addElement(operator: Operator)
 
-        fun addElement(rawExpression: String, operand: Operand)
+        fun addElement(operand: Operand)
 
-        fun removeElement(rawExpression: String)
+        fun removeElement()
 
-        fun calculate(rawExpression: String)
+        fun calculate()
     }
 
     interface View {

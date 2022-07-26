@@ -1,13 +1,10 @@
 package edu.nextstep.camp.calculator
 
-import com.google.common.truth.Truth.assertThat
 import edu.nextstep.camp.calculator.domain.Operand
 import edu.nextstep.camp.calculator.domain.Operator
 import edu.nextstep.camp.calculator.domain.StringExpressionState
 import io.mockk.confirmVerified
-import io.mockk.every
 import io.mockk.mockk
-import io.mockk.slot
 import io.mockk.verify
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
@@ -21,7 +18,6 @@ internal class MainPresenterTest {
     @BeforeEach
     fun setUp() {
         view = mockk(relaxed = true)
-        presenter = MainPresenter(view)
     }
 
     @AfterEach
@@ -38,16 +34,13 @@ internal class MainPresenterTest {
     fun `숫자가 입력되면 수식에 추가되고 변경된 수식을 보여줘야 한다`(given: String, operandNumber: Int, expected: String) {
         // given
         val operand = Operand(operandNumber)
-        val stateSlot = slot<StringExpressionState>()
-        every { view.setExpression(capture(stateSlot)) } answers { nothing }
+        presenter = MainPresenter(view, StringExpressionState.of(given))
 
         // when
-        presenter.addElement(given, operand)
+        presenter.addElement(operand)
 
         // then
-        val actual = stateSlot.captured
-        assertThat(actual.toString()).isEqualTo(expected)
-        verify(exactly = 1) { view.setExpression(actual) }
+        verify(exactly = 1) { view.setExpression(StringExpressionState.of(expected)) }
     }
 
     @ParameterizedTest(name = "연산자 {1}가 입력되면 수식 {0}에 추가되고 변경된 수식 {2}을 보여줘야 한다")
@@ -63,16 +56,13 @@ internal class MainPresenterTest {
     ) {
         // given
         val operator = Operator.of(operatorSymbol)
-        val stateSlot = slot<StringExpressionState>()
-        every { view.setExpression(capture(stateSlot)) } answers { nothing }
+        presenter = MainPresenter(view, StringExpressionState.of(given))
 
         // when
-        presenter.addElement(given, operator)
+        presenter.addElement(operator)
 
         // then
-        val actual = stateSlot.captured
-        assertThat(actual.toString()).isEqualTo(expected)
-        verify(exactly = 1) { view.setExpression(actual) }
+        verify(exactly = 1) { view.setExpression(StringExpressionState.of(expected)) }
     }
 
     @ParameterizedTest(name = "{0} 수식의 마지막 요소 제거가 요청되면 제거한 후 변경된 수식 {1}을 보여줘야 한다")
@@ -83,16 +73,13 @@ internal class MainPresenterTest {
     )
     fun `수식의 마지막 요소 제거가 요청되면 제거한 후 변경된 수식을 보여줘야 한다`(given: String, expected: String) {
         // given
-        val stateSlot = slot<StringExpressionState>()
-        every { view.setExpression(capture(stateSlot)) } answers { nothing }
+        presenter = MainPresenter(view, StringExpressionState.of(given))
 
         // when
-        presenter.removeElement(given)
+        presenter.removeElement()
 
         // then
-        val actual = stateSlot.captured
-        assertThat(actual.toString()).isEqualTo(expected)
-        verify(exactly = 1) { view.setExpression(actual) }
+        verify(exactly = 1) { view.setExpression(StringExpressionState.of(expected)) }
     }
 
     @ParameterizedTest(name = "적절한 형식의 {0} 수식의 계산 결과가 요청되면 계산된 수식 {1}을 보여줘야 한다")
@@ -102,23 +89,28 @@ internal class MainPresenterTest {
         "10 * 5 / 10, 5",
     )
     fun `적절한 형식의 수식 계산 결과가 요청되면 계산된 수식을 보여줘야 한다`(given: String, expected: String) {
+        // given
+        presenter = MainPresenter(view, StringExpressionState.of(given))
+
         // when
-        presenter.calculate(given)
+        presenter.calculate()
 
         // then
         verify(exactly = 1) { view.setCalculationResult(Operand.of(expected)) }
     }
 
-    @ParameterizedTest(name = "적절하지 않은 형식의 {0} 수식의 계산 결과가 요청되면 수식 계산이 실패했음을 알려줘야 한다")
+    @ParameterizedTest(name = "완성되지 않은 형식의 {0} 수식의 계산 결과가 요청되면 수식 계산이 실패했음을 알려줘야 한다")
     @CsvSource(
-        "1 @ 2",
-        "1 + 2 ( 3",
-        "- + 3",
-        "1(3)",
+        "1 + 2 -",
+        "2 *",
+        "100 / 1 /",
     )
-    fun `적절하지 않은 형식의 수식 계산 결과가 요청되면 수식 계산이 실패했음을 알려줘야 한다`(given: String) {
+    fun `완성되지 않은 형식의 수식 계산 결과가 요청되면 수식 계산이 실패했음을 알려줘야 한다`(given: String) {
+        // given
+        presenter = MainPresenter(view, StringExpressionState.of(given))
+
         // when
-        presenter.calculate(given)
+        presenter.calculate()
 
         // then
         verify(exactly = 1) { view.calculationFailed() }

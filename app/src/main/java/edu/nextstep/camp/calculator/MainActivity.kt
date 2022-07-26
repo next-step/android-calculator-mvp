@@ -13,9 +13,12 @@ import edu.nextstep.camp.calculator.domain.StringExpressionState
 class MainActivity : AppCompatActivity(), MainContract.View {
 
     private lateinit var binding: ActivityMainBinding
-    private val presenter: MainContract.Presenter = MainPresenter(this)
-    private val rawExpression: String
-        get() = binding.textView.text.toString()
+    private val presenter: MainContract.Presenter by lazy {
+        MainPresenter(
+            view = this,
+            initialState = StringExpressionState.of(binding.textView.text.toString())
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +59,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     private fun setOperandButtonListener(button: Button, operand: Operand) {
         button.setOnClickListener {
-            presenter.addElement(rawExpression, operand)
+            presenter.addElement(operand)
         }
     }
 
@@ -76,19 +79,19 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     private fun setOperatorButtonListener(button: Button, operator: Operator) {
         button.setOnClickListener {
-            presenter.addElement(rawExpression, operator)
+            presenter.addElement(operator)
         }
     }
 
     private fun initDeleteButton() {
         binding.buttonDelete.setOnClickListener {
-            presenter.removeElement(rawExpression)
+            presenter.removeElement()
         }
     }
 
     private fun initEqualsButton() {
         binding.buttonEquals.setOnClickListener {
-            presenter.calculate(rawExpression)
+            presenter.calculate()
         }
     }
 
