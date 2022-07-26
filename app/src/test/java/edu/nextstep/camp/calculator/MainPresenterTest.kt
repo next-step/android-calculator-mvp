@@ -1,8 +1,6 @@
 package edu.nextstep.camp.calculator
 
-import edu.nextstep.camp.calculator.domain.Calculator
-import edu.nextstep.camp.calculator.domain.Expression
-import edu.nextstep.camp.calculator.domain.Operator
+import edu.nextstep.camp.calculator.domain.*
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
@@ -17,7 +15,12 @@ class MainPresenterTest {
     @BeforeEach
     fun initPresenter() {
         view = mockk(relaxUnitFun = true)
-        mainPresenter = MainPresenter(view = view, Calculator(), Expression.EMPTY)
+        mainPresenter = MainPresenter(
+            view = view,
+            calculator = Calculator(),
+            expression = Expression.EMPTY,
+            calculationResultStorage = CalculationResultStorage()
+        )
     }
 
     @ParameterizedTest
@@ -137,5 +140,55 @@ class MainPresenterTest {
 
         // then
         verify { view.showExpression("") }
+    }
+
+    @Test
+    fun `완전하지 않은 수식일 때 계산을 실행하면 에러 Toast를 View에 요청한다`() {
+        // given
+        mainPresenter.addOperandToExpression(3)
+        mainPresenter.addOperandToExpression(2)
+        mainPresenter.addOperatorToExpression(Operator.Plus)
+
+        // when
+        mainPresenter.proceedCalculation()
+
+        // then
+        verify { view.showIncompleteExpression() }
+    }
+
+    @Test
+    fun `완전한 수식일 때 계산을 실행하면 계산 결과를 보여준다`() {
+        // given
+        mainPresenter.addOperandToExpression(3)
+        mainPresenter.addOperandToExpression(2)
+        mainPresenter.addOperatorToExpression(Operator.Plus)
+        mainPresenter.addOperandToExpression(8)
+
+        // when
+        mainPresenter.proceedCalculation()
+
+        // then
+        verify { view.showExpression("40") }
+    }
+
+
+    @Test
+    fun `계산 결과 변경 요청이 발생 할시 view에 계산 결과를 list를 전달 한다`() {
+        // when
+        val expectedList =
+            mutableListOf(
+                CalculationResult(Expression.EMPTY + 1 + Operator.Plus + 1, 2),
+                CalculationResult(Expression.EMPTY + 3 + Operator.Plus + 2, 5)
+            )
+        mainPresenter = MainPresenter(
+            view = view,
+            calculator = Calculator(),
+            expression = Expression.EMPTY,
+            calculationResultStorage = CalculationResultStorage(expectedList)
+        )
+        mainPresenter.requestChangeCalculateResults()
+
+        // then
+        verify { view.changeCalculateResults(expectedList) }
     }
 }

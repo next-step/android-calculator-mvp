@@ -3,10 +3,9 @@ package edu.nextstep.camp.calculator
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
-import edu.nextstep.camp.calculator.domain.Calculator
-import edu.nextstep.camp.calculator.domain.Expression
-import edu.nextstep.camp.calculator.domain.Operator
+import edu.nextstep.camp.calculator.domain.*
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
@@ -17,8 +16,14 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         presenter =
-            MainPresenter(view = this, calculator = Calculator(), expression = Expression.EMPTY)
+            MainPresenter(
+                view = this,
+                calculator = Calculator(),
+                expression = Expression.EMPTY,
+                calculationResultStorage = CalculationResultStorage()
+            )
         setButtons()
+        setCalculationResultRecyclerView()
     }
 
     override fun showIncompleteExpression(): Unit =
@@ -26,6 +31,11 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun showExpression(string: String) {
         binding.textView.text = string
+    }
+
+    override fun changeCalculateResults(calculationResultList: List<CalculationResult>) {
+        val adapter = binding.recyclerView.adapter as CalculationHistoryAdapter
+        adapter.changeCalculateResultList(calculationResultList)
     }
 
     private fun setButtons() {
@@ -61,5 +71,21 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     private fun setFunctionalButtons() {
         binding.buttonDelete.setOnClickListener { presenter.removeLastFromExpression() }
         binding.buttonEquals.setOnClickListener { presenter.proceedCalculation() }
+        binding.buttonMemory.setOnClickListener { changeCalculationHistoryVisibility() }
+    }
+
+    private fun changeCalculationHistoryVisibility() {
+        if (binding.recyclerView.isVisible) {
+            binding.recyclerView.isVisible = false
+            return
+        }
+        binding.recyclerView.isVisible = true
+        presenter.requestChangeCalculateResults()
+    }
+
+    private fun setCalculationResultRecyclerView() {
+        binding.recyclerView.apply {
+            adapter = CalculationHistoryAdapter()
+        }
     }
 }

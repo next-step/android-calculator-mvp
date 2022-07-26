@@ -1,13 +1,12 @@
 package edu.nextstep.camp.calculator
 
-import edu.nextstep.camp.calculator.domain.Calculator
-import edu.nextstep.camp.calculator.domain.Expression
-import edu.nextstep.camp.calculator.domain.Operator
+import edu.nextstep.camp.calculator.domain.*
 
 class MainPresenter(
     private val view: MainContract.View,
     private val calculator: Calculator,
-    private var expression: Expression
+    private var expression: Expression,
+    private val calculationResultStorage: CalculationResultStorage
 ) : MainContract.Presenter {
 
     override fun addOperatorToExpression(operator: Operator) {
@@ -31,8 +30,13 @@ class MainPresenter(
             view.showIncompleteExpression()
             return
         }
+        calculationResultStorage.addCalculationResult(CalculationResult(expression, result))
         expression = Expression.EMPTY + result
         showExpression()
+    }
+
+    override fun requestChangeCalculateResults() {
+        view.changeCalculateResults(calculationResultStorage.getResultsAsList())
     }
 
     private fun showExpression() {
