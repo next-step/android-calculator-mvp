@@ -4,16 +4,20 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import edu.nextstep.camp.calculator.R
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
+import edu.nextstep.camp.calculator.domain.ExpressionHistory
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
     private lateinit var presenter: MainContract.Presenter
     private lateinit var historyAdapter: ExpressionHistoryRecyclerAdapter
+
+    private var isHistoryVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +26,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         presenter = MainPresenter(this)
 
         historyAdapter = ExpressionHistoryRecyclerAdapter()
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = historyAdapter
 
         binding.button0.setOnClickListener {
@@ -74,14 +77,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             presenter.expressionCalculate()
         }
         binding.buttonMemory.setOnClickListener {
-            if (binding.recyclerView.isVisible) {
-                binding.recyclerView.visibility = View.GONE
-                binding.textView.visibility = View.VISIBLE
-            } else {
-                historyAdapter.submitList(presenter.getCalculateHistory())
-                binding.recyclerView.visibility = View.VISIBLE
-                binding.textView.visibility = View.INVISIBLE
-            }
+            presenter.requestHistory(!isHistoryVisible)
         }
     }
 
@@ -91,6 +87,19 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun showResult(result: Int) {
         binding.textView.text = result.toString()
+    }
+
+    override fun showHistory(history: List<ExpressionHistory>) {
+        historyAdapter.submitList(history)
+        binding.recyclerView.isVisible = true
+        binding.textView.isInvisible = true
+        isHistoryVisible = true
+    }
+
+    override fun hideHistory() {
+        binding.recyclerView.isVisible = false
+        binding.textView.isVisible = true
+        isHistoryVisible = false
     }
 
     override fun showIncompleteExpression() {

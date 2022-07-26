@@ -2,6 +2,8 @@ package edu.nextstep.camp.calculator.main
 
 import com.google.common.truth.Truth.assertThat
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.ExpressionHistory
+import edu.nextstep.camp.calculator.domain.ExpressionHistoryStorage
 import edu.nextstep.camp.calculator.domain.Operator
 import io.mockk.*
 import org.junit.jupiter.api.BeforeEach
@@ -13,7 +15,7 @@ internal class MainPresenterTest {
 
     @BeforeEach
     fun setUp() {
-        view = mockk()
+        view = mockk(relaxed = true)
     }
 
     @Test
@@ -116,9 +118,6 @@ internal class MainPresenterTest {
     @Test
     fun 완성되지_않은_수식을_계산하면_에러문구를_보여준다() {
         //given
-        val expressionSlot = slot<String>()
-        every { view.showExpression(capture(expressionSlot)) } answers { nothing }
-        every { view.showIncompleteExpression() } answers { nothing }
         presenter = MainPresenter(view, expression = Expression(listOf(10, Operator.Multiply)))
 
         //when
@@ -131,9 +130,6 @@ internal class MainPresenterTest {
     @Test
     fun 올바른_수식일_때_계산한_결과값을_보여준다() {
         //given
-        val expressionSlot = slot<String>()
-        every { view.showExpression(capture(expressionSlot)) } answers { nothing }
-        every { view.showResult(20) } answers { nothing }
         presenter = MainPresenter(view, expression = Expression(listOf(10, Operator.Multiply, 2)))
 
         //when
@@ -144,30 +140,31 @@ internal class MainPresenterTest {
     }
 
     @Test
-    fun 수식이_계산되었을_때_결과가_화면에_보이고_식과_결과가_저장된다() {
+    fun 계산기록을_요청하였을_때_화면에_계산기록이_보여야_한다() {
         //given
-        every { view.showResult(3) } just Runs
-        presenter = MainPresenter(view, expression = Expression(listOf(1, Operator.Plus, 2)))
+        val expression = Expression(listOf(1, Operator.Plus, 2))
+        val history = ExpressionHistory(expression, 3)
+        presenter = MainPresenter(view, historyStorage = ExpressionHistoryStorage(listOf(history)))
 
         //when
-        presenter.expressionCalculate()
+        presenter.requestHistory(true)
 
         //then
-        verify { view.showResult(3) }
-        assertThat(presenter.getCalculateHistory().size).isEqualTo(1)
+        verify { view.showHistory(listOf(history)) }
     }
 
     @Test
-    fun 잘못된_수식을_계산하려고_했을_때는_기록이_남지_않는다() {
+    fun 계산기록이_보여지고_있는_상태에서_계산기록을_숨길_수_있어야한다() {
         //given
-        every { view.showIncompleteExpression() } just Runs
-        presenter = MainPresenter(view, expression = Expression(listOf(1, Operator.Plus)))
+        val expression = Expression(listOf(1, Operator.Plus, 2))
+        val history = ExpressionHistory(expression, 3)
+        presenter = MainPresenter(view, historyStorage = ExpressionHistoryStorage(listOf(history)))
 
         //when
-        presenter.expressionCalculate()
+        presenter.requestHistory(false)
 
         //then
-        verify { view.showIncompleteExpression() }
-        assertThat(presenter.getCalculateHistory().size).isEqualTo(0)
+        verify { view.hideHistory() }
     }
+
 }

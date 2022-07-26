@@ -8,6 +8,8 @@ interface MainContract {
         fun showExpression(expression: String)
         fun showIncompleteExpression()
         fun showResult(result: Int)
+        fun showHistory(history: List<ExpressionHistory>)
+        fun hideHistory()
     }
 
     interface Presenter {
@@ -15,6 +17,6 @@ interface MainContract {
         fun addOperator(operator: Operator)
         fun removeLast()
         fun expressionCalculate()
-        fun getCalculateHistory(): List<ExpressionHistory>
+        fun requestHistory(isVisible: Boolean)
     }
 }
