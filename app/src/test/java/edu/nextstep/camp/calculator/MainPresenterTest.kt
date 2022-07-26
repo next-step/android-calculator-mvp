@@ -84,10 +84,8 @@ internal class MainPresenterTest {
         //given
         val expressionSlot = slot<Expression>()
         every { view.showCalculateValue(capture(expressionSlot)) } answers { nothing }
-        presenter.addOperand(1)
-        presenter.addOperator(Operator.Multiply)
-        presenter.addOperand(2)
-        presenter.addOperand(3)
+        val testExpression = listOf(1, Operator.Multiply, 2, 3)
+        presenter = MainPresenter(view = view, expression = Expression(testExpression))
 
         //when
         presenter.calculate()
