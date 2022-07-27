@@ -153,7 +153,7 @@ class MainPresenterTest {
         mainPresenter.proceedCalculation()
 
         // then
-        verify { view.showIncompleteExpression() }
+        verify { view.showToastForIncompleteExpressionInputted() }
     }
     @Test
     fun `피연산자 만이 수식에 있을 때 계산을 실행하면 에러 Toast를 View에 요청한다`() {
@@ -164,7 +164,7 @@ class MainPresenterTest {
         mainPresenter.proceedCalculation()
 
         // then
-        verify { view.showIncompleteExpression() }
+        verify { view.showToastForIncompleteExpressionInputted() }
     }
 
     @Test

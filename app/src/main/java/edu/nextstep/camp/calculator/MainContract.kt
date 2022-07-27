@@ -6,7 +6,7 @@ import edu.nextstep.camp.calculator.domain.Operator
 interface MainContract {
     interface View {
         fun showExpression(string: String)
-        fun showIncompleteExpression()
+        fun showToastForIncompleteExpressionInputted()
         fun changeCalculateResults(calculationResultList: List<CalculationResult>)
     }
 

@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         setCalculationResultRecyclerView()
     }
 
-    override fun showIncompleteExpression(): Unit =
+    override fun showToastForIncompleteExpressionInputted(): Unit =
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
 
     override fun showExpression(string: String) {
