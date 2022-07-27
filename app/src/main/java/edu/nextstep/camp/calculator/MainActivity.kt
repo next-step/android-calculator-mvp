@@ -1,90 +1,64 @@
 package edu.nextstep.camp.calculator
 
+import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
-import edu.nextstep.camp.calculator.domain.Calculator
-import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainContractInterface.View {
+
     private lateinit var binding: ActivityMainBinding
-    private val calculator = Calculator()
-    private var expression = Expression.EMPTY
+    private lateinit var mPresenter: MainPresenter
+    private lateinit var mContext: Context
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        mPresenter = MainPresenter(this)
+        mContext = this
         setContentView(binding.root)
 
-        binding.button0.setOnClickListener {
-            expression += 0
-            binding.textView.text = expression.toString()
-        }
-        binding.button1.setOnClickListener {
-            expression += 1
-            binding.textView.text = expression.toString()
-        }
-        binding.button2.setOnClickListener {
-            expression += 2
-            binding.textView.text = expression.toString()
-        }
-        binding.button3.setOnClickListener {
-            expression += 3
-            binding.textView.text = expression.toString()
-        }
-        binding.button4.setOnClickListener {
-            expression += 4
-            binding.textView.text = expression.toString()
-        }
-        binding.button5.setOnClickListener {
-            expression += 5
-            binding.textView.text = expression.toString()
-        }
-        binding.button6.setOnClickListener {
-            expression += 6
-            binding.textView.text = expression.toString()
-        }
-        binding.button7.setOnClickListener {
-            expression += 7
-            binding.textView.text = expression.toString()
-        }
-        binding.button8.setOnClickListener {
-            expression += 8
-            binding.textView.text = expression.toString()
-        }
-        binding.button9.setOnClickListener {
-            expression += 9
-            binding.textView.text = expression.toString()
-        }
-        binding.buttonPlus.setOnClickListener {
-            expression += edu.nextstep.camp.calculator.domain.Operator.Plus
-            binding.textView.text = expression.toString()
-        }
-        binding.buttonMinus.setOnClickListener {
-            expression += edu.nextstep.camp.calculator.domain.Operator.Minus
-            binding.textView.text = expression.toString()
-        }
-        binding.buttonMultiply.setOnClickListener {
-            expression += edu.nextstep.camp.calculator.domain.Operator.Multiply
-            binding.textView.text = expression.toString()
-        }
-        binding.buttonDivide.setOnClickListener {
-            expression += edu.nextstep.camp.calculator.domain.Operator.Divide
-            binding.textView.text = expression.toString()
-        }
-        binding.buttonDelete.setOnClickListener {
-            expression = expression.removeLast()
-            binding.textView.text = expression.toString()
-        }
-        binding.buttonEquals.setOnClickListener {
-            val result = calculator.calculate(expression.toString())
-            if (result == null) {
-                Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            expression = Expression.EMPTY + result
-            binding.textView.text = result.toString()
+        executeButtonClickAction()
+    }
+
+    private fun executeButtonClickAction() {
+
+        // 숫자 클릭
+        binding.button0.setOnClickListener { mPresenter.inputNumber(0) }
+        binding.button1.setOnClickListener { mPresenter.inputNumber(1) }
+        binding.button2.setOnClickListener { mPresenter.inputNumber(2) }
+        binding.button3.setOnClickListener { mPresenter.inputNumber(3) }
+        binding.button4.setOnClickListener { mPresenter.inputNumber(4) }
+        binding.button5.setOnClickListener { mPresenter.inputNumber(5) }
+        binding.button6.setOnClickListener { mPresenter.inputNumber(6) }
+        binding.button7.setOnClickListener { mPresenter.inputNumber(7) }
+        binding.button8.setOnClickListener { mPresenter.inputNumber(8) }
+        binding.button9.setOnClickListener { mPresenter.inputNumber(9) }
+
+        // 연산자 클릭
+        binding.buttonPlus.setOnClickListener { mPresenter.inputOperator(Operator.Plus) }
+        binding.buttonMinus.setOnClickListener { mPresenter.inputOperator(Operator.Minus) }
+        binding.buttonMultiply.setOnClickListener { mPresenter.inputOperator(Operator.Multiply) }
+        binding.buttonDivide.setOnClickListener { mPresenter.inputOperator(Operator.Divide) }
+
+        // 삭제, 등호 클릭
+        binding.buttonDelete.setOnClickListener { mPresenter.removeLastIndexData() }
+        binding.buttonEquals.setOnClickListener { mPresenter.calculateInputValue() }
+    }
+
+    override fun showCalculateExpression(expressionStr: String) {
+        if (!(expressionStr.equals(""))) {
+            binding.textView.text = expressionStr
+        } else {
+            // expressionStr이 빈 값이면
+            // 아무것도 실행하지 않기 위해 else문을 비움.
         }
     }
+
+    override fun showCompletionOfExpressionDataMessage() {
+        Toast.makeText(mContext, "수식을 다시 입력해주세요!", Toast.LENGTH_SHORT).show()
+    }
+
 }
