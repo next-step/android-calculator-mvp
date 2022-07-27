@@ -19,12 +19,12 @@ class CalculationResultStorageTest {
     @Test
     fun `계산기록 저장소에 계산기록을 추가 하면 추가된 계산 기록을 받아 올 수 있다`() {
         // given 계산기록 저장소에
-        val storage = CalculationResultStorage()
+        var storage = CalculationResultStorage()
 
         // when 계산기록을 추가 하면
         val expectedExpression = Expression.EMPTY + 1 + Operator.Plus + 1
         val expected = CalculationResult(expectedExpression, 2)
-        storage.addCalculationResult(expected)
+        storage += expected
 
         // then 추가된 계산 기록을 받아 올 수 있다.
         val resultList = storage.getResultsAsList()
@@ -35,18 +35,18 @@ class CalculationResultStorageTest {
     @Test
     fun `계산기록 저장소에 계산기록을 2개 이상 추가 하면, 추가된 순서대로 저장된 계산 기록을 받아 올 수 있다`() {
         // given 계산기록 저장소에
-        val storage = CalculationResultStorage()
+        var storage = CalculationResultStorage()
 
         // when 계산기록을 2개 이상 추가 하면
         val firstExpectedExpression = Expression.EMPTY + 1 + Operator.Plus + 1
         val firstExpected = CalculationResult(firstExpectedExpression, 2)
-        storage.addCalculationResult(firstExpected)
+        storage += firstExpected
 
         val secondExpectedExpression = Expression.EMPTY + 2 + Operator.Plus + 2
         val secondExpected = CalculationResult(secondExpectedExpression, 4)
-        storage.addCalculationResult(secondExpected)
+        storage += secondExpected
 
-        // then 추가된 순서대로 저장된 계산 기록을 받아 올 수 있다
+        // then
         val resultList = storage.getResultsAsList()
         assertThat(resultList[0]).isEqualTo(firstExpected)
         assertThat(resultList[1]).isEqualTo(secondExpected)

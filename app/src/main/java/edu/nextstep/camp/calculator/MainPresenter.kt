@@ -6,7 +6,7 @@ class MainPresenter(
     private val view: MainContract.View,
     private val calculator: Calculator,
     private var expression: Expression,
-    private val calculationResultStorage: CalculationResultStorage
+    private var calculationResultStorage: CalculationResultStorage
 ) : MainContract.Presenter {
 
     override fun addOperatorToExpression(operator: Operator) {
@@ -30,7 +30,7 @@ class MainPresenter(
             view.showIncompleteExpression()
             return
         }
-        calculationResultStorage.addCalculationResult(CalculationResult(expression, result))
+        calculationResultStorage += CalculationResult(expression, result)
         expression = Expression.EMPTY + result
         showExpression()
     }
