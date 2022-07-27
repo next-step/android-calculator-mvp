@@ -3,7 +3,9 @@ package edu.nextstep.camp.calculator
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
+import edu.nextstep.camp.calculator.domain.Memory
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainActivity : AppCompatActivity(), MainContract.View {
@@ -62,6 +64,11 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonEquals.setOnClickListener {
             presenter.calculateExpression()
         }
+        binding.buttonMemory.setOnClickListener {
+            if (presenter.toggleMemoryView(binding.recyclerView, binding.textView)) {
+                presenter.getMemory()
+            }
+        }
     }
 
     override fun showExpression(result: String) {
@@ -71,4 +78,12 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     override fun showError(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
+
+    override fun showMemory(memories: List<Memory.MemoryItem>) {
+        val adapter = MemoryAdapter()
+        adapter.datalist = memories
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+    }
+
 }
