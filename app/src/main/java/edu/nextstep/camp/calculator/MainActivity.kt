@@ -17,8 +17,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     private lateinit var memoryAdapter: MemoryRecyclerViewAdapter
 
-    private val diffUtil = MemoryDiffCallback()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -35,9 +33,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     private fun initRecyclerView() {
-        binding.recyclerView.apply {
-            adapter = MemoryRecyclerViewAdapter()
-            memoryAdapter = adapter as MemoryRecyclerViewAdapter
+        memoryAdapter = MemoryRecyclerViewAdapter().also {
+            binding.recyclerView.adapter = it
         }
     }
 

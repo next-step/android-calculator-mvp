@@ -8,9 +8,7 @@ class MainPresenter(
     private var expression: Expression = Expression.EMPTY
 ) : MainContract.Presenter {
     private var isMemoryViewDisplayed = true
-    private val _logs = mutableListOf<MemoryUIModel>()
-    private val logs: List<MemoryUIModel>
-        get() = _logs
+    private val logs = mutableListOf<MemoryUIModel>()
 
     override fun onClickNumberButton(number: Int) {
         expression += number
@@ -52,6 +50,6 @@ class MainPresenter(
     }
 
     private fun saveExpression(expression: String, result: String) {
-        _logs.add(MemoryUIModel(logs.size, expression, "= $result"))
+        logs.add(MemoryUIModel(logs.size, expression, "= $result"))
     }
 }
