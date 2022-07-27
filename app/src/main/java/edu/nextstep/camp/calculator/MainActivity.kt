@@ -7,15 +7,18 @@ import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.Operand
 import edu.nextstep.camp.calculator.domain.Operator
-import edu.nextstep.camp.calculator.domain.StringCalculator
 import edu.nextstep.camp.calculator.domain.StringExpressionState
 
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+class MainActivity : AppCompatActivity(), MainContract.View {
 
-    private val stringExpressionState: StringExpressionState
-        get() = StringExpressionState.of(binding.textView.text.toString())
+    private lateinit var binding: ActivityMainBinding
+    private val presenter: MainContract.Presenter by lazy {
+        MainPresenter(
+            view = this,
+            initialState = StringExpressionState.of(binding.textView.text.toString())
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +28,20 @@ class MainActivity : AppCompatActivity() {
         initOperatorButtons()
         initDeleteButton()
         initEqualsButton()
+    }
+
+    override fun setCalculationResult(result: Operand) {
+        binding.textView.text = result.value.toString()
+    }
+
+    override fun calculationFailed() {
+        Toast
+            .makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT)
+            .show()
+    }
+
+    override fun setExpression(state: StringExpressionState) {
+        binding.textView.text = state.toString()
     }
 
     private fun initViewBinding() {
@@ -42,7 +59,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setOperandButtonListener(button: Button, operand: Operand) {
         button.setOnClickListener {
-            binding.textView.text = stringExpressionState.addElement(operand).toString()
+            presenter.addElement(operand)
         }
     }
 
@@ -62,29 +79,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun setOperatorButtonListener(button: Button, operator: Operator) {
         button.setOnClickListener {
-            binding.textView.text = stringExpressionState.addElement(operator).toString()
+            presenter.addElement(operator)
         }
     }
 
     private fun initDeleteButton() {
         binding.buttonDelete.setOnClickListener {
-            binding.textView.text = stringExpressionState.removeElement().toString()
+            presenter.removeElement()
         }
     }
 
     private fun initEqualsButton() {
         binding.buttonEquals.setOnClickListener {
-            runCatching {
-                StringCalculator.calculate(stringExpressionState)
-            }
-                .onSuccess {
-                    binding.textView.text = it.value.toString()
-                }
-                .onFailure {
-                    Toast
-                        .makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT)
-                        .show()
-                }
+            presenter.calculate()
         }
     }
 
