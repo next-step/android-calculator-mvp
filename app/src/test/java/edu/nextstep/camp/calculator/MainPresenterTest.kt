@@ -155,6 +155,17 @@ class MainPresenterTest {
         // then
         verify { view.showIncompleteExpression() }
     }
+    @Test
+    fun `피연산자 만이 수식에 있을 때 계산을 실행하면 에러 Toast를 View에 요청한다`() {
+        // given
+        mainPresenter.addOperandToExpression(3)
+        mainPresenter.addOperandToExpression(2)
+        // when
+        mainPresenter.proceedCalculation()
+
+        // then
+        verify { view.showIncompleteExpression() }
+    }
 
     @Test
     fun `완전한 수식일 때 계산을 실행하면 계산 결과를 보여준다`() {
@@ -170,7 +181,6 @@ class MainPresenterTest {
         // then
         verify { view.showExpression("40") }
     }
-
 
     @Test
     fun `계산 결과 변경 요청이 발생 할시 view에 계산 결과를 list를 전달 한다`() {

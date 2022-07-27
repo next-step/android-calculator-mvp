@@ -26,7 +26,7 @@ class MainPresenter(
 
     override fun proceedCalculation() {
         val result = calculator.calculate(expression.toString())
-        if (result == null) {
+        if (result == null || expression.toString() == result.toString()) {
             view.showIncompleteExpression()
             return
         }
