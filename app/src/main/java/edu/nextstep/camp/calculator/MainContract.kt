@@ -1,11 +1,17 @@
 package edu.nextstep.camp.calculator
 
+import edu.nextstep.camp.calculator.view.MemoryUIModel
+
 
 interface MainContract {
     interface View {
         fun setResultTextView(text: String)
 
         fun showToastIncompleteExpression()
+
+        fun showExpressionMemoryView(items: List<MemoryUIModel>)
+
+        fun hideExpressionMemoryView()
     }
 
     interface Presenter {
@@ -16,5 +22,7 @@ interface MainContract {
         fun onClickDeleteButton()
 
         fun onClickEqualButton()
+
+        fun onClickMemoryButton()
     }
 }

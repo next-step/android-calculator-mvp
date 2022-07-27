@@ -1,22 +1,11 @@
 package edu.nextstep.camp.calculator
 
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
-import androidx.annotation.VisibleForTesting
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.constraintlayout.widget.ConstraintLayout
-import com.google.common.truth.Truth.assertThat
-import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
-import io.mockk.Called
-import io.mockk.InternalPlatformDsl.toStr
+import edu.nextstep.camp.calculator.view.MemoryUIModel
 import io.mockk.MockKAnnotations
-import io.mockk.every
-import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.mockkStatic
 import io.mockk.verify
+import io.mockk.verifyAll
 import org.junit.Rule
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -41,8 +30,10 @@ class MainPresenterTest {
         mainPresenter.onClickNumberButton(1)
         mainPresenter.onClickNumberButton(0)
 
-        verify(exactly = 1) { mainMockActivity.setResultTextView("1") }
-        verify(exactly = 1) { mainMockActivity.setResultTextView("10") }
+        verifyAll {
+            mainMockActivity.setResultTextView("1")
+            mainMockActivity.setResultTextView("10")
+        }
     }
 
     @Test
@@ -63,8 +54,7 @@ class MainPresenterTest {
         mainPresenter.onClickDeleteButton()
         mainPresenter.onClickDeleteButton()
 
-        verify(exactly = 1) { mainMockActivity.setResultTextView("1 +") }
-        verify(exactly = 1) { mainMockActivity.setResultTextView("1") }
+        verify { mainMockActivity.setResultTextView("1") }
     }
 
     @Test
@@ -78,5 +68,37 @@ class MainPresenterTest {
         mainPresenter.onClickEqualButton()
 
         verify(exactly = 1) { mainMockActivity.setResultTextView("6") }
+    }
+
+    @Test
+    fun `eqauls_버튼_누를때마다_계산_기록에_저장되었을 때 시계_버튼을_누르면_계산_기록을_보이는 함수가 호출된다`() {
+        //given
+        mainPresenter.onClickNumberButton(1)
+        mainPresenter.onClickOperandButton("+")
+        mainPresenter.onClickNumberButton(5)
+        mainPresenter.onClickEqualButton()
+        val list = listOf(MemoryUIModel(0, "1 + 5", "= 6"))
+
+        //when
+        mainPresenter.onClickMemoryButton()
+
+        //then
+        verify { mainMockActivity.showExpressionMemoryView(list) }
+    }
+
+    @Test
+    fun 계산_기록_UI가_떠_있는_상태에서_시계_버튼을_누르면_계산_기록_UI가_사라지는_함수가_호출된다() {
+        //given
+        mainPresenter.onClickNumberButton(1)
+        mainPresenter.onClickOperandButton("+")
+        mainPresenter.onClickNumberButton(5)
+        mainPresenter.onClickEqualButton()
+
+        //when
+        mainPresenter.onClickMemoryButton()
+        mainPresenter.onClickMemoryButton()
+
+        //then
+        verify { mainMockActivity.hideExpressionMemoryView() }
     }
 }
