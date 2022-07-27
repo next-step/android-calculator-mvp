@@ -1,8 +1,9 @@
-package edu.nextstep.camp.calculator.domain
+package edu.nextstep.camp.calculator
 
+import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 
-interface MainContractInterface {
+interface MainContract {
     interface View {
         fun showCalculateExpression(expressionStr: String)
         fun showCompletionOfExpressionDataMessage()

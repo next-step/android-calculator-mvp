@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.*
 
-class MainActivity : AppCompatActivity(), MainContractInterface.View {
+class MainActivity : AppCompatActivity(), MainContract.View {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var mPresenter: MainPresenter
@@ -49,12 +49,7 @@ class MainActivity : AppCompatActivity(), MainContractInterface.View {
     }
 
     override fun showCalculateExpression(expressionStr: String) {
-        if (!(expressionStr.equals(""))) {
-            binding.textView.text = expressionStr
-        } else {
-            // expressionStr이 빈 값이면
-            // 아무것도 실행하지 않기 위해 else문을 비움.
-        }
+        binding.textView.text = expressionStr
     }
 
     override fun showCompletionOfExpressionDataMessage() {

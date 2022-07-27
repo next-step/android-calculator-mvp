@@ -39,6 +39,13 @@ data class Expression(
         }
     }
 
+    fun isValid(): Boolean {
+        var isValid = false;
+        if (!(this.toString().equals(""))) isValid = true;
+
+        return isValid;
+    }
+
     companion object {
         val EMPTY = Expression()
 
