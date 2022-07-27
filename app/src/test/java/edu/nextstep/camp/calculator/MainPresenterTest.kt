@@ -155,6 +155,7 @@ class MainPresenterTest {
         // then
         verify { view.showToastForIncompleteExpressionInputted() }
     }
+
     @Test
     fun `피연산자 만이 수식에 있을 때 계산을 실행하면 에러 Toast를 View에 요청한다`() {
         // given
@@ -187,8 +188,8 @@ class MainPresenterTest {
         // when
         val expectedList =
             mutableListOf(
-                CalculationResult(Expression.EMPTY + 1 + Operator.Plus + 1, 2),
-                CalculationResult(Expression.EMPTY + 3 + Operator.Plus + 2, 5)
+                CalculationResult(Expression(listOf("1", Operator.Plus, "1")), 2),
+                CalculationResult(Expression(listOf("3", Operator.Plus, "2")), 5)
             )
         mainPresenter = MainPresenter(
             view = view,
