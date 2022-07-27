@@ -1,22 +1,17 @@
-plugins {
-    id 'kotlin'
-}
+apply plugin: 'kotlin'
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-}
-
-test{
+test {
     useJUnitPlatform()
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
+    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.7.1' // junit4 지원
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'com.google.truth:truth:1.1.2'
+    testImplementation 'io.mockk:mockk:1.10.6'
+}
 
-    testImplementation "org.junit.jupiter:junit-jupiter:$junit5_version"
-    testRuntimeOnly "org.junit.vintage:junit-vintage-engine:$junit5_version" // junit4 지원
-    testImplementation "junit:junit:$junit4_version"
-    testImplementation "com.google.truth:truth:$truth_version"
-    testImplementation "io.mockk:mockk:$mockk_version"
+repositories {
+    mavenCentral()
 }
