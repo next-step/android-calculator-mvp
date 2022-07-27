@@ -1,6 +1,7 @@
 package edu.nextstep.camp.calculator
 
 import com.google.common.truth.Truth.assertThat
+import edu.nextstep.camp.calculator.domain.Memory.MemoryItem
 import edu.nextstep.camp.calculator.domain.Operator
 import io.mockk.every
 import io.mockk.mockk
@@ -143,5 +144,44 @@ class MainPresenterTest {
         val actual = expressionSlot.captured
         assertThat(actual).isEqualTo("1")
         verify { view.showExpression(actual) }
+    }
+
+    @Test
+    fun `12+2가 계산됬을 때 계산 내역이 memory에 배열로 저장된다`() {
+        // given
+        presenter.addToExpression(1)
+        presenter.addToExpression(2)
+        presenter.addToExpression(Operator.Plus)
+        presenter.addToExpression(2)
+        presenter.calculateExpression()
+
+        // when
+        presenter.getMemory()
+        // then
+        verify { view.showMemory(listOf(MemoryItem("12 + 2", "14"))) }
+    }
+
+    @Test
+    fun `12+2가 계산되고 13-2가 계산됬을 때 계산 내역이 memory에 배열로 저장된다`() {
+        // given
+        presenter.addToExpression(1)
+        presenter.addToExpression(2)
+        presenter.addToExpression(Operator.Plus)
+        presenter.addToExpression(2)
+        presenter.calculateExpression()
+
+        presenter.removeLastFromExpression()
+        presenter.removeLastFromExpression()
+
+        presenter.addToExpression(1)
+        presenter.addToExpression(3)
+        presenter.addToExpression(Operator.Minus)
+        presenter.addToExpression(2)
+        presenter.calculateExpression()
+
+        // when
+        presenter.getMemory()
+        // then
+        verify { view.showMemory(listOf(MemoryItem("12 + 2", "14"),MemoryItem("13 - 2", "11"))) }
     }
 }
