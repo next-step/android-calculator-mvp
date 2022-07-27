@@ -37,30 +37,3 @@ class CalculationHistoryAdapter(calculationResult: List<CalculationResult> = emp
 
 }
 
-class CalculationHistoryViewHolder(private val binding: ItemResultBinding) :
-    RecyclerView.ViewHolder(binding.root) {
-    fun onBind(data: CalculationResult) {
-        with(binding) {
-            tvExpression.text = data.expression.toString()
-            tvResult.text = "= ${data.result}"
-        }
-    }
-}
-
-class DiffUtilCallback(
-    private val oldList: List<CalculationResult>,
-    private val newList: List<CalculationResult>
-) : DiffUtil.Callback() {
-    override fun getOldListSize(): Int = oldList.size
-
-    override fun getNewListSize(): Int = newList.size
-
-    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        val oldItem = oldList[oldItemPosition]
-        val newItem = newList[newItemPosition]
-        return oldItem == newItem
-    }
-
-    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-        oldList[oldItemPosition] == newList[newItemPosition]
-}
