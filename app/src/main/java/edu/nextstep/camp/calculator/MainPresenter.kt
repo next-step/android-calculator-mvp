@@ -7,6 +7,8 @@ import edu.nextstep.camp.calculator.domain.model.Operator
 
 class MainPresenter(private val view: MainContract.View) : MainContract.Presenter {
     private val expressionTokenProcessor = ExpressionTokenProcessor()
+    private val evaluationRecordStore = EvaluationRecordStore()
+    private var isShowingHistory = false
 
     override fun addOperatorToken(operator: Operator) {
         processToken {
@@ -22,7 +24,9 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
 
     override fun evaluate() {
         processToken {
-            view.displayExpression(expressionTokenProcessor.evaluate())
+            val record = expressionTokenProcessor.evaluate()
+            evaluationRecordStore.record(record)
+            view.displayExpression(record.result)
         }
     }
 
@@ -32,14 +36,17 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
         }
     }
 
-    override fun showOrHideEvaluationHistory(show: Boolean) {
-        if (show) {
-            view.showEvaluationHistory(EvaluationRecordStore.getInstance().getEvaluationHistory())
-        }
-        else {
-            view.hideEvaluationHistory()
-        }
+    override fun showEvaluationHistory() {
+        view.showEvaluationHistory(evaluationRecordStore.getEvaluationHistory())
+        isShowingHistory = true
     }
+
+    override fun hideEvaluationHistory() {
+        view.hideEvaluationHistory()
+        isShowingHistory = false
+    }
+
+    override fun isShowingHistory(): Boolean = isShowingHistory
 
     private fun processToken(processBlock : () -> Unit) {
         kotlin.runCatching {

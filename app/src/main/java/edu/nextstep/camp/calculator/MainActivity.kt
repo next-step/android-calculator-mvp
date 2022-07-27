@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity(), UserInputActionReceiver, MainContract.
         binding.apply {
             lifecycleOwner = this@MainActivity
             userInputActionReceiver = this@MainActivity
-            adapter = this@MainActivity.adapter
+            recyclerView.adapter = this@MainActivity.adapter
         }
 
         presenter = MainPresenter(this)
@@ -44,7 +44,8 @@ class MainActivity : AppCompatActivity(), UserInputActionReceiver, MainContract.
         when {
             !btn.text.isNullOrBlank() -> onExpressionTokenInput(ExpressionToken.getFromValue(btn.text.toString()))
             btn.id == R.id.buttonDelete -> onExpressionTokenInput(OtherExpressionToken.DEL)
-            btn.id == R.id.buttonMemory -> presenter.showOrHideEvaluationHistory(!binding.recyclerView.isVisible)
+            btn.id == R.id.buttonMemory && presenter.isShowingHistory() -> presenter.hideEvaluationHistory()
+            btn.id == R.id.buttonMemory && !presenter.isShowingHistory() -> presenter.showEvaluationHistory()
             else -> handleExceptions(IllegalArgumentException("Unknown Input"))
         }
     }

@@ -7,14 +7,6 @@
         <variable
             name="userInputActionReceiver"
             type="edu.nextstep.camp.calculator.UserInputActionReceiver" />
-
-        <variable
-            name="presenter"
-            type="edu.nextstep.camp.calculator.MainContract.Presenter" />
-
-        <variable
-            name="adapter"
-            type="edu.nextstep.camp.calculator.EvaluationHistoryAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -51,7 +43,6 @@
             tools:listitem="@layout/item_result"
             tools:visibility="visible"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:adapter="@{adapter}"
             android:background="@color/purple_200"
             />
 

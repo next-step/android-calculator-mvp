@@ -39,7 +39,7 @@ class ExpressionTokenProcessor {
         }
     }
 
-    fun evaluate(): String {
+    fun evaluate(): EvaluationRecord {
         val parsedStr = expressionTokenList.toExpression()
         if (!RegexUtils.checkExpressionIsValid(parsedStr)) {
             throw ExpressionNotCompleteException()
@@ -52,9 +52,7 @@ class ExpressionTokenProcessor {
         }
         expressionTokenList.addAll(calculatedTokens)
 
-        EvaluationRecordStore.getInstance().record(EvaluationRecord(parsedStr, result.toString()))
-
-        return expressionTokenList.toExpression()
+        return EvaluationRecord(parsedStr, expressionTokenList.toExpression())
     }
     
     private fun List<ExpressionToken>.toExpression() : String {

@@ -10,17 +10,4 @@ class EvaluationRecordStore {
     }
 
     fun getEvaluationHistory() = evaluationHistory.toList()
-
-    companion object {
-        @Volatile
-        private var instance: EvaluationRecordStore? = null
-
-        @JvmStatic
-        fun getInstance(): EvaluationRecordStore =
-            instance ?: synchronized(this) {
-                instance ?: EvaluationRecordStore().also {
-                    instance = it
-                }
-            }
-    }
 }

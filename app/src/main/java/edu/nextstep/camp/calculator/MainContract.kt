@@ -16,6 +16,8 @@ interface MainContract {
         fun addOperandToken(operand: Operand)
         fun evaluate()
         fun delete()
-        fun showOrHideEvaluationHistory(show: Boolean)
+        fun showEvaluationHistory()
+        fun hideEvaluationHistory()
+        fun isShowingHistory() : Boolean
     }
 }
