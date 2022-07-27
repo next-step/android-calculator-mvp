@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun changeCalculateResults(calculationResultList: List<CalculationResult>) {
         val adapter = binding.recyclerView.adapter as CalculationHistoryAdapter
-        adapter.changeCalculateResultList(calculationResultList)
+        adapter.submitList(calculationResultList)
     }
 
     private fun setButtons() {
