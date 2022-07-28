@@ -36,17 +36,15 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
         }
     }
 
-    override fun showEvaluationHistory() {
-        view.showEvaluationHistory(evaluationRecordStore.getEvaluationHistory())
-        isShowingHistory = true
+    override fun toggleEvaluationHistory() {
+        isShowingHistory = if (isShowingHistory) {
+            view.hideEvaluationHistory()
+            false
+        } else {
+            view.showEvaluationHistory(evaluationRecordStore.getEvaluationHistory())
+            true
+        }
     }
-
-    override fun hideEvaluationHistory() {
-        view.hideEvaluationHistory()
-        isShowingHistory = false
-    }
-
-    override fun isShowingHistory(): Boolean = isShowingHistory
 
     private fun processToken(processBlock : () -> Unit) {
         kotlin.runCatching {

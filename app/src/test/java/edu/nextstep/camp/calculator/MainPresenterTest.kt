@@ -53,7 +53,7 @@ class MainPresenterTest {
             }
         }
 
-        presenter.showEvaluationHistory()
+        presenter.toggleEvaluationHistory()
 
         // then
         verify { view.showEvaluationHistory(expected) }

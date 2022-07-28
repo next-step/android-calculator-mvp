@@ -44,8 +44,7 @@ class MainActivity : AppCompatActivity(), UserInputActionReceiver, MainContract.
         when {
             !btn.text.isNullOrBlank() -> onExpressionTokenInput(ExpressionToken.getFromValue(btn.text.toString()))
             btn.id == R.id.buttonDelete -> onExpressionTokenInput(OtherExpressionToken.DEL)
-            btn.id == R.id.buttonMemory && presenter.isShowingHistory() -> presenter.hideEvaluationHistory()
-            btn.id == R.id.buttonMemory && !presenter.isShowingHistory() -> presenter.showEvaluationHistory()
+            btn.id == R.id.buttonMemory -> presenter.toggleEvaluationHistory()
             else -> handleExceptions(IllegalArgumentException("Unknown Input"))
         }
     }
