@@ -17,6 +17,6 @@ interface MainContract {
         fun addOperator(operator: Operator)
         fun removeLast()
         fun expressionCalculate()
-        fun requestHistory(isVisible: Boolean)
+        fun toggleHistory()
     }
 }

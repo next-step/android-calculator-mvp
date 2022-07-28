@@ -9,6 +9,7 @@ class MainPresenter(
     private var historyStorage: ExpressionHistoryStorage = ExpressionHistoryStorage()
 ) : MainContract.Presenter {
 
+    private var isHistoryVisible = false
 
     override fun addOperand(operand: Int) {
         expression += operand
@@ -35,11 +36,13 @@ class MainPresenter(
         }
     }
 
-    override fun requestHistory(visible: Boolean) {
-        if(visible) {
-            view.showHistory(historyStorage.getHistory())
-        } else {
+    override fun toggleHistory() {
+        if(isHistoryVisible) {
             view.hideHistory()
+        } else {
+            view.showHistory(historyStorage.getHistory())
         }
+
+        isHistoryVisible = !isHistoryVisible
     }
 }

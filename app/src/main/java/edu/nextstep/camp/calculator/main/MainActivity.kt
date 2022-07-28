@@ -17,8 +17,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var presenter: MainContract.Presenter
     private lateinit var historyAdapter: ExpressionHistoryRecyclerAdapter
 
-    private var isHistoryVisible = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -77,7 +75,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             presenter.expressionCalculate()
         }
         binding.buttonMemory.setOnClickListener {
-            presenter.requestHistory(!isHistoryVisible)
+            presenter.toggleHistory()
         }
     }
 
@@ -93,13 +91,11 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         historyAdapter.submitList(history)
         binding.recyclerView.isVisible = true
         binding.textView.isInvisible = true
-        isHistoryVisible = true
     }
 
     override fun hideHistory() {
         binding.recyclerView.isVisible = false
         binding.textView.isVisible = true
-        isHistoryVisible = false
     }
 
     override fun showIncompleteExpression() {

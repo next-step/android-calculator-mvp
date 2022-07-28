@@ -147,7 +147,7 @@ internal class MainPresenterTest {
         presenter = MainPresenter(view, historyStorage = ExpressionHistoryStorage(listOf(history)))
 
         //when
-        presenter.requestHistory(true)
+        presenter.toggleHistory()
 
         //then
         verify { view.showHistory(listOf(history)) }
@@ -159,9 +159,10 @@ internal class MainPresenterTest {
         val expression = Expression(listOf(1, Operator.Plus, 2))
         val history = ExpressionHistory(expression, 3)
         presenter = MainPresenter(view, historyStorage = ExpressionHistoryStorage(listOf(history)))
+        presenter.toggleHistory()
 
         //when
-        presenter.requestHistory(false)
+        presenter.toggleHistory()
 
         //then
         verify { view.hideHistory() }
