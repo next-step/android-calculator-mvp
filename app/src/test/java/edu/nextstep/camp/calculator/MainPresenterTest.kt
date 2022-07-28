@@ -156,7 +156,7 @@ class MainPresenterTest {
         presenter.calculateExpression()
 
         // when
-        presenter.getMemory()
+        presenter.updateMemory()
         // then
         verify { view.showMemory(listOf(MemoryItem("12 + 2", "14"))) }
     }
@@ -180,7 +180,7 @@ class MainPresenterTest {
         presenter.calculateExpression()
 
         // when
-        presenter.getMemory()
+        presenter.updateMemory()
         // then
         verify { view.showMemory(listOf(MemoryItem("12 + 2", "14"),MemoryItem("13 - 2", "11"))) }
     }

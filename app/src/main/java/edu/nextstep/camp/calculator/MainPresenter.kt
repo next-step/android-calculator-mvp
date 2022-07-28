@@ -1,9 +1,5 @@
 package edu.nextstep.camp.calculator
 
-import android.view.View
-import android.widget.TextView
-import androidx.core.view.isVisible
-import androidx.recyclerview.widget.RecyclerView
 import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
@@ -26,7 +22,10 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
 
     override fun calculateExpression() {
         val result = calculator.calculate(expression.toString())
-            ?: return view.showError("완성되지 않은 수식입니다.")
+        if (result == null || expression.toString() == result.toString()) {
+            view.showError("완성되지 않은 수식입니다.")
+            return;
+        }
         history += Memory.MemoryItem(expression = expression.toString(), result = result.toString())
         expression = Expression.EMPTY + result
         view.showExpression(expression.toString())
@@ -37,18 +36,11 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
         view.showExpression(expression.toString())
     }
 
-    override fun toggleMemoryView(recyclerView: RecyclerView, textView:TextView) : Boolean {
-        if (recyclerView.isVisible) {
-            recyclerView.visibility = View.INVISIBLE
-            textView.visibility = View.VISIBLE
-            return false
-        }
-        textView.visibility = View.INVISIBLE
-        recyclerView.visibility = View.VISIBLE
-        return true
+    override fun updateExpression() {
+        view.showExpression(expression.toString())
     }
 
-    override fun getMemory() {
+    override fun updateMemory() {
         val histories = history.getHistory()
         view.showMemory(histories)
     }

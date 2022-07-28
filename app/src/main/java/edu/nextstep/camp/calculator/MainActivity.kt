@@ -1,8 +1,10 @@
 package edu.nextstep.camp.calculator
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.Memory
@@ -65,25 +67,43 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             presenter.calculateExpression()
         }
         binding.buttonMemory.setOnClickListener {
-            if (presenter.toggleMemoryView(binding.recyclerView, binding.textView)) {
-                presenter.getMemory()
+            when(binding.recyclerView.isVisible){
+                true -> presenter.updateExpression()
+                false -> presenter.updateMemory()
             }
         }
-    }
-
-    override fun showExpression(result: String) {
-        binding.textView.text = result
     }
 
     override fun showError(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
+    override fun showExpression(result: String) {
+        hideViewsExceptExpression()
+        binding.textView.visibility = View.VISIBLE
+        binding.textView.text = result
+    }
+
     override fun showMemory(memories: List<Memory.MemoryItem>) {
+        hideViewsExceptMemory()
+        binding.recyclerView.visibility = View.VISIBLE
+
         val adapter = MemoryAdapter()
         adapter.datalist = memories
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
+    }
+
+    override fun hideViewsExceptMemory() {
+        if (binding.textView.isVisible) {
+            binding.textView.visibility = View.INVISIBLE
+        }
+    }
+
+    override fun hideViewsExceptExpression() {
+        if (binding.recyclerView.isVisible) {
+            binding.recyclerView.visibility = View.INVISIBLE
+        }
     }
 
 }
