@@ -22,7 +22,7 @@ class UserInputActionProcessorTest {
                 is Operand -> inputController.processNumberInput(it)
                 is Operator -> inputController.processOperatorInput(it)
                 OtherExpressionToken.DEL -> inputController.delete()
-                else -> inputController.evaluate()
+                else -> inputController.evaluate().result
             }
         }
         assertThat(actual).isEqualTo(expected)

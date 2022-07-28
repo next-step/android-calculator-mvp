@@ -1,6 +1,7 @@
 package edu.nextstep.camp.calculator.domain
 
 import edu.nextstep.camp.calculator.domain.exception.ExpressionNotCompleteException
+import edu.nextstep.camp.calculator.domain.model.EvaluationRecord
 import edu.nextstep.camp.calculator.domain.model.Operand
 import edu.nextstep.camp.calculator.domain.model.Operator
 import edu.nextstep.camp.calculator.domain.model.ExpressionToken
@@ -38,7 +39,7 @@ class ExpressionTokenProcessor {
         }
     }
 
-    fun evaluate(): String {
+    fun evaluate(): EvaluationRecord {
         val parsedStr = expressionTokenList.toExpression()
         if (!RegexUtils.checkExpressionIsValid(parsedStr)) {
             throw ExpressionNotCompleteException()
@@ -51,7 +52,7 @@ class ExpressionTokenProcessor {
         }
         expressionTokenList.addAll(calculatedTokens)
 
-        return expressionTokenList.toExpression()
+        return EvaluationRecord(parsedStr, expressionTokenList.toExpression())
     }
     
     private fun List<ExpressionToken>.toExpression() : String {

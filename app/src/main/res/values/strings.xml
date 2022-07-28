@@ -18,4 +18,5 @@
     <string name="expression_not_complete_message">완성되지 않은 수식입니다</string>
     <string name="div_by_zero_message">0으로 나눌수 없습니다</string>
     <string name="unknown_error_message">알수없는 오류가 발생했습니다</string>
+    <string name="evaluation_result">= %s</string>
 </resources>

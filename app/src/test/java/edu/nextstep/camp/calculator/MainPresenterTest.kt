@@ -1,5 +1,6 @@
 package edu.nextstep.camp.calculator
 
+import edu.nextstep.camp.calculator.domain.model.EvaluationRecord
 import edu.nextstep.camp.calculator.domain.model.ExpressionToken
 import edu.nextstep.camp.calculator.domain.model.Operand
 import edu.nextstep.camp.calculator.domain.model.Operator
@@ -39,6 +40,24 @@ class MainPresenterTest {
         verify { view.displayExpression(expected) }
     }
 
+    @ParameterizedTest(name = "#{index}) when {1} is received, history is {0}")
+    @MethodSource("provideInputListAndHistory")
+    fun givenInputList_whenHistoryBtnClicked_historyIsExpected(userInputActionList: List<ExpressionToken>, expected: List<EvaluationRecord>) {
+        // given & when
+        userInputActionList.forEach {
+            when (it) {
+                is Operand -> presenter.addOperandToken(it)
+                is Operator -> presenter.addOperatorToken(it)
+                OtherExpressionToken.DEL -> presenter.delete()
+                else -> presenter.evaluate()
+            }
+        }
+
+        presenter.toggleEvaluationHistory()
+
+        // then
+        verify { view.showEvaluationHistory(expected) }
+    }
 
     companion object {
         @JvmStatic
@@ -48,6 +67,17 @@ class MainPresenterTest {
                 Arguments.of(listOf(Operator.DIVISION, Operand(5), Operator.SUBTRACTION, Operator.ADDITION), "5 + "),
                 Arguments.of(listOf(Operator.SUBTRACTION, Operand(5), Operator.SUBTRACTION, Operator.ADDITION), "-5 + "),
                 Arguments.of(listOf(Operator.SUBTRACTION, Operand(5), Operator.SUBTRACTION, Operator.SUBTRACTION, Operand(10)), "-5 - -10"),
+            )
+        }
+
+        @JvmStatic
+        private fun provideInputListAndHistory(): Stream<Arguments> {
+            return Stream.of(
+                Arguments.of(listOf(Operand(5), Operand(8), Operator.DIVISION), emptyList<EvaluationRecord>()),
+                Arguments.of(
+                    listOf(Operand(5), Operator.ADDITION, Operand(5), OtherExpressionToken.EQUALS,
+                    Operand(1), Operator.SUBTRACTION, Operand(12), OtherExpressionToken.EQUALS),
+                    listOf(EvaluationRecord("5 + 5", "10"), EvaluationRecord("101 - 12", "89"))),
             )
         }
     }

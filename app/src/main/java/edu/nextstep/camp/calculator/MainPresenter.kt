@@ -1,11 +1,14 @@
 package edu.nextstep.camp.calculator
 
+import edu.nextstep.camp.calculator.domain.EvaluationRecordStore
 import edu.nextstep.camp.calculator.domain.ExpressionTokenProcessor
 import edu.nextstep.camp.calculator.domain.model.Operand
 import edu.nextstep.camp.calculator.domain.model.Operator
 
 class MainPresenter(private val view: MainContract.View) : MainContract.Presenter {
     private val expressionTokenProcessor = ExpressionTokenProcessor()
+    private val evaluationRecordStore = EvaluationRecordStore()
+    private var isShowingHistory = false
 
     override fun addOperatorToken(operator: Operator) {
         processToken {
@@ -21,13 +24,25 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
 
     override fun evaluate() {
         processToken {
-            view.displayExpression(expressionTokenProcessor.evaluate())
+            val record = expressionTokenProcessor.evaluate()
+            evaluationRecordStore.record(record)
+            view.displayExpression(record.result)
         }
     }
 
     override fun delete() {
         processToken {
             view.displayExpression(expressionTokenProcessor.delete())
+        }
+    }
+
+    override fun toggleEvaluationHistory() {
+        isShowingHistory = if (isShowingHistory) {
+            view.hideEvaluationHistory()
+            false
+        } else {
+            view.showEvaluationHistory(evaluationRecordStore.getEvaluationHistory())
+            true
         }
     }
 

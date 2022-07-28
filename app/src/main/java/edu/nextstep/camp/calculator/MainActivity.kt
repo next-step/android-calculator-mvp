@@ -5,17 +5,20 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.exception.ExpressionNotCompleteException
+import edu.nextstep.camp.calculator.domain.model.EvaluationRecord
 import edu.nextstep.camp.calculator.domain.model.OtherExpressionToken
 import edu.nextstep.camp.calculator.domain.model.ExpressionToken
 import edu.nextstep.camp.calculator.domain.model.Operand
 import edu.nextstep.camp.calculator.domain.model.Operator
-import kotlin.runCatching
 
 class MainActivity : AppCompatActivity(), UserInputActionReceiver, MainContract.View {
     override lateinit var presenter: MainContract.Presenter
     private lateinit var binding: ActivityMainBinding
+    private val adapter: EvaluationHistoryAdapter by lazy { EvaluationHistoryAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +28,7 @@ class MainActivity : AppCompatActivity(), UserInputActionReceiver, MainContract.
         binding.apply {
             lifecycleOwner = this@MainActivity
             userInputActionReceiver = this@MainActivity
+            recyclerView.adapter = this@MainActivity.adapter
         }
 
         presenter = MainPresenter(this)
@@ -40,6 +44,7 @@ class MainActivity : AppCompatActivity(), UserInputActionReceiver, MainContract.
         when {
             !btn.text.isNullOrBlank() -> onExpressionTokenInput(ExpressionToken.getFromValue(btn.text.toString()))
             btn.id == R.id.buttonDelete -> onExpressionTokenInput(OtherExpressionToken.DEL)
+            btn.id == R.id.buttonMemory -> presenter.toggleEvaluationHistory()
             else -> handleExceptions(IllegalArgumentException("Unknown Input"))
         }
     }
@@ -66,6 +71,15 @@ class MainActivity : AppCompatActivity(), UserInputActionReceiver, MainContract.
                 Toast.makeText(this, R.string.unknown_error_message, Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    override fun showEvaluationHistory(history: List<EvaluationRecord>) {
+        adapter.submitList(history)
+        binding.recyclerView.isVisible = true
+    }
+
+    override fun hideEvaluationHistory() {
+        binding.recyclerView.isVisible = false
     }
 
     override fun displayExpression(expression: String) {
