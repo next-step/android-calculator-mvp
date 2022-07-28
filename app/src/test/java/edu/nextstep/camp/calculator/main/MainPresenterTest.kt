@@ -1,6 +1,9 @@
 package edu.nextstep.camp.calculator.main
 
 import com.google.common.truth.Truth.assertThat
+import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.ExpressionHistory
+import edu.nextstep.camp.calculator.domain.ExpressionHistoryStorage
 import edu.nextstep.camp.calculator.domain.Operator
 import io.mockk.*
 import org.junit.jupiter.api.BeforeEach
@@ -12,8 +15,7 @@ internal class MainPresenterTest {
 
     @BeforeEach
     fun setUp() {
-        view = mockk()
-        presenter = MainPresenter(view)
+        view = mockk(relaxed = true)
     }
 
     @Test
@@ -21,6 +23,7 @@ internal class MainPresenterTest {
         //given
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } just Runs
+        presenter = MainPresenter(view)
 
         //when
         presenter.addOperand(1)
@@ -36,7 +39,7 @@ internal class MainPresenterTest {
         //given
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } answers { nothing }
-        presenter.addOperand(1)
+        presenter = MainPresenter(view, expression = Expression(listOf(1)))
 
         //when
         presenter.addOperand(2)
@@ -52,7 +55,7 @@ internal class MainPresenterTest {
         //given
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } answers { nothing }
-        presenter.addOperand(1)
+        presenter = MainPresenter(view, expression = Expression(listOf(1)))
 
         //when
         presenter.addOperator(Operator.Plus)
@@ -68,6 +71,7 @@ internal class MainPresenterTest {
         //given
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } answers { nothing }
+        presenter = MainPresenter(view)
 
         //when
         presenter.addOperator(Operator.Minus)
@@ -83,8 +87,7 @@ internal class MainPresenterTest {
         //given
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } answers { nothing }
-        presenter.addOperand(9)
-        presenter.addOperator(Operator.Plus)
+        presenter = MainPresenter(view, expression = Expression(listOf(9, Operator.Plus)))
 
         //when
         presenter.addOperator(Operator.Minus)
@@ -100,9 +103,7 @@ internal class MainPresenterTest {
         //given
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } answers { nothing }
-        presenter.addOperand(10)
-        presenter.addOperator(Operator.Multiply)
-        presenter.addOperand(3)
+        presenter = MainPresenter(view, expression = Expression(listOf(10, Operator.Multiply, 3)))
 
         //when
         presenter.removeLast()
@@ -115,32 +116,21 @@ internal class MainPresenterTest {
     }
 
     @Test
-    fun 잘못된_수식을_계산하려고_했을_때_계산이_수행되지_않는다() {
+    fun 완성되지_않은_수식을_계산하면_에러문구를_보여준다() {
         //given
-        val expressionSlot = slot<String>()
-        every { view.showExpression(capture(expressionSlot)) } answers { nothing }
-        every { view.showResult(null) } answers { nothing }
-
-        presenter.addOperand(10)
-        presenter.addOperator(Operator.Multiply)
+        presenter = MainPresenter(view, expression = Expression(listOf(10, Operator.Multiply)))
 
         //when
         presenter.expressionCalculate()
 
         //then
-        verify { view.showResult(null) }
+        verify { view.showIncompleteExpression() }
     }
 
     @Test
     fun 올바른_수식일_때_계산한_결과값을_보여준다() {
         //given
-        val expressionSlot = slot<String>()
-        every { view.showExpression(capture(expressionSlot)) } answers { nothing }
-        every { view.showResult(20) } answers { nothing }
-
-        presenter.addOperand(10)
-        presenter.addOperator(Operator.Multiply)
-        presenter.addOperand(2)
+        presenter = MainPresenter(view, expression = Expression(listOf(10, Operator.Multiply, 2)))
 
         //when
         presenter.expressionCalculate()
@@ -148,4 +138,34 @@ internal class MainPresenterTest {
         //then
         verify { view.showResult(20) }
     }
+
+    @Test
+    fun 계산기록을_요청하였을_때_화면에_계산기록이_보여야_한다() {
+        //given
+        val expression = Expression(listOf(1, Operator.Plus, 2))
+        val history = ExpressionHistory(expression, 3)
+        presenter = MainPresenter(view, historyStorage = ExpressionHistoryStorage(listOf(history)))
+
+        //when
+        presenter.toggleHistory()
+
+        //then
+        verify { view.showHistory(listOf(history)) }
+    }
+
+    @Test
+    fun 계산기록이_보여지고_있는_상태에서_계산기록을_숨길_수_있어야한다() {
+        //given
+        val expression = Expression(listOf(1, Operator.Plus, 2))
+        val history = ExpressionHistory(expression, 3)
+        presenter = MainPresenter(view, historyStorage = ExpressionHistoryStorage(listOf(history)))
+        presenter.toggleHistory()
+
+        //when
+        presenter.toggleHistory()
+
+        //then
+        verify { view.hideHistory() }
+    }
+
 }

@@ -1,21 +1,30 @@
 package edu.nextstep.camp.calculator.main
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
 import edu.nextstep.camp.calculator.R
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
+import edu.nextstep.camp.calculator.domain.ExpressionHistory
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
     private lateinit var presenter: MainContract.Presenter
+    private lateinit var historyAdapter: ExpressionHistoryRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         presenter = MainPresenter(this)
+
+        historyAdapter = ExpressionHistoryRecyclerAdapter()
+        binding.recyclerView.adapter = historyAdapter
 
         binding.button0.setOnClickListener {
             presenter.addOperand(0)
@@ -65,17 +74,31 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonEquals.setOnClickListener {
             presenter.expressionCalculate()
         }
+        binding.buttonMemory.setOnClickListener {
+            presenter.toggleHistory()
+        }
     }
 
     override fun showExpression(expression: String) {
         binding.textView.text = expression
     }
 
-    override fun showResult(result: Int?) {
-        if (result == null) {
-            Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
-            return
-        }
+    override fun showResult(result: Int) {
         binding.textView.text = result.toString()
+    }
+
+    override fun showHistory(history: List<ExpressionHistory>) {
+        historyAdapter.submitList(history)
+        binding.recyclerView.isVisible = true
+        binding.textView.isInvisible = true
+    }
+
+    override fun hideHistory() {
+        binding.recyclerView.isVisible = false
+        binding.textView.isVisible = true
+    }
+
+    override fun showIncompleteExpression() {
+        Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
     }
 }
