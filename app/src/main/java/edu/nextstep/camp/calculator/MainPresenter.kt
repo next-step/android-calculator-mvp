@@ -36,6 +36,7 @@ class MainPresenter(
 
     private fun onSuccessCalculate(result: Int) {
         calculateHistory.putCalculateHistory(expression, result)
+        view.addCalculateResult(calculateHistory.calculateHistories.last())
         initExpression(result)
     }
 

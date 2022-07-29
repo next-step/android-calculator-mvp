@@ -1,16 +1,19 @@
 package edu.nextstep.camp.calculator
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import edu.nextstep.camp.calculator.domain.Calculator
-import edu.nextstep.camp.calculator.domain.Expression
+import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
 import edu.nextstep.camp.calculator.domain.Operator
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
+import edu.nextstep.camp.calculator.domain.CalculateResult
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
     private lateinit var mainPresenter: MainContract.Presenter
+    private val calculatorResultAdapter = CalculatorResultAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,6 +21,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         setContentView(binding.root)
 
         mainPresenter = MainPresenter(this)
+        initRecyclerView()
 
         binding.button0.setOnClickListener {
             mainPresenter.input(0)
@@ -67,6 +71,16 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonEquals.setOnClickListener {
             mainPresenter.calculate()
         }
+        binding.buttonMemory.setOnClickListener {
+            showCalculateHistory(binding.recyclerView.isVisible.not())
+        }
+    }
+
+    private fun initRecyclerView() {
+        binding.recyclerView.apply {
+            adapter = calculatorResultAdapter
+            layoutManager = LinearLayoutManager(this@MainActivity)
+        }
     }
 
     override fun showExpression(expression: String) {
@@ -75,5 +89,14 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun onFailCalculate() {
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun addCalculateResult(calculateResult: CalculateResult) {
+        calculatorResultAdapter.putCalculatorResult(calculateResult)
+    }
+
+    private fun showCalculateHistory(showHistory: Boolean) {
+        binding.recyclerView.visibility = if (showHistory) View.VISIBLE else View.GONE
+        binding.textView.visibility = if (showHistory.not()) View.VISIBLE else View.GONE
     }
 }
