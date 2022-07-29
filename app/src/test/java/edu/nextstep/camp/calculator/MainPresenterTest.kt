@@ -1,6 +1,7 @@
 package edu.nextstep.camp.calculator
 
 import com.google.common.truth.Truth.assertThat
+import edu.nextstep.camp.calculator.domain.Memory.MemoryItem
 import edu.nextstep.camp.calculator.domain.Operator
 import io.mockk.every
 import io.mockk.mockk
@@ -15,23 +16,18 @@ class MainPresenterTest {
 
     @Before
     fun setUp() {
-        view = mockk()
+        view = mockk(relaxed = true)
         presenter = MainPresenter(view)
     }
 
     @Test
     fun `숫자가 입력되면 수식에 추가되고 변경된 수식을 보여줘야 한다`() {
-        // given
-        val expressionSlot = slot<String>()
-        every { view.showExpression(capture(expressionSlot)) } answers { nothing }
-
+        //given
         // when
-        presenter.clickOperand(1)
+        presenter.addToExpression(1)
 
         // then
-        val actual = expressionSlot.captured
-        assertThat(actual).isEqualTo("1")
-        verify { view.showExpression(actual) }
+        verify { view.showExpression("1") }
     }
 
     @Test
@@ -39,10 +35,10 @@ class MainPresenterTest {
         // given
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } answers { nothing }
-        presenter.clickOperand(1)
+        presenter.addToExpression(1)
 
         // when
-        presenter.clickOperand(2)
+        presenter.addToExpression(2)
 
         // then
         val actual = expressionSlot.captured
@@ -55,11 +51,11 @@ class MainPresenterTest {
         // given
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } answers { nothing }
-        presenter.clickOperand(1)
-        presenter.clickOperand(2)
+        presenter.addToExpression(1)
+        presenter.addToExpression(2)
 
         // when
-        presenter.clickOperator(Operator.Plus)
+        presenter.addToExpression(Operator.Plus)
 
         // then
         val actual = expressionSlot.captured
@@ -72,11 +68,11 @@ class MainPresenterTest {
         // given
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } answers { nothing }
-        presenter.clickOperand(1)
-        presenter.clickOperand(2)
+        presenter.addToExpression(1)
+        presenter.addToExpression(2)
 
         // when
-        presenter.clickOperator(Operator.Minus)
+        presenter.addToExpression(Operator.Minus)
 
         // then
         val actual = expressionSlot.captured
@@ -89,13 +85,13 @@ class MainPresenterTest {
         // given
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } answers { nothing }
-        presenter.clickOperand(1)
-        presenter.clickOperand(2)
-        presenter.clickOperator(Operator.Minus)
-        presenter.clickOperand(2)
+        presenter.addToExpression(1)
+        presenter.addToExpression(2)
+        presenter.addToExpression(Operator.Minus)
+        presenter.addToExpression(2)
 
         // when
-        presenter.clickEqual()
+        presenter.calculateExpression()
 
         // then
         val actual = expressionSlot.captured
@@ -110,7 +106,7 @@ class MainPresenterTest {
         every { view.showExpression(capture(expressionSlot)) } answers { nothing }
 
         // when
-        presenter.clickOperator(Operator.Plus)
+        presenter.addToExpression(Operator.Plus)
 
         // then
         val actual = expressionSlot.captured
@@ -125,7 +121,7 @@ class MainPresenterTest {
         every { view.showExpression(capture(expressionSlot)) } answers { nothing }
 
         // when
-        presenter.clickDelete()
+        presenter.removeLastFromExpression()
 
         // then
         val actual = expressionSlot.captured
@@ -138,15 +134,54 @@ class MainPresenterTest {
         // given
         val expressionSlot = slot<String>()
         every { view.showExpression(capture(expressionSlot)) } answers { nothing }
-        presenter.clickOperand(1)
-        presenter.clickOperand(2)
+        presenter.addToExpression(1)
+        presenter.addToExpression(2)
 
         // when
-        presenter.clickDelete()
+        presenter.removeLastFromExpression()
 
         // then
         val actual = expressionSlot.captured
         assertThat(actual).isEqualTo("1")
         verify { view.showExpression(actual) }
+    }
+
+    @Test
+    fun `12+2가 계산됬을 때 계산 내역이 memory에 배열로 저장된다`() {
+        // given
+        presenter.addToExpression(1)
+        presenter.addToExpression(2)
+        presenter.addToExpression(Operator.Plus)
+        presenter.addToExpression(2)
+        presenter.calculateExpression()
+
+        // when
+        presenter.updateMemory()
+        // then
+        verify { view.showMemory(listOf(MemoryItem("12 + 2", "14"))) }
+    }
+
+    @Test
+    fun `12+2가 계산되고 13-2가 계산됬을 때 계산 내역이 memory에 배열로 저장된다`() {
+        // given
+        presenter.addToExpression(1)
+        presenter.addToExpression(2)
+        presenter.addToExpression(Operator.Plus)
+        presenter.addToExpression(2)
+        presenter.calculateExpression()
+
+        presenter.removeLastFromExpression()
+        presenter.removeLastFromExpression()
+
+        presenter.addToExpression(1)
+        presenter.addToExpression(3)
+        presenter.addToExpression(Operator.Minus)
+        presenter.addToExpression(2)
+        presenter.calculateExpression()
+
+        // when
+        presenter.updateMemory()
+        // then
+        verify { view.showMemory(listOf(MemoryItem("12 + 2", "14"),MemoryItem("13 - 2", "11"))) }
     }
 }
