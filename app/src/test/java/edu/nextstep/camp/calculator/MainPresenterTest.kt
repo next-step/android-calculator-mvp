@@ -91,4 +91,24 @@ class MainPresenterTest {
         assertThat(actual).isEqualTo("2")
         verify { view.showExpression(actual) }
     }
+
+
+    @Test
+    fun `정상적인 수식일 때 수식과 계산 결과를 저장한다`() {
+        // given & when
+        presenter = MainPresenter(view, Expression(listOf(1, Operator.Plus, 2)))
+        presenter.calculate()
+        presenter.input(2)
+        presenter.input(Operator.Multiply)
+        presenter.input(3)
+        presenter.input(Operator.Plus)
+        presenter.input(7)
+        presenter.calculate()
+
+        // then
+        assertThat(presenter.calculateHistory.calculateHistories[0].expression.toString()).isEqualTo("1 + 2")
+        assertThat(presenter.calculateHistory.calculateHistories[0].result).isEqualTo(3)
+        assertThat(presenter.calculateHistory.calculateHistories[1].expression.toString()).isEqualTo("32 * 3 + 7")
+        assertThat(presenter.calculateHistory.calculateHistories[1].result).isEqualTo(103)
+    }
 }

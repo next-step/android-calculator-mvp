@@ -1,5 +1,6 @@
 package edu.nextstep.camp.calculator
 
+import edu.nextstep.camp.calculator.domain.CalculateHistory
 import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
@@ -9,6 +10,7 @@ class MainPresenter(
     private var expression: Expression = Expression.EMPTY,
 ) : MainContract.Presenter {
     private val calculator = Calculator()
+    val calculateHistory = CalculateHistory()
 
     override fun input(operand: Int) {
         expression += operand
@@ -33,6 +35,7 @@ class MainPresenter(
     }
 
     private fun onSuccessCalculate(result: Int) {
+        calculateHistory.putCalculateHistory(expression, result)
         initExpression(result)
     }
 
