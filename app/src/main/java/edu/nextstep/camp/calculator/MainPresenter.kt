@@ -1,6 +1,5 @@
 package edu.nextstep.camp.calculator
 
-import edu.nextstep.camp.common.UiText
 import edu.nextstep.camp.domain.Calculator
 import edu.nextstep.camp.domain.Expression
 import edu.nextstep.camp.domain.Operator
@@ -33,7 +32,7 @@ class MainPresenter(
     override fun calculateCurrentExpression() {
         val result = calculator.calculate(expression.toString())
         if (result == null) {
-            view.showErrorMessage(UiText.StringResource(R.string.incomplete_expression))
+            view.showErrorMessage(IncompleteExpressionException())
             return
         }
 

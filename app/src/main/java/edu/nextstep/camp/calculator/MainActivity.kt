@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
-import edu.nextstep.camp.common.UiText
 import edu.nextstep.camp.domain.Calculator
 import edu.nextstep.camp.domain.Expression
 import edu.nextstep.camp.domain.Operator
@@ -46,7 +45,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.textView.text = result.toString()
     }
 
-    override fun showErrorMessage(uiText: UiText) {
-        Toast.makeText(this, uiText.asString(this), Toast.LENGTH_SHORT).show()
+    override fun showErrorMessage(exception: Exception) {
+        when (exception) {
+            is IncompleteExpressionException -> Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
+            else -> {}
+        }
     }
 }
