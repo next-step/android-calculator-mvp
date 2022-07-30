@@ -1,6 +1,7 @@
 package edu.nextstep.camp.calculator
 
 import com.google.common.truth.Truth.assertThat
+import edu.nextstep.camp.calculator.domain.CalculateResult
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 import io.mockk.every
@@ -95,8 +96,11 @@ class MainPresenterTest {
 
     @Test
     fun `정상적인 수식일 때 수식과 계산 결과를 저장한다`() {
-        // given & when
+        // given
         presenter = MainPresenter(view, Expression(listOf(1, Operator.Plus, 2)))
+        val calculateResultSlot = slot<List<CalculateResult>>()
+        every { view.showCalculateHistory(capture(calculateResultSlot)) } answers { nothing }
+
         presenter.calculate()
         presenter.input(2)
         presenter.input(Operator.Multiply)
@@ -105,10 +109,15 @@ class MainPresenterTest {
         presenter.input(7)
         presenter.calculate()
 
+        // when
+        presenter.toggleCalculatorHistory()
+
         // then
-        assertThat(presenter.calculateHistory.calculateHistories[0].expression.toString()).isEqualTo("1 + 2")
-        assertThat(presenter.calculateHistory.calculateHistories[0].result).isEqualTo(3)
-        assertThat(presenter.calculateHistory.calculateHistories[1].expression.toString()).isEqualTo("32 * 3 + 7")
-        assertThat(presenter.calculateHistory.calculateHistories[1].result).isEqualTo(103)
+        val actual = calculateResultSlot.captured
+        assertThat(actual[0].expression.toString()).isEqualTo("1 + 2")
+        assertThat(actual[0].result).isEqualTo(3)
+        assertThat(actual[1].expression.toString()).isEqualTo("32 * 3 + 7")
+        assertThat(actual[1].result).isEqualTo(103)
+        verify { view.showCalculateHistory(actual) }
     }
 }

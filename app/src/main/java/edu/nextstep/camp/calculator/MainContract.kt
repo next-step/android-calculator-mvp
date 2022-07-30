@@ -7,7 +7,8 @@ interface MainContract {
     interface View {
         fun showExpression(expression: String)
         fun onFailCalculate()
-        fun addCalculateResult(calculateResult: CalculateResult)
+        fun showCalculateHistory(calculateResults: List<CalculateResult>)
+        fun hideCalculateHistory()
     }
 
     interface Presenter {
@@ -16,5 +17,6 @@ interface MainContract {
         fun removeLast()
         fun calculate()
         fun initExpression(result : Int)
+        fun toggleCalculatorHistory()
     }
 }

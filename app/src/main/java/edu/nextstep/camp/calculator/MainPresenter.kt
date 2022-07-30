@@ -10,7 +10,8 @@ class MainPresenter(
     private var expression: Expression = Expression.EMPTY,
 ) : MainContract.Presenter {
     private val calculator = Calculator()
-    val calculateHistory = CalculateHistory()
+    private val calculateHistory = CalculateHistory()
+    private var isShowingCalculatorHistory: Boolean = false
 
     override fun input(operand: Int) {
         expression += operand
@@ -36,7 +37,6 @@ class MainPresenter(
 
     private fun onSuccessCalculate(result: Int) {
         calculateHistory.putCalculateHistory(expression, result)
-        view.addCalculateResult(calculateHistory.calculateHistories.last())
         initExpression(result)
     }
 
@@ -47,5 +47,15 @@ class MainPresenter(
     override fun initExpression(result : Int) {
         expression = Expression.EMPTY + result
         view.showExpression(expression.toString())
+    }
+
+    override fun toggleCalculatorHistory() {
+        if (isShowingCalculatorHistory) {
+            view.hideCalculateHistory()
+            isShowingCalculatorHistory = false
+        }  else {
+            view.showCalculateHistory(calculateHistory.calculateHistories)
+            isShowingCalculatorHistory = true
+        }
     }
 }

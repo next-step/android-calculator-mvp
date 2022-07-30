@@ -5,7 +5,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.recyclerview.widget.LinearLayoutManager
 import edu.nextstep.camp.calculator.domain.Operator
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.CalculateResult
@@ -72,14 +71,13 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             mainPresenter.calculate()
         }
         binding.buttonMemory.setOnClickListener {
-            showCalculateHistory(binding.recyclerView.isVisible.not())
+            mainPresenter.toggleCalculatorHistory()
         }
     }
 
     private fun initRecyclerView() {
         binding.recyclerView.apply {
             adapter = calculatorResultAdapter
-            layoutManager = LinearLayoutManager(this@MainActivity)
         }
     }
 
@@ -91,12 +89,15 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
     }
 
-    override fun addCalculateResult(calculateResult: CalculateResult) {
-        calculatorResultAdapter.putCalculatorResult(calculateResult)
+    override fun showCalculateHistory(calculateResults: List<CalculateResult>) {
+        binding.recyclerView.visibility = View.VISIBLE
+        binding.textView.visibility = View.GONE
+
+        calculatorResultAdapter.setCalculatorResults(calculateResults)
     }
 
-    private fun showCalculateHistory(showHistory: Boolean) {
-        binding.recyclerView.visibility = if (showHistory) View.VISIBLE else View.GONE
-        binding.textView.visibility = if (showHistory.not()) View.VISIBLE else View.GONE
+    override fun hideCalculateHistory() {
+        binding.recyclerView.visibility = View.GONE
+        binding.textView.visibility = View.VISIBLE
     }
 }
