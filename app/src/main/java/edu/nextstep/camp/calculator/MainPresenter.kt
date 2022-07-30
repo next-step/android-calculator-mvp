@@ -6,43 +6,43 @@ import edu.nextstep.camp.domain.Expression
 import edu.nextstep.camp.domain.Operator
 
 class MainPresenter(
-	private val view: MainContract.View,
-	private val calculator: Calculator
+    private val view: MainContract.View,
+    private val calculator: Calculator
 ): MainContract.Presenter {
 
-	private var expression = Expression.EMPTY
+    private var expression = Expression.EMPTY
 
-	override fun addNumberToExpression(number: Int) {
-		expression += number
+    override fun addNumberToExpression(number: Int) {
+        expression += number
 
-		showCurrentExpression()
-	}
+        showCurrentExpression()
+    }
 
-	override fun addOperatorToExpression(operator: Operator) {
-		expression += operator
+    override fun addOperatorToExpression(operator: Operator) {
+        expression += operator
 
-		showCurrentExpression()
-	}
+        showCurrentExpression()
+    }
 
-	override fun removeLastToken() {
-		expression = expression.removeLast()
+    override fun removeLastToken() {
+        expression = expression.removeLast()
 
-		showCurrentExpression()
-	}
+        showCurrentExpression()
+    }
 
-	override fun calculateCurrentExpression() {
-		val result = calculator.calculate(expression.toString())
-		if (result == null) {
-			view.showErrorMessage(UiText.StringResource(R.string.incomplete_expression))
-			return
-		}
+    override fun calculateCurrentExpression() {
+        val result = calculator.calculate(expression.toString())
+        if (result == null) {
+            view.showErrorMessage(UiText.StringResource(R.string.incomplete_expression))
+            return
+        }
 
-		expression = Expression.EMPTY + result
+        expression = Expression.EMPTY + result
 
-		view.showResult(result)
-	}
+        view.showResult(result)
+    }
 
-	private fun showCurrentExpression() {
-		view.showExpression(expression)
-	}
+    private fun showCurrentExpression() {
+        view.showExpression(expression)
+    }
 }
