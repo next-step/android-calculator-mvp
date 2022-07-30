@@ -11,7 +11,7 @@ import edu.nextstep.camp.domain.Operator
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
-    private val presenter = MainPresenter(this, Calculator())
+    private val presenter: MainContract.Presenter = MainPresenter(this, Calculator())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
