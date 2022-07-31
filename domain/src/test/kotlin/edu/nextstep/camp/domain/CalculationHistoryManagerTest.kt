@@ -26,7 +26,7 @@ class CalculationHistoryManagerTest {
         val result = calculationHistoryManager.getCalculationHistoryList()
 
         // then : 저장한 연산 기록을 리스트 형태로 반환해야 한다.
-        assertThat(result).isEqualTo(listOf(CalculationHistory(calculationExpression, calculationResult)))
+        assertThat(result).isEqualTo(listOf(CalculationHistory(0, calculationExpression, calculationResult)))
     }
 
     @Test
@@ -49,9 +49,9 @@ class CalculationHistoryManagerTest {
 
         // then : 연산 기록이 저장한 순서대로 반환되어야 한다.
         val expected = listOf(
-            CalculationHistory(calculationExpression1, calculationResult1),
-            CalculationHistory(calculationExpression2, calculationResult2),
-            CalculationHistory(calculationExpression3, calculationResult3)
+            CalculationHistory(0, calculationExpression1, calculationResult1),
+            CalculationHistory(1, calculationExpression2, calculationResult2),
+            CalculationHistory(2, calculationExpression3, calculationResult3)
         )
         assertThat(result).isEqualTo(expected)
     }
