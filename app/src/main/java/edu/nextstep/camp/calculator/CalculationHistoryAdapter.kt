@@ -18,7 +18,7 @@ class CalculationHistoryAdapter: ListAdapter<CalculationHistory, CalculationHist
         holder.showCalculationHistory(getItem(position))
     }
 
-    class CalculationHistoryViewHolder(private val binding: ItemResultBinding): RecyclerView.ViewHolder(binding.root) {
+    class CalculationHistoryViewHolder private constructor(private val binding: ItemResultBinding): RecyclerView.ViewHolder(binding.root) {
 
         companion object {
             fun create(parent: ViewGroup): CalculationHistoryViewHolder {
