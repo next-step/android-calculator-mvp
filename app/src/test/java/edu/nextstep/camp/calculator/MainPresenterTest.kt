@@ -1,7 +1,6 @@
 package edu.nextstep.camp.calculator
 
 import com.google.common.truth.Truth.assertThat
-import edu.nextstep.camp.common.UiText
 import edu.nextstep.camp.domain.Calculator
 import edu.nextstep.camp.domain.Expression
 import edu.nextstep.camp.domain.Operator
@@ -631,8 +630,8 @@ class MainPresenterTest {
     @Test
     fun `32 + 수식이 입력되었을때 연산을 수행하면 유효하지 않은 수식에 대한 에러 메시지를 보여줘야 한다`() {
         // given
-        val errorMessageSlot = slot<UiText>()
-        every { view.showErrorMessage(capture(errorMessageSlot)) } answers { nothing }
+        val errorExceptionSlot = slot<Exception>()
+        every { view.showErrorMessage(capture(errorExceptionSlot)) } answers { nothing }
         every { view.showExpression(any()) } answers { nothing }
 
         presenter.addNumberToExpression(3)
@@ -643,8 +642,8 @@ class MainPresenterTest {
         presenter.calculateCurrentExpression()
 
         // then
-        val actual = errorMessageSlot.captured
-        assertThat(actual).isEqualTo(UiText.StringResource(R.string.incomplete_expression))
+        val actual = errorExceptionSlot.captured
+        assertThat(actual).isInstanceOf(IncompleteExpressionException::class.java)
         verify { view.showErrorMessage(actual) }
     }
 }
