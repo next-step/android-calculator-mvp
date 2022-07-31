@@ -6,7 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
-import edu.nextstep.camp.domain.*
+import edu.nextstep.camp.domain.CalculationHistoryManager
+import edu.nextstep.camp.domain.CalculationHistory
+import edu.nextstep.camp.domain.Calculator
+import edu.nextstep.camp.domain.Expression
+import edu.nextstep.camp.domain.Operator
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
