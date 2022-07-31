@@ -15,6 +15,8 @@ interface MainContract {
 
         fun calculate()
 
+        fun toggleHistory(isShow: Boolean)
+
     }
 
     interface View {
@@ -24,6 +26,10 @@ interface MainContract {
         fun showCalculateValue(expression: Expression)
 
         fun showExpressionErrorToast()
+
+        fun showHistory(histories: List<History>)
+
+        fun hideHistory()
 
     }
 
