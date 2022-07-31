@@ -2,9 +2,11 @@ package edu.nextstep.camp.calculator
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
@@ -14,6 +16,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
 
     private val presenter = MainPresenter(this)
+    private val adapter = HistoryAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +43,13 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonEquals.setOnClickListener {
             presenter.calculate()
         }
+
+        binding.recyclerView.adapter = adapter
+
+        binding.buttonMemory.setOnClickListener {
+            presenter.toggleHistory(binding.recyclerView.isVisible)
+        }
+
     }
 
     private fun bindOnClickOperand(vararg buttons: Button) {
@@ -71,4 +81,12 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         Toast.makeText(applicationContext, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
     }
 
+    override fun showHistory(histories: List<History>) {
+        binding.recyclerView.visibility = View.VISIBLE
+        adapter.submitList(histories)
+    }
+
+    override fun hideHistory() {
+        binding.recyclerView.visibility = View.GONE
+    }
 }
