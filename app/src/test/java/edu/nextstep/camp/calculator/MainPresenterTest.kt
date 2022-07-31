@@ -1,13 +1,11 @@
 package edu.nextstep.camp.calculator
 
 import com.google.common.truth.Truth.assertThat
+import edu.nextstep.camp.domain.CalculationHistoryManager
 import edu.nextstep.camp.domain.Calculator
 import edu.nextstep.camp.domain.Expression
 import edu.nextstep.camp.domain.Operator
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.slot
-import io.mockk.verify
+import io.mockk.*
 import org.junit.Before
 import org.junit.Test
 
@@ -15,13 +13,16 @@ import org.junit.Test
 class MainPresenterTest {
     private lateinit var presenter: MainPresenter
     private lateinit var view: MainContract.View
+    private lateinit var calculationHistoryManager: CalculationHistoryManager
 
     @Before
     fun setUp() {
         view = mockk()
+        calculationHistoryManager = spyk(CalculationHistoryManager())
         presenter = MainPresenter(
             view = view,
-            calculator = Calculator()
+            calculator = Calculator(),
+            calculationHistoryManager = calculationHistoryManager
         )
     }
 
@@ -645,5 +646,25 @@ class MainPresenterTest {
         val actual = errorExceptionSlot.captured
         assertThat(actual).isInstanceOf(IncompleteExpressionException::class.java)
         verify { view.showErrorMessage(actual) }
+    }
+
+    @Test
+    fun `32 + 1 수식이 입력되었을때 연산을 수행하면 연산식과 계산 결과인 33을 연산 기록에 저장해야 한다`() {
+        // given
+        every { view.showResult(any()) } answers { nothing }
+        every { view.showExpression(any()) } answers { nothing }
+
+        presenter.addNumberToExpression(3)
+        presenter.addNumberToExpression(2)
+        presenter.addOperatorToExpression(Operator.Plus)
+        presenter.addNumberToExpression(1)
+
+        // when
+        presenter.calculateCurrentExpression()
+
+        // then
+        val expectedExpression = Expression.EMPTY + 3 + 2 + Operator.Plus + 1
+        val expectedResult = 33
+        verify { calculationHistoryManager.saveCalculationHistory(expectedExpression, expectedResult) }
     }
 }

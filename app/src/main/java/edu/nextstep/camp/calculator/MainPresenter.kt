@@ -1,12 +1,14 @@
 package edu.nextstep.camp.calculator
 
+import edu.nextstep.camp.domain.CalculationHistoryManager
 import edu.nextstep.camp.domain.Calculator
 import edu.nextstep.camp.domain.Expression
 import edu.nextstep.camp.domain.Operator
 
 class MainPresenter(
     private val view: MainContract.View,
-    private val calculator: Calculator
+    private val calculator: Calculator,
+    private val calculationHistoryManager: CalculationHistoryManager
 ): MainContract.Presenter {
 
     private var expression = Expression.EMPTY
@@ -35,6 +37,8 @@ class MainPresenter(
             view.showErrorMessage(IncompleteExpressionException())
             return
         }
+
+        calculationHistoryManager.saveCalculationHistory(expression, result)
 
         expression = Expression.EMPTY + result
 
