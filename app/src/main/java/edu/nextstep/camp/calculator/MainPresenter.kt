@@ -1,6 +1,5 @@
 package edu.nextstep.camp.calculator
 
-import android.util.Log
 import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
@@ -47,7 +46,6 @@ class MainPresenter(
         if (isShow) {
             view.hideHistory()
         } else {
-            Log.e("historyTest", "@@ $histories")
             view.showHistory(histories)
         }
     }

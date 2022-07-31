@@ -1,6 +1,5 @@
 package edu.nextstep.camp.calculator
 
-import com.google.common.truth.Truth.assertThat
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
 import io.mockk.mockk
@@ -33,8 +32,7 @@ internal class MainPresenterTest {
         presenter.addOperand(operand)
 
         // then
-        assertThat(expression.toString()).isEqualTo("$operand")
-        verify(exactly = 1) { view.showCurrentExpression(expression) }
+        verify(exactly = 1) { view.showCurrentExpression(any()) }
     }
 
     @ParameterizedTest
@@ -48,7 +46,7 @@ internal class MainPresenterTest {
         presenter.addOperator(operator)
 
         // then
-        verify(exactly = 2) { view.showCurrentExpression(expression) }
+        verify(exactly = 2) { view.showCurrentExpression(any()) }
     }
 
     @Test //
@@ -62,7 +60,7 @@ internal class MainPresenterTest {
         presenter.addOperand(3)
 
         // then
-        verify(exactly = 3) { view.showCurrentExpression(expression) }
+        verify(exactly = 3) { view.showCurrentExpression(any()) }
     }
 
     @Test
@@ -75,7 +73,7 @@ internal class MainPresenterTest {
         presenter.calculate()
 
         //then
-        verify(exactly = 1) { view.showCalculateValue(expression) }
+        verify(exactly = 1) { view.showCalculateValue(any()) }
     }
 
     @Test
@@ -90,9 +88,7 @@ internal class MainPresenterTest {
         presenter.toggleHistory(false)
 
         // then
-        verify(exactly = 1) {
-            view.showHistory(listOf(History(expression, "23")))
-        }
+        verify(exactly = 1) { view.showHistory(any()) }
     }
 
     @Test
@@ -105,7 +101,7 @@ internal class MainPresenterTest {
 
         // when
         presenter.toggleHistory(false)
-        presenter.toggleHistory(false)
+        presenter.toggleHistory(true)
 
         // then
         verify(exactly = 1) { view.hideHistory() }
