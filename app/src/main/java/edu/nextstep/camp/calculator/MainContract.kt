@@ -15,6 +15,8 @@ interface MainContract {
         fun removeElement()
 
         fun calculate()
+
+        fun toggleRecords()
     }
 
     interface View {
@@ -24,6 +26,10 @@ interface MainContract {
         fun setCalculationResult(result: Operand)
 
         fun calculationFailed()
+
+        fun showRecords(records: List<StringExpressionState>)
+
+        fun closeRecords()
     }
 }
 

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.Operand
 import edu.nextstep.camp.calculator.domain.Operator
@@ -24,10 +25,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         super.onCreate(savedInstanceState)
 
         initViewBinding()
-        initOperandButtons()
-        initOperatorButtons()
-        initDeleteButton()
-        initEqualsButton()
+        initButtons()
     }
 
     override fun setCalculationResult(result: Operand) {
@@ -42,6 +40,22 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun setExpression(state: StringExpressionState) {
         binding.textView.text = state.toString()
+    }
+
+    override fun showRecords(records: List<StringExpressionState>) {
+        binding.recyclerView.isVisible = true
+    }
+
+    override fun closeRecords() {
+        binding.recyclerView.isVisible = false
+    }
+
+    private fun initButtons() {
+        initOperandButtons()
+        initOperatorButtons()
+        initDeleteButton()
+        initEqualsButton()
+        initRecordsButton()
     }
 
     private fun initViewBinding() {
@@ -93,6 +107,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonEquals.setOnClickListener {
             presenter.calculate()
         }
+    }
+
+    private fun initRecordsButton() {
+        binding.buttonMemory
     }
 
     companion object {
