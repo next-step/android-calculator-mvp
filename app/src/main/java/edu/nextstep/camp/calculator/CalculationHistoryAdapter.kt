@@ -36,7 +36,7 @@ class CalculationHistoryAdapter: ListAdapter<CalculationHistory, CalculationHist
 
 private class CalculationHistoryDiffCallback: DiffUtil.ItemCallback<CalculationHistory>() {
     override fun areItemsTheSame(oldItem: CalculationHistory, newItem: CalculationHistory): Boolean {
-        return oldItem === newItem
+        return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(oldItem: CalculationHistory, newItem: CalculationHistory): Boolean {
