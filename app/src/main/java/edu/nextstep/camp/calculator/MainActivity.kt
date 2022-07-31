@@ -46,9 +46,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun showErrorMessage(exception: Exception) {
-        when (exception) {
-            is IncompleteExpressionException -> Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
-            else -> {}
+        if (exception is IncompleteExpressionException) {
+            Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
         }
     }
 }
