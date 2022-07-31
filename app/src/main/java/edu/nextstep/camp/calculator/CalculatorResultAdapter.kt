@@ -20,7 +20,7 @@ class CalculatorResultAdapter: ListAdapter<CalculateResult, CalculatorResultView
     }
 
     override fun onBindViewHolder(holder: CalculatorResultViewHolder, position: Int) {
-        holder.onBind(currentList[position])
+        holder.onBind(getItem(position))
     }
 
     override fun getItemCount(): Int = currentList.size
