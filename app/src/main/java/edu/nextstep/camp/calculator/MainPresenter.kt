@@ -11,7 +11,7 @@ class MainPresenter(
     initialRecordsShowing: Boolean = false,
 ) : MainContract.Presenter {
 
-    private val records: MutableList<StringExpressionState> = mutableListOf()
+    private val records: MutableList<Record> = mutableListOf()
     private var state: StringExpressionState = initialState
     private var isRecordsShowing: Boolean = initialRecordsShowing
 
@@ -30,7 +30,7 @@ class MainPresenter(
         }
             .onSuccess {
                 view.setCalculationResult(it)
-                records.add(state)
+                records.add(Record(state = state, result = it))
             }
             .onFailure {
                 view.calculationFailed()
@@ -39,6 +39,7 @@ class MainPresenter(
 
     override fun toggleRecords() {
         if (isRecordsShowing) view.closeRecords() else view.showRecords(records.toList())
+        isRecordsShowing = !isRecordsShowing
     }
 
     private fun updateViewState(state: StringExpressionState) {

@@ -121,6 +121,7 @@ internal class MainPresenterTest {
     fun `계산 기록이 보이지 않는 상태에서 시계 버튼이 입력되면 계산 기록이 보여져야 한다`() {
         // given
         val givenState = StringExpressionState.of("1 + 2")
+        val givenResult = Operand.of("3")
         presenter = MainPresenter(
             view = view,
             initialState = givenState,
@@ -132,8 +133,10 @@ internal class MainPresenterTest {
         presenter.toggleRecords()
 
         // then
-        verify(exactly = 1) { view.setCalculationResult(Operand.of("3")) }
-        verify(exactly = 1) { view.showRecords(listOf(givenState)) }
+        verify(exactly = 1) { view.setCalculationResult(givenResult) }
+        verify(exactly = 1) {
+            view.showRecords(listOf(Record(state = givenState, result = givenResult)))
+        }
     }
 
     @Test

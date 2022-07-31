@@ -27,7 +27,7 @@ interface MainContract {
 
         fun calculationFailed()
 
-        fun showRecords(records: List<StringExpressionState>)
+        fun showRecords(records: List<Record>)
 
         fun closeRecords()
     }
