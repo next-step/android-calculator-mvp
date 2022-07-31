@@ -20,16 +20,16 @@ class CalculationHistoryAdapter: ListAdapter<CalculationHistory, CalculationHist
 
     class CalculationHistoryViewHolder private constructor(private val binding: ItemResultBinding): RecyclerView.ViewHolder(binding.root) {
 
+        fun showCalculationHistory(calculationHistory: CalculationHistory) {
+            binding.tvExpression.text = calculationHistory.expression.toString()
+            binding.tvResult.text = binding.root.resources.getString(R.string.result, calculationHistory.result)
+        }
+
         companion object {
             fun create(parent: ViewGroup): CalculationHistoryViewHolder {
                 val binding = ItemResultBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 return CalculationHistoryViewHolder(binding)
             }
-        }
-
-        fun showCalculationHistory(calculationHistory: CalculationHistory) {
-            binding.tvExpression.text = calculationHistory.expression.toString()
-            binding.tvResult.text = binding.root.resources.getString(R.string.result, calculationHistory.result)
         }
     }
 }
