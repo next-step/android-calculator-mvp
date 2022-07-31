@@ -12,6 +12,9 @@ class MainPresenter(
     private var histories: List<History> = listOf()
 ) : MainContract.Presenter {
 
+    private var expression = Expression()
+    private val calculator = Calculator()
+
     override fun addOperand(operand: Int) {
         expression += operand
         view.showCurrentExpression(expression)

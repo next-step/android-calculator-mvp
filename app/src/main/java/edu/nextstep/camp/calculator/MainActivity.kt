@@ -65,6 +65,26 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         buttons.forEach { button ->
             button.setOnClickListener {
                 presenter.addOperator(Operator.of(button.text.toString()))
+        }
+
+        binding.buttonEquals.setOnClickListener {
+            presenter.calculate()
+        }
+    }
+
+    private fun bindOnClickOperand(vararg buttons: Button) {
+        buttons.forEachIndexed { index, button ->
+            button.setOnClickListener {
+                presenter.addOperand(button.text.toString().toInt())
+            }
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun bindOnClickOperator(vararg buttons: Button) {
+        buttons.forEach { button ->
+            button.setOnClickListener {
+                presenter.addOperator(Operator.of(button.text.toString()))
             }
         }
     }
