@@ -29,7 +29,7 @@ class CalculationHistoryAdapter: ListAdapter<CalculationHistory, CalculationHist
 
         fun showCalculationHistory(calculationHistory: CalculationHistory) {
             binding.tvExpression.text = calculationHistory.expression.toString()
-            binding.tvResult.text = calculationHistory.result.toString()
+            binding.tvResult.text = binding.root.resources.getString(R.string.result, calculationHistory.result)
         }
     }
 }

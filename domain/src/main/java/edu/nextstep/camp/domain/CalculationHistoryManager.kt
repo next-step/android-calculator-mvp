@@ -8,6 +8,6 @@ class CalculationHistoryManager {
     }
 
     fun getCalculationHistoryList(): List<CalculationHistory> {
-        return calculationHistoryList
+        return listOf(*(calculationHistoryList.toTypedArray()))
     }
 }
