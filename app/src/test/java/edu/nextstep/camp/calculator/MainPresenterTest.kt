@@ -8,6 +8,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
@@ -114,6 +115,44 @@ internal class MainPresenterTest {
 
         // then
         verify(exactly = 1) { view.calculationFailed() }
+    }
+
+    @Test
+    fun `계산 기록이 보이지 않는 상태에서 시계 버튼이 입력되면 계산 기록이 보여져야 한다`() {
+        // given
+        val givenState = StringExpressionState.of("1 + 2")
+        val givenResult = Operand.of("3")
+        presenter = MainPresenter(
+            view = view,
+            initialState = givenState,
+            initialRecordsShowing = false
+        )
+
+        // when
+        presenter.calculate()
+        presenter.toggleRecords()
+
+        // then
+        verify(exactly = 1) { view.setCalculationResult(givenResult) }
+        verify(exactly = 1) {
+            view.showRecords(listOf(Record(state = givenState, result = givenResult)))
+        }
+    }
+
+    @Test
+    fun `계산 기록이 보이는 상태에서 시계 버튼이 입력되면 계산 기록이 보여지지 않아야 한다`() {
+        // given
+        presenter = MainPresenter(
+            view = view,
+            initialState = StringExpressionState.of(""),
+            initialRecordsShowing = true
+        )
+
+        // when
+        presenter.toggleRecords()
+
+        // then
+        verify(exactly = 1) { view.closeRecords() }
     }
 
 }

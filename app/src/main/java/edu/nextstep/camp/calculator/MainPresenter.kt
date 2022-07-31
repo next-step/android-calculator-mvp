@@ -7,10 +7,15 @@ import edu.nextstep.camp.calculator.domain.StringExpressionState
 
 class MainPresenter(
     private val view: MainContract.View,
-    initialState: StringExpressionState
+    initialState: StringExpressionState,
+    initialRecordsShowing: Boolean = false,
 ) : MainContract.Presenter {
 
+    private val _records: MutableList<Record> = mutableListOf()
+    private val records: List<Record>
+        get() = _records.toList()
     private var state: StringExpressionState = initialState
+    private var isRecordsShowing: Boolean = initialRecordsShowing
 
     override fun addElement(operator: Operator) =
         updateViewState(state.addElement(operator))
@@ -25,10 +30,18 @@ class MainPresenter(
         runCatching {
             StringCalculator.calculate(state)
         }
-            .onSuccess(view::setCalculationResult)
+            .onSuccess {
+                view.setCalculationResult(it)
+                _records.add(Record(state = state, result = it))
+            }
             .onFailure {
                 view.calculationFailed()
             }
+    }
+
+    override fun toggleRecords() {
+        if (isRecordsShowing) view.closeRecords() else view.showRecords(records)
+        isRecordsShowing = !isRecordsShowing
     }
 
     private fun updateViewState(state: StringExpressionState) {

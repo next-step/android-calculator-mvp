@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.Operand
 import edu.nextstep.camp.calculator.domain.Operator
@@ -13,6 +15,7 @@ import edu.nextstep.camp.calculator.domain.StringExpressionState
 class MainActivity : AppCompatActivity(), MainContract.View {
 
     private lateinit var binding: ActivityMainBinding
+    private val recordsAdapter: RecordsAdapter by lazy { RecordsAdapter() }
     private val presenter: MainContract.Presenter by lazy {
         MainPresenter(
             view = this,
@@ -24,10 +27,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         super.onCreate(savedInstanceState)
 
         initViewBinding()
-        initOperandButtons()
-        initOperatorButtons()
-        initDeleteButton()
-        initEqualsButton()
+        initButtons()
+        initRecords()
     }
 
     override fun setCalculationResult(result: Operand) {
@@ -42,6 +43,29 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun setExpression(state: StringExpressionState) {
         binding.textView.text = state.toString()
+    }
+
+    override fun showRecords(records: List<Record>) {
+        recordsAdapter.submitList(records)
+        binding.recyclerView.isVisible = true
+        binding.textView.isInvisible = true
+    }
+
+    override fun closeRecords() {
+        binding.recyclerView.isInvisible = true
+        binding.textView.isVisible = true
+    }
+
+    private fun initButtons() {
+        initOperandButtons()
+        initOperatorButtons()
+        initDeleteButton()
+        initEqualsButton()
+        initRecordsButton()
+    }
+
+    private fun initRecords() {
+        binding.recyclerView.adapter = recordsAdapter
     }
 
     private fun initViewBinding() {
@@ -93,6 +117,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonEquals.setOnClickListener {
             presenter.calculate()
         }
+    }
+
+    private fun initRecordsButton() {
+        binding.buttonMemory.setOnClickListener { presenter.toggleRecords() }
     }
 
     companion object {
