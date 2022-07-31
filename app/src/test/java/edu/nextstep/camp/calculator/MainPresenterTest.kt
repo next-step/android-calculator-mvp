@@ -78,4 +78,37 @@ internal class MainPresenterTest {
         verify(exactly = 1) { view.showCalculateValue(expression) }
     }
 
+    @Test
+    @DisplayName("계산기록이 안 보여지고 있을 떄, buttonMemory 버튼을 클릭 시 계산 기록 보여주기 기능 테스트")
+    internal fun showHistory() {
+        // given
+        expression = Expression(listOf(1, Operator.Multiply, 23))
+        presenter = MainPresenter(view, expression)
+        presenter.calculate()
+
+        // when
+        presenter.toggleHistory(false)
+
+        // then
+        verify(exactly = 1) {
+            view.showHistory(listOf(History(expression, "23")))
+        }
+    }
+
+    @Test
+    @DisplayName("계산기록이 보여지고 있는 상태에서 buttonMemory 버튼을 클릭 시 계산 기록 숨기기 기능 테스트")
+    internal fun hideHistory() {
+        // given
+        expression = Expression(listOf(1, Operator.Multiply, 23))
+        presenter = MainPresenter(view, expression)
+        presenter.calculate()
+
+        // when
+        presenter.toggleHistory(false)
+        presenter.toggleHistory(false)
+
+        // then
+        verify(exactly = 1) { view.hideHistory() }
+    }
+
 }
