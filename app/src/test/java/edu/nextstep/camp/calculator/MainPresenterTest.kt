@@ -1,10 +1,7 @@
 package edu.nextstep.camp.calculator
 
 import com.google.common.truth.Truth.assertThat
-import edu.nextstep.camp.domain.CalculationHistoryManager
-import edu.nextstep.camp.domain.Calculator
-import edu.nextstep.camp.domain.Expression
-import edu.nextstep.camp.domain.Operator
+import edu.nextstep.camp.domain.*
 import io.mockk.*
 import org.junit.Before
 import org.junit.Test
@@ -666,5 +663,48 @@ class MainPresenterTest {
         val expectedExpression = Expression.EMPTY + 3 + 2 + Operator.Plus + 1
         val expectedResult = 33
         verify { calculationHistoryManager.saveCalculationHistory(expectedExpression, expectedResult) }
+    }
+
+    @Test
+    fun `계산 UI가 보여지는 상태에서 시계 버튼을 눌러 UI 를 변경하면 계산 기록을 보여주는 UI 로 변경되어야 한다`() {
+        // given
+        val calculationHistoryListSlot = slot<List<CalculationHistory>>()
+        every { view.showCalculationHistoryList(capture(calculationHistoryListSlot)) } answers { nothing }
+        every { view.showExpression(any()) } answers { nothing }
+        every { view.showResult(any()) } answers { nothing }
+
+        presenter.addNumberToExpression(3)
+        presenter.addNumberToExpression(2)
+        presenter.addOperatorToExpression(Operator.Plus)
+        presenter.addNumberToExpression(1)
+        presenter.calculateCurrentExpression()
+
+        // when
+        presenter.toggleUiBetweenCalculatorOrHistory()
+
+        // then
+        val actualCalculationHistoryList = calculationHistoryListSlot.captured
+
+        val expectedExpression = Expression.EMPTY + 3 + 2 + Operator.Plus + 1
+        val expectedResult = 33
+        val expectedCalculationHistoryList = listOf(CalculationHistory(expectedExpression, expectedResult))
+
+        assertThat(actualCalculationHistoryList).isEqualTo(expectedCalculationHistoryList)
+
+        verify { view.showCalculationHistoryList(actualCalculationHistoryList) }
+    }
+
+    @Test
+    fun `계산 기록 UI 가 보여지는 상태에서 시계 버튼을 눌러 UI 를 변경하면 계산 UI 로 변경되어야 한다`() {
+        // given
+        every { view.showCalculationHistoryList(any()) } answers { nothing }
+        every { view.showCalculatorUi() } answers { nothing }
+        presenter.toggleUiBetweenCalculatorOrHistory()
+
+        // when
+        presenter.toggleUiBetweenCalculatorOrHistory()
+
+        // then
+        verify { view.showCalculatorUi() }
     }
 }

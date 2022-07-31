@@ -12,6 +12,7 @@ class MainPresenter(
 ): MainContract.Presenter {
 
     private var expression = Expression.EMPTY
+    private var uiMode = CalculatorUiMode.CALCULATOR
 
     override fun addNumberToExpression(number: Int) {
         expression += number
@@ -43,6 +44,22 @@ class MainPresenter(
         expression = Expression.EMPTY + result
 
         view.showResult(result)
+    }
+
+    override fun toggleUiBetweenCalculatorOrHistory() {
+        uiMode = when (uiMode) {
+            CalculatorUiMode.CALCULATION_HISTORY -> CalculatorUiMode.CALCULATOR
+            CalculatorUiMode.CALCULATOR -> CalculatorUiMode.CALCULATION_HISTORY
+        }
+
+        showCurrentUi()
+    }
+
+    private fun showCurrentUi() {
+        when (uiMode) {
+            CalculatorUiMode.CALCULATOR -> view.showCalculatorUi()
+            CalculatorUiMode.CALCULATION_HISTORY -> view.showCalculationHistoryList(calculationHistoryManager.getCalculationHistoryList())
+        }
     }
 
     private fun showCurrentExpression() {
