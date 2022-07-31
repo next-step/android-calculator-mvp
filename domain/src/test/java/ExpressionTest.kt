@@ -1,6 +1,6 @@
 import com.google.common.truth.Truth.assertThat
-import com.port.domain.Expression
-import com.port.domain.Operator
+import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.Operator
 import org.junit.jupiter.api.Test
 
 class ExpressionTest {
@@ -34,7 +34,7 @@ class ExpressionTest {
         val expression = Expression.EMPTY
 
         // when
-        val actual = expression + Operator.Plus
+        val actual = expression + edu.nextstep.camp.calculator.domain.Operator.Plus
 
         // then
         assertThat(actual.toString()).isEqualTo("")
