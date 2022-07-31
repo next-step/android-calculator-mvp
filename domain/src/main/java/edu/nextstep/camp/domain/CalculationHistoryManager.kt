@@ -2,13 +2,11 @@ package edu.nextstep.camp.domain
 
 class CalculationHistoryManager {
     private var historyIdCount: Long = 0
-    private val calculationHistoryList = mutableListOf<CalculationHistory>()
+    private val _calculationHistoryList = mutableListOf<CalculationHistory>()
+    val calculationHistoryList: List<CalculationHistory>
+        get() = listOf(*(_calculationHistoryList.toTypedArray()))
 
     fun saveCalculationHistory(calculationExpression: Expression, calculationResult: Int) {
-        calculationHistoryList.add(CalculationHistory(historyIdCount++, calculationExpression, calculationResult))
-    }
-
-    fun getCalculationHistoryList(): List<CalculationHistory> {
-        return listOf(*(calculationHistoryList.toTypedArray()))
+        _calculationHistoryList.add(CalculationHistory(historyIdCount++, calculationExpression, calculationResult))
     }
 }

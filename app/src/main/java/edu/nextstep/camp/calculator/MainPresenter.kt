@@ -58,7 +58,7 @@ class MainPresenter(
     private fun showCurrentUi() {
         when (uiMode) {
             CalculatorUiMode.CALCULATOR -> view.showCalculatorUi()
-            CalculatorUiMode.CALCULATION_HISTORY -> view.showCalculationHistoryList(calculationHistoryManager.getCalculationHistoryList())
+            CalculatorUiMode.CALCULATION_HISTORY -> view.showCalculationHistoryList(calculationHistoryManager.calculationHistoryList)
         }
     }
 
