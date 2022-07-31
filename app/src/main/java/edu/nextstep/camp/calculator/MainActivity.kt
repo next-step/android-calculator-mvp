@@ -1,7 +1,6 @@
 package edu.nextstep.camp.calculator
 
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -90,14 +89,14 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun showCalculateHistory(calculateResults: List<CalculateResult>) {
-        binding.recyclerView.visibility = View.VISIBLE
-        binding.textView.visibility = View.GONE
+        binding.recyclerView.isVisible = true
+        binding.textView.isVisible = false
 
-        calculatorResultAdapter.setCalculatorResults(calculateResults)
+        calculatorResultAdapter.submitList(calculateResults)
     }
 
     override fun hideCalculateHistory() {
-        binding.recyclerView.visibility = View.GONE
-        binding.textView.visibility = View.VISIBLE
+        binding.recyclerView.isVisible = false
+        binding.textView.isVisible = true
     }
 }
