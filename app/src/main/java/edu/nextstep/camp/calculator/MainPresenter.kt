@@ -3,42 +3,56 @@ package edu.nextstep.camp.calculator
 import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
+import edu.nextstep.camp.calculator.domain.RecordData
 
-class MainPresenter(private val view: MainContract.View): MainContract.Presenter {
-
-    private val calculator = Calculator()
-    private var expression = Expression.EMPTY
+class MainPresenter(
+    private val view: MainContract.View,
+    private val calculator: Calculator = Calculator(),
+    private var expression: Expression = Expression.EMPTY,
+    private val recordList: MutableList<RecordData> = mutableListOf()
+): MainContract.Presenter {
 
     override fun inputNumber(number: Int) {
         expression += number
 
-        showCalculateExpression(expression);
+        view.showCalculateExpression(expression.toString())
     }
 
     override fun inputOperator(operatorData: Operator) {
         expression += operatorData
 
-        showCalculateExpression(expression)
+        view.showCalculateExpression(expression.toString())
     }
 
     override fun removeLastIndexData() {
         expression = expression.removeLast()
 
-        showCalculateExpression(expression)
+        view.showCalculateExpression(expression.toString())
+    }
+
+    override fun loadCalculatorRecord() {
+        view.loadRecordList(recordList)
     }
 
     override fun calculateInputValue() {
-
-        if (!(expression.isValid())) {
+        val result = calculator.calculate(expression.toString())
+        if (result == null) {
             view.showCompletionOfExpressionDataMessage()
             return
         }
 
-        showCalculateExpression(expression)
+        recordList.add(RecordData(expression.toString(), result))
+        expression = Expression.EMPTY + result
+
+        view.showCalculateExpression(expression.toString())
     }
 
-    private fun showCalculateExpression(inputExpression: Expression) {
-        if (inputExpression.isValid()) view.showCalculateExpression(inputExpression.toString())
+    override fun clickCalculatorRecord(isShowRecord: Boolean) {
+        if (isShowRecord) {
+            view.showRecord()
+        } else {
+            view.hideRecord()
+        }
     }
 
 }

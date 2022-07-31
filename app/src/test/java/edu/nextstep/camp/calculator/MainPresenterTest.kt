@@ -1,7 +1,9 @@
 package edu.nextstep.camp.calculator
 
+import com.google.common.base.Verify.verify
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.Operator
+import edu.nextstep.camp.calculator.domain.RecordData
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
@@ -23,33 +25,32 @@ class MainPresenterTest {
 
     @ParameterizedTest
     @ValueSource(ints = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0])
-    fun `0부터 9까지 입력 시 정상 노출됨`(inputNumberData: Int) {
+    fun `0부터 9까지 숫자 입력 시 정상 노출됨`(numberData: Int) {
         // when
-        presenter.inputNumber(inputNumberData)
+        presenter.inputNumber(numberData)
 
         // then
-        if (inputNumberData.toString() != "") verify { view.showCalculateExpression(inputNumberData.toString()) }
+        verify { view.showCalculateExpression(numberData.toString()) }
     }
 
     @ParameterizedTest
     @EnumSource(Operator::class)
-    fun `숫자와 연산자가 섞였을 때 연산자 정상 노출됨`(inputOperatorData: Operator) {
+    fun `숫자 입력 후 연산자 입력 시 연산자 정상 노출됨`(operatorData: Operator) {
         // given
         presenter.inputNumber(1)
 
         // when
-        presenter.inputOperator(inputOperatorData)
+        presenter.inputOperator(operatorData)
 
         // then
-        val result = Expression(listOf("1", "$inputOperatorData"))
-        verify { view.showCalculateExpression(result.toString()) }
+        verify { view.showCalculateExpression("1") }
     }
 
     @Test
-    fun `숫자와 연산자가 섞여 있을 때 삭제 버튼을 누르면 마지막 글자가 지워짐`() {
+    fun `삭제 버튼 클릭 시 마지막 글자 지워짐`() {
         // given
         presenter.inputNumber(1)
-        presenter.inputOperator(Operator.Minus)
+        presenter.inputOperator(Operator.Plus)
 
         // when
         presenter.removeLastIndexData()
@@ -59,7 +60,7 @@ class MainPresenterTest {
     }
 
     @Test
-    fun `식이 완성되고 등호 버튼을 누르면 결과가 정상 노출됨`() {
+    fun `식이 완성됐을 때 =을 누르면 계산 결과 노출`() {
         // given
         presenter.inputNumber(1)
         presenter.inputOperator(Operator.Plus)
@@ -73,7 +74,7 @@ class MainPresenterTest {
     }
 
     @Test
-    fun `미완성된 식이 있는 상태에서 등호 버튼을 누르면 토스트 알림이 노출됨`() {
+    fun `미완성된 식에서 = 클릭 시 토스트 노출`() {
         // given
         presenter.inputNumber(1)
         presenter.inputOperator(Operator.Plus)
@@ -83,6 +84,28 @@ class MainPresenterTest {
 
         // then
         verify { view.showCompletionOfExpressionDataMessage() }
+    }
+
+    @Test
+    fun `기록이 보이는 경우 기록 버튼 클릭 시 기록창 미노출`() {
+        // when
+        presenter.clickCalculatorRecord(true)
+
+        // then
+        view.hideRecord()
+    }
+
+    @Test
+    fun `기록이 있을 때 이전 기록을 불러오면 기록 정상 노출`() {
+        // given
+        presenter = MainPresenter(view = view, expression = Expression(listOf(1, Operator.Plus, 5)))
+        presenter.calculateInputValue()
+
+        // when
+        presenter.loadCalculatorRecord()
+
+        // then
+        verify { view.loadRecordList(listOf(RecordData("1 + 5", 6))) }
     }
 
 }
