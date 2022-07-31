@@ -66,7 +66,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     private fun initRecords() {
         binding.recyclerView.adapter = recordsAdapter
-        binding.buttonMemory.setOnClickListener { presenter.toggleRecords() }
     }
 
     private fun initViewBinding() {
@@ -121,7 +120,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     private fun initRecordsButton() {
-        binding.buttonMemory
+        binding.buttonMemory.setOnClickListener { presenter.toggleRecords() }
     }
 
     companion object {
