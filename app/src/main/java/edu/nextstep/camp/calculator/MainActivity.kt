@@ -14,9 +14,8 @@ import edu.nextstep.camp.domain.Operator
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var calculationHistoryAdapter: CalculationHistoryAdapter
-
     private val presenter: MainContract.Presenter = MainPresenter(this, Calculator(), CalculationHistoryManager())
+    private val calculationHistoryAdapter = CalculationHistoryAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +51,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     private fun initCalculationHistoryUi() {
-        calculationHistoryAdapter = CalculationHistoryAdapter()
         binding.recyclerView.adapter = calculationHistoryAdapter
     }
 
