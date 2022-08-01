@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            expression = Expression.EMPTY + result
+            expression = edu.nextstep.camp.calculator.domain.Expression.EMPTY + result
             binding.textView.text = result.toString()
         }
     }
