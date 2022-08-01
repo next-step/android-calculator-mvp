@@ -1,15 +1,18 @@
 package edu.nextstep.camp.calculator
 
+import edu.nextstep.camp.domain.CalculationHistoryManager
 import edu.nextstep.camp.domain.Calculator
 import edu.nextstep.camp.domain.Expression
 import edu.nextstep.camp.domain.Operator
 
 class MainPresenter(
     private val view: MainContract.View,
-    private val calculator: Calculator
+    private val calculator: Calculator,
+    private val calculationHistoryManager: CalculationHistoryManager
 ): MainContract.Presenter {
 
     private var expression = Expression.EMPTY
+    private var uiMode = CalculatorUiMode.CALCULATOR
 
     override fun addNumberToExpression(number: Int) {
         expression += number
@@ -36,9 +39,27 @@ class MainPresenter(
             return
         }
 
+        calculationHistoryManager.saveCalculationHistory(expression, result)
+
         expression = Expression.EMPTY + result
 
         view.showResult(result)
+    }
+
+    override fun toggleUiBetweenCalculatorOrHistory() {
+        uiMode = when (uiMode) {
+            CalculatorUiMode.CALCULATION_HISTORY -> CalculatorUiMode.CALCULATOR
+            CalculatorUiMode.CALCULATOR -> CalculatorUiMode.CALCULATION_HISTORY
+        }
+
+        showCurrentUi()
+    }
+
+    private fun showCurrentUi() {
+        when (uiMode) {
+            CalculatorUiMode.CALCULATOR -> view.showCalculatorUi()
+            CalculatorUiMode.CALCULATION_HISTORY -> view.showCalculationHistoryList(calculationHistoryManager.calculationHistoryList)
+        }
     }
 
     private fun showCurrentExpression() {

@@ -3,20 +3,31 @@ package edu.nextstep.camp.calculator
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
+import edu.nextstep.camp.domain.CalculationHistoryManager
+import edu.nextstep.camp.domain.CalculationHistory
 import edu.nextstep.camp.domain.Calculator
 import edu.nextstep.camp.domain.Expression
 import edu.nextstep.camp.domain.Operator
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
-    private val presenter: MainContract.Presenter = MainPresenter(this, Calculator())
+    private val presenter: MainContract.Presenter = MainPresenter(this, Calculator(), CalculationHistoryManager())
+    private val calculationHistoryAdapter = CalculationHistoryAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initListener()
+
+        initCalculationHistoryUi()
+    }
+
+    private fun initListener() {
         binding.button0.setOnClickListener { presenter.addNumberToExpression(0) }
         binding.button1.setOnClickListener { presenter.addNumberToExpression(1) }
         binding.button2.setOnClickListener { presenter.addNumberToExpression(2) }
@@ -35,6 +46,12 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
         binding.buttonDelete.setOnClickListener { presenter.removeLastToken() }
         binding.buttonEquals.setOnClickListener { presenter.calculateCurrentExpression() }
+
+        binding.buttonMemory.setOnClickListener { presenter.toggleUiBetweenCalculatorOrHistory() }
+    }
+
+    private fun initCalculationHistoryUi() {
+        binding.recyclerView.adapter = calculationHistoryAdapter
     }
 
     override fun showExpression(expression: Expression) {
@@ -46,9 +63,18 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun showErrorMessage(exception: Exception) {
-        when (exception) {
-            is IncompleteExpressionException -> Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
-            else -> {}
+        if (exception is IncompleteExpressionException) {
+            Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun showCalculationHistoryList(calculationHistoryList: List<CalculationHistory>) {
+        binding.recyclerView.isVisible = true
+
+        calculationHistoryAdapter.submitList(calculationHistoryList)
+    }
+
+    override fun showCalculatorUi() {
+        binding.recyclerView.isGone = true
     }
 }
