@@ -88,12 +88,12 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun showHistory(histories: List<History>) {
-        binding.recyclerView.visibility = View.VISIBLE
+        binding.recyclerView.isVisible = true
         adapter.submitList(histories)
     }
 
     override fun hideHistory() {
-        binding.recyclerView.visibility = View.GONE
+        binding.recyclerView.isVisible = false
     }
 
 }
