@@ -1,6 +1,8 @@
 package edu.nextstep.camp.calculator
 
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.Histories
+import edu.nextstep.camp.calculator.domain.History
 import edu.nextstep.camp.calculator.domain.Operator
 import io.mockk.mockk
 import io.mockk.verify
@@ -96,8 +98,7 @@ internal class MainPresenterTest {
     internal fun hideHistory() {
         // given
         expression = Expression(listOf(1, Operator.Multiply, 23))
-        presenter = MainPresenter(view, expression)
-        presenter.calculate()
+        presenter = MainPresenter(view, histories = Histories.of(listOf(History(expression, expression.toString()))))
         presenter.toggleHistory()
 
         // when
