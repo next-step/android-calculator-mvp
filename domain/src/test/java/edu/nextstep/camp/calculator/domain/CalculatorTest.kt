@@ -1,15 +1,15 @@
 package edu.nextstep.camp.calculator.domain
 
 import com.google.common.truth.Truth.assertThat
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
+import org.junit.Before
+import org.junit.Test
 
 class CalculatorTest {
-    private lateinit var calculator: edu.nextstep.camp.calculator.domain.Calculator
+    private lateinit var calculator: Calculator
 
-    @BeforeEach
+    @Before
     fun setUp() {
-        calculator = edu.nextstep.camp.calculator.domain.Calculator()
+        calculator = Calculator()
     }
 
     @Test
