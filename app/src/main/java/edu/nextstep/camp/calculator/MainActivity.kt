@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.recyclerView.adapter = adapter
 
         binding.buttonMemory.setOnClickListener {
-            presenter.toggleHistory(binding.recyclerView.isVisible)
+            presenter.toggleHistory()
         }
 
     }

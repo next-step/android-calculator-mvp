@@ -85,7 +85,7 @@ internal class MainPresenterTest {
         presenter.calculate()
 
         // when
-        presenter.toggleHistory(false)
+        presenter.toggleHistory()
 
         // then
         verify(exactly = 1) { view.showHistory(any()) }
@@ -98,10 +98,10 @@ internal class MainPresenterTest {
         expression = Expression(listOf(1, Operator.Multiply, 23))
         presenter = MainPresenter(view, expression)
         presenter.calculate()
+        presenter.toggleHistory()
 
         // when
-        presenter.toggleHistory(false)
-        presenter.toggleHistory(true)
+        presenter.toggleHistory()
 
         // then
         verify(exactly = 1) { view.hideHistory() }

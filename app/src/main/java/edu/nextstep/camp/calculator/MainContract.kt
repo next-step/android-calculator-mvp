@@ -16,7 +16,7 @@ interface MainContract {
 
         fun calculate()
 
-        fun toggleHistory(isShow: Boolean)
+        fun toggleHistory()
 
     }
 
