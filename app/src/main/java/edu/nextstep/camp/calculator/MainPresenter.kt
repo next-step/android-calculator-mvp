@@ -2,13 +2,14 @@ package edu.nextstep.camp.calculator
 
 import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.History
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainPresenter(
     private val view: MainContract.View,
     private var expression: Expression = Expression(),
     private val calculator: Calculator = Calculator(),
-    private var histories: List<History> = listOf()
+    private var histories: List<History> = listOf(),
 ) : MainContract.Presenter {
 
     private var expression = Expression()

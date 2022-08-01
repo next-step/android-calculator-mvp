@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import edu.nextstep.camp.calculator.databinding.ItemResultBinding
+import edu.nextstep.camp.calculator.domain.History
 
 class HistoryViewHolder(
     private val binding: ItemResultBinding

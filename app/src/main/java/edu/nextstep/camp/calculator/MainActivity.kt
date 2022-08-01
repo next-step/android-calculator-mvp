@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.History
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainActivity : AppCompatActivity(), MainContract.View {
@@ -65,26 +66,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         buttons.forEach { button ->
             button.setOnClickListener {
                 presenter.addOperator(Operator.of(button.text.toString()))
-        }
-
-        binding.buttonEquals.setOnClickListener {
-            presenter.calculate()
-        }
-    }
-
-    private fun bindOnClickOperand(vararg buttons: Button) {
-        buttons.forEachIndexed { index, button ->
-            button.setOnClickListener {
-                presenter.addOperand(button.text.toString().toInt())
             }
-        }
-    }
 
-    @SuppressLint("SetTextI18n")
-    private fun bindOnClickOperator(vararg buttons: Button) {
-        buttons.forEach { button ->
-            button.setOnClickListener {
-                presenter.addOperator(Operator.of(button.text.toString()))
+            binding.buttonEquals.setOnClickListener {
+                presenter.calculate()
             }
         }
     }
@@ -98,7 +83,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun showExpressionErrorToast() {
-        Toast.makeText(applicationContext, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
+        Toast.makeText(applicationContext, R.string.incomplete_expression, Toast.LENGTH_SHORT)
+            .show()
     }
 
     override fun showHistory(histories: List<History>) {
@@ -109,4 +95,5 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     override fun hideHistory() {
         binding.recyclerView.visibility = View.GONE
     }
+
 }
