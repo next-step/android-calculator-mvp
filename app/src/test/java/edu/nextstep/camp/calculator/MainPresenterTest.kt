@@ -109,6 +109,6 @@ class MainPresenterTest {
         //when
         presenter.calculateExpression()
         //then
-        verify { view.showCalculateFailedToast() }
+        verify { view.showIncompleteExpressionError() }
     }
 }

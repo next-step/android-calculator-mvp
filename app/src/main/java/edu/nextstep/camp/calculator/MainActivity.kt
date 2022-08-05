@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.textView.text = expression.toString()
     }
 
-    override fun showCalculateFailedToast() {
+    override fun showIncompleteExpressionError() {
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
     }
 }

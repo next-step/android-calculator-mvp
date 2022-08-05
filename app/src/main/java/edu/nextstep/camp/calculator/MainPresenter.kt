@@ -28,7 +28,7 @@ class MainPresenter(
     override fun calculateExpression() {
         val result = calculator.calculate(expression.toString())
         if (result == null) {
-            view.showCalculateFailedToast()
+            view.showIncompleteExpressionError()
             return
         }
         expression = Expression.EMPTY + result
