@@ -33,7 +33,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     private fun initRecyclerView() {
         binding.recyclerView.apply {
             adapter = calculatorHistoryAdapter
-            layoutManager = LinearLayoutManager(this@MainActivity)
         }
     }
 
