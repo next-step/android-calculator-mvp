@@ -18,7 +18,7 @@ class ExpressionHistoryUseCaseTest {
     @Test
     fun 하나의_히스토리를_저장할_수_있다() {
         //when
-        val expected = listOf(ExpressionHistoryItem("1 + 2", 3))
+        val expected = listOf(ExpressionHistory("1 + 2", 3))
         expressionHistoryUseCase.saveHistory(expected.first())
         //then
         val actual = expressionHistoryUseCase.getHistories()
@@ -29,8 +29,8 @@ class ExpressionHistoryUseCaseTest {
     fun 다수의_히스토리를_저장할_수_있다() {
         //when
         val expected = listOf(
-            ExpressionHistoryItem("1 + 2", 3),
-            ExpressionHistoryItem("2 + 6", 8)
+            ExpressionHistory("1 + 2", 3),
+            ExpressionHistory("2 + 6", 8)
         )
         expected.forEach { expression -> expressionHistoryUseCase.saveHistory(expression) }
         //then

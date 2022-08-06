@@ -33,7 +33,7 @@ class MainPresenter(
             return
         }
         expressionHistoryUseCase.saveHistory(
-            ExpressionHistoryItem(
+            ExpressionHistory(
                 expression = expression.toString(),
                 result = result
             )

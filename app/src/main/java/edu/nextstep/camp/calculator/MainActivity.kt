@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.Expression
-import edu.nextstep.camp.calculator.domain.ExpressionHistoryItem
+import edu.nextstep.camp.calculator.domain.ExpressionHistory
 import edu.nextstep.camp.calculator.domain.Operator
 
 class MainActivity : AppCompatActivity(), MainContract.View {
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
     }
 
-    override fun openHistory(expressions: List<ExpressionHistoryItem>) {
+    override fun openHistory(expressions: List<ExpressionHistory>) {
         calculatorHistoryAdapter.submitList(expressions)
         binding.recyclerView.isVisible = true
     }

@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import edu.nextstep.camp.calculator.databinding.ItemResultBinding
-import edu.nextstep.camp.calculator.domain.ExpressionHistoryItem
+import edu.nextstep.camp.calculator.domain.ExpressionHistory
 
 class CalculatorHistoryAdapter :
-    ListAdapter<ExpressionHistoryItem, CalculatorHistoryAdapter.ViewHolder>(
-        ExpressionHistoryItemDiffCallback()
+    ListAdapter<ExpressionHistory, CalculatorHistoryAdapter.ViewHolder>(
+        ExpressionHistoryDiffCallback()
     ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,7 +26,7 @@ class CalculatorHistoryAdapter :
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ItemResultBinding.bind(view)
-        fun bind(item: ExpressionHistoryItem) {
+        fun bind(item: ExpressionHistory) {
             val result = "= ${item.result}"
             binding.tvExpression.text = item.expression
             binding.tvResult.text = result
@@ -34,14 +34,14 @@ class CalculatorHistoryAdapter :
     }
 }
 
-class ExpressionHistoryItemDiffCallback : DiffUtil.ItemCallback<ExpressionHistoryItem>() {
+class ExpressionHistoryDiffCallback : DiffUtil.ItemCallback<ExpressionHistory>() {
     override fun areContentsTheSame(
-        oldItem: ExpressionHistoryItem,
-        newItem: ExpressionHistoryItem
+        oldItem: ExpressionHistory,
+        newItem: ExpressionHistory
     ) = oldItem == newItem
 
     override fun areItemsTheSame(
-        oldItem: ExpressionHistoryItem,
-        newItem: ExpressionHistoryItem
+        oldItem: ExpressionHistory,
+        newItem: ExpressionHistory
     ) = oldItem.expression == newItem.expression
 }
