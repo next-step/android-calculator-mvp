@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun openHistory(expressions: List<ExpressionHistoryItem>) {
-        calculatorHistoryAdapter.clearAndAddAllHistoryExpressions(expressions)
+        calculatorHistoryAdapter.submitList(expressions)
         binding.recyclerView.isVisible = true
     }
 
