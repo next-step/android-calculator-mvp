@@ -6,7 +6,7 @@ class MainPresenter(
     private val view: MainContract.View,
     private val calculator: Calculator = Calculator(),
     private var expression: Expression = Expression.EMPTY,
-    private val expressionHistoryUseCase: ExpressionHistoryUseCase = ExpressionHistoryUseCase()
+    private val expressionHistoryUseCase: ExpressionHistoryStorage = ExpressionHistoryStorage()
 ) : MainContract.Presenter {
 
     private var isShowHistory: Boolean = false

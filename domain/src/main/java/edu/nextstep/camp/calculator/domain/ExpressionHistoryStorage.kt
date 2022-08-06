@@ -1,8 +1,8 @@
 package edu.nextstep.camp.calculator.domain
 
-class ExpressionHistoryUseCase(
+class ExpressionHistoryStorage(
     private val expressions: MutableList<ExpressionHistory> = mutableListOf()
 ) {
     fun saveHistory(expression: ExpressionHistory) = expressions.add(expression)
-    fun getHistories() = expressions
+    fun getHistories(): List<ExpressionHistory> = expressions
 }

@@ -5,12 +5,12 @@ import org.junit.Test
 
 class ExpressionHistoryUseCaseTest {
 
-    private val expressionHistoryUseCase = ExpressionHistoryUseCase()
+    private val expressionHistoryStorage = ExpressionHistoryStorage()
 
     @Test
     fun 초기값은_비어있는_상태이다() {
         //when
-        val actual = expressionHistoryUseCase.getHistories()
+        val actual = expressionHistoryStorage.getHistories()
         //then
         assertThat(actual).isEmpty()
     }
@@ -19,9 +19,9 @@ class ExpressionHistoryUseCaseTest {
     fun 하나의_히스토리를_저장할_수_있다() {
         //when
         val expected = listOf(ExpressionHistory("1 + 2", 3))
-        expressionHistoryUseCase.saveHistory(expected.first())
+        expressionHistoryStorage.saveHistory(expected.first())
         //then
-        val actual = expressionHistoryUseCase.getHistories()
+        val actual = expressionHistoryStorage.getHistories()
         assertThat(actual).isEqualTo(expected)
     }
 
@@ -32,9 +32,9 @@ class ExpressionHistoryUseCaseTest {
             ExpressionHistory("1 + 2", 3),
             ExpressionHistory("2 + 6", 8)
         )
-        expected.forEach { expression -> expressionHistoryUseCase.saveHistory(expression) }
+        expected.forEach { expression -> expressionHistoryStorage.saveHistory(expression) }
         //then
-        val actual = expressionHistoryUseCase.getHistories()
+        val actual = expressionHistoryStorage.getHistories()
         assertThat(actual).isEqualTo(expected)
     }
 }
