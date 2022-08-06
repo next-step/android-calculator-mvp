@@ -32,7 +32,7 @@ class MainPresenterTest {
         //when
         presenter.addToExpression(Operator.Plus)
         //then
-        val expectedExpression = Expression(listOf(Operator.Plus))
+        val expectedExpression = Expression()
         verify { view.showExpression(expectedExpression) }
     }
 
@@ -65,7 +65,7 @@ class MainPresenterTest {
         //when
         presenter.removeLastFromExpression()
         //then
-        val expectedExpression = Expression(listOf(10, Operator.Plus))
+        val expectedExpression = Expression(listOf(10))
         verify { view.showExpression(expectedExpression) }
     }
 
