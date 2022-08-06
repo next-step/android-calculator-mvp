@@ -9,6 +9,8 @@ class MainPresenter(
     private val expressionHistoryUseCase: ExpressionHistoryUseCase = ExpressionHistoryUseCase()
 ) : MainContract.Presenter {
 
+    private var isShowHistory: Boolean = false
+
     override fun addToExpression(operand: Int) {
         expression += operand
         view.showExpression(expression)
@@ -40,11 +42,13 @@ class MainPresenter(
         view.showExpression(expression)
     }
 
-    override fun toggleExpressionHistory(isShow: Boolean) {
-        if (isShow) {
+    override fun toggleExpressionHistory() {
+        isShowHistory = if (!isShowHistory) {
             view.openHistory(expressionHistoryUseCase.getHistories())
+            true
         } else {
             view.closeHistory()
+            false
         }
     }
 }

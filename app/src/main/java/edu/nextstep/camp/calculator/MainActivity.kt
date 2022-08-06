@@ -3,9 +3,7 @@ package edu.nextstep.camp.calculator
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isGone
 import androidx.core.view.isVisible
-import androidx.recyclerview.widget.LinearLayoutManager
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.Expression
 import edu.nextstep.camp.calculator.domain.ExpressionHistoryItem
@@ -53,10 +51,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonDivide.setOnClickListener { mainPresenter.addToExpression(Operator.Divide) }
         binding.buttonDelete.setOnClickListener { mainPresenter.removeLastFromExpression() }
         binding.buttonEquals.setOnClickListener { mainPresenter.calculateExpression() }
-        binding.buttonMemory.setOnClickListener {
-            val isShow = binding.recyclerView.isGone
-            mainPresenter.toggleExpressionHistory(isShow)
-        }
+        binding.buttonMemory.setOnClickListener { mainPresenter.toggleExpressionHistory() }
     }
 
     override fun showExpression(expression: Expression) {

@@ -17,6 +17,6 @@ interface MainContract {
         fun addToExpression(operator: Operator)
         fun removeLastFromExpression()
         fun calculateExpression()
-        fun toggleExpressionHistory(isShow: Boolean)
+        fun toggleExpressionHistory()
     }
 }
