@@ -6,7 +6,7 @@ class MainPresenter(
     private val view: MainContract.View,
     private val calculator: Calculator = Calculator(),
     private var expression: Expression = Expression.EMPTY,
-    private val expressionHistoryUseCase: ExpressionHistoryStorage = ExpressionHistoryStorage()
+    private val expressionHistoryStorage: ExpressionHistoryStorage = ExpressionHistoryStorage()
 ) : MainContract.Presenter {
 
     private var isShowHistory: Boolean = false
@@ -32,7 +32,7 @@ class MainPresenter(
             view.showIncompleteExpressionError()
             return
         }
-        expressionHistoryUseCase.saveHistory(
+        expressionHistoryStorage.saveHistory(
             ExpressionHistory(
                 expression = expression.toString(),
                 result = result
@@ -44,7 +44,7 @@ class MainPresenter(
 
     override fun toggleExpressionHistory() {
         isShowHistory = if (!isShowHistory) {
-            view.openHistory(expressionHistoryUseCase.getHistories())
+            view.openHistory(expressionHistoryStorage.getHistories())
             true
         } else {
             view.closeHistory()

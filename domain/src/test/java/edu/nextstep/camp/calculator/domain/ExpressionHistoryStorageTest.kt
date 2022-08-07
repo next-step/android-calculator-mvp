@@ -3,7 +3,7 @@ package edu.nextstep.camp.calculator.domain
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 
-class ExpressionHistoryUseCaseTest {
+class ExpressionHistoryStorageTest {
 
     private val expressionHistoryStorage = ExpressionHistoryStorage()
 
