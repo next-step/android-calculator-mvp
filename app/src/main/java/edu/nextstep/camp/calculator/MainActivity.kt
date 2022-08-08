@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
 import edu.nextstep.camp.calculator.domain.Calculator
 import edu.nextstep.camp.calculator.domain.Expression
-import edu.nextstep.camp.calculator.domain.Operator
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -59,19 +59,19 @@ class MainActivity : AppCompatActivity() {
             binding.textView.text = expression.toString()
         }
         binding.buttonPlus.setOnClickListener {
-            expression += Operator.Plus
+            expression += edu.nextstep.camp.calculator.domain.Operator.Plus
             binding.textView.text = expression.toString()
         }
         binding.buttonMinus.setOnClickListener {
-            expression += Operator.Minus
+            expression += edu.nextstep.camp.calculator.domain.Operator.Minus
             binding.textView.text = expression.toString()
         }
         binding.buttonMultiply.setOnClickListener {
-            expression += Operator.Multiply
+            expression += edu.nextstep.camp.calculator.domain.Operator.Multiply
             binding.textView.text = expression.toString()
         }
         binding.buttonDivide.setOnClickListener {
-            expression += Operator.Divide
+            expression += edu.nextstep.camp.calculator.domain.Operator.Divide
             binding.textView.text = expression.toString()
         }
         binding.buttonDelete.setOnClickListener {
@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            expression = Expression.EMPTY + result
+            expression = edu.nextstep.camp.calculator.domain.Expression.EMPTY + result
             binding.textView.text = result.toString()
         }
     }
