@@ -1,14 +1,15 @@
 package edu.nextstep.camp.calculator
 
-import edu.nextstep.camp.calculator.domain.Calculator
-import edu.nextstep.camp.calculator.domain.Expression
-import edu.nextstep.camp.calculator.domain.Operator
+import edu.nextstep.camp.calculator.domain.*
 
 class MainPresenter(
     private val view: MainContract.View,
     private val calculator: Calculator = Calculator(),
-    private var expression: Expression = Expression.EMPTY
+    private var expression: Expression = Expression.EMPTY,
+    private val expressionHistoryStorage: ExpressionHistoryStorage = ExpressionHistoryStorage()
 ) : MainContract.Presenter {
+
+    private var isShowHistory: Boolean = false
 
     override fun addToExpression(operand: Int) {
         expression += operand
@@ -28,10 +29,26 @@ class MainPresenter(
     override fun calculateExpression() {
         val result = calculator.calculate(expression.toString())
         if (result == null) {
-            view.showCalculateFailedToast()
+            view.showIncompleteExpressionError()
             return
         }
+        expressionHistoryStorage.saveHistory(
+            ExpressionHistory(
+                expression = expression.toString(),
+                result = result
+            )
+        )
         expression = Expression.EMPTY + result
         view.showExpression(expression)
+    }
+
+    override fun toggleExpressionHistory() {
+        isShowHistory = if (!isShowHistory) {
+            view.openHistory(expressionHistoryStorage.historyExpressions)
+            true
+        } else {
+            view.closeHistory()
+            false
+        }
     }
 }
