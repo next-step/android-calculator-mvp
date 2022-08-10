@@ -10,7 +10,7 @@ class ExpressionHistoryStorageTest {
     @Test
     fun 초기값은_비어있는_상태이다() {
         //when
-        val actual = expressionHistoryStorage.getHistories()
+        val actual = expressionHistoryStorage.historyExpressions
         //then
         assertThat(actual).isEmpty()
     }
@@ -21,7 +21,7 @@ class ExpressionHistoryStorageTest {
         val expected = listOf(ExpressionHistory("1 + 2", 3))
         expressionHistoryStorage.saveHistory(expected.first())
         //then
-        val actual = expressionHistoryStorage.getHistories()
+        val actual = expressionHistoryStorage.historyExpressions
         assertThat(actual).isEqualTo(expected)
     }
 
@@ -34,7 +34,7 @@ class ExpressionHistoryStorageTest {
         )
         expected.forEach { expression -> expressionHistoryStorage.saveHistory(expression) }
         //then
-        val actual = expressionHistoryStorage.getHistories()
+        val actual = expressionHistoryStorage.historyExpressions
         assertThat(actual).isEqualTo(expected)
     }
 }

@@ -44,7 +44,7 @@ class MainPresenter(
 
     override fun toggleExpressionHistory() {
         isShowHistory = if (!isShowHistory) {
-            view.openHistory(expressionHistoryStorage.getHistories())
+            view.openHistory(expressionHistoryStorage.historyExpressions)
             true
         } else {
             view.closeHistory()
