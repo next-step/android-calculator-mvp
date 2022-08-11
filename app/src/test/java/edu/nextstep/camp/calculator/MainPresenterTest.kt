@@ -2,6 +2,8 @@ package edu.nextstep.camp.calculator
 
 import com.google.common.truth.Truth.assertThat
 import edu.nextstep.camp.calculator.domain.Expression
+import edu.nextstep.camp.calculator.domain.History
+import edu.nextstep.camp.calculator.domain.HistoryData
 import edu.nextstep.camp.calculator.domain.Operator
 import io.mockk.every
 import io.mockk.mockk
@@ -100,5 +102,36 @@ class MainPresenterTest {
 
         // Then
         verify { view.showErrorToast() }
+    }
+
+    @Test
+    fun `히스토리 보기 토글을 실행하면 누적된 히스토리 내역을 보여준다`() {
+        // Given
+        val expression = slot<String>()
+        every { view.showExpression(capture(expression)) } answers { nothing }
+        val histories = slot<List<HistoryData>>()
+        every { view.showHistoryView(capture(histories)) } answers { nothing }
+        every { view.hideHistoryView() } answers { nothing }
+
+        // When
+        presenter.appendOperand(3)
+        presenter.appendOperator(Operator.Plus)
+        presenter.appendOperand(3)
+        presenter.calculate()
+
+        presenter.appendOperator(Operator.Plus)
+        presenter.appendOperand(6)
+        presenter.calculate()
+
+        presenter.toggleHistoryViewMode()
+        presenter.toggleHistoryViewMode()
+
+        // Then
+        val actual = histories.captured
+        assertThat(actual).isEqualTo(listOf(
+            HistoryData(Expression(listOf(3, Operator.Plus, 3)), 6),
+            HistoryData(Expression(listOf(6, Operator.Plus, 6)), 12)))
+        verify { view.showHistoryView(actual) }
+        verify { view.hideHistoryView() }
     }
 }

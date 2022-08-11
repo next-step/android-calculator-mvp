@@ -3,12 +3,15 @@ package edu.nextstep.camp.calculator
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import edu.nextstep.camp.calculator.databinding.ActivityMainBinding
+import edu.nextstep.camp.calculator.domain.HistoryData
 import edu.nextstep.camp.calculator.domain.Operator
 
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
+    private val historyAdapter = HistoryAdapter()
 
     override lateinit var presenter: MainContract.Presenter
 
@@ -37,6 +40,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
         binding.buttonDelete.setOnClickListener { presenter.deleteLast() }
         binding.buttonEquals.setOnClickListener { presenter.calculate() }
+
+        binding.recyclerView.apply {
+            adapter = historyAdapter
+        }
     }
 
     override fun showExpression(text: String) {
@@ -45,5 +52,17 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun showErrorToast() {
         Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showHistoryView(histories: List<HistoryData>) {
+        binding.recyclerView.isVisible = true
+        binding.textView.isVisible = false
+
+        historyAdapter.submitList(histories)
+    }
+
+    override fun hideHistoryView() {
+        binding.recyclerView.isVisible = false
+        binding.textView.isVisible = true
     }
 }
