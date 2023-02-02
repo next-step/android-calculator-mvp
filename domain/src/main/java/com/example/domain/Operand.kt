@@ -12,7 +12,11 @@ value class Operand(val value: Int) : OperationTerm {
 
     companion object {
         fun fromTerm(term: String): Operand {
-            return Operand(parseInt(term))
+            val value = term.toIntOrNull()
+            require(value != null) {
+                "숫자로 변환 불가능한 문자입니다."
+            }
+            return Operand(value)
         }
     }
 }
