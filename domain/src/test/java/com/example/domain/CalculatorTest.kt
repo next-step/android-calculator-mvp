@@ -45,7 +45,7 @@ class CalculatorTest {
     @Test
     fun `0으로_나누면_에러를_던진다`() {
         val calculator = Calculator()
-        assertThrows(IllegalArgumentException::class.java){
+        assertThrows(IllegalArgumentException::class.java) {
             calculator.calculate("1 / 0")
         }
     }
