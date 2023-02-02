@@ -70,6 +70,14 @@ class TestClass {
             }
             assertEquals("/ by zero", exception.message)
         }
+
+        @Test
+        fun `사칙연산_기호가_아닌_문자를_입력하면_IllegalArgumentException_throw`() {
+            val exception = assertThrows(IllegalArgumentException::class.java) {
+               Operator.getByPrime("^")
+            }
+            assertEquals("구현되지 않은 기호입니다.", exception.message)
+        }
     }
 }
 
