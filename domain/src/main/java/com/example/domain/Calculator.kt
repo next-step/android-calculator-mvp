@@ -75,25 +75,33 @@ class Calculator {
      * */
     fun evaluate(operations: String?): Int {
         require(!operations.isNullOrEmpty()) {
-            throw IllegalArgumentException("입력값이 없습니다.")
-        }
-
-        require(operations.first().digitToIntOrNull() != null) {
-            throw IllegalArgumentException("입력값이 잘못되었습니다.")
-        }
-
-        require(operations.last().digitToIntOrNull() != null) {
-            throw IllegalArgumentException("입력값이 잘못되었습니다.")
+            throw IllegalArgumentException("입력값이 존재하지 않습니다.")
         }
 
         val operationList = operations.split(" ")
+
+        require(operationList.size % 2 != 0) {
+            throw IllegalArgumentException("입력값이 존재하지 않습니다.")
+        }
+
+        operationList.forEachIndexed { index, c ->
+            if (index % 2 == 0) {
+                val inputNumber = c.toIntOrNull()
+
+                when {
+                    inputNumber == null -> throw IllegalArgumentException("입력값 오류")
+                    inputNumber < 0 -> throw IllegalArgumentException("음수를 입력하실 수 없습니다.")
+                }
+            }
+        }
+
         return calc(operationList)
     }
 
     /**
      * 계산식을 이용해 계산 결과 도출
      *
-     * @param operationList 계산식
+     * @param operationList 입력된 문자열 리스트
      * */
     private fun calc(operationList: List<String>): Int {
         var result = operationList[0].toInt()
@@ -117,7 +125,7 @@ class Calculator {
                         div(result, operationList[i + 1].toInt())
                     }
 
-                    else -> throw IllegalArgumentException("입력값이 잘못되었습니다.")
+                    else -> throw IllegalArgumentException("잘못된 문자를 입력")
                 }
             }
         }
@@ -125,9 +133,6 @@ class Calculator {
     }
 
     enum class Operator(val operator: String) {
-        Plus("+"),
-        Minus("-"),
-        MultiBy("*"),
-        DividedBy("/")
+        Plus("+"), Minus("-"), MultiBy("*"), DividedBy("/")
     }
 }
