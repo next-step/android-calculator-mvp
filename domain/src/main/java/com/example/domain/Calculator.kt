@@ -31,7 +31,7 @@ class Calculator {
      * @param second 두 번째 입력값
      * */
     fun sum(first: Int, second: Int): Int {
-        return 0
+        return first + second
     }
 
     /**
@@ -41,7 +41,7 @@ class Calculator {
      * @param second 두 번째 입력값
      * */
     fun sub(first: Int, second: Int): Int {
-        return 0
+        return first - second
     }
 
     /**
@@ -51,7 +51,7 @@ class Calculator {
      * @param second 두 번째 입력값
      * */
     fun mul(first: Int, second: Int): Int {
-        return 0
+        return first * second
     }
 
     /**
@@ -61,7 +61,11 @@ class Calculator {
      * @param second 두 번째 입력값
      * */
     fun div(first: Int, second: Int): Int {
-        return 0
+        require(second != 0) {
+            throw ArithmeticException("0으로 나눌 수 없습니다.")
+        }
+
+        return first / second
     }
 
     /**
@@ -70,6 +74,60 @@ class Calculator {
      * @param operations 입력된 문자열
      * */
     fun evaluate(operations: String?): Int {
-        return 0
+        require(!operations.isNullOrEmpty()) {
+            throw IllegalArgumentException("입력값이 없습니다.")
+        }
+
+        require(operations.first().digitToIntOrNull() != null) {
+            throw IllegalArgumentException("입력값이 잘못되었습니다.")
+        }
+
+        require(operations.last().digitToIntOrNull() != null) {
+            throw IllegalArgumentException("입력값이 잘못되었습니다.")
+        }
+
+        val operationList = operations.split(" ")
+        return calc(operationList)
+    }
+
+    /**
+     * 계산식을 이용해 계산 결과 도출
+     *
+     * @param operationList 계산식
+     * */
+    private fun calc(operationList: List<String>): Int {
+        var result = operationList[0].toInt()
+
+        for (i in operationList.indices) {
+            if (i % 2 != 0) {
+                result = when (operationList[i]) {
+                    Operator.Plus.operator -> {
+                        sum(result, operationList[i + 1].toInt())
+                    }
+
+                    Operator.Minus.operator -> {
+                        sub(result, operationList[i + 1].toInt())
+                    }
+
+                    Operator.MultiBy.operator -> {
+                        mul(result, operationList[i + 1].toInt())
+                    }
+
+                    Operator.DividedBy.operator -> {
+                        div(result, operationList[i + 1].toInt())
+                    }
+
+                    else -> throw IllegalArgumentException("입력값이 잘못되었습니다.")
+                }
+            }
+        }
+        return result
+    }
+
+    enum class Operator(val operator: String) {
+        Plus("+"),
+        Minus("-"),
+        MultiBy("*"),
+        DividedBy("/")
     }
 }
