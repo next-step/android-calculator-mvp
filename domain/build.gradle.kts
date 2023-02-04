@@ -9,5 +9,6 @@ java {
 }
 dependencies {
     testImplementation("junit:junit:4.12")
-    testImplementation ("com.google.truth:truth:1.1.3")
+    testImplementation("com.google.truth:truth:1.1.3")
+    testImplementation("pl.pragmatists:JUnitParams:1.1.0")
 }
