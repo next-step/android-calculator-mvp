@@ -14,7 +14,7 @@ class MainActivityTest {
     var activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
-    fun 사용자가_피연산자_0_버튼을_누르면_화면에_0이_보여야_한다(){
+    fun 사용자가_피연산자_0_버튼을_누르면_화면에_0이_보여야_한다() {
         //when: 사용자가_피연산자_0_버튼을_누르면
         onView(withId(R.id.button0)).perform(click())
 
@@ -24,7 +24,7 @@ class MainActivityTest {
 
     // 사용자가 피연산자 0~9 버튼을 누르면 화면에 해당 숫자가 보여야 한다.
     @Test
-    fun 사용자가_피연산자_1_버튼을_누르면_화면에_1이_보여야_한다(){
+    fun 사용자가_피연산자_1_버튼을_누르면_화면에_1이_보여야_한다() {
         //when: 사용자가_피연산자_1_버튼을_누르면
         onView(withId(R.id.button1)).perform(click())
 
@@ -33,7 +33,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun 사용자가_피연산자_2_버튼을_누르면_화면에_2이_보여야_한다(){
+    fun 사용자가_피연산자_2_버튼을_누르면_화면에_2이_보여야_한다() {
         //when: 사용자가_피연산자_2_버튼을_누르면
         onView(withId(R.id.button2)).perform(click())
 
@@ -42,7 +42,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun 사용자가_피연산자_3_버튼을_누르면_화면에_3이_보여야_한다(){
+    fun 사용자가_피연산자_3_버튼을_누르면_화면에_3이_보여야_한다() {
         //when: 사용자가_피연산자_3_버튼을_누르면
         onView(withId(R.id.button3)).perform(click())
 
@@ -51,7 +51,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun 사용자가_피연산자_4_버튼을_누르면_화면에_4이_보여야_한다(){
+    fun 사용자가_피연산자_4_버튼을_누르면_화면에_4이_보여야_한다() {
         //when: 사용자가_피연산자_4_버튼을_누르면
         onView(withId(R.id.button4)).perform(click())
 
@@ -60,7 +60,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun 사용자가_피연산자_5_버튼을_누르면_화면에_5이_보여야_한다(){
+    fun 사용자가_피연산자_5_버튼을_누르면_화면에_5이_보여야_한다() {
         //when: 사용자가_피연산자_5_버튼을_누르면
         onView(withId(R.id.button5)).perform(click())
 
@@ -69,7 +69,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun 사용자가_피연산자_6_버튼을_누르면_화면에_6이_보여야_한다(){
+    fun 사용자가_피연산자_6_버튼을_누르면_화면에_6이_보여야_한다() {
         //when: 사용자가_피연산자_6_버튼을_누르면
         onView(withId(R.id.button6)).perform(click())
 
@@ -78,7 +78,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun 사용자가_피연산자_7_버튼을_누르면_화면에_7이_보여야_한다(){
+    fun 사용자가_피연산자_7_버튼을_누르면_화면에_7이_보여야_한다() {
         //when: 사용자가_피연산자_7_버튼을_누르면
         onView(withId(R.id.button7)).perform(click())
 
@@ -87,7 +87,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun 사용자가_피연산자_8_버튼을_누르면_화면에_8이_보여야_한다(){
+    fun 사용자가_피연산자_8_버튼을_누르면_화면에_8이_보여야_한다() {
         //when: 사용자가_피연산자_8_버튼을_누르면
         onView(withId(R.id.button8)).perform(click())
 
@@ -96,7 +96,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun 사용자가_피연산자_9_버튼을_누르면_화면에_9이_보여야_한다(){
+    fun 사용자가_피연산자_9_버튼을_누르면_화면에_9이_보여야_한다() {
         //when: 사용자가_피연산자_9_버튼을_누르면
         onView(withId(R.id.button9)).perform(click())
 
