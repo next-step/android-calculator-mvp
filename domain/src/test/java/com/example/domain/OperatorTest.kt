@@ -1,6 +1,6 @@
 package com.example.domain
 
-import com.example.util.ExceptionMessage
+import com.example.util.ExceptionMessage.OPERATOR_NOT_EXIST
 import org.junit.Assert.*
 import org.junit.Test
 
@@ -14,6 +14,6 @@ class OperatorTest {
         }.message
 
         // then
-        assertEquals(error, ExceptionMessage.OPERATOR_NOT_EXIST)
+        assertEquals(error, OPERATOR_NOT_EXIST)
     }
 }
