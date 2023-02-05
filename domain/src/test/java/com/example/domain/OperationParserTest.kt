@@ -4,13 +4,10 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThrows
 import org.junit.Test
 
-fun String.toOperator(): Operator {
-    return Operator.getByPrime(this)
-}
+fun String.toOperator(): Operator = Operator.getByPrime(this)
 
-fun Int.toOperand(): Operand {
-    return Operand(this)
-}
+fun Int.toOperand(): Operand = Operand(this)
+
 
 class OperationParserTest {
 
