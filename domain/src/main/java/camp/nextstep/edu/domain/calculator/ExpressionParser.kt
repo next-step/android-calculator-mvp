@@ -34,8 +34,25 @@ class ExpressionParser {
         return expressionItems
     }
 
-    private fun isValidExpression(items: List<String>) =
-        (items.size % 2 != 0) && items.first().isNumeric() && items.last().isNumeric()
+    private fun isValidExpression(items: List<String>): Boolean {
+        if (items.size % 2 == 0) return false
+        if (items.first().isNumeric().not()) return false
+        if (items.last().isNumeric().not()) return false
+
+        var pointer = 0
+        var old = ""
+        while (pointer != items.size - 1) {
+            val new = items[pointer]
+            if (old.isEmpty() || old != new) {
+                pointer += 1
+                old = new
+            } else {
+                return false
+            }
+        }
+
+        return true
+    }
 
     private fun String.isNumeric() = matches(numericRegex)
 }

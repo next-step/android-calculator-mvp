@@ -96,4 +96,12 @@ class ExpressionParserTest {
             expressionParser.parse(expression)
         }
     }
+
+    @Test
+    fun `유효하지 않은 표현식을 입력했을 경우는 IllegalArgumentException 을 뱉는다_4`() {
+        val expression = "1 + + + 1"
+        assertThrows(IllegalArgumentException::class.java) {
+            expressionParser.parse(expression)
+        }
+    }
 }
