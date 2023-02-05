@@ -6,7 +6,10 @@ class ExpressionParser {
     fun parse(
         expression: String
     ): List<ExpressionItem> {
-        require(expression.isNotEmpty()) { "공백은 입력할 수 없습니다." }
+        require(
+            expression.isNotEmpty() &&
+                    expression.isNotBlank()
+        ) { "공백은 입력할 수 없습니다." }
 
         val items = expression.trim().split(" ")
         require(isValidExpression(items)) { "유효하지 않은 표현식입니다." }
