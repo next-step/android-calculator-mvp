@@ -16,13 +16,13 @@ enum class Operator(val prime: String) : OperationTerm {
 
     companion object {
         fun getByPrime(prime: String): Operator {
-            val operator = values().find { operator ->
+            val oper = values().find { operator ->
                 prime == operator.prime
             }
-            require(operator != null) {
+            require(oper != null) {
                 "구현되지 않은 기호입니다."
             }
-            return operator
+            return oper
         }
     }
 
