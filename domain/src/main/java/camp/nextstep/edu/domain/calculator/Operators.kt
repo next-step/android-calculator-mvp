@@ -22,8 +22,8 @@ sealed class Operators : ExpressionItem {
 
 
     companion object {
-        fun of(operator: String) =
-            when (operator) {
+        fun of(symbol: String) =
+            when (symbol) {
                 "+" -> Plus
                 "-" -> Minus
                 "*" -> Multiply

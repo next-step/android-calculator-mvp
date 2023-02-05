@@ -22,10 +22,10 @@ class Calculator {
         else -> {
             val first = acc.first() as Num
             val second = expressionItems.first() as Num
-            val operator = acc.last() as Operators
+            val symbol = acc.last() as Operators
             calculateActual(
                 expressionItems.drop(1),
-                listOf(Num(operator.calculate(first.value, second.value)))
+                listOf(Num(symbol.calculate(first.value, second.value)))
             )
         }
     }
