@@ -23,15 +23,15 @@ class ExpressionParser {
     private fun toExpressionItem(
         items: List<String>
     ): List<ExpressionItem> {
-        val temp = mutableListOf<ExpressionItem>()
+        val expressionItems = mutableListOf<ExpressionItem>()
         items.forEach {
-            temp.add(
+            expressionItems.add(
                 if (it.isNumeric()) Num(it.toInt())
                 else Operators.of(it)
             )
         }
 
-        return temp
+        return expressionItems
     }
 
     private fun isValidExpression(items: List<String>) =
