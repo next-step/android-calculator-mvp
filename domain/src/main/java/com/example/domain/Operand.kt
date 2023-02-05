@@ -5,7 +5,7 @@ import java.lang.Integer.parseInt
 @JvmInline
 value class Operand(val value: Int) : OperationTerm {
     init {
-        require(value > 0) {
+        require(value >= 0) {
             "음수를 지원 하지 않습니다."
         }
     }

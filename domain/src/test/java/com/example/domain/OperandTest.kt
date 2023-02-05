@@ -6,6 +6,13 @@ import org.junit.Test
 class OperandTest {
 
     @Test
+    fun `0_통해_Operand_를_생성할_수_있다`() {
+        val operand = Operand(0)
+
+        assertTrue(operand is Operand)
+        assertEquals(Operand(0), operand)
+    }
+    @Test
     fun `양수를_통해_Operand_를_생성할_수_있다`() {
         val operand = Operand(1)
 
