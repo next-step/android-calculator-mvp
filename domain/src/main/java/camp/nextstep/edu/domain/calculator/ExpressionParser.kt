@@ -20,10 +20,8 @@ class ExpressionParser {
         val temp = mutableListOf<ExpressionItem>()
         items.forEach {
             temp.add(
-                if (it.isNumeric())
-                    Num(it.toInt())  // Numbers
-                else
-                    Operators.of(it) // Operators
+                if (it.isNumeric()) Num(it.toInt())
+                else Operators.of(it)
             )
         }
 

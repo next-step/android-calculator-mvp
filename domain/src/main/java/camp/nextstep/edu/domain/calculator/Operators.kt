@@ -2,19 +2,26 @@ package camp.nextstep.edu.domain.calculator
 
 
 sealed class Operators : ExpressionItem {
+
+    protected abstract val symbol: String
+
     object Plus : Operators() {
+        override val symbol = "+"
         override fun calculate(first: Int, second: Int) = first + second
     }
 
     object Minus : Operators() {
+        override val symbol = "-"
         override fun calculate(first: Int, second: Int) = first - second
     }
 
     object Multiply : Operators() {
+        override val symbol = "*"
         override fun calculate(first: Int, second: Int) = first * second
     }
 
     object Divide : Operators() {
+        override val symbol = "/"
         override fun calculate(first: Int, second: Int) = first / second
     }
 
@@ -23,12 +30,9 @@ sealed class Operators : ExpressionItem {
 
     companion object {
         fun of(symbol: String) =
-            when (symbol) {
-                "+" -> Plus
-                "-" -> Minus
-                "*" -> Multiply
-                "/" -> Divide
-                else -> throw IllegalArgumentException("Unsupported Operation")
-            }
+            Operators::class.sealedSubclasses
+                .map { it.objectInstance as Operators }
+                .find { it.symbol == symbol }
+                ?: throw IllegalArgumentException("Unsupported Operation")
     }
 }
