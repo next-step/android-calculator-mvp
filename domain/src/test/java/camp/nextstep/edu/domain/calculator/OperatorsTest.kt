@@ -31,7 +31,7 @@ class OperatorsTest {
     }
 
     @Test
-    fun `1 나누기 0 은 에러`() {
+    fun `1 나누기 0 은 ArithmeticException 을 뱉는다`() {
         assertThrows(ArithmeticException::class.java) {
             Operators.Divide.calculate(1, 0)
         }
@@ -46,7 +46,7 @@ class OperatorsTest {
     }
 
     @Test
-    fun `지원하지 않는 연산기호를 입력하면 에러를 뱉는다`() {
+    fun `지원하지 않는 연산기호를 입력하면 IllegalArgumentException 을 뱉는다`() {
         assertThrows(IllegalArgumentException::class.java) {
             Operators.of("!")
         }

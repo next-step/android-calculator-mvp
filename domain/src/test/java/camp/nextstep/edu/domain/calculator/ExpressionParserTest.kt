@@ -50,7 +50,7 @@ class ExpressionParserTest {
     }
 
     @Test
-    fun `공백은 입력할 수 없다_0`() {
+    fun `빈 문자열을 입력하는 경우 IllegalArgumentException 이 발생한다_0`() {
         val expression = ""
         assertThrows(IllegalArgumentException::class.java) {
             expressionParser.parse(expression)
@@ -58,7 +58,7 @@ class ExpressionParserTest {
     }
 
     @Test
-    fun `공백은 입력할 수 없다_1`() {
+    fun `빈 문자열을 입력하는 경우 IllegalArgumentException 이 발생한다_1`() {
         val expression = " "
         assertThrows(IllegalArgumentException::class.java) {
             expressionParser.parse(expression)
@@ -66,7 +66,7 @@ class ExpressionParserTest {
     }
 
     @Test
-    fun `유효하지 않은 표현식을 입력했을 경우는 에러를 뱉는다_0`() {
+    fun `유효하지 않은 표현식을 입력했을 경우는 IllegalArgumentException 을 뱉는다_0`() {
         val expression = "1 + "
         assertThrows(IllegalArgumentException::class.java) {
             expressionParser.parse(expression)
@@ -74,7 +74,7 @@ class ExpressionParserTest {
     }
 
     @Test
-    fun `유효하지 않은 표현식을 입력했을 경우는 에러를 뱉는다_1`() {
+    fun `유효하지 않은 표현식을 입력했을 경우는 IllegalArgumentException 을 뱉는다_1`() {
         val expression = "+ 1"
         assertThrows(IllegalArgumentException::class.java) {
             expressionParser.parse(expression)
@@ -82,7 +82,7 @@ class ExpressionParserTest {
     }
 
     @Test
-    fun `유효하지 않은 표현식을 입력했을 경우는 에러를 뱉는다_2`() {
+    fun `유효하지 않은 표현식을 입력했을 경우는 IllegalArgumentException 을 뱉는다_2`() {
         val expression = "+"
         assertThrows(IllegalArgumentException::class.java) {
             expressionParser.parse(expression)
@@ -90,7 +90,7 @@ class ExpressionParserTest {
     }
 
     @Test
-    fun `유효하지 않은 표현식을 입력했을 경우는 에러를 뱉는다_3`() {
+    fun `유효하지 않은 표현식을 입력했을 경우는 IllegalArgumentException 을 뱉는다_3`() {
         val expression = " + 1 *"
         assertThrows(IllegalArgumentException::class.java) {
             expressionParser.parse(expression)
