@@ -1,7 +1,6 @@
 package com.example.domain
 
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertThrows
+import org.junit.Assert.*
 import org.junit.Test
 
 fun String.toOperator(): Operator = Operator.getByPrime(this)
@@ -10,6 +9,22 @@ fun Int.toOperand(): Operand = Operand(this)
 
 
 class OperationParserTest {
+
+    @Test
+    fun `짝수번째_문자는_Operand_로_생성된다`() {
+        val result = OperationParser.parse("2 + 3 * 4 / 2")
+        for (index: Int in result.indices step 2) {
+            assertTrue(result[index] is Operand)
+        }
+    }
+
+    @Test
+    fun `홀수번째_문자는_Operator_로_생성된다`() {
+        val result = OperationParser.parse("2 + 3 * 4 / 2")
+        for (index: Int in 1 until result.size step 2) {
+            assertTrue(result[index] is Operator)
+        }
+    }
 
     @Test
     fun `입력값이_빈_문자열_이면_IllegalArgumentException_throw`() {
