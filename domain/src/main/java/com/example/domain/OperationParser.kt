@@ -17,10 +17,11 @@ class OperationParser {
     }
 
     private fun toOperationTerm(term: String, index: Int): OperationTerm {
-        if (index % 2 == 0) {
-            return Operand.fromTerm(term)
+        return if (index % 2 == 0) {
+            Operand.fromTerm(term)
+        } else {
+            Operator.getByPrime(term)
         }
-        return Operator.getByPrime(term)
     }
 
     private fun isCompleteOperation(size: Int): Boolean {
