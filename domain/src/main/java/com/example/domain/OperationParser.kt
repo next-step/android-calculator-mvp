@@ -1,7 +1,7 @@
 package com.example.domain
 
 
-class OperationParser {
+object OperationParser {
 
     fun parse(operation: String): List<OperationTerm> {
         require(operation.isNotBlank()) {

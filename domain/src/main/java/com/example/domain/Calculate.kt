@@ -1,6 +1,6 @@
 package com.example.domain
 
-class Calculator(private val operationParser: OperationParser = OperationParser()) {
+class Calculator(private val operationParser: OperationParser = OperationParser) {
     fun calculate(operation: String): Int {
 
         val terms = operationParser.parse(operation)
