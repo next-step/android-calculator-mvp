@@ -1,6 +1,6 @@
 package com.nextstep.edu.domain
 
-import org.junit.Assert.*
+import org.junit.Assert.assertThrows
 import org.junit.Test
 import java.lang.IllegalArgumentException
 

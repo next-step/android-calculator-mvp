@@ -34,5 +34,4 @@ class CalculationExpressionTest {
             calculationExpression.validate(splitInput)
         }
     }
-
 }
