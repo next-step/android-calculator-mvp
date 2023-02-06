@@ -1,8 +1,14 @@
 package camp.nextstep.edu.calculator
 
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
+import com.nextstep.edu.calculator.domain.Calculator
+import com.nextstep.edu.calculator.domain.OperationsUtil
+import com.nextstep.edu.calculator.domain.OperationsUtil.setOperationsOperator
+import com.nextstep.edu.calculator.domain.Operator
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -12,15 +18,59 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.button0.setOnClickListener { binding.textView.text = "0" }
-        binding.button1.setOnClickListener { binding.textView.text = "1" }
-        binding.button2.setOnClickListener { binding.textView.text = "2" }
-        binding.button3.setOnClickListener { binding.textView.text = "3" }
-        binding.button4.setOnClickListener { binding.textView.text = "4" }
-        binding.button5.setOnClickListener { binding.textView.text = "5" }
-        binding.button6.setOnClickListener { binding.textView.text = "6" }
-        binding.button7.setOnClickListener { binding.textView.text = "7" }
-        binding.button8.setOnClickListener { binding.textView.text = "8" }
-        binding.button9.setOnClickListener { binding.textView.text = "9" }
+        binding.apply {
+            initButtonClickListener()
+        }
     }
+
+    /**
+     * 버튼 Set Click Listener
+     * */
+    private fun ActivityMainBinding.initButtonClickListener() {
+        button0.setOnClickListener(setOnNumberClickListener())
+        button1.setOnClickListener(setOnNumberClickListener())
+        button2.setOnClickListener(setOnNumberClickListener())
+        button3.setOnClickListener(setOnNumberClickListener())
+        button4.setOnClickListener(setOnNumberClickListener())
+        button5.setOnClickListener(setOnNumberClickListener())
+        button6.setOnClickListener(setOnNumberClickListener())
+        button7.setOnClickListener(setOnNumberClickListener())
+        button8.setOnClickListener(setOnNumberClickListener())
+        button9.setOnClickListener(setOnNumberClickListener())
+
+        buttonPlus.setOnClickListener(setOnOperateClickListener())
+        buttonMinus.setOnClickListener(setOnOperateClickListener())
+        buttonMultiply.setOnClickListener(setOnOperateClickListener())
+        buttonDivide.setOnClickListener(setOnOperateClickListener())
+        buttonDelete.setOnClickListener(setOnOperateClickListener())
+        buttonEquals.setOnClickListener(setOnOperateClickListener())
+    }
+
+    /**
+     * 숫자 버튼에 관한 리스너
+     * */
+    private fun ActivityMainBinding.setOnNumberClickListener() = View.OnClickListener { view ->
+        val inputNumberString = (view as Button).text.toString()
+        textView.text = OperationsUtil.setOperationsNumber(textView.text.toString(), inputNumberString)
+    }
+
+    /**
+     * 기호 버튼에 관한 리스너
+     * */
+    private fun ActivityMainBinding.setOnOperateClickListener() = View.OnClickListener { view ->
+        when (view) {
+            buttonDelete ->
+                textView.text = OperationsUtil.deleteOperations(textView.text.toString())
+
+            buttonEquals ->
+                textView.text = "${Calculator().evaluate(textView.text.toString())}"
+
+            else -> {
+                val button = view as Button
+                textView.text = setOperationsOperator(textView.text.toString(), button.text.toString())
+            }
+        }
+    }
+
+
 }
