@@ -1,5 +1,7 @@
 package com.nextstep.calculator
 
+import com.nextstep.calculator.Operator.* // ktlint-disable no-wildcard-imports
+
 /**
  * @author 박소연
  * @created 2023/02/05
@@ -9,7 +11,7 @@ package com.nextstep.calculator
 
 class Calculator {
     private val validNumber = charArrayOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
-    private val validOperator = charArrayOf('+', '-', '*', '/')
+    private val validOperator = charArrayOf(PLUS.char, MINUS.char, MULTIPLY.char, DIVIDE.char)
     private var result: Int? = null
 
     fun calculate(formula: String) {
@@ -54,10 +56,10 @@ class Calculator {
         val num2 = formula.substring(operatorIndex + 1).toInt()
 
         return when (operator) {
-            '+' -> plus(num1, num2)
-            '-' -> minus(num1, num2)
-            '*' -> multiply(num1, num2)
-            '/' -> divide(num1, num2)
+            PLUS.char -> plus(num1, num2)
+            MINUS.char -> minus(num1, num2)
+            MULTIPLY.char -> multiply(num1, num2)
+            DIVIDE.char -> divide(num1, num2)
             // 사칙연산 기호가 아닌 경우
             else -> throw IllegalArgumentException()
         }
