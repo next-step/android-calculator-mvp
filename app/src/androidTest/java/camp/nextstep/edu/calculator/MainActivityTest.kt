@@ -58,13 +58,13 @@ class MainActivityTest {
         onView(withId(R.id.button1)).perform(click())
         onView(withId(R.id.buttonPlus)).perform(click())
 
-        onView(withId(R.id.textView)).check(matches(withText("1 +")))
+        onView(withId(R.id.textView)).check(matches(withText("1 + ")))
 
         // 1 + -> - 클릭 -> 1 -
         onView(withId(R.id.buttonMinus)).perform(click())
 
         // then
-        onView(withId(R.id.textView)).check(matches(withText("1 -")))
+        onView(withId(R.id.textView)).check(matches(withText("1 - ")))
 
     }
 
@@ -88,7 +88,7 @@ class MainActivityTest {
 
         // then
         onView(withId(R.id.buttonDelete)).perform(click())
-        onView(withId(R.id.textView)).check(matches(withText("32 +")))
+        onView(withId(R.id.textView)).check(matches(withText("32 + ")))
 
         onView(withId(R.id.buttonDelete)).perform(click())
         onView(withId(R.id.textView)).check(matches(withText("32")))
@@ -114,7 +114,7 @@ class MainActivityTest {
 
 
         //then
-        val result = Calculator().evaluate("3 + 2")
+        val result = Calculator().evaluate("3 + 2").toString()
         onView(withId(R.id.textView)).check(matches(withText(result)))
     }
 }
