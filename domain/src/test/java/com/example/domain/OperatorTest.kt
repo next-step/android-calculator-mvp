@@ -1,6 +1,5 @@
 package com.example.domain
 
-import com.example.util.ExceptionMessage.OPERATOR_NOT_EXIST
 import org.junit.Assert.*
 import org.junit.Test
 
