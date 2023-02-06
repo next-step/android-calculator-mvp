@@ -22,7 +22,7 @@ enum class Operator(val symbol: String) : CalculatorOperator {
             val mOperator = values()
                 .find { it.symbol == operator }
 
-            require(mOperator != null) {
+            requireNotNull(mOperator) {
                 "사칙연산 기호가 아닙니다."
             }
 
