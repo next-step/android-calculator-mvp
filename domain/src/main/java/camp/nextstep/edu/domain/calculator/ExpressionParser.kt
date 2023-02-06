@@ -37,16 +37,14 @@ class ExpressionParser {
         if (items.first().isNumeric().not()) return false
         if (items.last().isNumeric().not()) return false
 
-        var pointer = 0
-        var old = ""
-        while (pointer != items.size - 1) {
-            val new = items[pointer]
-            if (old.isEmpty() || old != new) {
-                pointer += 1
-                old = new
-            } else {
+        items.reduce { acc, s ->
+            if (acc.isNumeric() && s.isNumeric())
                 return false
-            }
+
+            if (!acc.isNumeric() && !s.isNumeric())
+                return false
+
+            s
         }
 
         return true

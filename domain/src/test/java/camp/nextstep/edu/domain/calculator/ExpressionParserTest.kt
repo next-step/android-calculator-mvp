@@ -66,50 +66,25 @@ class ExpressionParserTest {
     }
 
     @Test
-    fun `null 값을 입력하는 경우 IllegalArgumentException 이 발생한다`() {
-        val expression = null
-        assertThrows(IllegalArgumentException::class.java) {
-            expressionParser.parse(expression)
-        }
-    }
-
-    @Test
-    fun `유효하지 않은 표현식을 입력했을 경우는 IllegalArgumentException 을 뱉는다_0`() {
-        val expression = "1 + "
-        assertThrows(IllegalArgumentException::class.java) {
-            expressionParser.parse(expression)
-        }
-    }
-
-    @Test
     fun `유효하지 않은 표현식을 입력했을 경우는 IllegalArgumentException 을 뱉는다_1`() {
-        val expression = "+ 1"
-        assertThrows(IllegalArgumentException::class.java) {
-            expressionParser.parse(expression)
-        }
-    }
+        val expression_0 = "+ 1"
+        val expression_1 = "+"
+        val expression_2 = " + 1 *"
+        val expression_3 = "1 + + + 1"
+        val expression_4 = "1 + - + 1"
+        val expression_5 = "1 1 - + 1"
+        val expression_6 = "1 + "
+        val expression_7 = "1 + "
+        val expressions = listOf(
+            expression_0, expression_1, expression_2,
+            expression_3, expression_4, expression_5,
+            expression_6, expression_7
+        )
 
-    @Test
-    fun `유효하지 않은 표현식을 입력했을 경우는 IllegalArgumentException 을 뱉는다_2`() {
-        val expression = "+"
-        assertThrows(IllegalArgumentException::class.java) {
-            expressionParser.parse(expression)
-        }
-    }
-
-    @Test
-    fun `유효하지 않은 표현식을 입력했을 경우는 IllegalArgumentException 을 뱉는다_3`() {
-        val expression = " + 1 *"
-        assertThrows(IllegalArgumentException::class.java) {
-            expressionParser.parse(expression)
-        }
-    }
-
-    @Test
-    fun `유효하지 않은 표현식을 입력했을 경우는 IllegalArgumentException 을 뱉는다_4`() {
-        val expression = "1 + + + 1"
-        assertThrows(IllegalArgumentException::class.java) {
-            expressionParser.parse(expression)
+        expressions.forEach {
+            assertThrows(IllegalArgumentException::class.java) {
+                expressionParser.parse(it)
+            }
         }
     }
 }
