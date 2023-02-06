@@ -42,7 +42,7 @@ android {
 }
 
 dependencies {
-    implementation(project(mapOf("path" to ":domain")))
+    implementation(project(":domain"))
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib:${Version.kotlin}")
     implementation("androidx.core:core-ktx:1.9.0")
