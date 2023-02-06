@@ -83,8 +83,8 @@ class MainActivity : AppCompatActivity() {
             val formula = binding.textView.text
 
             // 수식 계산
-            calculator.calculate(formula.toString())
-            binding.textView.text = calculator.getResult().toString()
+            val result = calculator.calculate(formula.toString())
+            binding.textView.text = result.toString()
         }
     }
 

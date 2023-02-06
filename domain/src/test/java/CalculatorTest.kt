@@ -13,24 +13,21 @@ class CalculatorTest {
     @Test // 전체 수식 계산
     fun test1_calculate() {
         val calculator = Calculator()
-        calculator.calculate("2+3*4/2")
-        val actual: Int? = calculator.getResult()
+        val actual: Int = calculator.calculate("2+3*4/2")
         assertThat(actual).isEqualTo(10)
     }
 
     @Test(expected = IllegalArgumentException::class) // 공백 입력
     fun test2_inputNull() {
         val calculator = Calculator()
-        calculator.calculate("")
-        val actual: Int? = calculator.getResult()
+        val actual: Int = calculator.calculate("")
         assertThat(actual).isEqualTo(null)
     }
 
     @Test(expected = IllegalArgumentException::class) // 정의되지 않은 기호 입력
     fun test3_inputUndefinedOperator() {
         val calculator = Calculator()
-        calculator.calculate("2+3*4$2")
-        val actual: Int? = calculator.getResult()
+        val actual: Int = calculator.calculate("2+3*4$2")
         assertThat(actual).isEqualTo(null)
     }
 

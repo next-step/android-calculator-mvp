@@ -12,21 +12,20 @@ import com.nextstep.calculator.Operator.* // ktlint-disable no-wildcard-imports
 class Calculator {
     private val validNumber = charArrayOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
     private val validOperator = charArrayOf(PLUS.char, MINUS.char, MULTIPLY.char, DIVIDE.char)
-    private var result: Int? = null
 
-    fun calculate(formula: String) {
+    fun calculate(formula: String): Int {
         // 입력값이 null이거나 빈 공백 문자일 경우
         if (formula.isEmpty()) {
             throw IllegalArgumentException()
         }
 
-        checkFormula(formula)
+        return checkFormula(formula)
     }
 
     /**
      * 수식 내 문자 체크 후 수식 생성
      * */
-    private fun checkFormula(formula: String) {
+    private fun checkFormula(formula: String): Int {
         var currentOperator: Char? = null
         var subFormula = ""
 
@@ -43,7 +42,7 @@ class Calculator {
                 else -> throw IllegalArgumentException()
             }
         }
-        result = checkOperator(subFormula)
+        return checkOperator(subFormula)
     }
 
     // 연산자 체크
@@ -83,7 +82,4 @@ class Calculator {
         }
         return num1 / num2
     }
-
-    // 계산된 결과를 반환
-    fun getResult() = result
 }
