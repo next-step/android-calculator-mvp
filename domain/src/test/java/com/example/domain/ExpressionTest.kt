@@ -1,56 +1,78 @@
 package com.example.domain
 
-import com.example.util.ExceptionMessage.INCORRECT_EXPRESSION
-import junitparams.JUnitParamsRunner
-import junitparams.Parameters
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
-import org.junit.runner.RunWith
-
-@RunWith(JUnitParamsRunner::class)
 class ExpressionTest {
-
+    private var expression = Expression()
     @Test
-    @Parameters("+", "-", "/", "*")
-    fun `틀린 표현식 - 첫 표현식 글자가 사칙 연산자 인 경우 `(input: String) {
+    fun `Expression {피연산자, 연산자} 에서 피연산자가 들어올 경우`() {
         // given
-        val expression = Expression()
+        expression = expression.append(3)
+        expression = expression.append(Operator.PLUS)
 
         // when
-        val error = assertThrows(IllegalArgumentException::class.java) {
-            expression.append(input)
-        }.message
+        expression = expression.append(3)
 
         // then
-        assertEquals(error, INCORRECT_EXPRESSION)
+        assertEquals(listOf(3, Operator.PLUS, 3), expression.value())
     }
 
     @Test
-    fun `표현식만들기 - 피연산자 추가되는 경우`() {
+    fun `Expression {피연산자} 에서 피연산자가 들어올 경우`() {
         // given
-        val input = 3
+        expression = expression.append(3)
 
         // when
-        val expression = Expression()
-        expression.append(input)
+        expression = expression.append(3)
 
         // then
-        val expected = "3"
-        assertEquals(expected, expression.value())
+        assertEquals(listOf(33), expression.value())
     }
 
     @Test
-    fun `표현식만들기 - 연산자 추가되는 경우`() {
+    fun `Expression {연산자} 에서 피연산자가 들어올 경우`() {
         // given
-        val expression = Expression()
-        expression.append(3)
-        val input = "+"
-
+        expression = expression.append(Operator.PLUS)
         // when
-        expression.append(input)
+        expression = expression.append(1)
 
         // then
-        val expected = "3 +"
-        assertEquals(expected, expression.value())
+        assertEquals(listOf(1), expression.value())
+    }
+
+    @Test
+    fun `Expression {피연산자, 연산자} 에서 연산자가 들어올 경우`() {
+        // given
+        expression = expression.append(3)
+        expression = expression.append(Operator.PLUS)
+        // when
+        expression = expression.append(Operator.MULTI)
+
+        // then
+        assertEquals(listOf(3, Operator.MULTI), expression.value())
+    }
+
+    @Test
+    fun `Expression {연산자} 에서 연산자가 들어올 경우`() {
+        // given
+        expression = expression.append(Operator.PLUS)
+
+        // when
+        expression = expression.append(Operator.MULTI)
+
+        // then
+        assertEquals(listOf(Operator.MULTI), expression.value())
+    }
+
+    @Test
+    fun `Expression {피연산자} 에서 연산자가 들어올 경우`() {
+        // given
+        expression = expression.append(3)
+
+        // when
+        expression = expression.append(Operator.MULTI)
+
+        // then
+        assertEquals(listOf(3, Operator.MULTI), expression.value())
     }
 }

@@ -1,29 +1,20 @@
 package com.example.domain
 
-import com.example.util.ExceptionMessage.OPERATOR_DIVIDE_NOT_ZERO
-import com.example.util.ExceptionMessage.OPERATOR_NOT_EXIST
-
-enum class Operator(private val operator: String) {
-    PLUS("+"),
-    MINUS("-"),
-    MULTI("*"),
-    DIVIDE("/"),;
-
+enum class Operator(
+    private val operator: String,
+    val evaluator: (Int, Int) -> Int
+) {
+    PLUS("+", {x,y -> x+y}),
+    MINUS("-", {x,y -> x-y}),
+    MULTI("*", {x,y -> x*y}),
+    DIVIDE("/", {x,y -> x/y})
+    ;
 
     companion object {
-        fun valueOf(valueA: Int, valueB: Int, operator: String) : Int {
-            return when(operator) {
-                PLUS.operator -> valueA + valueB
-                MINUS.operator -> valueA - valueB
-                MULTI.operator -> valueA * valueB
-                DIVIDE.operator -> {
-                    if (valueB == 0)
-                        throw IllegalArgumentException(OPERATOR_DIVIDE_NOT_ZERO)
-
-                    valueA / valueB
-                }
-                else -> throw IllegalArgumentException(OPERATOR_NOT_EXIST)
-            }
+        fun of(operator: String): Operator {
+            val isValidOperator = values().find { it.operator == operator }
+            requireNotNull(isValidOperator) { "올바른 연산 기호가 아닙니다." }
+            return isValidOperator
         }
     }
 }
