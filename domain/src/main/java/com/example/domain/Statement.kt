@@ -1,10 +1,13 @@
 package com.example.domain
 
-class Statement(private var terms: List<OperationTerm> = emptyList()) {
+data class Statement(private var terms: List<OperationTerm> = emptyList()) {
 
     fun addTerm(term: OperationTerm) {
         when {
-            terms.isEmpty() || terms.last() is Operator -> {
+            terms.isEmpty() -> {
+                addTermWhenEmpty(term)
+            }
+            terms.last() is Operator -> {
                 addTermWhenLastIsOperator(term)
             }
             else -> {
@@ -22,8 +25,16 @@ class Statement(private var terms: List<OperationTerm> = emptyList()) {
         return calculator.calculate(termsToString())
     }
 
-    private fun addTermWhenLastIsOperand(term: OperationTerm) {
+    private fun addTermWhenEmpty(term: OperationTerm) {
+        if (term is Operand) {
+            terms + term
+        }
+    }
 
+    private fun addTermWhenLastIsOperand(term: OperationTerm) {
+        if (term is Operand) {
+
+        }
     }
 
     private fun addTermWhenLastIsOperator(term: OperationTerm) {
