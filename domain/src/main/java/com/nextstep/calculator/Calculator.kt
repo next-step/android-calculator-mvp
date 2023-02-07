@@ -15,8 +15,8 @@ class Calculator {
 
     fun calculate(formula: String): Int {
         // 입력값이 null이거나 빈 공백 문자일 경우
-        if (formula.isEmpty()) {
-            throw IllegalArgumentException()
+        require(formula.isNotEmpty()) {
+            IllegalArgumentException("입력값이 null이거나 빈 공백 문자")
         }
 
         return checkFormula(formula)
@@ -30,11 +30,12 @@ class Calculator {
         var subFormula = ""
 
         for (i in formula.indices) {
+            // 아래도 뭔가로 분리
             when (formula[i]) {
                 in validNumber -> subFormula += formula[i]
                 in validOperator -> {
                     if (currentOperator != null) {
-                        subFormula = checkOperator(subFormula).toString()
+                        subFormula = divideComponent(subFormula).toString()
                     }
                     subFormula += formula[i]
                     currentOperator = formula[i]
@@ -42,11 +43,11 @@ class Calculator {
                 else -> throw IllegalArgumentException()
             }
         }
-        return checkOperator(subFormula)
+        return divideComponent(subFormula)
     }
 
-    // 연산자 체크
-    private fun checkOperator(formula: String): Int {
+    // 수식 내 구성요소 분리
+    private fun divideComponent(formula: String): Int {
         // 수식 내 연산자 위치
         val operatorIndex = formula.indexOfAny(validOperator, ignoreCase = false)
 
@@ -54,6 +55,11 @@ class Calculator {
         val num1 = formula.substring(0, operatorIndex).toInt()
         val num2 = formula.substring(operatorIndex + 1).toInt()
 
+        return calculateSubFormula(num1, num2, operator)
+    }
+
+    // 연산자 체크 및 계산
+    private fun calculateSubFormula(num1: Int, num2: Int, operator: Char): Int {
         return when (operator) {
             PLUS.char -> plus(num1, num2)
             MINUS.char -> minus(num1, num2)
@@ -77,8 +83,8 @@ class Calculator {
     }
 
     private fun divide(num1: Int, num2: Int): Int {
-        if (num2 == 0) {
-            throw ArithmeticException()
+        require(num2 != 0) {
+            ArithmeticException("0으로 나눌 수 없다")
         }
         return num1 / num2
     }
