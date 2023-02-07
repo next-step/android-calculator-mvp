@@ -39,8 +39,8 @@ class MainActivity : AppCompatActivity() {
         binding.buttonMinus.setOnClickListener(setOnOperateClickListener())
         binding.buttonMultiply.setOnClickListener(setOnOperateClickListener())
         binding.buttonDivide.setOnClickListener(setOnOperateClickListener())
-        binding.buttonDelete.setOnClickListener(setOnOperateClickListener())
-        binding.buttonEquals.setOnClickListener(setOnOperateClickListener())
+        binding.buttonDelete.setOnClickListener(setOnDeleteClickListener())
+        binding.buttonEquals.setOnClickListener(setOnEqualsClickListener())
     }
 
     /**
