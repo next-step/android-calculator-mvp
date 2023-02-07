@@ -1,7 +1,7 @@
 package com.example.domain
 
 class Calculator {
-    fun evaluate(expressions: String): Int {
+    fun evaluate(expressions: String?): Int {
         require(!expressions.isNullOrEmpty()) { "입력값이 존재하지 않습니다." }
 
         val expressionList = expressions.split(" ")

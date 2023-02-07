@@ -11,7 +11,9 @@ enum class Operator(val op: String) {
         override fun operate(firstOperand: Int, secondOperand: Int): Int = firstOperand * secondOperand
     },
     DIV("/") {
-        override fun operate(firstOperand: Int, secondOperand: Int): Int = firstOperand / secondOperand
+        override fun operate(firstOperand: Int, secondOperand: Int): Int {
+            return firstOperand / secondOperand
+        }
     };
 
     abstract fun operate(firstOperand: Int, secondOperand: Int): Int
