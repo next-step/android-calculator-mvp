@@ -17,60 +17,58 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        binding.apply {
-            initButtonClickListener()
-        }
+        initButtonClickListener()
     }
 
     /**
      * 버튼 Set Click Listener
      * */
-    private fun ActivityMainBinding.initButtonClickListener() {
-        button0.setOnClickListener(setOnNumberClickListener())
-        button1.setOnClickListener(setOnNumberClickListener())
-        button2.setOnClickListener(setOnNumberClickListener())
-        button3.setOnClickListener(setOnNumberClickListener())
-        button4.setOnClickListener(setOnNumberClickListener())
-        button5.setOnClickListener(setOnNumberClickListener())
-        button6.setOnClickListener(setOnNumberClickListener())
-        button7.setOnClickListener(setOnNumberClickListener())
-        button8.setOnClickListener(setOnNumberClickListener())
-        button9.setOnClickListener(setOnNumberClickListener())
+    private fun initButtonClickListener() {
+        binding.button0.setOnClickListener(setOnNumberClickListener())
+        binding.button1.setOnClickListener(setOnNumberClickListener())
+        binding.button2.setOnClickListener(setOnNumberClickListener())
+        binding.button3.setOnClickListener(setOnNumberClickListener())
+        binding.button4.setOnClickListener(setOnNumberClickListener())
+        binding.button5.setOnClickListener(setOnNumberClickListener())
+        binding.button6.setOnClickListener(setOnNumberClickListener())
+        binding.button7.setOnClickListener(setOnNumberClickListener())
+        binding.button8.setOnClickListener(setOnNumberClickListener())
+        binding.button9.setOnClickListener(setOnNumberClickListener())
 
-        buttonPlus.setOnClickListener(setOnOperateClickListener())
-        buttonMinus.setOnClickListener(setOnOperateClickListener())
-        buttonMultiply.setOnClickListener(setOnOperateClickListener())
-        buttonDivide.setOnClickListener(setOnOperateClickListener())
-        buttonDelete.setOnClickListener(setOnOperateClickListener())
-        buttonEquals.setOnClickListener(setOnOperateClickListener())
+        binding.buttonPlus.setOnClickListener(setOnOperateClickListener())
+        binding.buttonMinus.setOnClickListener(setOnOperateClickListener())
+        binding.buttonMultiply.setOnClickListener(setOnOperateClickListener())
+        binding.buttonDivide.setOnClickListener(setOnOperateClickListener())
+        binding.buttonDelete.setOnClickListener(setOnOperateClickListener())
+        binding.buttonEquals.setOnClickListener(setOnOperateClickListener())
     }
 
     /**
      * 숫자 버튼에 관한 리스너
      * */
-    private fun ActivityMainBinding.setOnNumberClickListener() = View.OnClickListener { view ->
+    private fun setOnNumberClickListener() = View.OnClickListener { view ->
         val inputNumberString = (view as Button).text.toString()
-        textView.text = OperationsUtil.setOperationsNumber(textView.text.toString(), inputNumberString)
+        binding.textView.text =
+            OperationsUtil.setOperationsNumber(binding.textView.text.toString(), inputNumberString)
     }
 
     /**
      * 기호 버튼에 관한 리스너
      * */
-    private fun ActivityMainBinding.setOnOperateClickListener() = View.OnClickListener { view ->
+    private fun setOnOperateClickListener() = View.OnClickListener { view ->
         when (view) {
-            buttonDelete ->
-                textView.text = OperationsUtil.deleteOperations(textView.text.toString())
+            binding.buttonDelete ->
+                binding.textView.text =
+                    OperationsUtil.deleteOperations(binding.textView.text.toString())
 
-            buttonEquals ->
-                textView.text = "${Calculator().evaluate(textView.text.toString())}"
+            binding.buttonEquals ->
+                binding.textView.text = "${Calculator().evaluate(binding.textView.text.toString())}"
 
             else -> {
                 val button = view as Button
-                textView.text = setOperationsOperator(textView.text.toString(), button.text.toString())
+                binding.textView.text =
+                    setOperationsOperator(binding.textView.text.toString(), button.text.toString())
             }
         }
     }
-
-
 }
