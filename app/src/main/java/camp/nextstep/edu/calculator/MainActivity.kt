@@ -2,7 +2,6 @@ package camp.nextstep.edu.calculator
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.text.isDigitsOnly
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -18,7 +17,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        // 번호키
         binding.button0.setOnClickListener { displayCalculation("0") }
         binding.button1.setOnClickListener { displayCalculation("1") }
         binding.button2.setOnClickListener { displayCalculation("2") }
@@ -30,13 +28,11 @@ class MainActivity : AppCompatActivity() {
         binding.button8.setOnClickListener { displayCalculation("8") }
         binding.button9.setOnClickListener { displayCalculation("9") }
 
-        // 사칙연산키
         binding.buttonPlus.setOnClickListener { displayCalculation(plus) }
         binding.buttonMinus.setOnClickListener { displayCalculation(minus) }
         binding.buttonMultiply.setOnClickListener { displayCalculation(multiply) }
         binding.buttonDivide.setOnClickListener { displayCalculation(divide) }
 
-        // 결과키
         binding.buttonEquals.setOnClickListener {
             val text = binding.textView.text
             binding.textView.text = "$text = ${calculator.evaluate(text.toString())}"
@@ -45,24 +41,8 @@ class MainActivity : AppCompatActivity() {
         binding.textView.text = "0"
     }
 
-    private fun displayCalculation(newText: String?) {
-        if (newText.isNullOrEmpty()) throw IllegalArgumentException()
-
-        val trim = """[^\S\d-+*/]""".toRegex()
-        if (trim.matches(newText)) throw IllegalArgumentException()
-
-        val preText = binding.textView.text
-        val lastChar = preText.split(" ").last { it.isNotEmpty() }
-        val displayText = when {
-            preText == "0" && newText.isDigitsOnly() -> newText
-            lastChar.isDigitsOnly() && isOperation(newText) -> "$preText $newText "
-            isOperation(lastChar) && isOperation(newText) -> "${preText.replaceRange(preText.length - 3, preText.length, " $newText ")}"
-            else -> "$preText$newText"
-        }
-
-        binding.textView.text = displayText
+    private fun displayCalculation(newText: String) {
+        binding.textView.text = calculator.displayCalculation(binding.textView.text.toString(), newText)
     }
-
-    private fun isOperation(toCheck: String) = """[-+*/]""".toRegex().matches(toCheck)
 }
 
