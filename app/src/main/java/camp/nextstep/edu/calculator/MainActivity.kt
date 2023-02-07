@@ -2,7 +2,6 @@ package camp.nextstep.edu.calculator
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
 import com.nextstep.edu.calculator.domain.Calculator
@@ -12,6 +11,7 @@ import com.nextstep.edu.calculator.domain.Operator
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private val calculator: Calculator = Calculator()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,6 +94,6 @@ class MainActivity : AppCompatActivity() {
      * Equals Click Listener
      * */
     private fun setOnEqualsClickListener() = View.OnClickListener {
-        binding.textView.text = "${Calculator().evaluate(binding.textView.text.toString())}"
+        binding.textView.text = "${calculator.evaluate(binding.textView.text.toString())}"
     }
 }
