@@ -21,7 +21,7 @@ data class Statement(private var terms: List<OperationTerm> = emptyList()) {
     }
 
     fun calculate(): Int {
-        val calculator: Calculator = Calculator()
+        val calculator = Calculator()
         return calculator.calculate(termsToString())
     }
 
@@ -32,14 +32,25 @@ data class Statement(private var terms: List<OperationTerm> = emptyList()) {
     }
 
     private fun addTermWhenLastIsOperand(term: OperationTerm) {
-       when(term){
-           is Operand -> {}
-           is Operator -> {}
-       }
+        when (term) {
+            is Operand -> {
+                val last = terms.last() as Operand
+                terms = terms - last
+                terms = terms + Operand.fromTerm("${last.value}${term.value}")
+            }
+            is Operator -> {
+                terms = terms + term
+            }
+        }
     }
 
     private fun addTermWhenLastIsOperator(term: OperationTerm) {
+        if (term is Operator) {
+            val last = terms.last()
+            terms = terms - last
+        }
 
+        terms = terms + term
     }
 
     fun termsToString(): String {

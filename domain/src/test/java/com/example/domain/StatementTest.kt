@@ -43,6 +43,18 @@ class StatementTest {
     }
 
     @Test
+    fun `"8"_일때_9_버튼을_누르면_"89"_반환한다`() {
+        val statement = Statement(OperationParser.parse("8"))
+
+        // When
+        statement.addTerm(Operand(9))
+
+        // Then
+        assertEquals("89", statement.termsToString())
+        assertEquals(Statement(listOf(Operand(89))), statement)
+    }
+
+    @Test
     fun `""일때_연산자_버튼을_누르면_아무_변화없다`() {
         // Given
         val statement = Statement(emptyList())
@@ -65,7 +77,7 @@ class StatementTest {
 
         // Then
         assertEquals("1 +", statement.termsToString())
-        assertEquals(Statement(emptyList()), statement)
+        assertEquals(Statement(OperationParser.parse("1 +")), statement)
     }
 
     @Test
@@ -74,11 +86,11 @@ class StatementTest {
         val statement = Statement(OperationParser.parse("1"))
 
         // When
-        statement.addTerm(Operator.ADD)
+        statement.addTerm(Operator.SUBTRACT)
 
         // Then
-        assertEquals("1 +", statement.termsToString())
-        assertEquals(Statement(emptyList()), statement)
+        assertEquals("1 -", statement.termsToString())
+        assertEquals(Statement(OperationParser.parse("1 -")), statement)
     }
 
     @Test
