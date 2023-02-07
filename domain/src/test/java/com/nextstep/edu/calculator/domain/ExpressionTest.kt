@@ -1,23 +1,23 @@
 package com.nextstep.edu.calculator.domain
 
-import com.nextstep.edu.calculator.domain.OperationsUtil.deleteOperations
-import com.nextstep.edu.calculator.domain.OperationsUtil.setOperationsNumber
-import com.nextstep.edu.calculator.domain.OperationsUtil.setOperationsOperator
+import com.nextstep.edu.calculator.domain.Expression.deleteOperations
+import com.nextstep.edu.calculator.domain.Expression.addOperand
+import com.nextstep.edu.calculator.domain.Expression.addOperation
 import junit.framework.Assert.assertEquals
 import org.junit.Test
 
-class OperationsUtilTest {
+class ExpressionTest {
 
     @Test
     fun `입력된 피연산자가 없을 때 피연산자 입력`() {
         // when
-        var result = setOperationsNumber("", "1")
+        var result = addOperand("", "1")
 
         // then
         assertEquals("1", result)
 
         // when
-        result = setOperationsNumber("5 + ", "1")
+        result = addOperand("5 + ", "1")
 
         // then
         assertEquals("5 + 1", result)
@@ -26,7 +26,7 @@ class OperationsUtilTest {
     @Test
     fun `입력된 피연산자가 있을 때 피연산자 입력`() {
         // when
-        val result = setOperationsNumber("8", "9")
+        val result = addOperand("8", "9")
 
         // then
         assertEquals("89", result)
@@ -35,7 +35,8 @@ class OperationsUtilTest {
     @Test
     fun `입력된 피연산자가 없을 때 연산자 입력`() {
         //when
-        val result = setOperationsOperator("", "+")
+        val `operator` = Operator.Plus
+        val result = addOperation("", `operator`)
 
         //then
         assertEquals("", result)
@@ -44,12 +45,14 @@ class OperationsUtilTest {
     @Test
     fun `입력된 피연산자가 있을 때 연산자 입력`() {
         //when
-        var result = setOperationsOperator("1", "+")
+        val plusOperator = Operator.Plus
+        var result = addOperation("1", plusOperator)
 
         //then
         assertEquals("1 + ", result)
         //when
-        result = setOperationsOperator("1 +", "-")
+        val minusOperator = Operator.Minus
+        result = addOperation("1 +", minusOperator)
 
         //then
         assertEquals("1 - ", result)

@@ -1,14 +1,14 @@
 package com.nextstep.edu.calculator.domain
 
-object OperationsUtil {
+object Expression {
     /**
      * Number 입력된 경우
      *
      * @param operations 현재 수식
-     * @param inputNumberString 입력된 숫자
+     * @param operand 입력된 숫자
      * */
-    fun setOperationsNumber(operations: String, inputNumberString: String): String {
-        val number = OperationParse.parse(inputNumberString)
+    fun addOperand(operations: String, operand: String): String {
+        val number = OperationParse.parse(operand)
         return operations + number.toString()
     }
 
@@ -16,12 +16,12 @@ object OperationsUtil {
      * Operator 입력된 경우
      *
      * @param operations 현재 수식
-     * @param inputOperatorString 입력된 Operator
+     * @param operator 입력된 Operator
      * */
-    fun setOperationsOperator(operations: String, inputOperatorString: String): String {
+    fun addOperation(operations: String, `operator`: Operator): String {
         if (operations.isEmpty()) return ""
 
-        val symbol = Operator.find(inputOperatorString).symbol
+        val symbol = Operator.find(`operator`.symbol).symbol
 
         // Int 로 형 변환이 될 때까지 drop
         return operations.dropLastWhile { it.digitToIntOrNull() == null } + " $symbol "

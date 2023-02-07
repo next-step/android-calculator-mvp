@@ -5,8 +5,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
 import com.nextstep.edu.calculator.domain.Calculator
-import com.nextstep.edu.calculator.domain.OperationsUtil
-import com.nextstep.edu.calculator.domain.OperationsUtil.setOperationsOperator
+import com.nextstep.edu.calculator.domain.Expression
+import com.nextstep.edu.calculator.domain.Expression.addOperation
 import com.nextstep.edu.calculator.domain.Operator
 
 class MainActivity : AppCompatActivity() {
@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.textView.text =
-            OperationsUtil.setOperationsNumber(binding.textView.text.toString(), operand.toString())
+            Expression.addOperand(binding.textView.text.toString(), operand.toString())
     }
 
     /**
@@ -80,14 +80,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.textView.text =
-            setOperationsOperator(binding.textView.text.toString(), `operator`)
+            addOperation(binding.textView.text.toString(), `operator`)
     }
 
     /**
      * Delete Click Listener
      * */
     private fun setOnDeleteClickListener() = View.OnClickListener {
-        binding.textView.text = OperationsUtil.deleteOperations(binding.textView.text.toString())
+        binding.textView.text = Expression.deleteOperations(binding.textView.text.toString())
     }
 
     /**
