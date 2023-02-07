@@ -8,11 +8,6 @@ class CalculatorTest {
     private val calculator = Calculator()
 
     @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
-    }
-
-    @Test
     fun `1_더하기_1은_2`() {
         val result: Int = calculator.evaluate("1 + 1")
         assertEquals(2, result)
