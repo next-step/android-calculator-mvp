@@ -84,7 +84,7 @@ class Calculator {
 
     private fun divide(num1: Int, num2: Int): Int {
         require(num2 != 0) {
-            ArithmeticException("0으로 나눌 수 없다")
+            IllegalArgumentException("0으로 나눌 수 없다")
         }
         return num1 / num2
     }
