@@ -30,7 +30,6 @@ class Calculator {
         var subFormula = ""
 
         for (i in formula.indices) {
-            // 아래도 뭔가로 분리
             when (formula[i]) {
                 in validNumber -> subFormula += formula[i]
                 in validOperator -> {
@@ -40,7 +39,7 @@ class Calculator {
                     subFormula += formula[i]
                     currentOperator = formula[i]
                 }
-                else -> throw IllegalArgumentException()
+                else -> throw IllegalArgumentException("사칙연산자가 아닌 기호")
             }
         }
         return divideComponent(subFormula)
