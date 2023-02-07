@@ -36,20 +36,23 @@ class CalculatorExceptionTest {
 
     @Test
     fun 빈공백_문자_입력하는_경우() {
-        val result = calculator.calculate(" ")
-        assertThat(result).isEqualTo(" ")
+        assertThrows(IllegalArgumentException::class.java) {
+            calculator.calculate(" ")
+        }
     }
 
     @Test
     fun 사칙연산_기호가_아닌_경우() {
-        val result = calculator.calculate("3 # 5")
-        assertThat(result).isEqualTo("")
+        assertThrows(IllegalArgumentException::class.java) {
+            calculator.calculate("3 # 5")
+        }
     }
 
     @Test
     fun 사칙연산_기호가_아닌_경우2() {
-        val result = calculator.calculate("10 & -1")
-        assertThat(result).isEqualTo("")
+        assertThrows(IllegalArgumentException::class.java) {
+            calculator.calculate("10 & -1")
+        }
     }
 
 }
