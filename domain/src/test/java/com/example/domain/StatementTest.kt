@@ -143,27 +143,4 @@ class StatementTest {
         assertEquals(Statement(emptyList()), statement)
         assertEquals("", statement.termsToString())
     }
-
-    @Test
-    fun `"3_+_2"일때_계산_버튼을_누르면_5를_반환한다`() {
-        // GIVEN
-        val statement = Statement(OperationParser.parse("3 + 2"))
-
-        // When
-        val result = statement.calculate()
-
-        // Then
-        assertEquals(5, result)
-    }
-
-    @Test
-    fun `"3_+"일떄_계산_버튼을_누르면_"완성되지_수식_입니다"_에러를_반환한다`() {
-        // GIVEN
-        val statement = Statement(OperationParser.parse("3 +"))
-
-        val exception = assertThrows(IllegalArgumentException::class.java) {
-            statement.calculate()
-        }
-        assertEquals("완성되지 않은 수식입니다.", exception.message)
-    }
 }

@@ -66,18 +66,13 @@ data class Statement(private var terms: List<OperationTerm> = emptyList()) {
         }
     }
 
-    fun calculate(): Int {
-        val calculator = Calculator()
-        return calculator.calculate(termsToString())
-    }
-
     fun termsToString(): String {
-        return if (terms.isEmpty()) "" else fold().trim()
+        return if (terms.isEmpty()) "" else fold()
     }
 
     private fun fold(): String {
         return terms.fold("") { acc: String, term: OperationTerm ->
             if (term is Operator) "$acc ${term.prime}" else "$acc ${(term as Operand).value}"
-        }
+        }.trim()
     }
 }
