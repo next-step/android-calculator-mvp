@@ -43,14 +43,6 @@ class OperationParserTest {
     }
 
     @Test
-    fun `항의_수가_짝수이면_완성되지_않은_수식이므로_IllegalArgumentException_throw`() {
-        val exception = assertThrows(IllegalArgumentException::class.java) {
-            OperationParser.parse("2 +")
-        }
-        assertEquals("완성되지 않은 수식입니다.", exception.message)
-    }
-
-    @Test
     fun `숫자를_연속으로_넣으면_IllegalArgumentException_throw`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
             OperationParser.parse("2 2 2")

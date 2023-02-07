@@ -7,10 +7,8 @@ object OperationParser {
         require(operation.isNotBlank()) {
             "빈 공백 혹은 문자열은 입력하실 수 없습니다"
         }
+
         val terms = operation.split(' ')
-        require(isCompleteOperation(terms.size)) {
-            "완성되지 않은 수식입니다."
-        }
         return terms.mapIndexed { index: Int, term: String ->
             toOperationTerm(term, index)
         }
