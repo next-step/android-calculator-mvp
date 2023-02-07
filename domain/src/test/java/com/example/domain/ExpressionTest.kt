@@ -2,8 +2,10 @@ package com.example.domain
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
+
 class ExpressionTest {
     private var expression = Expression()
+
     @Test
     fun `Expression {피연산자, 연산자} 에서 피연산자가 들어올 경우`() {
         // given

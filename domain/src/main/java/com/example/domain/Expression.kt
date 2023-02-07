@@ -5,7 +5,7 @@ data class Expression(
 ) {
 
     /**
-     값이 아무 것도 없을 경우, 값이 있을 경우
+    값이 아무 것도 없을 경우, 값이 있을 경우
      */
     fun append(input: Any): Expression {
         if (values.isNullOrEmpty()) return Expression(listOf(input))
@@ -13,15 +13,15 @@ data class Expression(
         return when (input) {
             is Operator -> plus(input)
             is Int -> plus(input)
-            else -> throw IllegalArgumentException("error")
+            else -> throw IllegalArgumentException("해당 값은 수식에 필요한 값이 아닙니다.")
         }
     }
 
     /**
-     들어올 케이스
-     [3, +]   ->   1   = [3, +, 1]
-     [3]      ->   1   = [31]
-     [+]      ->   1   = [1]
+    들어올 케이스
+    [3, +]   ->   1   = [3, +, 1]
+    [3]      ->   1   = [31]
+    [+]      ->   1   = [1]
      */
     private operator fun plus(operand: Int): Expression {
         return when (val last = values.last()) {
@@ -33,21 +33,21 @@ data class Expression(
                 val operand = "${values.last()}$last".toInt()
                 Expression(values.dropLast(1) + operand)
             }
-            else -> throw IllegalArgumentException()
+            else -> throw IllegalArgumentException("피연산자를 추가하는 과정에서 Error 발생")
         }
     }
 
     /**
-     들어올 케이스
-     [3, +]  ->   *   = [3, *]
-     [+]     ->   *   = [*]
-     [3]     ->   *   = [3, *]
+    들어올 케이스
+    [3, +]  ->   *   = [3, *]
+    [+]     ->   *   = [*]
+    [3]     ->   *   = [3, *]
      */
     private operator fun plus(operator: Operator): Expression {
         return when (val last = values.last()) {
             is Operator -> Expression(values.dropLast(1) + operator)
             is Int -> Expression(values + operator)
-            else -> throw IllegalArgumentException()
+            else -> throw IllegalArgumentException("연산자를 추가하는 과정에서 Error 발생")
         }
     }
 

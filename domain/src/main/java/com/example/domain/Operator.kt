@@ -4,12 +4,12 @@ enum class Operator(
     private val operator: String,
     val evaluator: (Int, Int) -> Int
 ) {
-    PLUS("+", {x,y -> x+y}),
-    MINUS("-", {x,y -> x-y}),
-    MULTI("*", {x,y -> x*y}),
-    DIVIDE("/", {x,y ->
+    PLUS("+", { x, y -> x + y }),
+    MINUS("-", { x, y -> x - y }),
+    MULTI("*", { x, y -> x * y }),
+    DIVIDE("/", { x, y ->
         if (y == 0) throw ArithmeticException()
-        x/y
+        x / y
     })
     ;
 
