@@ -13,6 +13,15 @@ class Statement(private var terms: List<OperationTerm> = emptyList()) {
         }
     }
 
+    fun removeTerm() {
+
+    }
+
+    fun calculate(): Int {
+        val calculator: Calculator = Calculator()
+        return calculator.calculate(termsToString())
+    }
+
     private fun addTermWhenLastIsOperand(term: OperationTerm) {
 
     }

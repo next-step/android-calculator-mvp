@@ -1,5 +1,6 @@
 package com.example.domain
 
+import junit.framework.TestCase
 import org.junit.Assert.*
 import org.junit.Test
 
@@ -78,5 +79,79 @@ class StatementTest {
         // Then
         assertEquals("1 +", statement.termsToString())
         assertEquals(Statement(emptyList()), statement)
+    }
+
+    @Test
+    fun `""일때 지우기_버튼을_누르면_아무변화가_없다`() {
+        // Given
+        val statement = Statement(emptyList())
+
+        // When
+        statement.removeTerm()
+
+        // Then
+        assertEquals(Statement(emptyList()), statement)
+    }
+
+    @Test
+    fun `"32_+"일때_지우기_버튼을_누르면_32가_된다`() {
+        // Given
+        val statement = Statement(OperationParser.parse("32 +"))
+
+        // When
+        statement.removeTerm()
+
+        // Then
+        assertEquals(Statement(OperationParser.parse("32")), statement)
+        assertEquals("32", statement.termsToString())
+    }
+
+    @Test
+    fun `두자리_수_이상의_피연산자(32)일_때_지우기_버튼을_누르면_한자릿_수의_숫자(3)가_된다`() {
+        // Given
+        val statement = Statement(OperationParser.parse("32"))
+
+        // When
+        statement.removeTerm()
+
+        // Then
+        assertEquals(Statement(OperationParser.parse("3")), statement)
+        assertEquals("3", statement.termsToString())
+    }
+
+    @Test
+    fun `한자리_수의_피연산자(3)일_때_지우기_버튼을_누르면_공백이_된다`() {
+        // Given
+        val statement = Statement(OperationParser.parse("3"))
+
+        // When
+        statement.removeTerm()
+
+        // Then
+        assertEquals(Statement(emptyList()), statement)
+        assertEquals("", statement.termsToString())
+    }
+
+    @Test
+    fun `"3_+_2"일때_계산_버튼을_누르면_5를_반환한다`() {
+        // GIVEN
+        val statement = Statement(OperationParser.parse("3 + 2"))
+
+        // When
+        val result = statement.calculate()
+
+        // Then
+        assertEquals(5, result)
+    }
+
+    @Test
+    fun `"3_+"일떄_계산_버튼을_누르면_"완성되지_수식_입니다"_에러를_반환한다`() {
+        // GIVEN
+        val statement = Statement(OperationParser.parse("3 +"))
+
+        val exception = assertThrows(IllegalArgumentException::class.java) {
+            statement.calculate()
+        }
+        assertEquals("완성되지 않은 수식입니다.", exception.message)
     }
 }
