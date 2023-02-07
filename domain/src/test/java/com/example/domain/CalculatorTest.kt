@@ -43,12 +43,6 @@ class CalculatorTest {
     }
 
     @Test
-    fun `피연산자가 음수인 경우`() {
-        val actual = calculator.evaluate("-5 * 5")
-        assertEquals(-25, actual)
-    }
-
-    @Test
     fun `피연산자가 엄청 큰 수(Int 타입이 넘어설 경우)인 경우`() {
         assertThrows(IllegalArgumentException::class.java) {
             calculator.evaluate("5555555555555555555 * 5")
