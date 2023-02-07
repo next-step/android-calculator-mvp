@@ -32,7 +32,7 @@ class ExpressionTest {
     }
 
     @Test
-    fun `Expression {연산자} 에서 피연산자가 들어올 경우`() {
+    fun `Expression {연산자} 에서 피연산자가 들어올 경우 연산자 무시되고 피연산자로 덮어 쓰인다`() {
         // given
         expression = expression.append(Operator.PLUS)
         // when
@@ -43,7 +43,7 @@ class ExpressionTest {
     }
 
     @Test
-    fun `Expression {피연산자, 연산자} 에서 연산자가 들어올 경우`() {
+    fun `Expression {피연산자, 연산자} 에서 연산자가 들어올 경우 마지막에 들어온 연산자로 덮어 쓰인다`() {
         // given
         expression = expression.append(3)
         expression = expression.append(Operator.PLUS)
