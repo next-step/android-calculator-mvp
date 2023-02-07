@@ -44,31 +44,56 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * 숫자 버튼에 관한 리스너
+     * Operand Click Listener
      * */
     private fun setOnNumberClickListener() = View.OnClickListener { view ->
-        val inputNumberString = (view as Button).text.toString()
+
+        val operand = when (view) {
+            binding.button0 -> 0
+            binding.button1 -> 1
+            binding.button2 -> 2
+            binding.button3 -> 3
+            binding.button4 -> 4
+            binding.button5 -> 5
+            binding.button6 -> 6
+            binding.button7 -> 7
+            binding.button8 -> 8
+            binding.button9 -> 9
+            else -> throw IllegalArgumentException("Invalid view")
+        }
+
         binding.textView.text =
-            OperationsUtil.setOperationsNumber(binding.textView.text.toString(), inputNumberString)
+            OperationsUtil.setOperationsNumber(binding.textView.text.toString(), operand.toString())
     }
 
     /**
-     * 기호 버튼에 관한 리스너
+     * Operator Click Listener
      * */
     private fun setOnOperateClickListener() = View.OnClickListener { view ->
-        when (view) {
-            binding.buttonDelete ->
-                binding.textView.text =
-                    OperationsUtil.deleteOperations(binding.textView.text.toString())
 
-            binding.buttonEquals ->
-                binding.textView.text = "${Calculator().evaluate(binding.textView.text.toString())}"
-
-            else -> {
-                val button = view as Button
-                binding.textView.text =
-                    setOperationsOperator(binding.textView.text.toString(), button.text.toString())
-            }
+        val `operator` = when (view) {
+            binding.buttonPlus -> Operator.Plus
+            binding.buttonMinus -> Operator.Minus
+            binding.buttonMultiply -> Operator.MultiBy
+            binding.buttonDivide -> Operator.DividedBy
+            else -> throw IllegalArgumentException("Invalid view")
         }
+
+        binding.textView.text =
+            setOperationsOperator(binding.textView.text.toString(), `operator`)
+    }
+
+    /**
+     * Delete Click Listener
+     * */
+    private fun setOnDeleteClickListener() = View.OnClickListener {
+        binding.textView.text = OperationsUtil.deleteOperations(binding.textView.text.toString())
+    }
+
+    /**
+     * Equals Click Listener
+     * */
+    private fun setOnEqualsClickListener() = View.OnClickListener {
+        binding.textView.text = "${Calculator().evaluate(binding.textView.text.toString())}"
     }
 }
