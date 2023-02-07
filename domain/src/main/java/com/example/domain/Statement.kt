@@ -27,14 +27,15 @@ data class Statement(private var terms: List<OperationTerm> = emptyList()) {
 
     private fun addTermWhenEmpty(term: OperationTerm) {
         if (term is Operand) {
-            terms + term
+            terms = terms + term
         }
     }
 
     private fun addTermWhenLastIsOperand(term: OperationTerm) {
-        if (term is Operand) {
-
-        }
+       when(term){
+           is Operand -> {}
+           is Operator -> {}
+       }
     }
 
     private fun addTermWhenLastIsOperator(term: OperationTerm) {
@@ -42,6 +43,12 @@ data class Statement(private var terms: List<OperationTerm> = emptyList()) {
     }
 
     fun termsToString(): String {
-        return ""
+        return if (terms.isEmpty()) "" else fold().trim()
+    }
+
+    private fun fold(): String {
+        return terms.fold("") { acc: String, term: OperationTerm ->
+            if (term is Operator) "$acc ${term.prime}" else "$acc ${(term as Operand).value}"
+        }
     }
 }
