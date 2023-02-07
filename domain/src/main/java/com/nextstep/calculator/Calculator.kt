@@ -66,7 +66,7 @@ class Calculator {
             MULTIPLY.char -> multiply(num1, num2)
             DIVIDE.char -> divide(num1, num2)
             // 사칙연산 기호가 아닌 경우
-            else -> throw IllegalArgumentException()
+            else -> throw IllegalArgumentException("사칙연산자가 아닌 기호")
         }
     }
 
