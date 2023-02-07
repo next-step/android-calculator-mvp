@@ -2,7 +2,6 @@ package com.example.domain
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThrows
-import org.junit.Before
 import org.junit.Test
 
 class CalculatorTest {
@@ -72,7 +71,7 @@ class CalculatorTest {
     }
 
     @Test
-    fun `수식이_미완성일_경우_IllegalArgumentException이_발생`(){
+    fun `수식이_미완성일_경우_IllegalArgumentException이_발생`() {
         assertThrows(IllegalArgumentException::class.java) {
             calculator.evaluate("1 +")
         }

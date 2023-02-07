@@ -5,13 +5,13 @@ class Calculator {
         require(!expressions.isNullOrEmpty()) { "입력값이 존재하지 않습니다." }
 
         val expressionList = expressions.split(" ")
-        require(expressionList.size % 2 == 1) {"불완전한 수식입니다."}
+        require(expressionList.size % 2 == 1) { "불완전한 수식입니다." }
 
         var result = expressionList[0].toInt()
 
         for (i in 1 until expressionList.size step 2) {
             val operand = expressionList[i + 1].toIntOrNull()
-            require(operand != null) {"피연산자는 숫자만 입력할 수 있습니다."}
+            require(operand != null) { "피연산자는 숫자만 입력할 수 있습니다." }
 
             val op: Operator = when (expressionList[i]) {
                 Operator.PLUS.op -> Operator.PLUS
