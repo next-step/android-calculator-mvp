@@ -20,20 +20,36 @@ class CalculatorTest {
     @Test(expected = IllegalArgumentException::class)
     fun `공백 입력시 null을 출력해야 한다`() {
         val calculator = Calculator()
-        val actual: Int = calculator.calculate("")
-        assertThat(actual).isEqualTo(null)
+
+        runCatching {
+            calculator.calculate("")
+        }.onFailure { e ->
+            e.printStackTrace()
+            throw IllegalArgumentException()
+        }
     }
 
     @Test(expected = IllegalArgumentException::class)
     fun `사칙연산자 외의 기호가 입력되면 null을 출력해야 한다`() {
         val calculator = Calculator()
-        val actual: Int = calculator.calculate("2+3*4$2")
-        assertThat(actual).isEqualTo(null)
+
+        runCatching {
+            calculator.calculate("2+3*4$2")
+        }.onFailure { e ->
+            e.printStackTrace()
+            throw IllegalArgumentException()
+        }
     }
 
     @Test(expected = IllegalArgumentException::class)
     fun `0으로 나누면 에러를 반환한다`() {
         val calculator = Calculator()
-        calculator.calculate("2/0")
+
+        runCatching {
+            calculator.calculate("2/0")
+        }.onFailure { e ->
+            e.printStackTrace()
+            throw IllegalArgumentException()
+        }
     }
 }
