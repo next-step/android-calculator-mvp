@@ -1,6 +1,7 @@
 package camp.nextstep.edu.calculator
 
 import com.google.common.truth.Truth.assertThat
+import org.junit.Assert.assertThrows
 import org.junit.Test
 
 class CalculatorTest {
@@ -48,5 +49,13 @@ class CalculatorTest {
 
         val actual2: String = calculator.displayCalculation(actual1, divide)
         assertThat(actual2).isEqualTo("2 + 3 * 4 / ")
+    }
+    @Test
+    fun testExceptionThrown() {
+        assertThrows(IllegalArgumentException::class.java) {
+            val calculator = Calculator()
+            calculator.displayCalculation("1 + 2 + 3 ", " ")
+            calculator.displayCalculation("1 + 2 + 3", " & ")
+        }
     }
 }
