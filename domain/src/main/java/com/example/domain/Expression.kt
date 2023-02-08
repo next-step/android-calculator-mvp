@@ -31,7 +31,7 @@ data class Expression(
         }
     }
 
-    fun dropLastInExpression(): Expression {
+    fun removeLastValue(): Expression {
         if (values.isNullOrEmpty()) return Expression()
 
         val last = values.last()

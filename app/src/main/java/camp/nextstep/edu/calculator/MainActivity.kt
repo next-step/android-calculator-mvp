@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         binding.buttonMinus.setOnClickListener { appendOperatorInExpression(Operator.MINUS) }
         binding.buttonMultiply.setOnClickListener { appendOperatorInExpression(Operator.MULTI) }
         binding.buttonDivide.setOnClickListener { appendOperatorInExpression(Operator.DIVIDE) }
-        binding.buttonDelete.setOnClickListener { removeWordInExpression() }
+        binding.buttonDelete.setOnClickListener { removeLastValueInExpression() }
         binding.buttonEquals.setOnClickListener { binding.textView.text = returnResult() }
     }
 
@@ -61,8 +61,8 @@ class MainActivity : AppCompatActivity() {
         ).show()
     }
 
-    private fun removeWordInExpression() {
-        expression = expression.dropLastInExpression()
+    private fun removeLastValueInExpression() {
+        expression = expression.removeLastValue()
     }
 
     private fun appendOperandInExpression(value: Int) {
