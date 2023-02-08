@@ -8,7 +8,6 @@ class Calculator {
 
         var result = calculationFormula[0].toInt()
         for (i: Int in 1 until calculationFormula.size step 2) {
-            println(calculationFormula[i])
             val operator = Operator.of(calculationFormula[i])
             result = operator.evaluator(result, calculationFormula[i + 1].toInt())
         }
