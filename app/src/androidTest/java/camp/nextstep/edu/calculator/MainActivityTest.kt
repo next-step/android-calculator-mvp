@@ -109,11 +109,15 @@ class MainActivityTest {
     @Test
     fun `입력된_피연산자가_없을때_사용자가_숫자버튼을_누르면_화면에_해당숫자가_화면에_보여야_한다`() {
         // 5 + -> 1 클릭 -> 5 + 1
+        //given
+        onView(withId(R.id.button5)).perform(click())
+        onView(withId(R.id.buttonPlus)).perform(click())
+
         // when
         onView(withId(R.id.button1)).perform(click())
 
         // then
-        onView(withId(R.id.textView)).check(matches(withText("1")))
+        onView(withId(R.id.textView)).check(matches(withText("5 + 1")))
     }
 
     @Test
