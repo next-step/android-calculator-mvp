@@ -1,6 +1,7 @@
 package camp.nextstep.edu.calculator
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
 import com.example.domain.Calculator
@@ -46,7 +47,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun returnResult(): String {
-        return calculator.evaluate(expression.value()).toString()
+        try {
+            return calculator.evaluate(expression.value()).toString()
+        }catch (exception: IllegalArgumentException) {
+            showToastMessage()
+            return expression.value()
+        }
+    }
+
+    private fun showToastMessage() {
+        Toast.makeText(applicationContext, "완성되지 않은 수식입니다.", Toast.LENGTH_SHORT).show()
     }
 
     private fun removeWordInExpression(): String {
