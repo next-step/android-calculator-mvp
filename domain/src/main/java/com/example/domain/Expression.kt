@@ -30,8 +30,8 @@ data class Expression(
                 Expression(values + operand)
             }
             is Int -> {
-                val operand = "${values.last()}$last".toInt()
-                Expression(values.dropLast(1) + operand)
+                val nOperand = "${values.last()}${operand}".toInt()
+                Expression(values.dropLast(1) + nOperand)
             }
             else -> throw IllegalArgumentException("피연산자를 추가하는 과정에서 Error 발생")
         }
