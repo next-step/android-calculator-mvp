@@ -39,7 +39,7 @@ class MainActivityTest {
 
         // then
         val result = activity.findViewById<TextView>(R.id.textView).text
-        Truth.assertThat(result).isEqualTo("0123456789")
+        Truth.assertThat(result).isEqualTo("123456789")
     }
 
     @Test
@@ -77,14 +77,14 @@ class MainActivityTest {
         activity.findViewById<Button>(R.id.buttonPlus).performClick()
 
         var result = activity.findViewById<TextView>(R.id.textView).text
-        Truth.assertThat(result).isEqualTo("1 + ")
+        Truth.assertThat(result).isEqualTo("1 +")
 
         // 1 + -> - 클릭 -> 1 -
         activity.findViewById<Button>(R.id.buttonMinus).performClick()
 
         // then
         result = activity.findViewById<TextView>(R.id.textView).text
-        Truth.assertThat(result).isEqualTo("1 - ")
+        Truth.assertThat(result).isEqualTo("1 -")
     }
 
     @Test
@@ -114,7 +114,7 @@ class MainActivityTest {
         activity.findViewById<Button>(R.id.buttonDelete).performClick()
 
         var result = activity.findViewById<TextView>(R.id.textView).text
-        Truth.assertThat(result).isEqualTo("32 + ")
+        Truth.assertThat(result).isEqualTo("32 +")
 
         activity.findViewById<Button>(R.id.buttonDelete).performClick()
 

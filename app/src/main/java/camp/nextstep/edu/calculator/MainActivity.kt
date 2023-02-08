@@ -62,8 +62,9 @@ class MainActivity : AppCompatActivity() {
             else -> throw IllegalArgumentException("Invalid view")
         }
 
-        binding.textView.text =
-            expression.addOperand(binding.textView.text.toString()).toString()
+        expression = expression.addOperand(operand)
+        binding.textView.text = expression.toString()
+
     }
 
     /**
@@ -79,15 +80,16 @@ class MainActivity : AppCompatActivity() {
             else -> throw IllegalArgumentException("Invalid view")
         }
 
-        binding.textView.text =
-            addOperator(binding.textView.text.toString(), `operator`)
+        expression = expression.addOperator(`operator`)
+        binding.textView.text = expression.toString()
     }
 
     /**
      * Delete Click Listener
      * */
     private fun setOnDeleteClickListener() = View.OnClickListener {
-        binding.textView.text = Expression.deleteOperations(binding.textView.text.toString())
+        expression = expression.deleteOperations()
+        binding.textView.text = expression.toString()
     }
 
     /**

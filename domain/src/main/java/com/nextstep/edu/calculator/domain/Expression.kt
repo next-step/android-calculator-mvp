@@ -11,9 +11,9 @@ data class Expression(
      * */
     fun addOperand(operand: Int): Expression {
         return when (val last = operations.lastOrNull()) {
-            is Operator -> Expression(operations + last)
-            is Int -> Expression(operations.dropLast(1) + "$last$operand")
-            null -> EMPTY
+            is Operator -> Expression(operations + operand)
+            is Int -> Expression(operations.dropLast(1) + "$last$operand".toInt())
+            null -> Expression(listOf(operand))
             else -> throw IllegalArgumentException("Error 'addOperand' >> $last")
         }
     }
@@ -25,8 +25,8 @@ data class Expression(
      * */
     fun addOperator(`operator`: Operator): Expression {
         return when (val last = operations.lastOrNull()) {
-            is Operator -> Expression(operations.dropLast(1) + last)
-            is Int -> Expression(operations + last)
+            is Operator -> Expression(operations.dropLast(1) + `operator`)
+            is Int, is String -> Expression(operations + `operator`)
             null -> EMPTY
             else -> throw IllegalArgumentException("Error 'addOperation' >> $last")
         }
@@ -34,16 +34,15 @@ data class Expression(
 
     /**
      * 지우기
-     *
-     * @param operations 현재 수식
      * */
     fun deleteOperations(): Expression {
         return when (val last = operations.lastOrNull()) {
             is Operator -> Expression(operations.dropLast(1))
             is Int -> {
-                val operand = if (last / 10 == 0) last else last / 10
-                Expression(operations.dropLast(1) + listOfNotNull(operand))
-                EMPTY
+                if (last / 10 == 0)
+                    Expression(operations.dropLast(1))
+                else
+                    Expression(operations.dropLast(1) + listOfNotNull(last / 10))
             }
             null -> EMPTY
             else -> throw IllegalArgumentException("Error 'deleteOperations' >> $last")
@@ -54,7 +53,7 @@ data class Expression(
     override fun toString(): String {
         return operations.joinToString(separator = " ") {
             return@joinToString if (it is Operator) {
-                " $it "
+                "${it.symbol}"
             } else {
                 "$it"
             }
