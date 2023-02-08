@@ -71,4 +71,11 @@ class CalculatorTest {
             calculator.evaluate("1 +")
         }
     }
+
+    @Test
+    fun `수식의_첫번째_인자가_숫자가_아닐_경우_IllegalArgumentException이_발생`() {
+        assertThrows(IllegalArgumentException::class.java) {
+            calculator.evaluate("+ 1 2")
+        }
+    }
 }
