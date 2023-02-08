@@ -78,5 +78,11 @@ class CalculatorTest {
 
     }
 
+    @Test(expected = IllegalArgumentException::class)
+    fun `유효하지 않은 수식에 대해서 IllegalArgumentException exception을 반환 한다`() {
+        val calculator = Calculator()
+        calculator.run("+ 1 - * 3")
+    }
+
 
 }

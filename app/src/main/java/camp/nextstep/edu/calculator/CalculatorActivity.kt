@@ -11,6 +11,11 @@ class CalculatorActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setUpButton()
+
+    }
+
+    private fun setUpButton() {
 
         binding.button0.setOnClickListener {
             binding.textView.text = binding.button0.text.toString()
@@ -42,7 +47,6 @@ class CalculatorActivity : AppCompatActivity() {
         binding.button9.setOnClickListener {
             binding.textView.text = binding.button9.text.toString()
         }
-
-
     }
+
 }
