@@ -1,30 +1,35 @@
 package com.nextstep.edu.calculator.domain
 
-object Expression {
+data class Expression(
+    private val operations: List<Any> = emptyList()
+) {
+
     /**
      * Number 입력된 경우
      *
-     * @param operations 현재 수식
      * @param operand 입력된 숫자
      * */
-    fun addOperand(operations: String, operand: String): String {
-        val number = OperationParse.parse(operand)
-        return operations + number.toString()
+    fun addOperand(operand: Int): Expression {
+        return when (val last = operations.lastOrNull()) {
+            is Operator -> Expression(operations + last)
+            is Int -> Expression(operations.dropLast(1) + "$last$operand")
+            null -> EMPTY
+            else -> throw IllegalArgumentException("Error 'addOperand' >> $last")
+        }
     }
 
     /**
      * Operator 입력된 경우
      *
-     * @param operations 현재 수식
      * @param operator 입력된 Operator
      * */
-    fun addOperation(operations: String, `operator`: Operator): String {
-        if (operations.isEmpty()) return ""
-
-        val symbol = Operator.find(`operator`.symbol).symbol
-
-        // Int 로 형 변환이 될 때까지 drop
-        return operations.dropLastWhile { it.digitToIntOrNull() == null } + " $symbol "
+    fun addOperator(`operator`: Operator): Expression {
+        return when (val last = operations.lastOrNull()) {
+            is Operator -> Expression(operations.dropLast(1) + last)
+            is Int -> Expression(operations + last)
+            null -> EMPTY
+            else -> throw IllegalArgumentException("Error 'addOperation' >> $last")
+        }
     }
 
     /**
@@ -32,29 +37,31 @@ object Expression {
      *
      * @param operations 현재 수식
      * */
-    fun deleteOperations(operations: String): String {
-        if (operations.isEmpty()) return ""
+    fun deleteOperations(): Expression {
+        return when (val last = operations.lastOrNull()) {
+            is Operator -> Expression(operations.dropLast(1))
+            is Int -> {
+                val operand = if (last / 10 == 0) last else last / 10
+                Expression(operations.dropLast(1) + listOfNotNull(operand))
+                EMPTY
+            }
+            null -> EMPTY
+            else -> throw IllegalArgumentException("Error 'deleteOperations' >> $last")
 
-        return if (isStringLastIndexOperator(operations)) {
-            operations.dropLast(3)
-        } else {
-            operations.dropLast(1)
         }
     }
 
-    /**
-     * 연산의 마지막 문자가 Operator 인지 체크
-     *
-     * @param operations 현재 수식
-     *
-     * @return 마지막 문자가 Operator ?
-     * */
-    private fun isStringLastIndexOperator(operations: String): Boolean {
-        return try {
-            Operator.find(operations.trim().last().toString())
-            true
-        } catch (e: IllegalArgumentException) {
-            false
+    override fun toString(): String {
+        return operations.joinToString(separator = " ") {
+            return@joinToString if (it is Operator) {
+                " $it "
+            } else {
+                "$it"
+            }
         }
+    }
+
+    companion object {
+        val EMPTY = Expression()
     }
 }

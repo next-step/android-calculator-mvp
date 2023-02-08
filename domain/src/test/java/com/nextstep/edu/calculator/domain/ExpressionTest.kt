@@ -2,7 +2,6 @@ package com.nextstep.edu.calculator.domain
 
 import com.nextstep.edu.calculator.domain.Expression.deleteOperations
 import com.nextstep.edu.calculator.domain.Expression.addOperand
-import com.nextstep.edu.calculator.domain.Expression.addOperation
 import junit.framework.Assert.assertEquals
 import org.junit.Test
 

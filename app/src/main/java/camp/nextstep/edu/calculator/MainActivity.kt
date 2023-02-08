@@ -6,12 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
 import com.nextstep.edu.calculator.domain.Calculator
 import com.nextstep.edu.calculator.domain.Expression
-import com.nextstep.edu.calculator.domain.Expression.addOperation
 import com.nextstep.edu.calculator.domain.Operator
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val calculator: Calculator = Calculator()
+    private var expression : Expression = Expression()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.textView.text =
-            Expression.addOperand(binding.textView.text.toString(), operand.toString())
+            expression.addOperand(binding.textView.text.toString()).toString()
     }
 
     /**
@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.textView.text =
-            addOperation(binding.textView.text.toString(), `operator`)
+            addOperator(binding.textView.text.toString(), `operator`)
     }
 
     /**

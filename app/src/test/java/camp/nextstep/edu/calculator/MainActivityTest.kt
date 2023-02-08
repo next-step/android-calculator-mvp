@@ -5,7 +5,6 @@ import android.widget.TextView
 import com.google.common.truth.Truth
 import com.nextstep.edu.calculator.domain.Calculator
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
