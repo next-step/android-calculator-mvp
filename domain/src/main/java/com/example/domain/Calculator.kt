@@ -7,14 +7,13 @@ class Calculator {
         val expressionList = expressions.split(" ")
         require(expressionList.size % 2 == 1) { "불완전한 수식입니다." }
 
-        var result = expressionList[0].toIntOrNull()
-        require(result != null) { "첫번째 인자는 숫자여야합니다." }
+        var result = Operand.of(expressionList[0])
 
         for (i in 1 until expressionList.size step 2) {
-            val operand = expressionList[i + 1].toIntOrNull()
-            require(operand != null) { "피연산자는 숫자만 입력할 수 있습니다." }
-
+            val operand = Operand.of(expressionList[i + 1])
             val operator = Operator.of(expressionList[i])
+
+            result = operator.operate(result, operand)
         }
         return result
     }
