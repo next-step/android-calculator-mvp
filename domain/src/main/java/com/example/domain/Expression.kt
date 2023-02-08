@@ -51,8 +51,10 @@ data class Expression(
         }
     }
 
-    fun value(): List<Any> {
-        return values
+    fun value(): String {
+        return values.joinToString(" ") {
+            if (it is Operator) it.operator else it.toString()
+        }
     }
 }
 

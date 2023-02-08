@@ -16,7 +16,7 @@ class ExpressionTest {
         expression = expression.append(3)
 
         // then
-        assertEquals(listOf(3, Operator.PLUS, 3), expression.value())
+        assertEquals("3 + 3", expression.value())
     }
 
     @Test
@@ -28,7 +28,7 @@ class ExpressionTest {
         expression = expression.append(3)
 
         // then
-        assertEquals(listOf(33), expression.value())
+        assertEquals("33", expression.value())
     }
 
     @Test
@@ -39,7 +39,7 @@ class ExpressionTest {
         expression = expression.append(1)
 
         // then
-        assertEquals(listOf(1), expression.value())
+        assertEquals("1", expression.value())
     }
 
     @Test
@@ -51,7 +51,7 @@ class ExpressionTest {
         expression = expression.append(Operator.MULTI)
 
         // then
-        assertEquals(listOf(3, Operator.MULTI), expression.value())
+        assertEquals("3 *", expression.value())
     }
 
     @Test
@@ -63,7 +63,7 @@ class ExpressionTest {
         expression = expression.append(Operator.MULTI)
 
         // then
-        assertEquals(listOf(Operator.MULTI), expression.value())
+        assertEquals("*", expression.value())
     }
 
     @Test
@@ -75,6 +75,6 @@ class ExpressionTest {
         expression = expression.append(Operator.MULTI)
 
         // then
-        assertEquals(listOf(3, Operator.MULTI), expression.value())
+        assertEquals("3 *", expression.value())
     }
 }

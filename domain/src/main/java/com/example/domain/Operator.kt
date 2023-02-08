@@ -1,7 +1,7 @@
 package com.example.domain
 
 enum class Operator(
-    private val operator: String,
+    val operator: String,
     val evaluator: (Int, Int) -> Int
 ) {
     PLUS("+", { x, y -> x + y }),
