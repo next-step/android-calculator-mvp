@@ -32,6 +32,12 @@ class MainActivity : AppCompatActivity() {
         binding.buttonMinus.setOnClickListener { binding.textView.text = appendOperatorInExpression(Operator.MINUS) }
         binding.buttonMultiply.setOnClickListener { binding.textView.text = appendOperatorInExpression(Operator.MULTI) }
         binding.buttonDivide.setOnClickListener { binding.textView.text = appendOperatorInExpression(Operator.DIVIDE) }
+        binding.buttonDelete.setOnClickListener { binding.textView.text = removeWordInExpression() }
+    }
+
+    private fun removeWordInExpression(): String{
+        expression = expression.dropLastInExpression()
+        return expression.value()
     }
 
     private fun appendOperandInExpression(value: Int): String {

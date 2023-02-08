@@ -46,7 +46,17 @@ data class Expression(
     fun dropLastInExpression(): Expression {
         if (values.isNullOrEmpty()) return Expression()
 
+        val last = values.last()
+        if ((last is Int) && (last.toInt() > 9)) {
+            return separateNumbers(last)
+        }
+
         return Expression(values.dropLast(1))
+    }
+
+    private fun separateNumbers(last: Int): Expression {
+        val last = (last / 10)
+        return Expression(values.dropLast(1) + last)
     }
 
     fun value(): String {
