@@ -12,11 +12,10 @@ data class Expression(
     operator fun plus(operand: Int): Expression {
         return when (val last = values.lastOrNull()) {
             is Operator -> {
-                if (values.size == 1) return Expression(listOf(operand))
                 Expression(values + operand)
             }
             is Int -> {
-                val nOperand = "${values.last()}${operand}".toInt()
+                val nOperand = "$last$operand".toInt()
                 Expression(values.dropLast(1) + nOperand)
             }
             null -> Expression(listOf(operand))

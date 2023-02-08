@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         binding.button6.setOnClickListener { binding.textView.text = appendOperandInExpression(6) }
         binding.button7.setOnClickListener { binding.textView.text = appendOperandInExpression(7) }
         binding.button8.setOnClickListener { binding.textView.text = appendOperandInExpression(8) }
-        binding.button8.setOnClickListener { binding.textView.text = appendOperandInExpression(9) }
+        binding.button9.setOnClickListener { binding.textView.text = appendOperandInExpression(9) }
 
         binding.buttonPlus.setOnClickListener {
             binding.textView.text = appendOperatorInExpression(Operator.PLUS)
@@ -47,11 +47,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun returnResult(): String {
-        try {
-            return calculator.evaluate(expression.value()).toString()
+        return try {
+            calculator.evaluate(expression.value()).toString()
         }catch (exception: IllegalArgumentException) {
             showToastMessage()
-            return expression.value()
+            expression.value()
         }
     }
 
