@@ -5,7 +5,7 @@ import com.nextstep.calculator.Operator.* // ktlint-disable no-wildcard-imports
 /**
  * @author 박소연
  * @created 2023/02/05
- * @updated 2023/02/06
+ * @updated 2023/02/08
  * @desc 계산 로직을 수행 하는 클래스
  */
 
@@ -29,20 +29,49 @@ class Calculator {
         var currentOperator: Char? = null
         var subFormula = ""
 
-        for (i in formula.indices) {
-            when (formula[i]) {
-                in validNumber -> subFormula += formula[i]
-                in validOperator -> {
-                    if (currentOperator != null) {
-                        subFormula = divideComponent(subFormula).toString()
-                    }
-                    subFormula += formula[i]
-                    currentOperator = formula[i]
-                }
-                else -> throw IllegalArgumentException("사칙연산자가 아닌 기호")
-            }
+        for (c in formula) {
+            checkCharacter(
+                c,
+                currentOperator,
+                subFormula,
+                { checkFormula -> subFormula = checkFormula },
+                { checkCharacter -> currentOperator = checkCharacter }
+            )
         }
         return divideComponent(subFormula)
+    }
+
+    // 수식 내 문자가 숫자인지 사친연산자인지 체크
+    private fun checkCharacter(
+        char: Char,
+        currentOperator: Char?,
+        subFormula: String,
+        checkedFormula: (String) -> Unit,
+        checkedChar: (Char) -> Unit
+    ) {
+        when (char) {
+            in validNumber -> checkedFormula.invoke(subFormula + char)
+            in validOperator -> {
+                checkFirstOperator(currentOperator, subFormula) {
+                    checkedFormula.invoke(it)
+                }
+                checkedFormula.invoke(subFormula + char)
+                checkedChar.invoke(char)
+            }
+            else -> throw IllegalArgumentException("사칙연산자가 아닌 기호")
+        }
+    }
+
+    // 첫번째로 나온 사칙연산자가 아니면 수식 구성요소 분리 요청
+    private fun checkFirstOperator(
+        currentOperator: Char?,
+        subFormula: String,
+        checkedFormula: (String) -> Unit
+    ) {
+        if (currentOperator != null) {
+            val calculateSubResult = divideComponent(subFormula).toString()
+            checkedFormula.invoke(calculateSubResult)
+        }
     }
 
     // 수식 내 구성요소 분리
