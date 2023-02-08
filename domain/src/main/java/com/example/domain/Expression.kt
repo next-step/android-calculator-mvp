@@ -3,12 +3,7 @@ package com.example.domain
 data class Expression(
     private val values: List<Any> = emptyList()
 ) {
-    /**
-    들어올 케이스
-    [3, +]   ->   1   = [3, +, 1]
-    [3]      ->   1   = [31]
-    [+]      ->   1   = [1]
-     */
+
     operator fun plus(operand: Int): Expression {
         return when (val last = values.lastOrNull()) {
             is Operator -> {
@@ -24,12 +19,6 @@ data class Expression(
         }
     }
 
-    /**
-    들어올 케이스
-    [3, +]  ->   *   = [3, *]
-    [+]     ->   *   = [*]
-    [3]     ->   *   = [3, *]
-     */
     operator fun plus(operator: Operator): Expression {
         return when (val last = values.lastOrNull()) {
             is Operator -> {
