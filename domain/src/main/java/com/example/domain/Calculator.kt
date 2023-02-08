@@ -17,6 +17,7 @@ class Calculator {
 
     private fun checkEmptyExpressions(expressions: String?): String{
         require(!expressions.isNullOrEmpty()) { "입력값이 존재하지 않습니다." }
+
         return expressions
     }
 
