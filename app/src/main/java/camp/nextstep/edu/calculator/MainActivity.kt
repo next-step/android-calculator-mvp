@@ -28,14 +28,28 @@ class MainActivity : AppCompatActivity() {
         binding.button7.setOnClickListener { binding.textView.text = appendOperandInExpression(7) }
         binding.button8.setOnClickListener { binding.textView.text = appendOperandInExpression(8) }
         binding.button8.setOnClickListener { binding.textView.text = appendOperandInExpression(9) }
-        binding.buttonPlus.setOnClickListener { binding.textView.text = appendOperatorInExpression(Operator.PLUS) }
-        binding.buttonMinus.setOnClickListener { binding.textView.text = appendOperatorInExpression(Operator.MINUS) }
-        binding.buttonMultiply.setOnClickListener { binding.textView.text = appendOperatorInExpression(Operator.MULTI) }
-        binding.buttonDivide.setOnClickListener { binding.textView.text = appendOperatorInExpression(Operator.DIVIDE) }
+
+        binding.buttonPlus.setOnClickListener {
+            binding.textView.text = appendOperatorInExpression(Operator.PLUS)
+        }
+        binding.buttonMinus.setOnClickListener {
+            binding.textView.text = appendOperatorInExpression(Operator.MINUS)
+        }
+        binding.buttonMultiply.setOnClickListener {
+            binding.textView.text = appendOperatorInExpression(Operator.MULTI)
+        }
+        binding.buttonDivide.setOnClickListener {
+            binding.textView.text = appendOperatorInExpression(Operator.DIVIDE)
+        }
         binding.buttonDelete.setOnClickListener { binding.textView.text = removeWordInExpression() }
+        binding.buttonEquals.setOnClickListener { binding.textView.text = returnResult() }
     }
 
-    private fun removeWordInExpression(): String{
+    private fun returnResult(): String {
+        return calculator.evaluate(expression.value()).toString()
+    }
+
+    private fun removeWordInExpression(): String {
         expression = expression.dropLastInExpression()
         return expression.value()
     }
