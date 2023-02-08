@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showToastMessage() {
-        Toast.makeText(applicationContext, "완성되지 않은 수식입니다.", Toast.LENGTH_SHORT).show()
+        Toast.makeText(applicationContext, "완성되지 않은 수식입니다. \n${expression.value()}", Toast.LENGTH_SHORT).show()
     }
 
     private fun removeWordInExpression(): String {
