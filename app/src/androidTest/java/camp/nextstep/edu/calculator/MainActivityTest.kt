@@ -8,6 +8,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runners.Parameterized.Parameters
 
 class MainActivityTest {
 
@@ -103,5 +104,43 @@ class MainActivityTest {
 
         // then: '9'이 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("9")))
+    }
+
+    @Test
+    fun `입력된_피연산자가_없을때_사용자가_숫자버튼을_누르면_화면에_해당숫자가_화면에_보여야한다`() {
+        // when
+        onView(withId(R.id.button1))
+            .perform(click())
+
+        // then
+        onView(withId(R.id.textView))
+            .check(matches(withText("1")))
+    }
+
+    @Test
+    fun `입력된_피연산자가_있을때_기존숫자_뒤에_해당숫자가_화면에_보여야한다`() {
+        onView(withId(R.id.button8))
+            .perform(click())
+
+        // when
+        onView(withId(R.id.button9))
+            .perform(click())
+
+        // then
+        onView(withId(R.id.textView))
+            .check(matches(withText("89")))
+    }
+
+
+    @Test
+    @Parameters()
+    fun `입력된_피연산자가_없을때_사용자가_사칙연산자_버튼을_누르면_화면에_아무런_변화가_없어야한다`() {
+        // when
+        onView(withId(R.id.buttonPlus))
+            .perform(click())
+
+        // then
+        onView(withId(R.id.textView))
+            .check(matches(withText("")))
     }
 }
