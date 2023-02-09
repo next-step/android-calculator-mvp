@@ -2,7 +2,13 @@ package com.example.domain
 
 private const val tens = 10
 
-data class Statement(private var terms: List<OperationTerm> = emptyList()) {
+class Statement(terms: List<OperationTerm> = emptyList()) {
+
+    private var terms: MutableList<OperationTerm>
+
+    init {
+        this.terms = terms.toMutableList()
+    }
 
     fun addTerm(term: OperationTerm) {
         when (val last = terms.lastOrNull()) {
@@ -20,34 +26,34 @@ data class Statement(private var terms: List<OperationTerm> = emptyList()) {
 
     private fun addTermWhenEmpty(term: OperationTerm) {
         if (term is Operand) {
-            terms = terms + term
+            terms.add(term)
         }
     }
 
     private fun addTermWhenLastIsOperand(term: OperationTerm, last: Operand) {
         when (term) {
             is Operand -> {
-                terms = terms - last
-                terms = terms + Operand.fromTerm("${last.value}${term.value}")
+                terms.removeLast()
+                terms.add(Operand.fromTerm("${last.value}${term.value}"))
             }
             is Operator -> {
-                terms = terms + term
+                terms.add(term)
             }
         }
     }
 
     private fun addTermWhenLastIsOperator(term: OperationTerm, last: Operator) {
         if (term is Operator) {
-            terms = terms - last
+            terms.removeLast()
         }
-        terms = terms + term
+        terms.add(term)
     }
 
 
     fun removeTerm() {
         when (val last = terms.lastOrNull()) {
             is Operator -> {
-                terms = terms - last
+                terms.removeLast()
             }
             is Operand -> {
                 removeTermWhenLastIsOperand(last)
@@ -56,10 +62,10 @@ data class Statement(private var terms: List<OperationTerm> = emptyList()) {
     }
 
     private fun removeTermWhenLastIsOperand(last: Operand) {
-        terms = terms - last
+        terms.removeLast()
         val lastRemoved = last.removeLastOrNull()
         if (lastRemoved != null) {
-            terms = terms + lastRemoved
+            terms.add(lastRemoved)
         }
     }
 
@@ -71,5 +77,20 @@ data class Statement(private var terms: List<OperationTerm> = emptyList()) {
         return terms.fold("") { acc: String, term: OperationTerm ->
             if (term is Operator) "$acc ${term.prime}" else "$acc ${(term as Operand).value}"
         }.trim()
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Statement
+
+        if (terms != other.terms) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return terms.hashCode()
     }
 }

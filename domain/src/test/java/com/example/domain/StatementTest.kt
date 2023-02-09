@@ -7,6 +7,20 @@ import org.junit.Test
 class StatementTest {
 
     @Test
+    fun `배열을_주입한_뒤_원_배열을_변경해도_영향을_받지_않는다`() {
+        // Given
+        val items = mutableListOf<OperationTerm>()
+        val statement = Statement(items)
+
+        // When
+        items.add(Operand(1))
+
+        // Then
+        assertEquals(Statement(emptyList()), statement)
+        assertEquals("", statement.termsToString())
+    }
+
+    @Test
     fun `빈_문자열의_수식이_나온다`() {
         // When
         val statement = Statement()
