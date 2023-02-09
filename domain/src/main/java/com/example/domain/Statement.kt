@@ -3,12 +3,12 @@ package com.example.domain
 data class Statement(private var terms: List<OperationTerm> = emptyList()) {
 
     fun addTerm(term: OperationTerm) {
-        when (terms.lastOrNull()) {
+        when (val last = terms.lastOrNull()) {
             is Operator -> {
-                addTermWhenLastIsOperator(term)
+                addTermWhenLastIsOperator(term, last)
             }
             is Operand -> {
-                addTermWhenLastIsOperand(term)
+                addTermWhenLastIsOperand(term, last)
             }
             null -> {
                 addTermWhenEmpty(term)
@@ -22,10 +22,9 @@ data class Statement(private var terms: List<OperationTerm> = emptyList()) {
         }
     }
 
-    private fun addTermWhenLastIsOperand(term: OperationTerm) {
+    private fun addTermWhenLastIsOperand(term: OperationTerm, last: Operand) {
         when (term) {
             is Operand -> {
-                val last = terms.last() as Operand
                 terms = terms - last
                 terms = terms + Operand.fromTerm("${last.value}${term.value}")
             }
@@ -35,9 +34,8 @@ data class Statement(private var terms: List<OperationTerm> = emptyList()) {
         }
     }
 
-    private fun addTermWhenLastIsOperator(term: OperationTerm) {
+    private fun addTermWhenLastIsOperator(term: OperationTerm, last: Operator) {
         if (term is Operator) {
-            val last = terms.last()
             terms = terms - last
         }
         terms = terms + term
@@ -45,24 +43,21 @@ data class Statement(private var terms: List<OperationTerm> = emptyList()) {
 
 
     fun removeTerm() {
-        when (terms.lastOrNull()) {
+        when (val last = terms.lastOrNull()) {
             is Operator -> {
-                terms = terms - terms.last()
+                terms = terms - last
             }
             is Operand -> {
-                removeTermWhenLastIsOperand()
+                removeTermWhenLastIsOperand(last)
             }
         }
     }
 
-    private fun removeTermWhenLastIsOperand() {
-        if ((terms.last() as Operand).value >= 10) {
-            val last = terms.last() as Operand
-            terms = terms - terms.last()
+    private fun removeTermWhenLastIsOperand(last: Operand) {
+        terms = terms - last
+        if (last.value >= 10) {
             val remainder = (last.value - last.value % 10) / 10
             terms = terms + Operand(remainder)
-        } else {
-            terms = terms - terms.last()
         }
     }
 
