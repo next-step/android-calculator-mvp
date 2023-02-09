@@ -56,8 +56,8 @@ class MainActivity : AppCompatActivity() {
     private fun showToastMessage() {
         Toast.makeText(
             applicationContext,
-            "완성되지 않은 수식입니다. \n${expression.value()}",
-            Toast.LENGTH_SHORT
+            "The '${expression.value()}' is not a valid formula.",
+            Toast.LENGTH_LONG
         ).show()
     }
 
