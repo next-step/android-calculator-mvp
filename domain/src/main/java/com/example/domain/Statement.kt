@@ -1,5 +1,7 @@
 package com.example.domain
 
+private const val tens = 10
+
 data class Statement(private var terms: List<OperationTerm> = emptyList()) {
 
     fun addTerm(term: OperationTerm) {
@@ -55,9 +57,9 @@ data class Statement(private var terms: List<OperationTerm> = emptyList()) {
 
     private fun removeTermWhenLastIsOperand(last: Operand) {
         terms = terms - last
-        if (last.value >= 10) {
-            val remainder = (last.value - last.value % 10) / 10
-            terms = terms + Operand(remainder)
+        val lastRemoved = last.removeLastOrNull()
+        if (lastRemoved != null) {
+            terms = terms + lastRemoved
         }
     }
 
