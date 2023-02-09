@@ -1,5 +1,8 @@
 ## MVP, UI 테스트
 
+### 4단계 - UI 테스트
+- [x] 1차 피드백 반영
+
 ### 3단계 - 문자열 계산기
 - [x] 입력 값을 공백 기준으로 분리
 - [x] 입력 값이 null 또는 공백일 경우 IllegalArgumentException 발생

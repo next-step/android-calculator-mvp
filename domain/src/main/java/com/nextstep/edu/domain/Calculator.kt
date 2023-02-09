@@ -2,9 +2,8 @@ package com.nextstep.edu.domain
 
 class Calculator {
     fun calculate(inputValue: String): Int {
-        val calculationExpression = CalculationExpression()
-        val splitInputValue = calculationExpression.split(inputValue)
-        calculationExpression.validate(splitInputValue)
+        val calculationExpression = CalculationExpression(inputValue)
+        val splitInputValue = calculationExpression.value
 
         var accumulatedValue = splitInputValue[0].toInt()
         var operatorSymbol: Operator
