@@ -4,10 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
-import com.example.domain.Calculator
-import com.example.domain.Operand
-import com.example.domain.Operator
-import com.example.domain.Statement
+import com.example.domain.*
 
 class MainActivity() : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -20,86 +17,89 @@ class MainActivity() : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.button0.setOnClickListener {
-            statement.addTerm(Operand(0))
-            binding.textView.text = statement.termsToString()
+            addTerm(Operand(0))
         }
 
         binding.button1.setOnClickListener {
-            statement.addTerm(Operand(1))
-            binding.textView.text = statement.termsToString()
+            addTerm(Operand(1))
         }
 
         binding.button2.setOnClickListener {
-            statement.addTerm(Operand(2))
-            binding.textView.text = statement.termsToString()
+            addTerm(Operand(2))
         }
 
         binding.button3.setOnClickListener {
-            statement.addTerm(Operand(3))
-            binding.textView.text = statement.termsToString()
+            addTerm(Operand(3))
         }
 
         binding.button4.setOnClickListener {
-            statement.addTerm(Operand(4))
-            binding.textView.text = statement.termsToString()
+            addTerm(Operand(4))
         }
 
         binding.button5.setOnClickListener {
-            statement.addTerm(Operand(5))
-            binding.textView.text = statement.termsToString()
+            addTerm(Operand(5))
         }
 
         binding.button6.setOnClickListener {
-            statement.addTerm(Operand(6))
-            binding.textView.text = statement.termsToString()
+            addTerm(Operand(6))
         }
 
         binding.button7.setOnClickListener {
-            statement.addTerm(Operand(7))
-            binding.textView.text = statement.termsToString()
+            addTerm(Operand(7))
         }
 
         binding.button8.setOnClickListener {
-            statement.addTerm(Operand(8))
-            binding.textView.text = statement.termsToString()
+            addTerm(Operand(8))
         }
 
         binding.button9.setOnClickListener {
-            statement.addTerm(Operand(9))
-            binding.textView.text = statement.termsToString()
+            addTerm(Operand(9))
         }
 
         binding.buttonDivide.setOnClickListener {
-            statement.addTerm(Operator.DIVIDE)
-            binding.textView.text = statement.termsToString()
+            addTerm(Operator.DIVIDE)
         }
 
         binding.buttonMinus.setOnClickListener {
-            statement.addTerm(Operator.SUBTRACT)
-            binding.textView.text = statement.termsToString()
+            addTerm(Operator.SUBTRACT)
         }
 
         binding.buttonMultiply.setOnClickListener {
-            statement.addTerm(Operator.MULTIPLY)
-            binding.textView.text = statement.termsToString()
+            addTerm(Operator.MULTIPLY)
         }
 
         binding.buttonPlus.setOnClickListener {
-            statement.addTerm(Operator.ADD)
-            binding.textView.text = statement.termsToString()
+            addTerm(Operator.ADD)
         }
 
         binding.buttonDelete.setOnClickListener {
-            statement.removeTerm()
-            binding.textView.text = statement.termsToString()
+            removeTerm()
         }
 
         binding.buttonEquals.setOnClickListener {
-            try {
-                binding.textView.text = calculator.calculate(statement.termsToString()).toString()
-            } catch (e: Exception) {
-                Toast.makeText(applicationContext, e.message, Toast.LENGTH_LONG).show()
-            }
+            calculate()
         }
+    }
+
+    private fun calculate() {
+        try {
+            binding.textView.text = calculator.calculate(statement.termsToString()).toString()
+        } catch (e: Exception) {
+            Toast.makeText(applicationContext, e.message, Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun addTerm(term: OperationTerm) {
+        statement.addTerm(term)
+        textRebuild()
+    }
+
+    private fun removeTerm() {
+        statement.removeTerm()
+        textRebuild()
+    }
+
+    private fun textRebuild() {
+        binding.textView.text = statement.termsToString()
     }
 }
