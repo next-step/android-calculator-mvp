@@ -8,8 +8,10 @@ import com.example.domain.Calculator
 import com.example.domain.Expression
 import com.example.domain.Operator
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
+
+    override lateinit var presenter: MainContract.Presenter
 
     private var expression = Expression()
         set(value) {
@@ -24,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        presenter = MainPresenter(this)
 
         binding.button0.setOnClickListener { appendOperandInExpression(0) }
         binding.button1.setOnClickListener { appendOperandInExpression(1) }
