@@ -54,4 +54,20 @@ class OperatorTest {
         // then
         assertEquals(0, actual)
     }
+
+    @Test
+    fun `피연산자가 음수일 경우 결과 값이 잘 나온다`() {
+        // when
+        val actual = Operator.of("*").evaluator(-5, 5)
+
+        // then
+        assertEquals(-25, actual)
+    }
+
+    @Test
+    fun `0을 나눌 경우 예외처리하기`() {
+        assertThrows(ArithmeticException::class.java) {
+            Operator.of("/").evaluator(3, 0)
+        }
+    }
 }

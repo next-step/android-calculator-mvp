@@ -1,13 +1,13 @@
 package com.example.domain
 
 enum class Operator(
-    private val operator: String,
+    val operator: String,
     val evaluator: (Int, Int) -> Int
 ) {
-    PLUS("+", {x,y -> x+y}),
-    MINUS("-", {x,y -> x-y}),
-    MULTI("*", {x,y -> x*y}),
-    DIVIDE("/", {x,y -> x/y})
+    PLUS("+", { x, y -> x + y }),
+    MINUS("-", { x, y -> x - y }),
+    MULTI("*", { x, y -> x * y }),
+    DIVIDE("/", { x, y -> x / y })
     ;
 
     companion object {
