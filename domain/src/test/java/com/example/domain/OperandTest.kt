@@ -35,4 +35,33 @@ class OperandTest {
         }
         assertEquals("음수를 지원 하지 않습니다.", exception.message)
     }
+
+    @Test
+    fun `10_미만_이면_false를_반환한다`() {
+        val operand = Operand(9)
+
+        assertFalse(operand.isOverUnits())
+    }
+    @Test
+    fun `10_이상_이면_true를_반환한다`() {
+        val operand = Operand(10)
+
+        assertTrue(operand.isOverUnits())
+    }
+
+    @Test
+    fun `한자리수일_때_removeLast_하면_null_을_반환한다`() {
+        val operand = Operand(9)
+
+        val lastRemoved = operand.removeLastOrNull()
+        assertEquals(null, lastRemoved)
+    }
+
+    @Test
+    fun `두자리수_이상일_때_removeLast_하면_일의자리를_날린_Operand_객체를_반환한다`() {
+        val operand = Operand(10)
+
+        val lastRemoved = operand.removeLastOrNull()
+        assertEquals(Operand(1), lastRemoved)
+    }
 }

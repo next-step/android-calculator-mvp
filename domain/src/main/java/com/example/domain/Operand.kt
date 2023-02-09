@@ -1,6 +1,6 @@
 package com.example.domain
 
-import java.lang.Integer.parseInt
+private const val tens = 10
 
 @JvmInline
 value class Operand(val value: Int) : OperationTerm {
@@ -8,6 +8,15 @@ value class Operand(val value: Int) : OperationTerm {
         require(value >= 0) {
             "음수를 지원 하지 않습니다."
         }
+    }
+
+    fun isOverUnits(): Boolean {
+        return value >= tens
+    }
+
+    fun removeLastOrNull(): Operand? {
+        if (isOverUnits()) return Operand(value / tens)
+        return null
     }
 
     companion object {

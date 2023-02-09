@@ -103,4 +103,145 @@ class MainActivityTest {
         // then: '9'이 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("9")))
     }
+
+    @Test
+    fun `5_덧셈기호_일때_1_버튼을_누르면_5_덧셈기호_1_보여야_한다`() {
+        // Given
+        onView(withId(R.id.button5)).perform(click())
+        onView(withId(R.id.buttonPlus)).perform(click())
+        onView(withId(R.id.textView)).check(matches(withText("5 +")))
+        // When
+        onView(withId(R.id.button1)).perform(click())
+
+        // Then
+        onView(withId(R.id.textView)).check(matches(withText("5 + 1")))
+    }
+
+    @Test
+    fun `8_일때_9_버튼을_누르면_89_보여야_한다`() {
+        onView(withId(R.id.button8)).perform(click())
+
+        // When
+        onView(withId(R.id.button9)).perform(click())
+
+        // Then
+        onView(withId(R.id.textView)).check(matches(withText("89")))
+    }
+
+    @Test
+    fun `공백일때_연산자_버튼을_누르면_아무_변화없다`() {
+
+        // When
+        onView(withId(R.id.buttonPlus)).perform(click())
+
+        // Then
+        onView(withId(R.id.textView)).check(matches(withText("")))
+    }
+
+    @Test
+    fun `1일때_연선자_버튼을_누르면_1_덧셈기호_반환한다`() {
+        // Given
+        onView(withId(R.id.button1)).perform(click())
+        onView(withId(R.id.textView)).check(matches(withText("1")))
+
+        // When
+        onView(withId(R.id.buttonPlus)).perform(click())
+
+        // Then
+        onView(withId(R.id.textView)).check(matches(withText("1 +")))
+    }
+
+    @Test
+    fun `1_덧셈기호_일때_빼기_연산자_버튼을_누르면_1_뺄셈기호_반환한다`() {
+        // Given
+        onView(withId(R.id.button1)).perform(click())
+        onView(withId(R.id.buttonPlus)).perform(click())
+        onView(withId(R.id.textView)).check(matches(withText("1 +")))
+
+        // When
+        onView(withId(R.id.buttonMinus)).perform(click())
+
+        // Then
+        onView(withId(R.id.textView)).check(matches(withText("1 -")))
+    }
+
+    @Test
+    fun `공백일때_지우기_버튼을_누르면_아무변화가_없다`() {
+        // When
+        onView(withId(R.id.buttonDelete)).perform(click())
+
+        // Then
+        onView(withId(R.id.textView)).check(matches(withText("")))
+    }
+
+    @Test
+    fun `32_덧셈기호_일때_지우기_버튼을_누르면_32가_된다`() {
+        // Given
+        onView(withId(R.id.button3)).perform(click())
+        onView(withId(R.id.button2)).perform(click())
+        onView(withId(R.id.buttonPlus)).perform(click())
+        onView(withId(R.id.textView)).check(matches(withText("32 +")))
+
+        // When
+        onView(withId(R.id.buttonDelete)).perform(click())
+
+        // Then
+        onView(withId(R.id.textView)).check(matches(withText("32")))
+    }
+
+    @Test
+    fun `두자리_수_이상의_피연산자_32일_때_지우기_버튼을_누르면_한자릿_수의_숫자3가_된다`() {
+        // Given
+        onView(withId(R.id.button3)).perform(click())
+        onView(withId(R.id.button2)).perform(click())
+        onView(withId(R.id.textView)).check(matches(withText("32")))
+        // When
+        onView(withId(R.id.buttonDelete)).perform(click())
+
+        // Then
+        onView(withId(R.id.textView)).check(matches(withText("3")))
+    }
+
+    @Test
+    fun `한자리_수의_피연산자_3일_때_지우기_버튼을_누르면_공백이_된다`() {
+        // Given
+        onView(withId(R.id.button3)).perform(click())
+        onView(withId(R.id.textView)).check(matches(withText("3")))
+
+        // When
+        onView(withId(R.id.buttonDelete)).perform(click())
+
+        // Then
+        onView(withId(R.id.textView)).check(matches(withText("")))
+    }
+
+    @Test
+    fun `3_덧셈기호_2일때_계산_버튼을_누르면_5를_반환한다`() {
+        // GIVEN
+        onView(withId(R.id.button3)).perform(click())
+        onView(withId(R.id.buttonPlus)).perform(click())
+        onView(withId(R.id.button2)).perform(click())
+
+        onView(withId(R.id.textView)).check(matches(withText("3 + 2")))
+
+        // When
+        onView(withId(R.id.buttonEquals)).perform(click())
+
+        // Then
+        onView(withId(R.id.textView)).check(matches(withText("5")))
+    }
+
+    @Test
+    fun `3_덧셈기호_일떄_계산_버튼을_누르면_결과가_나오지_않는다`() {
+        // GIVEN
+        onView(withId(R.id.button3)).perform(click())
+        onView(withId(R.id.buttonPlus)).perform(click())
+        onView(withId(R.id.textView)).check(matches(withText("3 +")))
+
+        // When
+        onView(withId(R.id.buttonEquals)).perform(click())
+
+        // Then
+        onView(withId(R.id.textView)).check(matches(withText("3 +")))
+    }
 }
