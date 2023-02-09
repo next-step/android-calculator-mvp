@@ -1,6 +1,5 @@
-package com.example.domain
+package com.nextstep.edu.calculator.domain
 
-import com.nextstep.edu.calculator.domain.Calculator
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThrows
 import org.junit.Before

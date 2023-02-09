@@ -18,8 +18,8 @@ class Calculator {
 
         for (i in 1 until operationList.size step 2) {
             val operator: Operator = Operator.find(operationList[i])
-            val temp = OperationParse.parse(operationList[i + 1])
-            result = operator.operate(result, temp)
+            val operand = OperationParse.parse(operationList[i + 1])
+            result = operator.operate(result, operand)
         }
 
         return result
