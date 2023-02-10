@@ -3,8 +3,6 @@ package camp.nextstep.edu.domain.calculator
 
 class ExpressionParser {
 
-    private val numericRegex by lazy { "-?[0-9]+(\\.[0-9]+)?".toRegex() }
-
 
     fun parse(
         expression: String?
@@ -49,6 +47,4 @@ class ExpressionParser {
 
         return true
     }
-
-    private fun String.isNumeric() = matches(numericRegex)
 }

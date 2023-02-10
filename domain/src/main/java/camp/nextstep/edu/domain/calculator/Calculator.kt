@@ -13,8 +13,10 @@ class Calculator {
         expressionItems: List<ExpressionItem>,
         accumulator: List<ExpressionItem> = listOf()
     ): Int = when {
-        pointer >= expressionItems.size ->
+        pointer >= expressionItems.size -> {
+            pointer = 0
             (accumulator.first() as Num).value
+        }
         accumulator.isEmpty() || accumulator.last() is Num -> {
             // 기호
             val head = expressionItems[pointer]
