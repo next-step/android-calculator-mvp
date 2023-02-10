@@ -1,5 +1,6 @@
 package camp.nextstep.edu.calculator
 
+import com.example.domain.Calculator
 import com.example.domain.Expression
 import com.example.domain.Operator
 import io.mockk.*
@@ -67,6 +68,29 @@ class MainPresenterTest {
 
         // then
         verify { view.showToastMessage(capture(expressionSlot)) }
+    }
+
+    @Test
+    fun `옳바른 수식 상태에서 이퀄사인 버튼을 누를 경우 수식을 계산한 결과 값이 보여야 한다`() {
+        // given
+        val expressionSlot: CapturingSlot<Expression> = slot()
+        every { view.showExpression(capture(expressionSlot)) } just Runs
+        every { view.showExpression(capture(expressionSlot)) } just Runs
+        every { view.showExpression(capture(expressionSlot)) } just Runs
+        every { view.showResult("6") } just Runs
+
+        presenter.appendOperandInExpression(3)
+        presenter.appendOperatorInExpression(Operator.PLUS)
+        presenter.appendOperandInExpression(3)
+
+        // when
+        presenter.returnResult()
+        val expression = expressionSlot.captured
+        val result = Calculator().evaluate(expression.value()).toString()
+
+        // then
+        assertEquals("6", result)
+        verify { view.showResult(result) }
     }
 
     @Test

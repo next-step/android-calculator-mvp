@@ -10,13 +10,17 @@ interface MainContract {
         fun showExpression(expression: Expression)
 
         fun showToastMessage(expression: Expression)
+
+        fun showResult(result: String)
     }
 
     interface Presenter {
         fun appendOperandInExpression(value: Int)
+
         fun appendOperatorInExpression(value: Operator)
 
-        fun returnResult() : String
+        fun returnResult()
+
         fun removeLastValueInExpression()
     }
 }

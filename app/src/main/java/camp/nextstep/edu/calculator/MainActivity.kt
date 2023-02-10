@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.buttonDivide.setOnClickListener { presenter.appendOperatorInExpression(Operator.DIVIDE) }
 
         binding.buttonDelete.setOnClickListener { presenter.removeLastValueInExpression() }
-        binding.buttonEquals.setOnClickListener { binding.textView.text = presenter.returnResult() }
+        binding.buttonEquals.setOnClickListener { presenter.returnResult() }
     }
 
     override fun showToastMessage(expression: Expression) {
@@ -45,6 +45,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             "The '${expression.value()}' is not a valid formula.",
             Toast.LENGTH_LONG
         ).show()
+    }
+
+    override fun showResult(result: String) {
+        binding.textView.text = result
     }
 
     override fun showExpression(expression: Expression) {

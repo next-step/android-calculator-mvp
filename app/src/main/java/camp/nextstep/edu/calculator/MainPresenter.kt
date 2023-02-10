@@ -26,12 +26,12 @@ class MainPresenter(
         view.showExpression(expression)
     }
 
-    override fun returnResult(): String {
+    override fun returnResult() {
         return try {
-            calculator.evaluate(expression.value()).toString()
+            val result = calculator.evaluate(expression.value()).toString()
+            view.showResult(result)
         } catch (exception: IllegalArgumentException) {
             view.showToastMessage(expression)
-            expression.value()
         }
     }
 }
