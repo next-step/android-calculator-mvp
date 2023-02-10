@@ -7,6 +7,7 @@ interface MainContract {
         val presenter: Presenter
         fun showResult(result: String)
         fun showExpression(expression: Expression)
+        fun showExceptionToast(errorMessage: String?)
     }
 
     interface Presenter {
