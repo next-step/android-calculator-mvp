@@ -5,8 +5,6 @@ import com.example.domain.Operator
 
 interface MainContract {
     interface View {
-        var presenter: Presenter
-
         fun showExpression(expression: Expression)
 
         fun showToastMessage(expression: Expression)
