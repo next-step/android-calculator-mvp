@@ -40,7 +40,6 @@ class MainPresenterTest {
         val expressionSlot: CapturingSlot<Expression> = slot()
 
         every { view.showExpression(capture(expressionSlot)) } just Runs
-        every { view.showExpression(capture(expressionSlot)) } just Runs
         presenter.appendOperandInExpression(3)
 
         // when
@@ -58,7 +57,6 @@ class MainPresenterTest {
         val expressionSlot: CapturingSlot<Expression> = slot()
 
         every { view.showExpression(capture(expressionSlot)) } just Runs
-        every { view.showExpression(capture(expressionSlot)) } just Runs
         every { view.showToastMessage(capture(expressionSlot)) } just Runs
         presenter.appendOperandInExpression(3)
         presenter.appendOperatorInExpression(Operator.PLUS)
@@ -74,8 +72,6 @@ class MainPresenterTest {
     fun `옳바른 수식 상태에서 이퀄사인 버튼을 누를 경우 수식을 계산한 결과 값이 보여야 한다`() {
         // given
         val expressionSlot: CapturingSlot<Expression> = slot()
-        every { view.showExpression(capture(expressionSlot)) } just Runs
-        every { view.showExpression(capture(expressionSlot)) } just Runs
         every { view.showExpression(capture(expressionSlot)) } just Runs
         every { view.showResult("6") } just Runs
 
@@ -98,8 +94,6 @@ class MainPresenterTest {
         // given
         val expressionSlot: CapturingSlot<Expression> = slot()
 
-        every { view.showExpression(capture(expressionSlot)) } just Runs
-        every { view.showExpression(capture(expressionSlot)) } just Runs
         every { view.showExpression(capture(expressionSlot)) } just Runs
 
         presenter.appendOperandInExpression(3)
