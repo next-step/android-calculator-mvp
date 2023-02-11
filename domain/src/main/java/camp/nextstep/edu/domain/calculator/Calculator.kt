@@ -3,13 +3,9 @@ package camp.nextstep.edu.domain.calculator
 
 class Calculator {
 
-    fun evaluate(expression: String?): Int {
-        val parsed = ExpressionParser().parse(expression)
-        return calculateActual(parsed)
+    fun evaluate(expression: List<ExpressionItem>): Int {
+        return calculateActual(expression)
     }
-
-    fun evaluate(expression: List<ExpressionItem>) =
-        calculateActual(expression)
 
     private var pointer = 0
     private tailrec fun calculateActual(
