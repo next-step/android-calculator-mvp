@@ -40,22 +40,29 @@ class MainActivity : AppCompatActivity() {
 
     private fun appendOperand(operand: Int) {
         expression.appendOperand(operand)
+        bindExpressionInTextView()
     }
 
     private fun appendOperator(op: Operator) {
         expression.appendOperator(op)
+        bindExpressionInTextView()
     }
 
     private fun removeLastValue() {
         expression.removeLastValue()
+        bindExpressionInTextView()
     }
 
     private fun calculateExpression() {
         try {
             binding.textView.text =
-                calculator.evaluate(expression.expressions.toString()).toString()
+                calculator.evaluate(expression.getExpressions()).toString()
         } catch (e: Exception) {
             Toast.makeText(applicationContext, e.message, Toast.LENGTH_LONG).show()
         }
+    }
+
+    private fun bindExpressionInTextView() {
+        binding.textView.text = expression.getExpressions()
     }
 }

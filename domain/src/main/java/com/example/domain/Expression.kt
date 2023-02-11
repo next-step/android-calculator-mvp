@@ -53,4 +53,23 @@ data class Expression(val expressions: List<Any> = emptyList()) {
             expressionList.add(lastExpression / 10)
         }
     }
+
+    fun getExpressions(): String {
+        var expressionStr = ""
+
+        expressionList.forEach { expression ->
+            if (expressionStr == "") expressionStr += getExpressionToAppend(expression)
+            else expressionStr += " ${getExpressionToAppend(expression)}"
+        }
+
+        return expressionStr
+    }
+
+    private fun getExpressionToAppend(expression: Any): String {
+        return when (expression) {
+            is Operator -> expression.op
+            is Int -> expression.toString()
+            else -> ""
+        }
+    }
 }
