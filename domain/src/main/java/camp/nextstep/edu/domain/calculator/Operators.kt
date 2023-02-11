@@ -8,21 +8,25 @@ sealed class Operators : ExpressionItem {
     object Plus : Operators() {
         override val symbol = "+"
         override fun calculate(first: Int, second: Int) = first + second
+        override fun toString() = symbol
     }
 
     object Minus : Operators() {
         override val symbol = "-"
         override fun calculate(first: Int, second: Int) = first - second
+        override fun toString() = symbol
     }
 
     object Multiply : Operators() {
         override val symbol = "*"
         override fun calculate(first: Int, second: Int) = first * second
+        override fun toString() = symbol
     }
 
     object Divide : Operators() {
         override val symbol = "/"
         override fun calculate(first: Int, second: Int) = first / second
+        override fun toString() = symbol
     }
 
     abstract fun calculate(first: Int, second: Int): Int

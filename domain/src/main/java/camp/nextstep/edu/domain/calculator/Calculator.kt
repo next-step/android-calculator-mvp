@@ -8,6 +8,9 @@ class Calculator {
         return calculateActual(parsed)
     }
 
+    fun evaluate(expression: List<ExpressionItem>) =
+        calculateActual(expression)
+
     private var pointer = 0
     private tailrec fun calculateActual(
         expressionItems: List<ExpressionItem>,

@@ -4,16 +4,17 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
-import camp.nextstep.edu.domain.calculator.Calculator
-import camp.nextstep.edu.domain.calculator.isNumeric
+import camp.nextstep.edu.domain.calculator.*
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private val expressions = mutableListOf<String>()
-
     private val calculator = Calculator()
+
+    private val expression = Expression { displayExpression ->
+        binding.textView.text = displayExpression
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,82 +22,47 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.button0.setOnClickListener { appendExpression("0") }
-        binding.button1.setOnClickListener { appendExpression("1") }
-        binding.button2.setOnClickListener { appendExpression("2") }
-        binding.button3.setOnClickListener { appendExpression("3") }
-        binding.button4.setOnClickListener { appendExpression("4") }
-        binding.button5.setOnClickListener { appendExpression("5") }
-        binding.button6.setOnClickListener { appendExpression("6") }
-        binding.button7.setOnClickListener { appendExpression("7") }
-        binding.button8.setOnClickListener { appendExpression("8") }
-        binding.button9.setOnClickListener { appendExpression("9") }
+        binding.button0.setOnClickListener { appendExpression(Num(0)) }
+        binding.button1.setOnClickListener { appendExpression(Num(1)) }
+        binding.button2.setOnClickListener { appendExpression(Num(2)) }
+        binding.button3.setOnClickListener { appendExpression(Num(3)) }
+        binding.button4.setOnClickListener { appendExpression(Num(4)) }
+        binding.button5.setOnClickListener { appendExpression(Num(5)) }
+        binding.button6.setOnClickListener { appendExpression(Num(6)) }
+        binding.button7.setOnClickListener { appendExpression(Num(7)) }
+        binding.button8.setOnClickListener { appendExpression(Num(8)) }
+        binding.button9.setOnClickListener { appendExpression(Num(9)) }
 
-        binding.buttonPlus.setOnClickListener { appendExpression("+") }
-        binding.buttonMinus.setOnClickListener { appendExpression("-") }
-        binding.buttonMultiply.setOnClickListener { appendExpression("*") }
-        binding.buttonDivide.setOnClickListener { appendExpression("/") }
+        binding.buttonPlus.setOnClickListener { appendExpression(Operators.of("+")) }
+        binding.buttonMinus.setOnClickListener { appendExpression(Operators.of("-")) }
+        binding.buttonMultiply.setOnClickListener { appendExpression(Operators.of("*")) }
+        binding.buttonDivide.setOnClickListener { appendExpression(Operators.of("/")) }
         binding.buttonDelete.setOnClickListener { removeLastExpression() }
         binding.buttonEquals.setOnClickListener {
-            binding.textView.text = calculate(calculator) { showErrorToast() }
+            binding.textView.text = calculate(calculator, expression) { showErrorToast() }
         }
     }
 
-    private fun appendExpression(item: String) {
-        expressions.lastOrNull()?.let { last ->
-            when {
-                last.isNumeric() && item.isNumeric() -> {
-                    expressions.removeLast()
-                    expressions.add(last + item)
-                }
-                !last.isNumeric() && !item.isNumeric() -> {
-                    expressions.removeLast()
-                    expressions.add(item)
-                }
-                else -> {
-                    expressions.add(item)
-                }
-            }
-        } ?: run {
-            if (item.isNumeric()) {
-                expressions.add(item)
-            }
-        }
-
-        binding.textView.text = expressions.joinToString(separator = " ")
+    private fun appendExpression(expressionItem: ExpressionItem) {
+        expression.append(expressionItem)
     }
 
     private fun removeLastExpression() {
-        if (expressions.isEmpty()) return
-
-        val last = expressions.last()
-        when {
-            !last.isNumeric() -> expressions.removeLast()
-            else -> {
-                val trimmed = last.split("").drop(1).dropLast(1)
-                expressions.removeLast()
-                expressions.addAll(trimmed.dropLast(1))
-            }
-        }
-
-        binding.textView.text = expressions.joinToString(separator = " ")
+        expression.removeLastExpression()
     }
 
     private fun calculate(
         calculator: Calculator,
+        expression: Expression,
         onError: () -> Unit
-    ): String {
-        val expressionString = expressions.joinToString(separator = " ")
-        return try {
-            val result = calculator.evaluate(expressionString).toString()
-            expressions.clear()
-            expressions.add(result)
+    ) =
+        try {
+            val result = calculator.evaluate(expression.get()).toString()
             result
         } catch (e: Exception) {
-            onError()
-            expressionString
+            onError.invoke()
+            expression.toString()
         }
-    }
 
     private fun showErrorToast() {
         Toast.makeText(
