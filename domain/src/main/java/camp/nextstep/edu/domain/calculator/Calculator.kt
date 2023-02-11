@@ -4,6 +4,7 @@ package camp.nextstep.edu.domain.calculator
 class Calculator {
 
     fun evaluate(expression: List<ExpressionItem>): Int {
+        ExpressionValidator().validOrError(expression)
         return calculateActual(expression)
     }
 
