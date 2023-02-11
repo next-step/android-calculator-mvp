@@ -1,6 +1,7 @@
 package camp.nextstep.edu.domain.calculator
 
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThrows
 import org.junit.Test
 
 
