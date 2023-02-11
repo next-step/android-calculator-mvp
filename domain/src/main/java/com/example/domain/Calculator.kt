@@ -21,7 +21,7 @@ class Calculator {
         }
 
         val expressionList = expressions.split(" ")
-        require(checkOddSize(expressionList)) { "불완전한 수식입니다." }
+        require(checkOddSize(expressionList)) { "완성되지 않은 수식입니다." }
 
         return expressionList
     }
