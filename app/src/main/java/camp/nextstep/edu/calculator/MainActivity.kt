@@ -1,8 +1,6 @@
 package camp.nextstep.edu.calculator
 
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
 import com.nextstep.edu.domain.CalculationExpression
@@ -35,6 +33,10 @@ class MainActivity : AppCompatActivity() {
         binding.buttonDivide.setOnClickListener { appendExpression(Operator.DIVIDE) }
 
         binding.buttonDelete.setOnClickListener { removeExpression() }
+
+        binding.buttonEquals.setOnClickListener {
+            binding.textView.text = calculate.calculate(calculationExpression.toString()).toString()
+        }
     }
 
     private fun appendExpression(operand: Int) {
