@@ -5,22 +5,22 @@ import com.nextstep.edu.calculator.domain.Expression
 import com.nextstep.edu.calculator.domain.Operator
 
 class MainPresenter(
-    private val view: MainContract.View
+    private val view: MainContract.View,
 ) : MainContract.Presenter {
 
-    private var expression : Expression = Expression.EMPTY
+    private var expression: Expression = Expression.EMPTY
     private val calculator: Calculator = Calculator()
 
+    /**
+     * 계산결과 실행
+     * */
     override fun callEquals() {
-        runCatching {
-            calculator.evaluate(expression.toString())
-        }.onSuccess { result ->
+        try {
+            val result = calculator.evaluate(expression.toString())
             view.showResult(result.toString())
-        }.onFailure {
-            when (it) {
-                is IllegalArgumentException -> view.showExceptionToast(it.message)
-                else -> throw it
-            }
+            expression = Expression(listOf(result))
+        } catch (e: IllegalArgumentException) {
+            view.showExceptionToast(e.message)
         }
     }
 
