@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         binding.textView.text = expression.toString()
     }
 
-    override fun showExceptionToast(errorMessage: String?) {
+    override fun showErrorMessage(errorMessage: String?) {
         Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
     }
 }

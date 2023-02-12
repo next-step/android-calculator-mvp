@@ -20,7 +20,7 @@ class MainPresenter(
             view.showResult(result.toString())
             expression = Expression(listOf(result))
         } catch (e: IllegalArgumentException) {
-            view.showExceptionToast(e.message)
+            view.showErrorMessage(e.message)
         }
     }
 
