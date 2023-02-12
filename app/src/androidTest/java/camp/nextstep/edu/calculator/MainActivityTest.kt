@@ -173,7 +173,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun `입력된_수식이_있을때_사용자가_지우기_버튼을_누르면_수식에_마지막으로_입력된_연산자_또는_피연산자가_지워져야_한다`() {
+    fun `32_더하기_1이_입력되어_있을때_지우기_버튼을_누르면_32_더하기가_보여야_한다`() {
         // given: 32 + 1
         onView(withId(R.id.button3)).perform(click())
         onView(withId(R.id.button2)).perform(click())
@@ -185,6 +185,14 @@ class MainActivityTest {
 
         // then: 32 +
         onView(withId(R.id.textView)).check(matches(withText("32 +")))
+    }
+
+    @Test
+    fun `32_더하기가_입력되어_있을때_지우기_버튼을_누르면_32가_보여야_한다`() {
+        // given: 32 +
+        onView(withId(R.id.button3)).perform(click())
+        onView(withId(R.id.button2)).perform(click())
+        onView(withId(R.id.buttonPlus)).perform(click())
 
         // when: 지우기
         onView(withId(R.id.buttonDelete)).perform(click())
