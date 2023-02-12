@@ -16,5 +16,6 @@ interface MainContract {
         fun callDelete()
         fun addOperator(operator: Operator)
         fun addOperation(operation: Int)
+        fun initExpression(expression: Expression)
     }
 }

@@ -40,4 +40,8 @@ class MainPresenter(
         view.showExpression(expression)
     }
 
+    override fun initExpression(expression: Expression) {
+        this.expression = expression
+    }
+
 }
