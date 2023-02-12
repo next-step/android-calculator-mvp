@@ -33,6 +33,8 @@ class MainActivity : AppCompatActivity() {
         binding.buttonMinus.setOnClickListener { appendExpression(Operator.SUBTRACT) }
         binding.buttonMultiply.setOnClickListener { appendExpression(Operator.MULTIPLY) }
         binding.buttonDivide.setOnClickListener { appendExpression(Operator.DIVIDE) }
+
+        binding.buttonDelete.setOnClickListener { }
     }
 
     private fun appendExpression(operand: Int) {
