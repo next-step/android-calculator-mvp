@@ -1,7 +1,7 @@
 package com.nextstep.edu.domain
 
 
-class CalculationExpression(var value: List<Any> = emptyList()) {
+class CalculationExpression(private var value: List<Any> = emptyList()) {
     init {
         if (value.isNotEmpty()) {
             validate(value)
@@ -21,13 +21,26 @@ class CalculationExpression(var value: List<Any> = emptyList()) {
         require(splitInputValue.last().toString().toIntOrNull() != null) { "마지막 값은 숫자여야 합니다." }
     }
 
+    fun getValue(): List<Any> {
+        return value.toList()
+    }
+
     fun add(operand: Int) {
-        value += "$operand"
+        when {
+            value.isNullOrEmpty() -> value += "$operand"
+            value.last() is Operator -> value += "$operand"
+            value.isNotEmpty() -> {
+                value = value.dropLast(1) + "${value.last()}$operand"
+            }
+        }
     }
 
     fun add(operator: Operator) {
-        println("TEST : $operator and ${operator.symbol}")
-        value += operator
+        when {
+            !value.isNullOrEmpty() -> {
+                value += listOf(operator)
+            }
+        }
     }
 
     companion object {

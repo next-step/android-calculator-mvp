@@ -3,7 +3,7 @@ package com.nextstep.edu.domain
 class Calculator {
     fun calculate(inputValue: String): Int {
         val calculationExpression = CalculationExpression(inputValue)
-        val splitInputValue = calculationExpression.value
+        val splitInputValue = calculationExpression.getValue()
 
         var accumulatedValue = splitInputValue[0].toString().toInt()
         var operatorSymbol: Operator
