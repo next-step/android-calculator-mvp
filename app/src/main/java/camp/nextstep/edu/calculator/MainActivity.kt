@@ -28,10 +28,20 @@ class MainActivity : AppCompatActivity() {
         binding.button7.setOnClickListener { appendExpression(7) }
         binding.button8.setOnClickListener { appendExpression(8) }
         binding.button9.setOnClickListener { appendExpression(9) }
+
+        binding.buttonPlus.setOnClickListener { appendExpression(Operator.ADDITION) }
+        binding.buttonMinus.setOnClickListener { appendExpression(Operator.SUBTRACT) }
+        binding.buttonMultiply.setOnClickListener { appendExpression(Operator.MULTIPLY) }
+        binding.buttonDivide.setOnClickListener { appendExpression(Operator.DIVIDE) }
     }
 
     private fun appendExpression(operand: Int) {
         calculationExpression.add(operand)
+        binding.textView.text = calculationExpression.toString()
+    }
+
+    private fun appendExpression(operator: Operator) {
+        calculationExpression.add(operator)
         binding.textView.text = calculationExpression.toString()
     }
 }
