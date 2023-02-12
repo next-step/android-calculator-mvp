@@ -29,12 +29,13 @@ class MainPresenter(
         view.showExpression(expression)
     }
 
-    override fun addExpression(operations: Any) {
-        expression = when (operations) {
-            is Operator -> expression.addOperator(operations)
-            is Int -> expression.addOperand(operations)
-            else -> throw IllegalArgumentException("Invalid Type")
-        }
+    override fun addOperator(operator: Operator) {
+        expression = expression.addOperator(operator)
+        view.showExpression(expression)
+    }
+
+    override fun addOperation(operation: Int) {
+        expression = expression.addOperand(operation)
         view.showExpression(expression)
     }
 

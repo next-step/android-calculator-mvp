@@ -2,6 +2,7 @@ package camp.nextstep.edu.calculator
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
@@ -24,45 +25,36 @@ class MainActivity : AppCompatActivity(), MainContract.View {
      * 버튼 Set Click Listener
      * */
     private fun initButtonClickListener() {
-        binding.button0.setOnClickListener(onOperationAndOperatorClickListener)
-        binding.button1.setOnClickListener(onOperationAndOperatorClickListener)
-        binding.button2.setOnClickListener(onOperationAndOperatorClickListener)
-        binding.button3.setOnClickListener(onOperationAndOperatorClickListener)
-        binding.button4.setOnClickListener(onOperationAndOperatorClickListener)
-        binding.button5.setOnClickListener(onOperationAndOperatorClickListener)
-        binding.button6.setOnClickListener(onOperationAndOperatorClickListener)
-        binding.button7.setOnClickListener(onOperationAndOperatorClickListener)
-        binding.button8.setOnClickListener(onOperationAndOperatorClickListener)
-        binding.button9.setOnClickListener(onOperationAndOperatorClickListener)
+        addOperandBy(binding.button0, 0)
+        addOperandBy(binding.button1, 0)
+        addOperandBy(binding.button2, 0)
+        addOperandBy(binding.button3, 0)
+        addOperandBy(binding.button4, 0)
+        addOperandBy(binding.button5, 0)
+        addOperandBy(binding.button6, 0)
+        addOperandBy(binding.button7, 0)
+        addOperandBy(binding.button8, 0)
+        addOperandBy(binding.button9, 0)
 
-        binding.buttonPlus.setOnClickListener(onOperationAndOperatorClickListener)
-        binding.buttonMinus.setOnClickListener(onOperationAndOperatorClickListener)
-        binding.buttonMultiply.setOnClickListener(onOperationAndOperatorClickListener)
-        binding.buttonDivide.setOnClickListener(onOperationAndOperatorClickListener)
+        addOperatorBy(binding.buttonPlus, Operator.Plus)
+        addOperatorBy(binding.buttonMinus, Operator.Minus)
+        addOperatorBy(binding.buttonMultiply, Operator.MultiBy)
+        addOperatorBy(binding.buttonDivide, Operator.DividedBy)
 
         binding.buttonDelete.setOnClickListener(onDeleteClickListener)
         binding.buttonEquals.setOnClickListener(onEqualsClickListener)
     }
 
-    private val onOperationAndOperatorClickListener : View.OnClickListener = View.OnClickListener { view ->
-        val expression = when (view) {
-            binding.button0 -> 0
-            binding.button1 -> 1
-            binding.button2 -> 2
-            binding.button3 -> 3
-            binding.button4 -> 4
-            binding.button5 -> 5
-            binding.button6 -> 6
-            binding.button7 -> 7
-            binding.button8 -> 8
-            binding.button9 -> 9
-            binding.buttonPlus -> Operator.Plus
-            binding.buttonMinus -> Operator.Minus
-            binding.buttonMultiply -> Operator.MultiBy
-            binding.buttonDivide -> Operator.DividedBy
-            else -> throw IllegalArgumentException("Invalid view")
+    private fun addOperatorBy(button: Button, operator: Operator) {
+        button.setOnClickListener {
+            presenter.addOperator(operator)
         }
-        presenter.addExpression(expression)
+    }
+
+    private fun addOperandBy(button: Button, operand: Int) {
+        button.setOnClickListener {
+            presenter.addOperation(operand)
+        }
     }
 
     /**

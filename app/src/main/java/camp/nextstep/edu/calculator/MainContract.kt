@@ -1,6 +1,7 @@
 package camp.nextstep.edu.calculator
 
 import com.nextstep.edu.calculator.domain.Expression
+import com.nextstep.edu.calculator.domain.Operator
 
 interface MainContract {
     interface View {
@@ -13,6 +14,7 @@ interface MainContract {
     interface Presenter {
         fun callEquals()
         fun callDelete()
-        fun addExpression(operations: Any)
+        fun addOperator(operator: Operator)
+        fun addOperation(operation: Int)
     }
 }
