@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         binding.buttonMultiply.setOnClickListener { appendExpression(Operator.MULTIPLY) }
         binding.buttonDivide.setOnClickListener { appendExpression(Operator.DIVIDE) }
 
-        binding.buttonDelete.setOnClickListener { }
+        binding.buttonDelete.setOnClickListener { removeExpression() }
     }
 
     private fun appendExpression(operand: Int) {
@@ -44,6 +44,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun appendExpression(operator: Operator) {
         calculationExpression.add(operator)
+        binding.textView.text = calculationExpression.toString()
+    }
+
+    private fun removeExpression() {
+        calculationExpression.remove()
         binding.textView.text = calculationExpression.toString()
     }
 }

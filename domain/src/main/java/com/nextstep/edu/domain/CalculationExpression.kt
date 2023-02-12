@@ -27,10 +27,10 @@ class CalculationExpression(private var value: List<Any> = emptyList()) {
 
     fun add(operand: Int) {
         when {
-            value.isNullOrEmpty() -> value += "$operand"
-            value.last() is Operator -> value += "$operand"
+            value.isNullOrEmpty() -> value += operand
+            value.last() is Operator -> value += operand
             value.isNotEmpty() -> {
-                value = value.dropLast(1) + "${value.last()}$operand"
+                value = value.dropLast(1) + "${value.last()}$operand".toInt()
             }
         }
     }
@@ -39,6 +39,15 @@ class CalculationExpression(private var value: List<Any> = emptyList()) {
         when {
             !value.isNullOrEmpty() -> {
                 value += listOf(operator)
+            }
+        }
+    }
+
+    fun remove() {
+        when (val lastValue = value.lastOrNull()) {
+            is Operator -> value = value.dropLast(1)
+            is Int -> {
+                value = value.dropLast(1) + listOfNotNull((lastValue / 10).takeIf { it != 0 })
             }
         }
     }
