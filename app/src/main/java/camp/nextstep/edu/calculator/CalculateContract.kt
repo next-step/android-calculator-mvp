@@ -1,14 +1,17 @@
 package camp.nextstep.edu.calculator
 
 import com.example.domain.OperationTerm
+import com.example.domain.Statement
 
 interface CalculateContract {
     interface View {
         var presenter: Presenter
 
-        fun showStatement(statement: String)
+        fun showStatement(statement: Statement)
 
-        fun showCalculateError(error: String)
+        fun showResult(result: Int)
+
+        fun showCalculateError(error: Throwable)
     }
 
     interface Presenter {

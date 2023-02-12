@@ -11,20 +11,20 @@ class CalculatePresenter(private val view: CalculateContract.View) : CalculateCo
 
     override fun addTerm(term: OperationTerm) {
         statement.addTerm(term)
-        view.showStatement(statement.termsToString())
+        view.showStatement(statement)
     }
 
     override fun removeTerm() {
         statement.removeTerm()
-        view.showStatement(statement.termsToString())
+        view.showStatement(statement)
     }
 
     override fun calculate() {
         try {
             val result = calculator.calculate(statement.termsToString())
-            view.showStatement(result.toString())
+            view.showResult(result)
         } catch (e: Throwable) {
-            view.showCalculateError(e.message.toString())
+            view.showCalculateError(e)
         }
     }
 }

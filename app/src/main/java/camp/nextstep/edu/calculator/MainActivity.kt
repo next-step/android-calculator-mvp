@@ -81,11 +81,15 @@ class MainActivity : AppCompatActivity(), CalculateContract.View {
         }
     }
 
-    override fun showStatement(statement: String) {
-        binding.textView.text = statement
+    override fun showStatement(statement: Statement) {
+        binding.textView.text = statement.termsToString()
     }
 
-    override fun showCalculateError(error: String) {
-        Toast.makeText(applicationContext, error, Toast.LENGTH_LONG).show()
+    override fun showResult(result: Int) {
+        binding.textView.text = result.toString()
+    }
+
+    override fun showCalculateError(error: Throwable) {
+        Toast.makeText(applicationContext, error.message.toString(), Toast.LENGTH_LONG).show()
     }
 }
