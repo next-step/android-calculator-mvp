@@ -30,7 +30,7 @@ class CalculationExpression(private var value: List<Any> = emptyList()) {
             value.isNullOrEmpty() -> value += operand
             value.last() is Operator -> value += operand
             value.isNotEmpty() -> {
-                value = value.dropLast(1) + "${value.last()}$operand".toInt()
+                value = value.dropLast(LAST_INPUT_VALUE) + "${value.last()}$operand".toInt()
             }
         }
     }
@@ -43,15 +43,17 @@ class CalculationExpression(private var value: List<Any> = emptyList()) {
 
     fun remove() {
         when (val lastValue = value.lastOrNull()) {
-            is Operator -> value = value.dropLast(1)
+            is Operator -> value = value.dropLast(LAST_INPUT_VALUE)
             is Int -> {
-                value = value.dropLast(1) + listOfNotNull((lastValue / 10).takeIf { it != 0 })
+                value = value.dropLast(LAST_INPUT_VALUE) + listOfNotNull((lastValue / OPERAND_DELETE_UNIT).takeIf { it != 0 })
             }
         }
     }
 
     companion object {
         private const val INPUT_VALUE_DELIMITER = " "
+        private const val LAST_INPUT_VALUE = 1
+        private const val OPERAND_DELETE_UNIT = 10
         private fun split(inputValue: String?): List<Any> {
             return validateNullOrBlank(inputValue).split(INPUT_VALUE_DELIMITER)
         }
