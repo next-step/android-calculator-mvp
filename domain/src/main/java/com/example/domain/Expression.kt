@@ -1,74 +1,86 @@
 package com.example.domain
 
-data class Expression(val expressions: List<Any> = emptyList()) {
-    private val expressionList = expressions.toMutableList()
+data class Expression(private val elements: List<Any> = emptyList()) {
 
-    fun appendOperator(operator: Operator) {
-        when (expressionList.lastOrNull()) {
+    // 순수 함수 - 같은 인자에 대해 항상 같은 값 반환, 함수 외부의 어떤 상태도 바꾸지 않음
+    fun appendOperator(operator: Operator): Expression {
+        val elementList: MutableList<Any> = mutableListOf()
+        elementList.addAll(elements) // 깊은 복사
+
+        when (elementList.lastOrNull()) {
             is Operator -> {
-                expressionList.removeLast()
-                expressionList.add(operator)
+                elementList.removeLast()
+                elementList.add(operator)
             }
 
             is Int -> {
-                expressionList.add(operator)
+                elementList.add(operator)
             }
         }
+        return Expression(elementList)
     }
 
-    fun appendOperand(operand: Int) {
-        when (val lastExpression = expressionList.lastOrNull()) {
+    fun appendOperand(operand: Int): Expression {
+        val elementList: MutableList<Any> = mutableListOf()
+        elementList.addAll(elements)
+
+        when (val lastElement = elementList.lastOrNull()) {
             is Operator -> {
-                expressionList.add(operand)
+                elementList.add(operand)
+            }
+
+            is Int -> {
+                elementList.removeLast()
+                elementList.add(lastElement * 10 + operand)
             }
 
             null -> {
-                expressionList.add(operand)
-            }
-
-            is Int -> {
-                expressionList.removeLast()
-                expressionList.add(lastExpression * 10 + operand)
+                elementList.add(operand)
             }
         }
+        return Expression(elementList)
     }
 
-    fun removeLastValue() {
-        when (val lastExpression = expressionList.lastOrNull()) {
+    fun removeLastValue(): Expression {
+        var elementList: MutableList<Any> = mutableListOf()
+        elementList.addAll(elements)
+
+        when (val lastElement = elementList.lastOrNull()) {
             is Operator -> {
-                expressionList.removeLast()
+                elementList.removeLast()
             }
 
             is Int -> {
-                removeUnits(lastExpression)
+                elementList = removeUnits(lastElement, elementList) // 얕은 복사
             }
         }
+        return Expression(elementList)
     }
 
-    private fun removeUnits(lastExpression: Int) {
-        if (lastExpression < 10) {
-            expressionList.removeLast()
+    private fun removeUnits(lastElement: Int, elementList: MutableList<Any>): MutableList<Any> {
+        if (lastElement < 10) {
+            elementList.removeLast()
         } else {
-            expressionList.removeLast()
-            expressionList.add(lastExpression / 10)
+            elementList.removeLast()
+            elementList.add(lastElement / 10)
         }
+        return elementList
     }
 
     fun getExpressions(): String {
         var expressionStr = ""
 
-        expressionList.forEach { expression ->
-            if (expressionStr == "") expressionStr += getExpressionToAppend(expression)
-            else expressionStr += " ${getExpressionToAppend(expression)}"
+        elements.forEach { element ->
+            if (expressionStr == "") expressionStr += getExpressionToAppend(element)
+            else expressionStr += " ${getExpressionToAppend(element)}"
         }
-
         return expressionStr
     }
 
-    private fun getExpressionToAppend(expression: Any): String {
-        return when (expression) {
-            is Operator -> expression.op
-            is Int -> expression.toString()
+    private fun getExpressionToAppend(element: Any): String {
+        return when (element) {
+            is Operator -> element.op
+            is Int -> element.toString()
             else -> ""
         }
     }

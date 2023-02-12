@@ -11,7 +11,7 @@ import com.example.domain.Operator
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val calculator = Calculator()
-    private val expression = Expression()
+    private var expression = Expression()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,17 +39,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun appendOperand(operand: Int) {
-        expression.appendOperand(operand)
+        expression = expression.appendOperand(operand)
         bindExpressionInTextView()
     }
 
     private fun appendOperator(op: Operator) {
-        expression.appendOperator(op)
+        expression = expression.appendOperator(op)
         bindExpressionInTextView()
     }
 
     private fun removeLastValue() {
-        expression.removeLastValue()
+        expression = expression.removeLastValue()
         bindExpressionInTextView()
     }
 
