@@ -1,7 +1,5 @@
 package com.example.domain
 
-private const val tens = 10
-
 @JvmInline
 value class Operand(val value: Int) : OperationTerm {
     init {
@@ -11,15 +9,16 @@ value class Operand(val value: Int) : OperationTerm {
     }
 
     fun isOverUnits(): Boolean {
-        return value >= tens
+        return value >= TENS
     }
 
     fun removeLastOrNull(): Operand? {
-        if (isOverUnits()) return Operand(value / tens)
+        if (isOverUnits()) return Operand(value / TENS)
         return null
     }
 
     companion object {
+        private const val TENS = 10
         fun fromTerm(term: String): Operand {
             val value = term.toIntOrNull()
             require(value != null) {
@@ -28,4 +27,5 @@ value class Operand(val value: Int) : OperationTerm {
             return Operand(value)
         }
     }
+
 }
