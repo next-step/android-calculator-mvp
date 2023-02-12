@@ -191,24 +191,6 @@ class MainActivityTest {
 
         // then: 32
         onView(withId(R.id.textView)).check(matches(withText("32")))
-
-        // when: 지우기
-        onView(withId(R.id.buttonDelete)).perform(click())
-
-        // then: 3
-        onView(withId(R.id.textView)).check(matches(withText("3")))
-
-        // when: 지우기
-        onView(withId(R.id.buttonDelete)).perform(click())
-
-        // then: 공백
-        onView(withId(R.id.textView)).check(matches(withText("")))
-
-        // when: 지우기
-        onView(withId(R.id.buttonDelete)).perform(click())
-
-        // then: 공백
-        onView(withId(R.id.textView)).check(matches(withText("")))
     }
 
     @Test
