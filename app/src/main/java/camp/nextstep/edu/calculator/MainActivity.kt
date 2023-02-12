@@ -1,6 +1,7 @@
 package camp.nextstep.edu.calculator
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
 import com.nextstep.edu.domain.CalculationExpression
@@ -35,7 +36,13 @@ class MainActivity : AppCompatActivity() {
         binding.buttonDelete.setOnClickListener { removeExpression() }
 
         binding.buttonEquals.setOnClickListener {
-            binding.textView.text = calculate.calculate(calculationExpression.toString()).toString()
+            runCatching {
+                binding.textView.text =
+                    calculate.calculate(calculationExpression.toString()).toString()
+            }.onFailure {
+                Toast.makeText(this, getString(R.string.incomplete_expression), Toast.LENGTH_SHORT)
+                    .show()
+            }
         }
     }
 
