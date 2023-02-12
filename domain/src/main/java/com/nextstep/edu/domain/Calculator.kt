@@ -5,13 +5,13 @@ class Calculator {
         val calculationExpression = CalculationExpression(inputValue)
         val splitInputValue = calculationExpression.value
 
-        var accumulatedValue = splitInputValue[0].toInt()
+        var accumulatedValue = splitInputValue[0].toString().toInt()
         var operatorSymbol: Operator
 
         for (index in 1 until splitInputValue.size step 2) {
-            operatorSymbol = Operator.of(splitInputValue[index])
+            operatorSymbol = Operator.of(splitInputValue[index].toString())
             accumulatedValue =
-                operatorSymbol.execute(accumulatedValue, splitInputValue[index + 1].toInt())
+                operatorSymbol.execute(accumulatedValue, splitInputValue[index + 1].toString().toInt())
         }
 
         return accumulatedValue

@@ -105,4 +105,8 @@ class MainActivityTest {
         onView(withId(R.id.textView)).check(ViewAssertions.matches(withText("9")))
     }
 
+    @Test
+    fun 입력된_피연산자가_없을_때_피연산자_입력_시_해당_숫자가_화면에_보여야_한다() {
+
+    }
 }
