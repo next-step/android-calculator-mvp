@@ -41,7 +41,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun appendExpression(operator: Operator) {
-        calculationExpression.add(operator)
-        binding.textView.text = calculationExpression.toString()
+        if (!calculationExpression.value.isNullOrEmpty()) {
+            calculationExpression.add(operator)
+            binding.textView.text = calculationExpression.toString()
+        }
     }
 }
