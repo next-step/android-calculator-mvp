@@ -15,12 +15,13 @@ class MainPresenter(
      * 계산결과 실행
      * */
     override fun callEquals() {
-        try {
-            val result = calculator.evaluate(expression.toString())
+        kotlin.runCatching {
+            calculator.evaluate(expression.toString())
+        }.onSuccess { result ->
             view.showResult(result.toString())
             expression = Expression(listOf(result))
-        } catch (e: IllegalArgumentException) {
-            view.showErrorMessage(e.message)
+        }.onFailure {
+            view.showErrorMessage(it.message)
         }
     }
 
