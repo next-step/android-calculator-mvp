@@ -33,10 +33,10 @@ class MainActivity : AppCompatActivity() {
         binding.button8.setOnClickListener { appendExpression(Num(8)) }
         binding.button9.setOnClickListener { appendExpression(Num(9)) }
 
-        binding.buttonPlus.setOnClickListener { appendExpression(Operators.of("+")) }
-        binding.buttonMinus.setOnClickListener { appendExpression(Operators.of("-")) }
-        binding.buttonMultiply.setOnClickListener { appendExpression(Operators.of("*")) }
-        binding.buttonDivide.setOnClickListener { appendExpression(Operators.of("/")) }
+        binding.buttonPlus.setOnClickListener { appendExpression(Operators.Plus) }
+        binding.buttonMinus.setOnClickListener { appendExpression(Operators.Minus) }
+        binding.buttonMultiply.setOnClickListener { appendExpression(Operators.Multiply) }
+        binding.buttonDivide.setOnClickListener { appendExpression(Operators.Divide) }
         binding.buttonDelete.setOnClickListener { removeLastExpression() }
         binding.buttonEquals.setOnClickListener {
             binding.textView.text = calculate(calculator, expression) { showErrorToast() }
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         onError: () -> Unit
     ) =
         try {
-            val result = calculator.evaluate(expression.get()).toString()
+            val result = calculator.evaluate(expression.expressions).toString()
             result
         } catch (e: Exception) {
             onError.invoke()

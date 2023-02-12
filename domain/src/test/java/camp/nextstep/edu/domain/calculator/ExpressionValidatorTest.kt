@@ -7,34 +7,31 @@ import org.junit.Test
 
 class ExpressionValidatorTest {
 
-    private val expressionValidator = ExpressionValidator()
-
-
     @Test
     fun `1 + 1`() {
         val expression = listOf(Num(1), Operators.of("+"), Num(1))
-        val isValid = expressionValidator.validOrError(expression)
+        val isValid = ExpressionValidator.validOrError(expression)
         assertEquals(true, isValid)
     }
 
     @Test
     fun `1 - 1`() {
         val expression = listOf(Num(1), Operators.of("-"), Num(1))
-        val isValid = expressionValidator.validOrError(expression)
+        val isValid = ExpressionValidator.validOrError(expression)
         assertEquals(true, isValid)
     }
 
     @Test
     fun `1 * 1`() {
         val expression = listOf(Num(1), Operators.of("*"), Num(1))
-        val isValid = expressionValidator.validOrError(expression)
+        val isValid = ExpressionValidator.validOrError(expression)
         assertEquals(true, isValid)
     }
 
     @Test
     fun `1 나누기 1`() {
         val expression = listOf(Num(1), Operators.of("/"), Num(1))
-        val isValid = expressionValidator.validOrError(expression)
+        val isValid = ExpressionValidator.validOrError(expression)
         assertEquals(true, isValid)
     }
 
@@ -42,7 +39,7 @@ class ExpressionValidatorTest {
     fun `빈 표현식을 입력하는 경우 IllegalArgumentException 이 발생한다_1`() {
         val expression = listOf<ExpressionItem>()
         assertThrows(IllegalArgumentException::class.java) {
-            expressionValidator.validOrError(expression)
+            ExpressionValidator.validOrError(expression)
         }
     }
 
@@ -66,7 +63,7 @@ class ExpressionValidatorTest {
 
         expressions.forEach {
             assertThrows(IllegalArgumentException::class.java) {
-                expressionValidator.validOrError(it)
+                ExpressionValidator.validOrError(it)
             }
         }
     }
