@@ -36,10 +36,8 @@ class CalculationExpression(private var value: List<Any> = emptyList()) {
     }
 
     fun add(operator: Operator) {
-        when {
-            !value.isNullOrEmpty() -> {
-                value += listOf(operator)
-            }
+        if (!value.isNullOrEmpty()) {
+            value += listOf(operator)
         }
     }
 
