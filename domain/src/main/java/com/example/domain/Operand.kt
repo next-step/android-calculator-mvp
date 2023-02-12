@@ -8,9 +8,8 @@ value class Operand(val value: Int) : OperationTerm {
         }
     }
 
-    fun isOverUnits(): Boolean {
-        return value >= TENS
-    }
+    fun isOverUnits(): Boolean = value >= TENS
+
 
     fun removeLastOrNull(): Operand? {
         if (isOverUnits()) return Operand(value / TENS)
