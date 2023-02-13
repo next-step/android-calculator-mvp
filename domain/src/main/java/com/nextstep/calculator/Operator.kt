@@ -1,7 +1,6 @@
 package com.nextstep.calculator
 
 import java.util.function.BinaryOperator
-import java.util.function.IntBinaryOperator
 
 /**
  * @author 박소연
@@ -9,7 +8,7 @@ import java.util.function.IntBinaryOperator
  * @updated 2023/02/06
  * @desc 사칙연산 기호의 enum class
  */
-enum class Operator(val char: Char) : BinaryOperator<Int>, IntBinaryOperator {
+enum class Operator(val char: Char) : BinaryOperator<Int> {
     PLUS('+') {
         override fun apply(num1: Int, num2: Int): Int = num1 + num2
     },
@@ -28,5 +27,5 @@ enum class Operator(val char: Char) : BinaryOperator<Int>, IntBinaryOperator {
         }
     };
 
-    override fun applyAsInt(t: Int, u: Int) = apply(t, u)
+    abstract override fun apply(num1: Int, num2: Int): Int
 }
