@@ -16,7 +16,7 @@ class Calculator {
     fun calculate(expression: String): Int {
         // 입력값이 null이거나 빈 공백 문자일 경우
         require(expression.isNotEmpty()) {
-            IllegalArgumentException("입력값이 null이거나 빈 공백 문자")
+            IllegalArgumentException("입력값이 null이거나 빈 공백 문자 - 입력값: $expression")
         }
 
         return checkExpression(expression)
@@ -94,7 +94,7 @@ class Calculator {
             MULTIPLY.char -> multiply(num1, num2)
             DIVIDE.char -> divide(num1, num2)
             // 사칙연산 기호가 아닌 경우
-            else -> throw IllegalArgumentException("사칙연산자가 아닌 기호")
+            else -> throw IllegalArgumentException("사칙연산자가 아닌 기호 - char: $operator")
         }
     }
 
