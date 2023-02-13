@@ -31,12 +31,12 @@ class Calculator {
         var isChar = false
 
         // 수식이 숫자로 시작하지 않는 경우 예외 발생
-        require(expression[0].equals(validNumber)) {
+        require(validNumber.contains(expression[0])) {
             IllegalArgumentException("수식이 숫자로 시작하지 않음 - 수식: $expression")
         }
 
         // 수식이 숫자로 끝나지 않는 경우 예외 발생
-        require(expression[expression.length - 1].equals(validNumber)) {
+        require(validNumber.contains(expression[expression.length - 1])) {
             IllegalArgumentException("수식이 숫자로 끝나지 않음 - 수식: $expression")
         }
 
@@ -69,15 +69,11 @@ class Calculator {
         checkIsOperator: (Boolean) -> Unit
     ) {
         when (char) {
-            in validNumber -> {
-                checkedExpression.invoke(subExpression + char)
-                checkIsOperator.invoke(true)
-            }
+            in validNumber -> checkedExpression.invoke(subExpression + char)
             in validOperator -> {
                 checkFirstOperator(currentOperator, subExpression) {
-                    checkedExpression.invoke(it)
+                    checkedExpression.invoke(it + char)
                 }
-                checkedExpression.invoke(subExpression + char)
                 checkedChar.invoke(char)
                 checkIsOperator.invoke(true)
             }
@@ -91,10 +87,11 @@ class Calculator {
         subExpression: String,
         checkedExpression: (String) -> Unit
     ) {
+        var subResult = subExpression
         if (currentOperator != null) {
-            val calculateSubResult = divideComponent(subExpression).toString()
-            checkedExpression.invoke(calculateSubResult)
+            subResult = divideComponent(subExpression).toString()
         }
+        checkedExpression.invoke(subResult)
     }
 
     // 수식 내 구성요소 분리
