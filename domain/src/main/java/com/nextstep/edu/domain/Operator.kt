@@ -1,16 +1,16 @@
 package com.nextstep.edu.domain
 
-enum class Operator(private val symbol: String) {
+enum class Operator(val symbol: String) {
     ADDITION("+") {
         override fun execute(leftOperand: Int, rightOperand: Int): Int = leftOperand + rightOperand
     },
     SUBTRACT("-") {
         override fun execute(leftOperand: Int, rightOperand: Int): Int = leftOperand - rightOperand
     },
-    MULTIPLY("*") {
+    MULTIPLY("×") {
         override fun execute(leftOperand: Int, rightOperand: Int): Int = leftOperand * rightOperand
     },
-    DIVIDE("/") {
+    DIVIDE("÷") {
         override fun execute(leftOperand: Int, rightOperand: Int): Int = leftOperand / rightOperand
     };
 
