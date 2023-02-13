@@ -34,6 +34,42 @@ class CalculatorTest {
     }
 
     @Test(expected = IllegalArgumentException::class)
+    fun `문자로 시작하는 수식이 입력되면 예외처리 해야한다`() {
+        val calculator = Calculator()
+
+        runCatching {
+            calculator.checkExpression("+2*3")
+        }.onFailure { e ->
+            e.printStackTrace()
+            throw IllegalArgumentException()
+        }
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun `문자로 끝나는 수식이 입력되면 예외처리 해야한다`() {
+        val calculator = Calculator()
+
+        runCatching {
+            calculator.checkExpression("2*3+")
+        }.onFailure { e ->
+            e.printStackTrace()
+            throw IllegalArgumentException()
+        }
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun `수식에 문자가 중복되어 나오면 예외처리 해야한다`() {
+        val calculator = Calculator()
+
+        runCatching {
+            calculator.checkExpression("2**3")
+        }.onFailure { e ->
+            e.printStackTrace()
+            throw IllegalArgumentException()
+        }
+    }
+
+    @Test(expected = IllegalArgumentException::class)
     fun `사칙연산자 외의 기호가 입력되면 null을 출력해야 한다`() {
         val calculator = Calculator()
 

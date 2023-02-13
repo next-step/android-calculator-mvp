@@ -25,18 +25,36 @@ class Calculator {
     /**
      * 수식 내 문자 체크 후 수식 생성
      * */
-    private fun checkExpression(expression: String): Int {
+    fun checkExpression(expression: String): Int {
         var currentOperator: Char? = null
         var subExpression = ""
+        var isChar = false
+
+        // 수식이 숫자로 시작하지 않는 경우 예외 발생
+        require(expression[0].equals(validNumber)) {
+            IllegalArgumentException("수식이 숫자로 시작하지 않음 - 수식: $expression")
+        }
+
+        // 수식이 숫자로 끝나지 않는 경우 예외 발생
+        require(expression[expression.length - 1].equals(validNumber)) {
+            IllegalArgumentException("수식이 숫자로 끝나지 않음 - 수식: $expression")
+        }
 
         for (c in expression) {
+            val lastCharIsOperator = isChar
+
             checkCharacter(
                 c,
                 currentOperator,
                 subExpression,
                 { checkExpression -> subExpression = checkExpression },
-                { checkCharacter -> currentOperator = checkCharacter }
+                { checkCharacter -> currentOperator = checkCharacter },
+                { checkIsChar -> isChar = checkIsChar }
             )
+
+            require(!(lastCharIsOperator && isChar)) {
+                IllegalArgumentException("수식에 연산자가 연달아 나옴 - 수식: $expression")
+            }
         }
         return divideComponent(subExpression)
     }
@@ -47,16 +65,21 @@ class Calculator {
         currentOperator: Char?,
         subExpression: String,
         checkedExpression: (String) -> Unit,
-        checkedChar: (Char) -> Unit
+        checkedChar: (Char) -> Unit,
+        checkIsOperator: (Boolean) -> Unit
     ) {
         when (char) {
-            in validNumber -> checkedExpression.invoke(subExpression + char)
+            in validNumber -> {
+                checkedExpression.invoke(subExpression + char)
+                checkIsOperator.invoke(true)
+            }
             in validOperator -> {
                 checkFirstOperator(currentOperator, subExpression) {
                     checkedExpression.invoke(it)
                 }
                 checkedExpression.invoke(subExpression + char)
                 checkedChar.invoke(char)
+                checkIsOperator.invoke(true)
             }
             else -> throw IllegalArgumentException("사칙연산자가 아닌 기호")
         }
