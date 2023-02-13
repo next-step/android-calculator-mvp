@@ -14,14 +14,9 @@ class Calculator {
     private fun calculate(numbers: List<Int>, operators: List<Operator>): Int {
         val numbers = numbers.toMutableList()
         operators.forEach {
-            val p0 = numbers.removeFirst()
-            val p1 = numbers.removeFirst()
-            val result = when (it) {
-                Operator.PLUS -> Operator.PLUS.applyAsInt(p0, p1)
-                Operator.SUB -> Operator.SUB.applyAsInt(p0, p1)
-                Operator.DIV -> Operator.DIV.applyAsInt(p0, p1)
-                Operator.MUL -> Operator.MUL.applyAsInt(p0, p1)
-            }
+            val leftNumber = numbers.removeFirst()
+            val rightNumber = numbers.removeFirst()
+            val result = it.applyAsInt(leftNumber, rightNumber)
             numbers.add(0, result)
         }
         return numbers.first()

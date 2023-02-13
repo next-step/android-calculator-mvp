@@ -4,16 +4,16 @@ import java.util.function.IntBinaryOperator
 
 enum class Operator(val value: String) : IntBinaryOperator {
     PLUS("+") {
-        override fun applyAsInt(p0: Int, p1: Int): Int = p0 + p1
+        override fun applyAsInt(leftNumber: Int, rightNumber: Int): Int = leftNumber + rightNumber
     },
     SUB("-") {
-        override fun applyAsInt(p0: Int, p1: Int): Int = p0 - p1
+        override fun applyAsInt(leftNumber: Int, rightNumber: Int): Int = leftNumber - rightNumber
     },
-    MUL("*") {
-        override fun applyAsInt(p0: Int, p1: Int): Int = p0 * p1
+    MUL("×") {
+        override fun applyAsInt(leftNumber: Int, rightNumber: Int): Int = leftNumber * rightNumber
     },
-    DIV("/") {
-        override fun applyAsInt(p0: Int, p1: Int): Int = p0 / p1
+    DIV("÷") {
+        override fun applyAsInt(leftNumber: Int, rightNumber: Int): Int = leftNumber / rightNumber
     };
 
     companion object {
