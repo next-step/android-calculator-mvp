@@ -8,52 +8,34 @@ class Expression(
         get() = expressions.joinToString(" ")
 
     fun updateExpressions(input: String) {
-        //입력된 피연산자가 없을때
-
         if (expressions.isEmpty()) {
-            //입력이 숫자면
-            if (isNumber(input)) {
-                expressions.add(input)
-            }
-
+            expressions.add(input)
+            return
         }
-        //입력된 피연산자가 있을때
-        else {
-            //입력이 숫자면
-            val last = expressions.last()
-            if (isNumber(last)) {
-                if (isNumber(input)) {
-                    expressions[expressions.lastIndex] =
-                        ((last.toInt() * 10) + input.toInt()).toString()
-                } else {
-                    expressions.add(input)
-                }
-            } else {
-                if (isNumber(input)) {
-                    expressions.add(input)
-                } else {
-                    expressions.add(input)
-                }
+        val last = expressions.last()
 
-            }
-
+        if (isInt(last) && isInt(input)) {
+            expressions[expressions.lastIndex] =
+                ((last.toInt() * 10) + input.toInt()).toString()
+        } else {
+            expressions.add(input)
         }
-
     }
+
 
     fun delete() {
-        if (expressions.isNotEmpty()) {
-            val exp = expressions.last()
-            if (isNumber(exp) && exp.length > 1) {
-                val newExp = exp.substring(0, exp.length - 1)
-                expressions[expressions.lastIndex] = newExp
-            } else {
-                expressions.removeLast()
-            }
-
+        if (expressions.isEmpty()) {
+            return
         }
-    }
+        val exp = expressions.last()
+        if (isInt(exp) && exp.length > MINIMUM_NUMBER) {
+            val newExp = exp.substring(0, exp.length - 1)
+            expressions[expressions.lastIndex] = newExp
+        } else {
+            expressions.removeLast()
+        }
 
+    }
 
     fun calculateAndReset() {
         val result = calculator.run(text)
@@ -61,8 +43,11 @@ class Expression(
         expressions.add(result.toString())
     }
 
-    private fun isNumber(input: String): Boolean {
+    private fun isInt(input: String): Boolean {
         return input.toIntOrNull() != null
     }
 
+    companion object {
+        const val MINIMUM_NUMBER = 1
+    }
 }
