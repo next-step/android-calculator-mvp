@@ -5,94 +5,77 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
 
-class CalculatorActivity : AppCompatActivity() {
+class CalculatorActivity : AppCompatActivity(), CalculatorContract.View {
     private lateinit var binding: ActivityMainBinding
+    override lateinit var presenter: CalculatorContract.Presenter
 
-    private val expression = Expression(Calculator())
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        presenter = CalculatorPresenter(this)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupListener()
-
     }
-
 
     private fun setupListener() {
-
         binding.button0.setOnClickListener {
-            expression.updateExpressions(binding.button0.text.toString())
-            binding.textView.text = expression.text
+            presenter.updateExpressions(binding.button0.text.toString())
         }
         binding.button1.setOnClickListener {
-            expression.updateExpressions(binding.button1.text.toString())
-            binding.textView.text = expression.text
+            presenter.updateExpressions(binding.button1.text.toString())
         }
         binding.button2.setOnClickListener {
-            expression.updateExpressions(binding.button2.text.toString())
-            binding.textView.text = expression.text
+            presenter.updateExpressions(binding.button2.text.toString())
         }
         binding.button3.setOnClickListener {
-            expression.updateExpressions(binding.button3.text.toString())
-            binding.textView.text = expression.text
+            presenter.updateExpressions(binding.button3.text.toString())
+
         }
         binding.button4.setOnClickListener {
-            expression.updateExpressions(binding.button4.text.toString())
-            binding.textView.text = expression.text
+            presenter.updateExpressions(binding.button4.text.toString())
         }
         binding.button5.setOnClickListener {
-            expression.updateExpressions(binding.button5.text.toString())
-            binding.textView.text = expression.text
+            presenter.updateExpressions(binding.button5.text.toString())
         }
         binding.button6.setOnClickListener {
-            expression.updateExpressions(binding.button6.text.toString())
-            binding.textView.text = expression.text
+            presenter.updateExpressions(binding.button6.text.toString())
         }
         binding.button7.setOnClickListener {
-            expression.updateExpressions(binding.button7.text.toString())
-            binding.textView.text = expression.text
+            presenter.updateExpressions(binding.button7.text.toString())
         }
         binding.button8.setOnClickListener {
-            expression.updateExpressions(binding.button8.text.toString())
-            binding.textView.text = expression.text
+            presenter.updateExpressions(binding.button8.text.toString())
         }
-
         binding.button9.setOnClickListener {
-            expression.updateExpressions(binding.button9.text.toString())
-            binding.textView.text = expression.text
+            presenter.updateExpressions(binding.button9.text.toString())
         }
-
         binding.buttonDivide.setOnClickListener {
-            expression.updateExpressions(binding.buttonDivide.text.toString())
-            binding.textView.text = expression.text
+            presenter.updateExpressions(binding.buttonDivide.text.toString())
         }
         binding.buttonMinus.setOnClickListener {
-            expression.updateExpressions(binding.buttonMinus.text.toString())
-            binding.textView.text = expression.text
+            presenter.updateExpressions(binding.buttonMinus.text.toString())
         }
         binding.buttonMultiply.setOnClickListener {
-            expression.updateExpressions(binding.buttonMultiply.text.toString())
-            binding.textView.text = expression.text
+            presenter.updateExpressions(binding.buttonMultiply.text.toString())
         }
         binding.buttonPlus.setOnClickListener {
-            expression.updateExpressions(binding.buttonPlus.text.toString())
-            binding.textView.text = expression.text
+            presenter.updateExpressions(binding.buttonPlus.text.toString())
         }
-
         binding.buttonDelete.setOnClickListener {
-            expression.delete()
-            binding.textView.text = expression.text
+            presenter.deleteLast()
         }
-
         binding.buttonEquals.setOnClickListener {
-
-            try {
-                expression.calculateAndReset()
-                binding.textView.text = expression.text
-            } catch (e: IllegalArgumentException) {
-                Toast.makeText(this, "완성되지 않은 수식 입니다.", Toast.LENGTH_SHORT).show()
-            }
+            presenter.calculateAndReset()
         }
     }
 
+    /** 수식을 화면에 출력 */
+    override fun showExpression(expression: String) {
+        binding.textView.text = expression.toString()
+    }
+
+    /** 에러 메세지 출력 */
+    override fun showIncompleteExpressionError() {
+        Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
+    }
 }
