@@ -52,8 +52,8 @@ data class Expression(
 
     override fun toString(): String {
         return operations.joinToString(separator = " ") {
-            return@joinToString if (it is Operator) {
-                "${it.symbol}"
+            if (it is Operator) {
+                it.symbol
             } else {
                 "$it"
             }

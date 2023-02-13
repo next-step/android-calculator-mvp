@@ -2,21 +2,22 @@ package camp.nextstep.edu.calculator
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
-import com.nextstep.edu.calculator.domain.Calculator
 import com.nextstep.edu.calculator.domain.Expression
 import com.nextstep.edu.calculator.domain.Operator
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
-    private val calculator: Calculator = Calculator()
-    private var expression : Expression = Expression()
+    override lateinit var presenter: MainContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        presenter = MainPresenter(this)
         initButtonClickListener()
     }
 
@@ -24,78 +25,61 @@ class MainActivity : AppCompatActivity() {
      * 버튼 Set Click Listener
      * */
     private fun initButtonClickListener() {
-        binding.button0.setOnClickListener(setOnNumberClickListener())
-        binding.button1.setOnClickListener(setOnNumberClickListener())
-        binding.button2.setOnClickListener(setOnNumberClickListener())
-        binding.button3.setOnClickListener(setOnNumberClickListener())
-        binding.button4.setOnClickListener(setOnNumberClickListener())
-        binding.button5.setOnClickListener(setOnNumberClickListener())
-        binding.button6.setOnClickListener(setOnNumberClickListener())
-        binding.button7.setOnClickListener(setOnNumberClickListener())
-        binding.button8.setOnClickListener(setOnNumberClickListener())
-        binding.button9.setOnClickListener(setOnNumberClickListener())
+        addOperandBy(binding.button0, 0)
+        addOperandBy(binding.button1, 1)
+        addOperandBy(binding.button2, 2)
+        addOperandBy(binding.button3, 3)
+        addOperandBy(binding.button4, 4)
+        addOperandBy(binding.button5, 5)
+        addOperandBy(binding.button6, 6)
+        addOperandBy(binding.button7, 7)
+        addOperandBy(binding.button8, 8)
+        addOperandBy(binding.button9, 9)
 
-        binding.buttonPlus.setOnClickListener(setOnOperateClickListener())
-        binding.buttonMinus.setOnClickListener(setOnOperateClickListener())
-        binding.buttonMultiply.setOnClickListener(setOnOperateClickListener())
-        binding.buttonDivide.setOnClickListener(setOnOperateClickListener())
-        binding.buttonDelete.setOnClickListener(setOnDeleteClickListener())
-        binding.buttonEquals.setOnClickListener(setOnEqualsClickListener())
+        addOperatorBy(binding.buttonPlus, Operator.Plus)
+        addOperatorBy(binding.buttonMinus, Operator.Minus)
+        addOperatorBy(binding.buttonMultiply, Operator.MultiBy)
+        addOperatorBy(binding.buttonDivide, Operator.DividedBy)
+
+        binding.buttonDelete.setOnClickListener(onDeleteClickListener)
+        binding.buttonEquals.setOnClickListener(onEqualsClickListener)
     }
 
-    /**
-     * Operand Click Listener
-     * */
-    private fun setOnNumberClickListener() = View.OnClickListener { view ->
-
-        val operand = when (view) {
-            binding.button0 -> 0
-            binding.button1 -> 1
-            binding.button2 -> 2
-            binding.button3 -> 3
-            binding.button4 -> 4
-            binding.button5 -> 5
-            binding.button6 -> 6
-            binding.button7 -> 7
-            binding.button8 -> 8
-            binding.button9 -> 9
-            else -> throw IllegalArgumentException("Invalid view")
+    private fun addOperatorBy(button: Button, operator: Operator) {
+        button.setOnClickListener {
+            presenter.addOperator(operator)
         }
-
-        expression = expression.addOperand(operand)
-        binding.textView.text = expression.toString()
-
     }
 
-    /**
-     * Operator Click Listener
-     * */
-    private fun setOnOperateClickListener() = View.OnClickListener { view ->
-
-        val `operator` = when (view) {
-            binding.buttonPlus -> Operator.Plus
-            binding.buttonMinus -> Operator.Minus
-            binding.buttonMultiply -> Operator.MultiBy
-            binding.buttonDivide -> Operator.DividedBy
-            else -> throw IllegalArgumentException("Invalid view")
+    private fun addOperandBy(button: Button, operand: Int) {
+        button.setOnClickListener {
+            presenter.addOperation(operand)
         }
-
-        expression = expression.addOperator(`operator`)
-        binding.textView.text = expression.toString()
-    }
-
-    /**
-     * Delete Click Listener
-     * */
-    private fun setOnDeleteClickListener() = View.OnClickListener {
-        expression = expression.deleteOperations()
-        binding.textView.text = expression.toString()
     }
 
     /**
      * Equals Click Listener
      * */
-    private fun setOnEqualsClickListener() = View.OnClickListener {
-        binding.textView.text = "${calculator.evaluate(binding.textView.text.toString())}"
+    private val onEqualsClickListener = View.OnClickListener {
+        presenter.callEquals()
+    }
+
+    /**
+     * Equals Click Listener
+     * */
+    private val onDeleteClickListener = View.OnClickListener {
+        presenter.callDelete()
+    }
+
+    override fun showResult(result: String) {
+        binding.textView.text = result
+    }
+
+    override fun showExpression(expression: Expression) {
+        binding.textView.text = expression.toString()
+    }
+
+    override fun showErrorMessage(errorMessage: String?) {
+        Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
     }
 }
