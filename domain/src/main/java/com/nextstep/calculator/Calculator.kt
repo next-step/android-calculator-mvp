@@ -89,31 +89,12 @@ class Calculator {
     // 연산자 체크 및 계산
     private fun calculateSubExpression(num1: Int, num2: Int, operator: Char): Int {
         return when (operator) {
-            PLUS.char -> plus(num1, num2)
-            MINUS.char -> minus(num1, num2)
-            MULTIPLY.char -> multiply(num1, num2)
-            DIVIDE.char -> divide(num1, num2)
+            PLUS.char -> PLUS.apply(num1, num2)
+            MINUS.char -> MINUS.apply(num1, num2)
+            MULTIPLY.char -> MULTIPLY.apply(num1, num2)
+            DIVIDE.char -> DIVIDE.apply(num1, num2)
             // 사칙연산 기호가 아닌 경우
             else -> throw IllegalArgumentException("사칙연산자가 아닌 기호 - char: $operator")
         }
-    }
-
-    private fun plus(num1: Int, num2: Int): Int {
-        return num1 + num2
-    }
-
-    private fun minus(num1: Int, num2: Int): Int {
-        return num1 - num2
-    }
-
-    private fun multiply(num1: Int, num2: Int): Int {
-        return num1 * num2
-    }
-
-    private fun divide(num1: Int, num2: Int): Int {
-        require(num2 != 0) {
-            IllegalArgumentException("0으로 나눌 수 없다")
-        }
-        return num1 / num2
     }
 }
