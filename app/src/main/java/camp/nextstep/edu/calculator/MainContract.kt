@@ -6,8 +6,6 @@ import camp.nextstep.edu.domain.calculator.ExpressionItem
 interface MainContract {
 
     interface View {
-        var presenter: Presenter
-
 
         fun showExpression(expression: String)
 

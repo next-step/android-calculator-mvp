@@ -5,28 +5,30 @@ class Expression(
     private val thunk: (String) -> Unit
 ) {
 
-    private val expressions = mutableListOf<ExpressionItem>()
+    private val _expressions = mutableListOf<ExpressionItem>()
+    val expressions: List<ExpressionItem>
+        get() = _expressions.toList()
 
 
     fun append(input: ExpressionItem) {
-        expressions.lastOrNull()?.let { last ->
+        _expressions.lastOrNull()?.let { last ->
             when {
                 last is Num && input is Num -> {
-                    expressions.removeLast()
-                    expressions.add(Num("${last.value}${input.value}".toInt()))
+                    _expressions.removeLast()
+                    _expressions.add(Num("${last.value}${input.value}".toInt()))
                 }
                 last !is Num && input !is Num -> {
-                    expressions.removeLast()
-                    expressions.add(input)
+                    _expressions.removeLast()
+                    _expressions.add(input)
                 }
                 else -> {
-                    expressions.add(input)
+                    _expressions.add(input)
                 }
 
             }
         } ?: run {
             if (input is Num) {
-                expressions.add(input)
+                _expressions.add(input)
             }
         }
 
@@ -34,18 +36,18 @@ class Expression(
     }
 
     fun removeLastExpression() {
-        if (expressions.isEmpty()) return
+        if (_expressions.isEmpty()) return
 
-        when (val last = expressions.last()) {
-            is Operators -> expressions.removeLast()
+        when (val last = _expressions.last()) {
+            is Operators -> _expressions.removeLast()
             is Num -> {
                 val lastValue = last.value
                 if (lastValue > 9) {
                     val dropped = lastValue.toString().dropLast(1)
-                    expressions.removeLast()
-                    expressions.add(Num(dropped.toInt()))
+                    _expressions.removeLast()
+                    _expressions.add(Num(dropped.toInt()))
                 } else {
-                    expressions.removeLast()
+                    _expressions.removeLast()
                 }
             }
         }
@@ -53,9 +55,7 @@ class Expression(
         thunk.invoke(toString())
     }
 
-    fun clear() = expressions.clear()
-
-    fun get(): List<ExpressionItem> = expressions
+    fun clear() = _expressions.clear()
 
     override fun toString() =
         expressions.joinToString(separator = " ", transform = ExpressionItem::toString)

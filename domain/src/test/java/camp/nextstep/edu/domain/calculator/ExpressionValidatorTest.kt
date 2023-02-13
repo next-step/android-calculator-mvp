@@ -36,7 +36,7 @@ class ExpressionValidatorTest {
     }
 
     @Test
-    fun `빈 표현식을 입력하는 경우 IllegalArgumentException 이 발생한다_1`() {
+    fun `빈 표현식을 입력하는 경우 IllegalArgumentException 이 발생한다`() {
         val expression = listOf<ExpressionItem>()
         assertThrows(IllegalArgumentException::class.java) {
             ExpressionValidator.validOrError(expression)
@@ -44,7 +44,7 @@ class ExpressionValidatorTest {
     }
 
     @Test
-    fun `유효하지 않은 표현식을 입력했을 경우는 IllegalArgumentException 을 뱉는다_1`() {
+    fun `유효하지 않은 표현식을 입력했을 경우는 IllegalArgumentException 을 뱉는다`() {
         val expression_0 = listOf(Operators.Plus, Num(1))
         val expression_1 = listOf(Operators.Plus)
         val expression_2 = listOf(Operators.Plus, Num(1), Operators.Multiply)

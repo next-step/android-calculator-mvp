@@ -28,14 +28,13 @@ class MainPresenter(
     override fun calculate(
         onError: () -> Unit
     ) {
-        try {
-            val tempResult = calculator.evaluate(expression.get())
+        runCatching {
+            calculator.evaluate(expression.expressions)
+        }.onSuccess { result ->
             expression.clear()
-            expression.append(Num(tempResult))
-            tempResult.toString()
-        } catch (e: Exception) {
+            expression.append(Num(result))
+        }.onFailure {
             onError.invoke()
-            expression.toString()
         }
     }
 }

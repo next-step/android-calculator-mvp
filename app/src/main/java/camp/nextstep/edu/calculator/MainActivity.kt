@@ -10,7 +10,7 @@ import camp.nextstep.edu.domain.calculator.Operators
 
 class MainActivity : AppCompatActivity(), MainContract.View {
 
-    override lateinit var presenter: MainContract.Presenter
+    private lateinit var presenter: MainContract.Presenter
 
     private lateinit var binding: ActivityMainBinding
 
