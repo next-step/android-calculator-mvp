@@ -1,7 +1,5 @@
 package camp.nextstep.edu.calculator
 
-import camp.nextstep.edu.domain.calculator.Calculator
-import camp.nextstep.edu.domain.calculator.Expression
 import camp.nextstep.edu.domain.calculator.ExpressionItem
 
 
@@ -12,8 +10,6 @@ interface MainContract {
 
 
         fun showExpression(expression: String)
-
-        fun showResult(result: String)
 
         fun showError()
     }

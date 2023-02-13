@@ -9,28 +9,28 @@ class ExpressionValidatorTest {
 
     @Test
     fun `1 + 1`() {
-        val expression = listOf(Num(1), Operators.of("+"), Num(1))
+        val expression = listOf(Num(1), Operators.Plus, Num(1))
         val isValid = ExpressionValidator.validOrError(expression)
         assertEquals(true, isValid)
     }
 
     @Test
     fun `1 - 1`() {
-        val expression = listOf(Num(1), Operators.of("-"), Num(1))
+        val expression = listOf(Num(1), Operators.Minus, Num(1))
         val isValid = ExpressionValidator.validOrError(expression)
         assertEquals(true, isValid)
     }
 
     @Test
     fun `1 * 1`() {
-        val expression = listOf(Num(1), Operators.of("*"), Num(1))
+        val expression = listOf(Num(1), Operators.Multiply, Num(1))
         val isValid = ExpressionValidator.validOrError(expression)
         assertEquals(true, isValid)
     }
 
     @Test
     fun `1 나누기 1`() {
-        val expression = listOf(Num(1), Operators.of("/"), Num(1))
+        val expression = listOf(Num(1), Operators.Divide, Num(1))
         val isValid = ExpressionValidator.validOrError(expression)
         assertEquals(true, isValid)
     }
@@ -45,16 +45,16 @@ class ExpressionValidatorTest {
 
     @Test
     fun `유효하지 않은 표현식을 입력했을 경우는 IllegalArgumentException 을 뱉는다_1`() {
-        val expression_0 = listOf(Operators.of("+"), Num(1))
-        val expression_1 = listOf(Operators.of("+"))
-        val expression_2 = listOf(Operators.of("+"), Num(1), Operators.of("*"))
+        val expression_0 = listOf(Operators.Plus, Num(1))
+        val expression_1 = listOf(Operators.Plus)
+        val expression_2 = listOf(Operators.Plus, Num(1), Operators.Multiply)
         val expression_3 =
-            listOf(Num(1), Operators.of("+"), Operators.of("+"), Operators.of("+"), Num(1))
+            listOf(Num(1), Operators.Plus, Operators.Plus, Operators.Plus, Num(1))
         val expression_4 =
-            listOf(Num(1), Operators.of("+"), Operators.of("-"), Operators.of("+"), Num(1))
+            listOf(Num(1), Operators.Plus, Operators.Minus, Operators.Plus, Num(1))
         val expression_5 =
-            listOf(Num(1), Num(1), Operators.of("-"), Operators.of("+"), Num(1))
-        val expression_6 = listOf(Num(1), Operators.of("+"))
+            listOf(Num(1), Num(1), Operators.Minus, Operators.Plus, Num(1))
+        val expression_6 = listOf(Num(1), Operators.Plus)
         val expressions = listOf(
             expression_0, expression_1, expression_2,
             expression_3, expression_4, expression_5,
