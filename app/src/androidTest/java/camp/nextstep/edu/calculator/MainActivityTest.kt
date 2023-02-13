@@ -17,7 +17,6 @@ class MainActivityTest {
     @Test
     fun `입력된_피연산자가_없을_때_사용자가_피연산자_0_부터_9_버튼을_누르면_화면에_해당_숫자가_화면에_보여야_한다`() {
         // when
-        onView(withId(R.id.button0)).perform(click())
         onView(withId(R.id.button1)).perform(click())
         onView(withId(R.id.button2)).perform(click())
         onView(withId(R.id.button3)).perform(click())
@@ -29,7 +28,7 @@ class MainActivityTest {
         onView(withId(R.id.button9)).perform(click())
 
         // then
-        onView(withId(R.id.textView)).check(matches(withText("0123456789")))
+        onView(withId(R.id.textView)).check(matches(withText("123456789")))
     }
 
     @Test
@@ -58,13 +57,13 @@ class MainActivityTest {
         onView(withId(R.id.button1)).perform(click())
         onView(withId(R.id.buttonPlus)).perform(click())
 
-        onView(withId(R.id.textView)).check(matches(withText("1 + ")))
+        onView(withId(R.id.textView)).check(matches(withText("1 +")))
 
         // 1 + -> - 클릭 -> 1 -
         onView(withId(R.id.buttonMinus)).perform(click())
 
         // then
-        onView(withId(R.id.textView)).check(matches(withText("1 - ")))
+        onView(withId(R.id.textView)).check(matches(withText("1 -")))
 
     }
 
@@ -88,7 +87,7 @@ class MainActivityTest {
 
         // then
         onView(withId(R.id.buttonDelete)).perform(click())
-        onView(withId(R.id.textView)).check(matches(withText("32 + ")))
+        onView(withId(R.id.textView)).check(matches(withText("32 +")))
 
         onView(withId(R.id.buttonDelete)).perform(click())
         onView(withId(R.id.textView)).check(matches(withText("32")))

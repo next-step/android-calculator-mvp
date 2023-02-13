@@ -6,9 +6,9 @@ import com.nextstep.edu.calculator.domain.Operator
 
 class MainPresenter(
     private val view: MainContract.View,
+    private var expression: Expression = Expression.EMPTY
 ) : MainContract.Presenter {
 
-    private var expression: Expression = Expression.EMPTY
     private val calculator: Calculator = Calculator()
 
     /**
@@ -38,10 +38,6 @@ class MainPresenter(
     override fun addOperation(operation: Int) {
         expression = expression.addOperand(operation)
         view.showExpression(expression)
-    }
-
-    override fun initExpression(expression: Expression) {
-        this.expression = expression
     }
 
 }

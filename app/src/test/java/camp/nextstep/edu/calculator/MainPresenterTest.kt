@@ -12,17 +12,12 @@ class MainPresenterTest {
     private lateinit var presenter: MainContract.Presenter
     private val view: MainContract.View = mockk<MainContract.View>(relaxed = true)
 
-    @Before
-    fun setUp() {
-        presenter = MainPresenter(view)
-    }
-
-
     @Test
     fun `숫자가 입력되면 수식에 추가되고 변경된 수식을 보여줘야 한다`() {
         // given
         val expressionSlot = slot<Expression>()
         every { view.showExpression(capture(expressionSlot)) } answers { nothing }
+        presenter = MainPresenter(view)
 
         // when 1 입력
         presenter.addOperation(1)
@@ -38,7 +33,8 @@ class MainPresenterTest {
         // given
         val expressionSlot = slot<String>()
         every { view.showResult(capture(expressionSlot)) } just runs
-        presenter.initExpression(Expression(listOf(1, Operator.Plus, 3)))
+        val expression = Expression(listOf(1, Operator.Plus, 3))
+        presenter = MainPresenter(view, expression)
 
         // when 1 + 3 계산결과 실행
         presenter.callEquals()
@@ -54,7 +50,9 @@ class MainPresenterTest {
         // given
         val expressionSlot = slot<Expression>()
         every { view.showExpression(capture(expressionSlot)) } answers { nothing }
-        presenter.initExpression(Expression(listOf(123)))
+
+        val expression = Expression(listOf(123))
+        presenter = MainPresenter(view, expression)
 
         // when 123입력 후 Delete 실행
         presenter.callDelete()
