@@ -10,7 +10,7 @@ import com.nextstep.edu.domain.Operator
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private var calculationExpression: CalculationExpression = CalculationExpression()
+    private val calculationExpression: CalculationExpression = CalculationExpression()
     private val calculate: Calculator = Calculator()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,13 +36,7 @@ class MainActivity : AppCompatActivity() {
         binding.buttonDelete.setOnClickListener { removeExpression() }
 
         binding.buttonEquals.setOnClickListener {
-            runCatching {
-                binding.textView.text =
-                    calculate.calculate(calculationExpression.toString()).toString()
-            }.onFailure {
-                Toast.makeText(this, getString(R.string.incomplete_expression), Toast.LENGTH_SHORT)
-                    .show()
-            }
+            showCalculationResult()
         }
     }
 
@@ -59,5 +53,15 @@ class MainActivity : AppCompatActivity() {
     private fun removeExpression() {
         calculationExpression.remove()
         binding.textView.text = calculationExpression.toString()
+    }
+
+    private fun showCalculationResult() {
+        runCatching {
+            binding.textView.text =
+                calculate.calculate(calculationExpression.toString()).toString()
+        }.onFailure {
+            Toast.makeText(this, getString(R.string.incomplete_expression), Toast.LENGTH_SHORT)
+                .show()
+        }
     }
 }

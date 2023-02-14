@@ -8,7 +8,7 @@ class CalculationExpression(private var value: List<Any> = emptyList()) {
         }
     }
 
-    constructor(inputValue: String?) : this(split(inputValue))
+    constructor(inputValue: String?) : this(ExpressionValidator.split(inputValue))
 
     override fun toString(): String {
         return value.joinToString(" ") {
@@ -51,16 +51,7 @@ class CalculationExpression(private var value: List<Any> = emptyList()) {
     }
 
     companion object {
-        private const val INPUT_VALUE_DELIMITER = " "
         private const val LAST_INPUT_VALUE = 1
         private const val OPERAND_DELETE_UNIT = 10
-        private fun split(inputValue: String?): List<Any> {
-            return validateNullOrBlank(inputValue).split(INPUT_VALUE_DELIMITER)
-        }
-
-        private fun validateNullOrBlank(inputValue: String?): String {
-            require(!inputValue.isNullOrBlank()) { "입력 값이 Null 또는 공백입니다." }
-            return inputValue
-        }
     }
 }
