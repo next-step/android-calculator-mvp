@@ -68,13 +68,7 @@ data class Expression(private val elements: List<Any> = emptyList()) {
     }
 
     fun getExpressions(): String {
-        var expressionStr = ""
-
-        elements.forEach { element ->
-            if (expressionStr == "") expressionStr += getExpressionToAppend(element)
-            else expressionStr += " ${getExpressionToAppend(element)}"
-        }
-        return expressionStr
+        return elements.joinToString(separator = " ") { getExpressionToAppend(it) }
     }
 
     private fun getExpressionToAppend(element: Any): String {
