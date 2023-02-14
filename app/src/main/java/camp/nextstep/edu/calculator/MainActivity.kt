@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity() {
         runCatching {
             binding.textView.text =
                 calculate.calculate(calculationExpression.toString()).toString()
+            calculationExpression.clear(binding.textView.text.toString().toInt())
         }.onFailure {
             Toast.makeText(this, getString(R.string.incomplete_expression), Toast.LENGTH_SHORT)
                 .show()

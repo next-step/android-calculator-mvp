@@ -50,6 +50,11 @@ class CalculationExpression(private var value: List<Any> = emptyList()) {
         }
     }
 
+    fun clear(initValue: Int) {
+        value = emptyList()
+        value += initValue
+    }
+
     companion object {
         private const val LAST_INPUT_VALUE = 1
         private const val OPERAND_DELETE_UNIT = 10
