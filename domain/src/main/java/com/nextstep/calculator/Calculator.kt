@@ -28,7 +28,7 @@ class Calculator {
     fun checkExpression(expression: String): Int {
         var currentOperator: Char? = null
         var subExpression = ""
-        var isChar = false
+        var lastIsChar: Boolean? = null
 
         // 수식이 숫자로 시작하지 않는 경우 예외 발생
         require(validNumber.contains(expression[0])) {
@@ -41,19 +41,18 @@ class Calculator {
         }
 
         for (c in expression) {
-            val lastCharIsOperator = isChar
-
+            val last = lastIsChar
             checkCharacter(
                 c,
                 currentOperator,
                 subExpression,
                 { checkExpression -> subExpression = checkExpression },
                 { checkCharacter -> currentOperator = checkCharacter },
-                { checkIsChar -> isChar = checkIsChar }
+                { checkLastIsChar -> lastIsChar = checkLastIsChar }
             )
 
-            require(!(lastCharIsOperator && isChar)) {
-                IllegalArgumentException("수식에 연산자가 연달아 나옴 - 수식: $expression")
+            require(!(c in validOperator && last == true)) {
+                throw IllegalAccessException("연산자가 연달아 입력됨 - 수식: $expression")
             }
         }
         return divideComponent(subExpression)
@@ -66,16 +65,19 @@ class Calculator {
         subExpression: String,
         checkedExpression: (String) -> Unit,
         checkedChar: (Char) -> Unit,
-        checkIsOperator: (Boolean) -> Unit
+        checkLastIsChar: (Boolean) -> Unit
     ) {
         when (char) {
-            in validNumber -> checkedExpression.invoke(subExpression + char)
+            in validNumber -> {
+                checkedExpression.invoke(subExpression + char)
+                checkLastIsChar.invoke(false)
+            }
             in validOperator -> {
                 checkFirstOperator(currentOperator, subExpression) {
                     checkedExpression.invoke(it + char)
                 }
                 checkedChar.invoke(char)
-                checkIsOperator.invoke(true)
+                checkLastIsChar.invoke(true)
             }
             else -> throw IllegalArgumentException("사칙연산자가 아닌 기호")
         }
