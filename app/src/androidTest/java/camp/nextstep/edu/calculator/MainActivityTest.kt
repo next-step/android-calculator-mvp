@@ -11,7 +11,7 @@ import org.junit.Test
 /**
  * @author 박소연
  * @created 2023/01/31
- * @updated 2023/01/14
+ * @updated 2023/02/15
  * @desc
  */
 class MainActivityTest {
@@ -19,7 +19,7 @@ class MainActivityTest {
     var activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
-    fun clickButton0AndShow0() {
+    fun `0을_누르면_0이_보인다`() {
         // when: '0' 버튼을 누르면
         onView(withId(R.id.button0)).perform(click())
 
@@ -28,7 +28,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun clickButton1AndShow1() {
+    fun `1를_누르면_1이_보인다`() {
         // when: '1' 버튼을 누르면
         onView(withId(R.id.button1)).perform(click())
 
@@ -37,7 +37,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun clickButton2AndShow2() {
+    fun `2를_누르면_2가_보인다`() {
         // when: '2' 버튼을 누르면
         onView(withId(R.id.button2)).perform(click())
 
@@ -46,7 +46,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun clickButton3AndShow3() {
+    fun `3을_누르면_3이_보인다`() {
         // when: '3' 버튼을 누르면
         onView(withId(R.id.button3)).perform(click())
 
@@ -55,7 +55,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun clickButton4AndShow4() {
+    fun `4를_누르면_4이_보인다`() {
         // when: '4' 버튼을 누르면
         onView(withId(R.id.button4)).perform(click())
 
@@ -64,7 +64,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun clickButton5AndShow5() {
+    fun `5를_누르면_5가_보인다`() {
         // when: '5' 버튼을 누르면
         onView(withId(R.id.button5)).perform(click())
 
@@ -73,7 +73,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun clickButton6AndShow6() {
+    fun `6을_누르면_6이_보인다`() {
         // when: '6' 버튼을 누르면
         onView(withId(R.id.button6)).perform(click())
 
@@ -82,7 +82,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun clickButton7AndShow7() {
+    fun `7을_누르면_7이_보인다`() {
         // when: '7' 버튼을 누르면
         onView(withId(R.id.button7)).perform(click())
 
@@ -91,7 +91,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun clickButton8AndShow8() {
+    fun `8을_누르면_8이_보인다`() {
         // when: '8' 버튼을 누르면
         onView(withId(R.id.button8)).perform(click())
 
@@ -100,7 +100,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun clickButton9AndShow9() {
+    fun `9를_누르면_9가_보인다`() {
         // when: '9' 버튼을 누르면
         onView(withId(R.id.button9)).perform(click())
 
@@ -139,7 +139,7 @@ class MainActivityTest {
         onView(withId(R.id.button8)).perform(click())
 
         // when: '9' 버튼을 누르면
-        onView(withId(R.id.button1)).perform(click())
+        onView(withId(R.id.button9)).perform(click())
 
         // then: '89'가 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("89")))
@@ -186,7 +186,7 @@ class MainActivityTest {
         // given : 입력된 수식이 ''일때
 
         // when: '지우기' 버튼을 누르면
-        onView(withId(R.id.buttonMinus)).perform(click())
+        onView(withId(R.id.buttonDelete)).perform(click())
 
         // then: ''가 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("")))
@@ -200,7 +200,7 @@ class MainActivityTest {
         onView(withId(R.id.buttonPlus)).perform(click())
         onView(withId(R.id.button1)).perform(click())
 
-        // when: '지우기' 버튼을 누르면=
+        // when: '지우기' 버튼을 누르면
         onView(withId(R.id.buttonDelete)).perform(click())
 
         // then: '32+'가 보여야 한다
