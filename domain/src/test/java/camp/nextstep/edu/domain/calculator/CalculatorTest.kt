@@ -13,7 +13,7 @@ class CalculatorTest {
     @Test
     fun `1 더하기 1 = 2`() {
         val actual: Int = calculator.evaluate(
-            listOf(Num(1), Operators.of("+"), Num(1))
+            listOf(Num(1), Operators.Plus, Num(1))
         )
         assertEquals(2, actual)
     }
@@ -21,7 +21,7 @@ class CalculatorTest {
     @Test
     fun `1 빼기 1 = 0`() {
         val actual: Int = calculator.evaluate(
-            listOf(Num(1), Operators.of("-"), Num(1))
+            listOf(Num(1), Operators.Minus, Num(1))
         )
         assertEquals(0, actual)
     }
@@ -29,7 +29,7 @@ class CalculatorTest {
     @Test
     fun `1 곱하기 1 = 1`() {
         val actual: Int = calculator.evaluate(
-            listOf(Num(1), Operators.of("*"), Num(1))
+            listOf(Num(1), Operators.Multiply, Num(1))
         )
         assertEquals(1, actual)
     }
@@ -37,7 +37,7 @@ class CalculatorTest {
     @Test
     fun `1 나누기 1 = 1`() {
         val actual: Int = calculator.evaluate(
-            listOf(Num(1), Operators.of("/"), Num(1))
+            listOf(Num(1), Operators.Divide, Num(1))
         )
         assertEquals(1, actual)
     }
@@ -47,9 +47,9 @@ class CalculatorTest {
         val actual: Int = calculator.evaluate(
             listOf(
                 Num(1),
-                Operators.of("+"),
+                Operators.Plus,
                 Num(2),
-                Operators.of("+"),
+                Operators.Plus,
                 Num(3)
             )
         )
@@ -61,11 +61,11 @@ class CalculatorTest {
         val actual: Int = calculator.evaluate(
             listOf(
                 Num(2),
-                Operators.of("+"),
+                Operators.Plus,
                 Num(3),
-                Operators.of("*"),
+                Operators.Multiply,
                 Num(4),
-                Operators.of("/"),
+                Operators.Divide,
                 Num(2)
             )
         )
@@ -75,7 +75,7 @@ class CalculatorTest {
     @Test
     fun `0 빼기 1 = -1`() {
         val actual: Int = calculator.evaluate(
-            listOf(Num(0), Operators.of("-"), Num(1))
+            listOf(Num(0), Operators.Minus, Num(1))
         )
         assertEquals(-1, actual)
     }
@@ -83,7 +83,7 @@ class CalculatorTest {
     @Test
     fun `-1 더하기 -1 = -2`() {
         val actual: Int = calculator.evaluate(
-            listOf(Num(-1), Operators.of("+"), Num(-1))
+            listOf(Num(-1), Operators.Plus, Num(-1))
         )
         assertEquals(-2, actual)
     }
@@ -91,7 +91,7 @@ class CalculatorTest {
     @Test
     fun `-1 곱하기 -1 은 1`() {
         val actual: Int = calculator.evaluate(
-            listOf(Num(-1), Operators.of("*"), Num(-1))
+            listOf(Num(-1), Operators.Multiply, Num(-1))
         )
         assertEquals(1, actual)
     }
@@ -99,7 +99,7 @@ class CalculatorTest {
     @Test
     fun `-1 나누기 -1 은 1`() {
         val actual: Int = calculator.evaluate(
-            listOf(Num(-1), Operators.of("/"), Num(-1))
+            listOf(Num(-1), Operators.Divide, Num(-1))
         )
         assertEquals(1, actual)
     }
@@ -108,7 +108,7 @@ class CalculatorTest {
     fun `0 으로 나누면 ArithmeticException 이 발생한다`() {
         assertThrows(ArithmeticException::class.java) {
             calculator.evaluate(
-                listOf(Num(1), Operators.of("/"), Num(0))
+                listOf(Num(1), Operators.Divide, Num(0))
             )
         }
     }
