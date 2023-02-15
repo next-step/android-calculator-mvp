@@ -13,10 +13,12 @@ class CalculatePresenter(
 
     override fun appendOperand(operand: Int) {
         expression = expression.appendOperand(operand)
+        view.showExpression(expression.getExpressions())
     }
 
     override fun appendOperator(op: Operator) {
         expression = expression.appendOperator(op)
+        view.showExpression(expression.getExpressions())
     }
 
     override fun calculateExpression() {
@@ -30,5 +32,6 @@ class CalculatePresenter(
 
     override fun removeLastValue() {
         expression = expression.removeLastValue()
+        view.showExpression(expression.getExpressions())
     }
 }
