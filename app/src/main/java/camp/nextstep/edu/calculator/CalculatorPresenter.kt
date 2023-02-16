@@ -5,8 +5,8 @@ import com.nextstep.edu.domain.Calculator
 import com.nextstep.edu.domain.Operator
 
 class CalculatorPresenter(
-    private val view: CalculatorViewInterface
-) : CalculatorPresenterInterface {
+    private val view: CalculatorContract.View
+) : CalculatorContract.Presenter {
     private val calculationExpression: CalculationExpression = CalculationExpression()
     private val calculate: Calculator = Calculator()
 
@@ -26,18 +26,14 @@ class CalculatorPresenter(
     }
 
     override fun calculate() {
-        lateinit var result: String
+        var result = ""
         runCatching {
             result = calculate.calculate(calculationExpression.toString()).toString()
-            view.showCalculationResult(result)
+            view.showCalculationExpression(result)
         }.onSuccess {
-            calculationExpression.clear(result.toInt())
+            calculationExpression.resetValueToResult(result.toInt())
         }.onFailure {
             view.alertIncompleteExpression()
         }
-    }
-
-    override fun clear(value: Int) {
-        calculationExpression.clear(value)
     }
 }

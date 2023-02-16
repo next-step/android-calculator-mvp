@@ -4,13 +4,11 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
-import com.nextstep.edu.domain.CalculationExpression
-import com.nextstep.edu.domain.Calculator
 import com.nextstep.edu.domain.Operator
 
-class MainActivity : AppCompatActivity(), CalculatorViewInterface {
+class MainActivity : AppCompatActivity(), CalculatorContract.View {
     private lateinit var binding: ActivityMainBinding
-    override lateinit var presenter: CalculatorPresenterInterface
+    override lateinit var presenter: CalculatorContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,10 +37,6 @@ class MainActivity : AppCompatActivity(), CalculatorViewInterface {
         binding.buttonEquals.setOnClickListener {
             presenter.calculate()
         }
-    }
-
-    override fun showCalculationResult(result: String) {
-        binding.textView.text = result
     }
 
     override fun alertIncompleteExpression() {

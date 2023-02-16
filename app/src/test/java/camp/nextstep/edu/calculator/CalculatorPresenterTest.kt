@@ -11,7 +11,7 @@ import org.junit.Test
 
 internal class CalculatorPresenterTest {
     private lateinit var presenter: CalculatorPresenter
-    private lateinit var view: CalculatorViewInterface
+    private lateinit var view: CalculatorContract.View
 
     @Before
     fun setUp() {
@@ -54,9 +54,7 @@ internal class CalculatorPresenterTest {
     fun `완전한 수식을 입력하고 계산을 실행하면 결과를 보여줘야 한다`() {
         // given
         val expressionSlot = slot<String>()
-        val resultSlot = slot<String>()
         every { view.showCalculationExpression(capture(expressionSlot)) } answers { nothing }
-        every { view.showCalculationResult(capture(resultSlot)) } answers { nothing }
 
         presenter.appendExpression(10)
         presenter.appendExpression(Operator.ADDITION)
@@ -66,9 +64,9 @@ internal class CalculatorPresenterTest {
         presenter.calculate()
 
         // then
-        val actual = resultSlot.captured
+        val actual = expressionSlot.captured
         assertEquals("55", actual)
-        verify { view.showCalculationResult(actual) }
+        verify { view.showCalculationExpression(actual) }
     }
 
     @Test

@@ -50,7 +50,7 @@ class CalculationExpression(private var value: List<Any> = emptyList()) {
         }
     }
 
-    fun clear(initValue: Int) {
+    fun resetValueToResult(initValue: Int) {
         value = emptyList()
         value += initValue
     }
