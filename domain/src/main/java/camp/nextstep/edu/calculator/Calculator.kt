@@ -52,9 +52,15 @@ class Calculator {
         return displayText
     }
 
-    private fun isAllCheck(toCheck: String) = """[\S\d-+*/]""".toRegex().matches(toCheck)
+    companion object {
+        private val allCheckRegex = """[\S\d-+*/]""".toRegex()
 
-    private fun isOperation(toCheck: String) = """[-+*/]""".toRegex().matches(toCheck)
+        private val operationCheckRegex = """[-+*/]""".toRegex()
+    }
+
+    private fun isAllCheck(toCheck: String) = allCheckRegex.matches(toCheck)
+
+    private fun isOperation(toCheck: String) = operationCheckRegex.matches(toCheck)
 
     private fun isNumeric(toCheck: String) = toCheck.all { char -> char.isDigit() }
 }
