@@ -28,7 +28,7 @@ class CalculatePresenterTest {
         presenter.appendOperand(1)
 
         // then
-        verify { view.showExpression("1") }
+        verify(exactly = 1) { view.showExpression("1") }
     }
 
     @Test
@@ -44,7 +44,7 @@ class CalculatePresenterTest {
         // then
         val actual = expressionSlot.captured
         assertEquals("1 +", actual)
-        verify { view.showExpression(actual) }
+        verify(exactly = 1) { view.showExpression(actual) }
     }
 
     @Test
@@ -60,7 +60,7 @@ class CalculatePresenterTest {
         // then
         val actual = expressionSlot.captured
         assertEquals("1", actual)
-        verify { view.showExpression(actual) }
+        verify(exactly = 1) { view.showExpression(actual) }
     }
 
     @Test
@@ -79,6 +79,6 @@ class CalculatePresenterTest {
         // then
         val actual = expressionSlot.captured
         assertEquals("3", actual)
-        verify { view.showExpression(actual) }
+        verify(exactly = 1) { view.showExpression(actual) }
     }
 }
