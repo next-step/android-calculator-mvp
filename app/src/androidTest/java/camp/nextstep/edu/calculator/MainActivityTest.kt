@@ -103,4 +103,123 @@ class MainActivityTest {
         // then : 화면에_9가_보여야_한다
         onView(withId(R.id.textView)).check(matches(withText("9")))
     }
+
+    @Test
+    fun 입력된_피연산자가_없을_때_사용자가_피연산자_버튼을_누르면_화면에_해당_숫자가_화면에_보여야_한다() {
+        // when : 사용자가_피연산자_5_버튼을_누르고
+        onView(withId(R.id.button5)).perform(click())
+        // when : 사용자가_+버튼을_누른 후
+        onView(withId(R.id.buttonPlus)).perform(click())
+        // when : 사용자가_피연산자_1_버튼을_누르면
+        onView(withId(R.id.button1)).perform(click())
+
+        // then : 화면에_5 + 1이_보여야_한다
+        onView(withId(R.id.textView)).check(matches(withText("5 + 1")))
+    }
+
+    @Test
+    fun 입력된_피연산자가_있을_때_기존_숫자_뒤에_해당_숫자가_화면에_보여야_한다() {
+        // when : 사용자가_피연산자_8_버튼을_누르고
+        onView(withId(R.id.button8)).perform(click())
+        // when : 사용자가_피연산자_9_버튼을_누르면
+        onView(withId(R.id.button9)).perform(click())
+
+        // then : 화면에_89가_보여야_한다
+        onView(withId(R.id.textView)).check(matches(withText("89")))
+    }
+
+    @Test
+    fun 입력된_피연산자가_없을_때_사용자가_연산자_버튼을_누르면_화면에_아무런_변화가_없어야_한다() {
+        // when : 사용자가_연산자_+_버튼을_누르면
+        onView(withId(R.id.buttonPlus)).perform(click())
+
+        // then : 화면에_아무런_변화가_없어야_한다
+        onView(withId(R.id.textView)).check(matches(withText("")))
+    }
+
+    @Test
+    fun 입력된_피연산자가_있을_때_사용자가_연산자_버튼을_누르면_해당_기호가_화면에_보여야_한다() {
+        // when : 사용자가_피연산자_1_버튼을_누르고
+        onView(withId(R.id.button1)).perform(click())
+        // when : 사용자가_연산자_+_버튼을_누르면
+        onView(withId(R.id.buttonPlus)).perform(click())
+
+        // then : 화면에_1 +가_보여야_한다
+        onView(withId(R.id.textView)).check(matches(withText("1 + ")))
+
+        // when : 사용자가_연산자_-_버튼을_누르면
+        onView(withId(R.id.buttonMinus)).perform(click())
+
+        // then : 화면에_1 -가_보여야_한다
+        onView(withId(R.id.textView)).check(matches(withText("1 - ")))
+    }
+
+    @Test
+    fun 입력된_수식이_없을_때_사용자가_지우기_버튼을_누르면_화면에_아무런_변화가_없어야_한다() {
+        // when : 사용자가_지우기_버튼을_누르면
+        onView(withId(R.id.buttonDelete)).perform(click())
+
+        // then : 화면에_아무런_변화가_없어야_한다
+        onView(withId(R.id.textView)).check(matches(withText("")))
+    }
+
+    @Test
+    fun 입력된_수식이_있을_때_사용자가_지우기_버튼을_누르면_수식에_마지막으로_입력된_연산자_또는_피연산자가_지워져야_한다() {
+        // when : 사용자가_피연산자_3_버튼을_누르고
+        onView(withId(R.id.button3)).perform(click())
+        // when : 사용자가_피연산자_2_버튼을_누르고
+        onView(withId(R.id.button2)).perform(click())
+        // when : 사용자가_연산자_+_버튼을_누르고
+        onView(withId(R.id.buttonPlus)).perform(click())
+        // when : 사용자가_피연산자_1_버튼을_누르면
+        onView(withId(R.id.button1)).perform(click())
+
+        // then : 화면에_32 + 1이 보여야 한다
+        onView(withId(R.id.textView)).check(matches(withText("32 + 1")))
+
+        // when : 사용자가_지우기_버튼을_누르면
+        onView(withId(R.id.buttonDelete)).perform(click())
+
+        // then : 화면에_32 + 가 보여야 한다
+        onView(withId(R.id.textView)).check(matches(withText("32 + ")))
+
+        // when : 사용자가_지우기_버튼을_누르면
+        onView(withId(R.id.buttonDelete)).perform(click())
+
+        // then : 화면에_32가 보여야 한다
+        onView(withId(R.id.textView)).check(matches(withText("32")))
+
+        // when : 사용자가_지우기_버튼을_누르면
+        onView(withId(R.id.buttonDelete)).perform(click())
+
+        // then : 화면에_3이 보여야 한다
+        onView(withId(R.id.textView)).check(matches(withText("3")))
+
+        // when : 사용자가_지우기_버튼을_누르면
+        onView(withId(R.id.buttonDelete)).perform(click())
+
+        // then : 모든 화면이 지워져야 한다
+        onView(withId(R.id.textView)).check(matches(withText("")))
+
+        // when : 사용자가_지우기_버튼을_누르면
+        onView(withId(R.id.buttonDelete)).perform(click())
+
+        // then : 화면에_아무런_변화가_없어야_한다
+        onView(withId(R.id.textView)).check(matches(withText("")))
+    }
+
+    @Test
+    fun 입력된_수신이_완전할_때_사용자가_버튼을_누르면_입력된_수식의_결과가_화면에_보여야_한다() {
+        // when : 사용자가_피연산자_3_버튼을_누르고
+        onView(withId(R.id.button3)).perform(click())
+        // when : 사용자가_연산자_+_버튼을_누르고
+        onView(withId(R.id.buttonPlus)).perform(click())
+        // when : 사용자가_피연산자_2_버튼을_누르고
+        onView(withId(R.id.button2)).perform(click())
+        // when : 사용자가_=_버튼을_누르면
+        onView(withId(R.id.buttonEquals)).perform(click())
+
+        // then : 화면에_아무런_변화가_없어야_한다
+        onView(withId(R.id.textView)).check(matches(withText("3 + 2 = 5.0")))
+    }
 }
