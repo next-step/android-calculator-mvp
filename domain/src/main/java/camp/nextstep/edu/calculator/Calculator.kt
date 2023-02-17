@@ -9,6 +9,7 @@ const val multiply = "*"
 const val divide = "/"
 
 class Calculator {
+
     fun plus(value1: Double, value2: Double) = value1 + value2
 
     fun minus(value1: Double, value2: Double) = value1 - value2
@@ -18,6 +19,10 @@ class Calculator {
     fun divide(value1: Double, value2: Double) = value1 / value2
 
     fun evaluate(calculation: String): Double {
+        if (calculation.isBlank() || calculation.last().isWhitespace()) {
+            throw IllegalStateException()
+        }
+
         val operationList = calculation.split(" ")
         var result = operationList[0].toDouble()
 
@@ -38,23 +43,32 @@ class Calculator {
     }
 
     fun displayCalculation(preText: String, newText: String?): String {
-        require(!newText.isNullOrEmpty())
+        require(!newText.isNullOrBlank())
         require(isAllCheck(newText))
 
-        val lastChar = preText.split(" ").last { it.isNotEmpty() }
+        val lastChar = if (preText.isBlank()) "" else preText.split(" ").last { it.isNotBlank() }
         val displayText = when {
-            preText == "0" && isNumeric(newText) -> newText
-            isNumeric(lastChar) && isOperation(newText) -> "$preText $newText "
+            preText.isEmpty() && isNumeric(newText) -> newText
+            preText.isEmpty() && isOperation(newText) -> ""
             isOperation(lastChar) && isOperation(newText) -> "${preText.replaceRange(preText.length - 3, preText.length, " $newText ")}"
+            isNumeric(lastChar) && isOperation(newText) -> "$preText $newText "
             else -> "$preText$newText"
         }
 
         return displayText
     }
 
-    private fun isAllCheck(toCheck: String) = """[\S\d-+*/]""".toRegex().matches(toCheck)
+    fun clearCalculation(calculation: String) = if (calculation.last().isDigit()) calculation.dropLast(1) else calculation.dropLast(3)
 
-    private fun isOperation(toCheck: String) = """[-+*/]""".toRegex().matches(toCheck)
+    companion object {
+        private val allCheckRegex = """[\S\d-+*/]""".toRegex()
+
+        private val operationCheckRegex = """[-+*/]""".toRegex()
+    }
+
+    private fun isAllCheck(toCheck: String) = allCheckRegex.matches(toCheck)
+
+    private fun isOperation(toCheck: String) = operationCheckRegex.matches(toCheck)
 
     private fun isNumeric(toCheck: String) = toCheck.all { char -> char.isDigit() }
 }

@@ -1,6 +1,7 @@
 package camp.nextstep.edu.calculator
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
 
@@ -34,11 +35,20 @@ class MainActivity : AppCompatActivity() {
         binding.buttonDivide.setOnClickListener { displayCalculation(divide) }
 
         binding.buttonEquals.setOnClickListener {
-            val text = binding.textView.text
-            binding.textView.text = "$text = ${calculator.evaluate(text.toString())}"
+            try {
+                val text = binding.textView.text
+                binding.textView.text = "$text = ${calculator.evaluate(text.toString())}"
+            } catch (e: IllegalStateException) {
+                Toast.makeText(this, "완성되지 않은 수식입니다", Toast.LENGTH_SHORT).show()
+            }
         }
 
-        binding.textView.text = "0"
+        binding.buttonDelete.setOnClickListener {
+            val text = binding.textView.text
+            if (text.isNotBlank()) {
+                binding.textView.text = calculator.clearCalculation(text.toString())
+            }
+        }
     }
 
     private fun displayCalculation(newText: String) {
