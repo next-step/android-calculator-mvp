@@ -70,6 +70,6 @@ class ExpressionTest {
     @Test
     fun `1_더하기_2가_있을때_1_+_2가_된다`() {
         val actualExpression = Expression(listOf(1, Operator.PLUS, 2))
-        assertEquals(actualExpression.getExpressions(), "1 + 2")
+        assertEquals("1 + 2", actualExpression.getExpressions())
     }
 }
