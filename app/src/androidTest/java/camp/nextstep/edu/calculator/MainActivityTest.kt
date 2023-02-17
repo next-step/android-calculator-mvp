@@ -164,47 +164,62 @@ class MainActivityTest {
     }
 
     @Test
-    fun 입력된_수식이_있을_때_사용자가_지우기_버튼을_누르면_수식에_마지막으로_입력된_연산자_또는_피연산자가_지워져야_한다() {
+    fun 입력된_수식이_있을_때_사용자가_지우기_버튼을_누르면_수식에_마지막으로_입력된_피연산자가_지워져야_한다() {
         // when : 사용자가_피연산자_3_버튼을_누르고
         onView(withId(R.id.button3)).perform(click())
         // when : 사용자가_피연산자_2_버튼을_누르고
         onView(withId(R.id.button2)).perform(click())
         // when : 사용자가_연산자_+_버튼을_누르고
         onView(withId(R.id.buttonPlus)).perform(click())
-        // when : 사용자가_피연산자_1_버튼을_누르면
+        // when : 사용자가_피연산자_1_버튼을_누르고
         onView(withId(R.id.button1)).perform(click())
-
-        // then : 화면에_32 + 1이 보여야 한다
-        onView(withId(R.id.textView)).check(matches(withText("32 + 1")))
 
         // when : 사용자가_지우기_버튼을_누르면
         onView(withId(R.id.buttonDelete)).perform(click())
 
         // then : 화면에_32 + 가 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("32 + ")))
+    }
+
+    @Test
+    fun 입력된_수식이_있을_때_사용자가_지우기_버튼을_누르면_수식에_마지막으로_입력된_연산자가_지워져야_한다() {
+        // when : 사용자가_피연산자_3_버튼을_누르고
+        onView(withId(R.id.button3)).perform(click())
+        // when : 사용자가_피연산자_2_버튼을_누르고
+        onView(withId(R.id.button2)).perform(click())
+        // when : 사용자가_연산자_+_버튼을_누르고
+        onView(withId(R.id.buttonPlus)).perform(click())
 
         // when : 사용자가_지우기_버튼을_누르면
         onView(withId(R.id.buttonDelete)).perform(click())
 
         // then : 화면에_32가 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("32")))
+    }
+
+    @Test
+    fun 두자리수_이상의_피연산자가_있을_때_사용자가_지우기_버튼을_누르면_피연산자_중_마지막으로_입력된_피연산자가_지워져야_한다() {
+        // when : 사용자가_피연산자_3_버튼을_누르고
+        onView(withId(R.id.button3)).perform(click())
+        // when : 사용자가_피연산자_2_버튼을_누르고
+        onView(withId(R.id.button2)).perform(click())
 
         // when : 사용자가_지우기_버튼을_누르면
         onView(withId(R.id.buttonDelete)).perform(click())
 
-        // then : 화면에_3이 보여야 한다
+        // then : 화면에_32가 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("3")))
+    }
+
+    @Test
+    fun 한자리_수의_피연산자가_있을_때_사용자가_지우기_버튼을_누르면_모든_입력값이_지워져야_한다() {
+        // when : 사용자가_피연산자_3_버튼을_누르고
+        onView(withId(R.id.button3)).perform(click())
 
         // when : 사용자가_지우기_버튼을_누르면
         onView(withId(R.id.buttonDelete)).perform(click())
 
-        // then : 모든 화면이 지워져야 한다
-        onView(withId(R.id.textView)).check(matches(withText("")))
-
-        // when : 사용자가_지우기_버튼을_누르면
-        onView(withId(R.id.buttonDelete)).perform(click())
-
-        // then : 화면에_아무런_변화가_없어야_한다
+        // then :모든_입력값이_지워져야_한다
         onView(withId(R.id.textView)).check(matches(withText("")))
     }
 
@@ -219,7 +234,7 @@ class MainActivityTest {
         // when : 사용자가_=_버튼을_누르면
         onView(withId(R.id.buttonEquals)).perform(click())
 
-        // then : 화면에_아무런_변화가_없어야_한다
+        // then : 입력된_수식의_결과가_화면에_보여야_한다
         onView(withId(R.id.textView)).check(matches(withText("3 + 2 = 5.0")))
     }
 }
