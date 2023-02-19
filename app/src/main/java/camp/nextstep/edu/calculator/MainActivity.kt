@@ -6,8 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), CalculatorContract.View {
-    override lateinit var presenter: CalculatorContract.Presenter
-
+    private lateinit var presenter: CalculatorContract.Presenter
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,11 +46,16 @@ class MainActivity : AppCompatActivity(), CalculatorContract.View {
     }
 
     override fun inCompleteExpressionNotice() {
-        Toast.makeText(this, "완성되지 않은 수식입니다", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, R.string.incomplete_expression, Toast.LENGTH_SHORT).show()
     }
 
     override fun showExpressions(expression: String) {
         binding.textView.text = expression
     }
-}
 
+    override fun showCalculationResult(expression: String, result: Double): String {
+        val expressionResult = String.format(resources.getString(R.string.calculation_result), expression, result)
+        binding.textView.text = expressionResult
+        return expressionResult
+    }
+}

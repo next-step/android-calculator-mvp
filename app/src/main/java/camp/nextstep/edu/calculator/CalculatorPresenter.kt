@@ -23,8 +23,7 @@ class CalculatorPresenter(private val view: CalculatorContract.View) : Calculato
         runCatching {
             calculator.evaluate(expressions.toString())
         }.onSuccess {
-            val expressionResult = "$expressions = $it"
-            view.showExpressions(expressionResult)
+            val expressionResult = view.showCalculationResult(expressions.toString(), it)
             expressions.clear().append(expressionResult)
         }.onFailure {
             view.inCompleteExpressionNotice()

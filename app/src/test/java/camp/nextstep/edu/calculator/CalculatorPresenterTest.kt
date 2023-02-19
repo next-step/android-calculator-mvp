@@ -1,10 +1,7 @@
 package camp.nextstep.edu.calculator
 
 import com.google.common.truth.Truth.assertThat
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.slot
-import io.mockk.verify
+import io.mockk.*
 import org.junit.Before
 import org.junit.Test
 
@@ -34,13 +31,14 @@ class CalculatorPresenterTest {
     }
 
     @Test
-    fun `연산자가 입력되면 수식에 추가되고 변경된 수식을 보여줘야 한다`() {
+    fun `피연산자가 입력된 상태에서 연산자가 입력되면 수식에 추가되고 변경된 수식을 보여줘야 한다`() {
         // given
         val expressionSlot = slot<String>()
         every { view.showExpressions(capture(expressionSlot)) } answers { nothing }
 
-        // when
         presenter.appendExpression("1")
+
+        // when
         presenter.appendExpression(plus)
 
         // then
@@ -53,7 +51,15 @@ class CalculatorPresenterTest {
     fun `수식을 입력 후 계산 실행 시 결과를 보여줘야 한다`() {
         // given
         val expressionSlot = slot<String>()
+        val resultSlot = slot<Double>()
+
         every { view.showExpressions(capture(expressionSlot)) } answers { nothing }
+        every {
+            view.showCalculationResult(
+                capture(expressionSlot),
+                capture(resultSlot)
+            )
+        } answers { "${expressionSlot.captured} = ${resultSlot.captured}" }
 
         presenter.appendExpression("1")
         presenter.appendExpression(plus)
@@ -63,9 +69,10 @@ class CalculatorPresenterTest {
         presenter.calculate()
 
         // then
-        val actual = expressionSlot.captured
-        assertThat(actual).isEqualTo("1 + 2 = 3.0")
-        verify { view.showExpressions(actual) }
+        val expression = expressionSlot.captured
+        val result = resultSlot.captured
+        assertThat(view.showCalculationResult(expression, result)).isEqualTo("1 + 2 = 3.0")
+        verify { view.showCalculationResult(expression, result) }
     }
 
     @Test
