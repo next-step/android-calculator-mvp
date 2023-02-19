@@ -108,10 +108,10 @@ class Calculator {
     // 연산자 체크 및 계산
     private fun calculateSubExpression(num1: Int, num2: Int, operator: Char): Int {
         return when (operator) {
-            PLUS.char -> PLUS.apply(num1, num2)
-            MINUS.char -> MINUS.apply(num1, num2)
-            MULTIPLY.char -> MULTIPLY.apply(num1, num2)
-            DIVIDE.char -> DIVIDE.apply(num1, num2)
+            PLUS.char -> PLUS.result(num1, num2)
+            MINUS.char -> MINUS.result(num1, num2)
+            MULTIPLY.char -> MULTIPLY.result(num1, num2)
+            DIVIDE.char -> DIVIDE.result(num1, num2)
             // 사칙연산 기호가 아닌 경우
             else -> throw IllegalArgumentException("사칙연산자가 아닌 기호 - char: $operator")
         }
