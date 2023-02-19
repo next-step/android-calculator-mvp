@@ -14,12 +14,7 @@ class CalculatorTest {
     fun ` ' 2 + 3 ' 을 계산하고 5를 출력해야 한다`() {
         val calculator = Calculator()
 
-        val actual = runCatching {
-            calculator.checkExpression("2+3")
-        }.onFailure { e ->
-            e.printStackTrace()
-            throw IllegalArgumentException()
-        }.getOrNull()
+        val actual = calculator.checkExpression("2+3")
 
         assertThat(actual).isEqualTo(5)
     }
@@ -28,18 +23,13 @@ class CalculatorTest {
     fun ` ' 2 + 3 * 4 % 2 ' 을 계산하고 10을 출력해야 한다`() {
         val calculator = Calculator()
 
-        val actual = runCatching {
-            calculator.calculate("2+3*4/2")
-        }.onFailure { e ->
-            e.printStackTrace()
-            throw IllegalArgumentException()
-        }.getOrNull()
+        val actual = calculator.calculate("2+3*4/2")
 
         assertThat(actual).isEqualTo(10)
     }
 
     @Test(expected = IllegalArgumentException::class)
-    fun `공백 입력시 null을 출력해야 한다`() {
+    fun `공백 입력시 예외처리 해야한다`() {
         val calculator = Calculator()
 
         runCatching {
