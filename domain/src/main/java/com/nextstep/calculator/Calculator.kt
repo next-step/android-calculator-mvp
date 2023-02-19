@@ -16,7 +16,7 @@ class Calculator {
     fun calculate(expression: String): Int {
         // 입력값이 null이거나 빈 공백 문자일 경우
         require(expression.isNotEmpty()) {
-            IllegalArgumentException("입력값이 null이거나 빈 공백 문자 - 입력값: $expression")
+            "입력값이 null이거나 빈 공백 문자 - 입력값: $expression"
         }
 
         return checkExpression(expression)
@@ -28,32 +28,25 @@ class Calculator {
     fun checkExpression(expression: String): Int {
         var currentOperator: Char? = null
         var subExpression = ""
-        var lastIsChar: Boolean? = null
 
         // 수식이 숫자로 시작하지 않는 경우 예외 발생
         require(validNumber.contains(expression[0])) {
-            IllegalArgumentException("수식이 숫자로 시작하지 않음 - 수식: $expression")
+            "수식이 숫자로 시작하지 않음 - 수식: $expression"
         }
 
         // 수식이 숫자로 끝나지 않는 경우 예외 발생
         require(validNumber.contains(expression[expression.length - 1])) {
-            IllegalArgumentException("수식이 숫자로 끝나지 않음 - 수식: $expression")
+            "수식이 숫자로 끝나지 않음 - 수식: $expression"
         }
 
         for (c in expression) {
-            val last = lastIsChar
             checkCharacter(
                 c,
                 currentOperator,
                 subExpression,
                 { checkExpression -> subExpression = checkExpression },
-                { checkCharacter -> currentOperator = checkCharacter },
-                { checkLastIsChar -> lastIsChar = checkLastIsChar }
+                { checkCharacter -> currentOperator = checkCharacter }
             )
-
-            require(!(c in validOperator && last == true)) {
-                throw IllegalAccessException("연산자가 연달아 입력됨 - 수식: $expression")
-            }
         }
         return divideComponent(subExpression)
     }
@@ -64,22 +57,19 @@ class Calculator {
         currentOperator: Char?,
         subExpression: String,
         checkedExpression: (String) -> Unit,
-        checkedChar: (Char) -> Unit,
-        checkLastIsChar: (Boolean) -> Unit
+        checkedChar: (Char) -> Unit
     ) {
         when (char) {
             in validNumber -> {
                 checkedExpression.invoke(subExpression + char)
-                checkLastIsChar.invoke(false)
             }
             in validOperator -> {
                 checkFirstOperator(currentOperator, subExpression) {
                     checkedExpression.invoke(it + char)
                 }
                 checkedChar.invoke(char)
-                checkLastIsChar.invoke(true)
             }
-            else -> throw IllegalArgumentException("사칙연산자가 아닌 기호")
+            else -> throw IllegalArgumentException("피연산자나 사칙연산자가 아닌 기호")
         }
     }
 
@@ -101,9 +91,16 @@ class Calculator {
         // 수식 내 연산자 위치
         val operatorIndex = expression.indexOfAny(validOperator, ignoreCase = false)
 
-        val operator = expression[operatorIndex]
-        val num1 = expression.substring(0, operatorIndex).toInt()
-        val num2 = expression.substring(operatorIndex + 1).toInt()
+        var operator: Char
+        var num1: Int
+        var num2: Int
+        try {
+            operator = expression[operatorIndex]
+            num1 = expression.substring(0, operatorIndex).toInt()
+            num2 = expression.substring(operatorIndex + 1).toInt()
+        } catch (e: java.lang.NumberFormatException) {
+            throw IllegalArgumentException("연산자가 연달아 입력됨 - 수식: $expression")
+        }
 
         return calculateSubExpression(num1, num2, operator)
     }
