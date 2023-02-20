@@ -58,7 +58,11 @@ class Calculator {
         return displayText
     }
 
-    fun clearCalculation(calculation: String) = if (calculation.last().isDigit()) calculation.dropLast(1) else calculation.dropLast(3)
+    fun clearCalculation(calculation: String) = if (calculation.last().isDigit()) clearOperand(calculation) else clearOperator(calculation)
+
+    private fun clearOperand(calculation: String) = calculation.dropLast(1)
+
+    private fun clearOperator(calculation: String) = calculation.dropLast(3)
 
     companion object {
         private val allCheckRegex = """[\S\d-+*/]""".toRegex()
