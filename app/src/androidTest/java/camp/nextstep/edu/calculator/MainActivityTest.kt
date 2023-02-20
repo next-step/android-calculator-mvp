@@ -130,7 +130,7 @@ class MainActivityTest {
         onView(withId(R.id.button1)).perform(click())
 
         // then: '1+1'이 보여야 한다
-        onView(withId(R.id.textView)).check(matches(withText("1+1")))
+        onView(withId(R.id.textView)).check(matches(withText("1 + 1")))
     }
 
     @Test
@@ -165,7 +165,7 @@ class MainActivityTest {
         onView(withId(R.id.buttonPlus)).perform(click())
 
         // then: '1+'가 보여야 한다
-        onView(withId(R.id.textView)).check(matches(withText("1+")))
+        onView(withId(R.id.textView)).check(matches(withText("1 +")))
     }
 
     @Test
@@ -178,7 +178,7 @@ class MainActivityTest {
         onView(withId(R.id.buttonMinus)).perform(click())
 
         // then: '1-'가 보여야 한다
-        onView(withId(R.id.textView)).check(matches(withText("1-")))
+        onView(withId(R.id.textView)).check(matches(withText("1 -")))
     }
 
     @Test
@@ -204,7 +204,7 @@ class MainActivityTest {
         onView(withId(R.id.buttonDelete)).perform(click())
 
         // then: '32+'가 보여야 한다
-        onView(withId(R.id.textView)).check(matches(withText("32+")))
+        onView(withId(R.id.textView)).check(matches(withText("32 +")))
     }
 
     @Test

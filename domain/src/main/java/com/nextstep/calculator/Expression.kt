@@ -1,7 +1,5 @@
 package com.nextstep.calculator
 
-import com.nextstep.calculator.Operator.* // ktlint-disable no-wildcard-imports
-
 /**
  * @author 박소연
  * @created 2023/02/14
@@ -9,46 +7,52 @@ import com.nextstep.calculator.Operator.* // ktlint-disable no-wildcard-imports
  * @desc
  */
 class Expression {
-    private val validNumber = arrayOf("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
-    private val validOperator =
-        arrayOf(PLUS.operator, MINUS.operator, MULTIPLY.operator, DIVIDE.operator)
-
     private var expression = ""
-    var lastIsOperator: Boolean? = null
+    private var lastIsOperator: Boolean? = null
 
     fun checkInput(input: String) {
-        when (input) {
-            in validNumber -> addNumberToExpression(input)
-            in validOperator -> addOperatorToExpression(input)
-            else -> {
-                throw IllegalAccessException()
-            }
+        runCatching {
+            addNumberToExpression(input.toInt())
+        }.onFailure {
+            Operator.of(input)?.let { addOperatorToExpression(it) }
         }
     }
 
     // 수식에 숫자 추가
-    private fun addNumberToExpression(input: String) {
-        expression += input
+    private fun addNumberToExpression(input: Int) {
+        if (lastIsOperator == true) {
+            expression += " "
+        }
+        expression += input.toString()
         lastIsOperator = false
     }
 
     // 수식에 사칙연산자 추가
-    private fun addOperatorToExpression(input: String) {
+    private fun addOperatorToExpression(input: Operator) {
         when (lastIsOperator) {
-            true -> {
-                expression = expression.substring(0, expression.length - 1) + input
-            }
-            false -> expression += input
+            true -> expression = expression.substring(0, expression.length - 1) + input.operator
+            false -> expression += " ${input.operator}"
             else -> {}
         }
         lastIsOperator = true
     }
 
     fun removeInput() {
+        val value = expression.split(" ")
+
         if (expression.isNotEmpty()) {
-            expression = expression.substring(0, expression.length - 1)
-            lastIsOperator = expression.last().toString() in validOperator
+            if (value.last().length > 1) { removeSingleInput() } else { removeInputIncludeSpace() }
         }
+    }
+
+    private fun removeSingleInput() {
+        expression = expression.substring(0, expression.length - 1)
+        lastIsOperator = false
+    }
+
+    private fun removeInputIncludeSpace() {
+        expression = expression.substring(0, expression.length - 2)
+        lastIsOperator = true
     }
 
     fun getInputExpression() = expression
