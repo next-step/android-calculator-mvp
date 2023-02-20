@@ -9,13 +9,14 @@ import com.nextstep.calculator.Operator.* // ktlint-disable no-wildcard-imports
  * @desc
  */
 class Expression {
-    private val validNumber = charArrayOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
-    private val validOperator = charArrayOf(PLUS.char, MINUS.char, MULTIPLY.char, DIVIDE.char)
+    private val validNumber = arrayOf("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
+    private val validOperator =
+        arrayOf(PLUS.operator, MINUS.operator, MULTIPLY.operator, DIVIDE.operator)
 
     private var expression = ""
     var lastIsOperator: Boolean? = null
 
-    fun checkInput(input: Char) {
+    fun checkInput(input: String) {
         when (input) {
             in validNumber -> addNumberToExpression(input)
             in validOperator -> addOperatorToExpression(input)
@@ -26,13 +27,13 @@ class Expression {
     }
 
     // 수식에 숫자 추가
-    private fun addNumberToExpression(input: Char) {
+    private fun addNumberToExpression(input: String) {
         expression += input
         lastIsOperator = false
     }
 
     // 수식에 사칙연산자 추가
-    private fun addOperatorToExpression(input: Char) {
+    private fun addOperatorToExpression(input: String) {
         when (lastIsOperator) {
             true -> {
                 expression = expression.substring(0, expression.length - 1) + input
@@ -46,7 +47,7 @@ class Expression {
     fun removeInput() {
         if (expression.isNotEmpty()) {
             expression = expression.substring(0, expression.length - 1)
-            lastIsOperator = expression.last() in validOperator
+            lastIsOperator = expression.last().toString() in validOperator
         }
     }
 

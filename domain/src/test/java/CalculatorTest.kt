@@ -14,7 +14,7 @@ class CalculatorTest {
     fun ` ' 2 + 3 ' 을 계산하고 5를 출력해야 한다`() {
         val calculator = Calculator()
 
-        val actual = calculator.checkExpression("2+3")
+        val actual = calculator.calculate("2 + 3")
 
         assertThat(actual).isEqualTo(5)
     }
@@ -23,7 +23,7 @@ class CalculatorTest {
     fun ` ' 2 + 3 * 4 % 2 ' 을 계산하고 10을 출력해야 한다`() {
         val calculator = Calculator()
 
-        val actual = calculator.calculate("2+3*4/2")
+        val actual = calculator.calculate("2 + 3 * 4 / 2")
 
         assertThat(actual).isEqualTo(10)
     }
@@ -47,10 +47,10 @@ class CalculatorTest {
         val calculator = Calculator()
 
         runCatching {
-            calculator.checkExpression("+2*3")
+            calculator.calculate("+ 2 * 3")
         }.onFailure {
             println(it)
-            if (it.toString().contains("수식이 숫자로 시작하지 않음")) {
+            if (it.toString().contains("올바르지 않은 수식")) {
                 throw java.lang.IllegalArgumentException()
             }
         }.exceptionOrNull()
@@ -61,10 +61,10 @@ class CalculatorTest {
         val calculator = Calculator()
 
         runCatching {
-            calculator.checkExpression("2*3+")
+            calculator.calculate("2 * 3 +")
         }.onFailure {
             println(it)
-            if (it.toString().contains("수식이 숫자로 끝나지 않음")) {
+            if (it.toString().contains("올바르지 않은 수식")) {
                 throw java.lang.IllegalArgumentException()
             }
         }.exceptionOrNull()
@@ -75,21 +75,21 @@ class CalculatorTest {
         val calculator = Calculator()
 
         runCatching {
-            calculator.checkExpression("2**3")
+            calculator.calculate("2 * * 3")
         }.onFailure {
             println(it)
-            if (it.toString().contains("연산자가 연달아 입력됨")) {
+            if (it.toString().contains("올바르지 않은 수식")) {
                 throw java.lang.IllegalArgumentException()
             }
         }.exceptionOrNull()
     }
 
     @Test(expected = IllegalArgumentException::class)
-    fun `사칙연산자 외의 기호가 입력되면 null을 출력해야 한다`() {
+    fun `사칙연산자 외의 기호가 입력되면 예외처리 해야한다`() {
         val calculator = Calculator()
 
         runCatching {
-            calculator.checkExpression("2+3*4$2")
+            calculator.calculate("2 + 3 * 4 $ 2")
         }.onFailure {
             println(it)
             if (it.toString().contains("사칙연산자가 아닌 기호")) {
@@ -103,7 +103,7 @@ class CalculatorTest {
         val calculator = Calculator()
 
         runCatching {
-            calculator.checkExpression("2/0")
+            calculator.calculate("2 / 0")
         }.onFailure {
             println(it)
             if (it.toString().contains("0으로 나눌 수 없다")) {

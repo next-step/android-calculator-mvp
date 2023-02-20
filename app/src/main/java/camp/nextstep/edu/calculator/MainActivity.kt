@@ -19,61 +19,61 @@ class MainActivity : AppCompatActivity() {
 
         // 수 입력
         binding.button0.setOnClickListener {
-            expression.checkInput('0')
+            expression.checkInput("0")
             updateInput()
         }
         binding.button1.setOnClickListener {
-            expression.checkInput('1')
+            expression.checkInput("1")
             updateInput()
         }
         binding.button2.setOnClickListener {
-            expression.checkInput('2')
+            expression.checkInput("2")
             updateInput()
         }
         binding.button3.setOnClickListener {
-            expression.checkInput('3')
+            expression.checkInput("3")
             updateInput()
         }
         binding.button4.setOnClickListener {
-            expression.checkInput('4')
+            expression.checkInput("4")
             updateInput()
         }
         binding.button5.setOnClickListener {
-            expression.checkInput('5')
+            expression.checkInput("5")
             updateInput()
         }
         binding.button6.setOnClickListener {
-            expression.checkInput('6')
+            expression.checkInput("6")
             updateInput()
         }
         binding.button7.setOnClickListener {
-            expression.checkInput('7')
+            expression.checkInput("7")
             updateInput()
         }
         binding.button8.setOnClickListener {
-            expression.checkInput('8')
+            expression.checkInput("8")
             updateInput()
         }
         binding.button9.setOnClickListener {
-            expression.checkInput('9')
+            expression.checkInput("9")
             updateInput()
         }
 
         // 사칙연산 기호 입력
         binding.buttonPlus.setOnClickListener {
-            expression.checkInput(PLUS.char)
+            expression.checkInput(PLUS.operator)
             updateInput()
         }
         binding.buttonMinus.setOnClickListener {
-            expression.checkInput(MINUS.char)
+            expression.checkInput(MINUS.operator)
             updateInput()
         }
         binding.buttonMultiply.setOnClickListener {
-            expression.checkInput(MULTIPLY.char)
+            expression.checkInput(MULTIPLY.operator)
             updateInput()
         }
         binding.buttonDivide.setOnClickListener {
-            expression.checkInput(DIVIDE.char)
+            expression.checkInput(DIVIDE.operator)
             updateInput()
         }
 
