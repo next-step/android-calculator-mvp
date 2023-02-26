@@ -29,6 +29,6 @@ class CalculatorPresenter(
         val expression = expression.getInputExpression()
         val result = calculator.calculate(expression)
 
-        view.showExpression(result.toString())
+        view.showExpression(result)
     }
 }

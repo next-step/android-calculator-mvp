@@ -10,7 +10,7 @@ import com.nextstep.calculator.Operator.* // ktlint-disable no-wildcard-imports
  */
 
 class Calculator {
-    fun calculate(expression: String): Int {
+    fun calculate(expression: String): String {
         val values = expression.split(" ")
 
         // 입력값이 null이거나 빈 공백 문자일 경우
@@ -24,7 +24,7 @@ class Calculator {
             result = divideSubComponent("$result ${values[i]} ${values[i + 1]}").toString()
         }
 
-        return result.toInt()
+        return result
     }
 
     // 수식 내 구성요소 분리
@@ -40,13 +40,9 @@ class Calculator {
 
     // 연산자 체크 및 계산
     private fun calculateSubExpression(num1: Int, num2: Int, operator: String): Int {
-        return when (operator) {
-            PLUS.operator -> PLUS.result(num1, num2)
-            MINUS.operator -> MINUS.result(num1, num2)
-            MULTIPLY.operator -> MULTIPLY.result(num1, num2)
-            DIVIDE.operator -> DIVIDE.result(num1, num2)
-            // 사칙연산 기호가 아닌 경우
-            else -> throw IllegalArgumentException("사칙연산자가 아닌 기호 - char: $operator")
-        }
+        val operator: Operator = Operator.of(operator)
+            ?: throw IllegalArgumentException("사칙연산자가 아닌 기호 - char: $operator")
+
+        return operator.result(num1, num2)
     }
 }
