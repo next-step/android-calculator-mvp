@@ -43,7 +43,7 @@ class CalculatorTest {
     }
 
     @Test(expected = IllegalArgumentException::class)
-    fun `문자로 시작하는 수식이 입력되면 예외처리 해야한다`() {
+    fun `수식이 문자로 시작할 수 없다`() {
         val calculator = Calculator()
 
         runCatching {
@@ -57,7 +57,7 @@ class CalculatorTest {
     }
 
     @Test(expected = IllegalArgumentException::class)
-    fun `문자로 끝나는 수식이 입력되면 예외처리 해야한다`() {
+    fun `수식이 문자로 끝날 수 없다`() {
         val calculator = Calculator()
 
         runCatching {
@@ -71,7 +71,7 @@ class CalculatorTest {
     }
 
     @Test(expected = IllegalArgumentException::class)
-    fun `수식에 문자가 중복되어 나오면 예외처리 해야한다`() {
+    fun `수식에 문자가 중복될 수 없다`() {
         val calculator = Calculator()
 
         runCatching {
@@ -85,7 +85,7 @@ class CalculatorTest {
     }
 
     @Test(expected = IllegalArgumentException::class)
-    fun `사칙연산자 외의 기호가 입력되면 예외처리 해야한다`() {
+    fun `사칙연산자 외의 기호가 입력될 수 없다`() {
         val calculator = Calculator()
 
         runCatching {
@@ -99,7 +99,7 @@ class CalculatorTest {
     }
 
     @Test(expected = IllegalArgumentException::class)
-    fun `0으로 나누면 에러를 반환한다`() {
+    fun `0으로 나눌 수 없다`() {
         val calculator = Calculator()
 
         runCatching {
