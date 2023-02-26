@@ -1,7 +1,5 @@
 package com.nextstep.calculator
 
-import com.nextstep.calculator.Operator.* // ktlint-disable no-wildcard-imports
-
 /**
  * @author 박소연
  * @created 2023/02/05
@@ -21,20 +19,18 @@ class Calculator {
         var result = values[0]
 
         for (i in 1..values.size - 2 step 2) {
-            result = divideSubComponent("$result ${values[i]} ${values[i + 1]}").toString()
+            result = divideSubComponent(result.trim(), values[i + 1].trim(), values[i].trim()).toString()
         }
 
         return result
     }
 
     // 수식 내 구성요소 분리
-    private fun divideSubComponent(expression: String): Int {
-        val value = expression.split(" ")
-
+    private fun divideSubComponent(num1: String, num2: String, operator: String): Int {
         return calculateSubExpression(
-            num1 = value[0].toInt(),
-            num2 = value[2].toInt(),
-            operator = value[1]
+            num1 = num1.toInt(),
+            num2 = num2.toInt(),
+            operator = operator
         )
     }
 
