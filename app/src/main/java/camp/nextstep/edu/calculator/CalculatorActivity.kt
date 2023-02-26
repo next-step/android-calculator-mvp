@@ -41,11 +41,7 @@ class CalculatorActivity : AppCompatActivity(), CalculatorContract.View {
         binding.buttonEquals.setOnClickListener { presenter.calculate() }
     }
 
-    override fun showInput(input: String) {
+    override fun showExpression(input: String) {
         binding.textView.text = input
-    }
-
-    override fun showResult(result: Int) {
-        binding.textView.text = result.toString()
     }
 }

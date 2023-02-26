@@ -12,8 +12,7 @@ interface CalculatorContract {
         var presenter: Presenter
 
         // Presenter에서 호출
-        fun showInput(input: String)
-        fun showResult(result: Int)
+        fun showExpression(input: String)
     }
 
     // ViewController에서 호출

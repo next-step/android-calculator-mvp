@@ -17,18 +17,18 @@ class CalculatorPresenter(
 
     override fun addInput(input: String) {
         expression.checkInput(input)
-        view.showInput(expression.getInputExpression())
+        view.showExpression(expression.getInputExpression())
     }
 
     override fun removeLastInput() {
         expression.removeInput()
-        view.showInput(expression.getInputExpression())
+        view.showExpression(expression.getInputExpression())
     }
 
     override fun calculate() {
         val expression = expression.getInputExpression()
         val result = calculator.calculate(expression)
 
-        view.showResult(result)
+        view.showExpression(result.toString())
     }
 }
