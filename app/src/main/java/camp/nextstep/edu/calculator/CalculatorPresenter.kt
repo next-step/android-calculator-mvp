@@ -2,6 +2,7 @@ package camp.nextstep.edu.calculator
 
 import com.nextstep.calculator.Calculator
 import com.nextstep.calculator.Expression
+import com.nextstep.calculator.Operator
 
 /**
  * @author 박소연
@@ -15,7 +16,12 @@ class CalculatorPresenter(
     private val calculator = Calculator()
     private val expression by lazy { Expression() }
 
-    override fun addInput(input: String) {
+    override fun addInput(input: Int) {
+        expression.checkInput(input)
+        view.showExpression(expression.getInputExpression())
+    }
+
+    override fun addInput(input: Operator) {
         expression.checkInput(input)
         view.showExpression(expression.getInputExpression())
     }

@@ -17,22 +17,22 @@ class CalculatorActivity : AppCompatActivity(), CalculatorContract.View {
         presenter = CalculatorPresenter(this)
 
         // 수 입력
-        binding.button0.setOnClickListener { presenter.addInput("0") }
-        binding.button1.setOnClickListener { presenter.addInput("1") }
-        binding.button2.setOnClickListener { presenter.addInput("2") }
-        binding.button3.setOnClickListener { presenter.addInput("3") }
-        binding.button4.setOnClickListener { presenter.addInput("4") }
-        binding.button5.setOnClickListener { presenter.addInput("5") }
-        binding.button6.setOnClickListener { presenter.addInput("6") }
-        binding.button7.setOnClickListener { presenter.addInput("7") }
-        binding.button8.setOnClickListener { presenter.addInput("8") }
-        binding.button9.setOnClickListener { presenter.addInput("9") }
+        binding.button0.setOnClickListener { presenter.addInput(0) }
+        binding.button1.setOnClickListener { presenter.addInput(1) }
+        binding.button2.setOnClickListener { presenter.addInput(2) }
+        binding.button3.setOnClickListener { presenter.addInput(3) }
+        binding.button4.setOnClickListener { presenter.addInput(4) }
+        binding.button5.setOnClickListener { presenter.addInput(5) }
+        binding.button6.setOnClickListener { presenter.addInput(6) }
+        binding.button7.setOnClickListener { presenter.addInput(7) }
+        binding.button8.setOnClickListener { presenter.addInput(8) }
+        binding.button9.setOnClickListener { presenter.addInput(9) }
 
         // 사칙연산 기호 입력
-        binding.buttonPlus.setOnClickListener { presenter.addInput(PLUS.operator) }
-        binding.buttonMinus.setOnClickListener { presenter.addInput(MINUS.operator) }
-        binding.buttonMultiply.setOnClickListener { presenter.addInput(MULTIPLY.operator) }
-        binding.buttonDivide.setOnClickListener { presenter.addInput(DIVIDE.operator) }
+        binding.buttonPlus.setOnClickListener { presenter.addInput(PLUS) }
+        binding.buttonMinus.setOnClickListener { presenter.addInput(MINUS) }
+        binding.buttonMultiply.setOnClickListener { presenter.addInput(MULTIPLY) }
+        binding.buttonDivide.setOnClickListener { presenter.addInput(DIVIDE) }
 
         // 입력된 문자 1개 지우기
         binding.buttonDelete.setOnClickListener { presenter.removeLastInput() }

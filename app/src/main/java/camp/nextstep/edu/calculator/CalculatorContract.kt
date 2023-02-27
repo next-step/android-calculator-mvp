@@ -1,5 +1,7 @@
 package camp.nextstep.edu.calculator
 
+import com.nextstep.calculator.Operator
+
 /**
  * @author 박소연
  * @created 2023/02/25
@@ -17,7 +19,8 @@ interface CalculatorContract {
 
     // ViewController에서 호출
     interface Presenter {
-        fun addInput(input: String)
+        fun addInput(input: Int)
+        fun addInput(input: Operator)
         fun removeLastInput()
         fun calculate()
     }
