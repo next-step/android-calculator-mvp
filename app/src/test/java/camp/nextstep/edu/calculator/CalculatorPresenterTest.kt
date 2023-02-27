@@ -1,10 +1,11 @@
 package camp.nextstep.edu.calculator
 
+import com.google.common.truth.Truth.assertThat
+import com.nextstep.calculator.Operator.*
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
@@ -31,11 +32,11 @@ class CalculatorPresenterTest {
         every { view.showExpression(capture(inputSlot)) } answers { nothing }
 
         // when
-        presenter.addInput("1")
+        presenter.addInput(1)
 
         // then
         val actual = inputSlot.captured
-        assertEquals("1", actual)
+        assertThat(actual).isEqualTo("1")
         verify { view.showExpression(actual) }
     }
 
@@ -44,14 +45,14 @@ class CalculatorPresenterTest {
         // given
         val inputSlot = slot<String>()
         every { view.showExpression(capture(inputSlot)) } answers { nothing }
-        presenter.addInput("1")
+        presenter.addInput(1)
 
         // when
-        presenter.addInput("+")
+        presenter.addInput(PLUS)
 
         // then
         val actual = inputSlot.captured
-        assertEquals("1 +", actual)
+        assertThat(actual).isEqualTo("1 +")
         verify { view.showExpression(actual) }
     }
 
@@ -60,16 +61,16 @@ class CalculatorPresenterTest {
         // given
         val inputSlot = slot<String>()
         every { view.showExpression(capture(inputSlot)) } answers { nothing }
-        presenter.addInput("1")
-        presenter.addInput("+")
-        presenter.addInput("2")
+        presenter.addInput(1)
+        presenter.addInput(PLUS)
+        presenter.addInput(2)
 
         // when
         presenter.removeLastInput()
 
         // then
         val actual = inputSlot.captured
-        assertEquals("1 +", actual)
+        assertThat(actual).isEqualTo("1 +")
         verify { view.showExpression(actual) }
     }
 
@@ -79,16 +80,16 @@ class CalculatorPresenterTest {
         val inputSlot = slot<String>()
         every { view.showExpression(capture(inputSlot)) } answers { nothing }
 
-        presenter.addInput("1")
-        presenter.addInput("+")
-        presenter.addInput("2")
+        presenter.addInput(1)
+        presenter.addInput(PLUS)
+        presenter.addInput(2)
 
         // when
         presenter.calculate()
 
         // then
         val actual = inputSlot.captured
-        assertEquals("3", actual)
+        assertThat(actual).isEqualTo("3")
         verify { view.showExpression(actual) }
     }
 }
