@@ -34,7 +34,7 @@ class CalculatorTest {
 
         val actual = runCatching {
             calculator.calculate("")
-        }.exceptionOrNull().also { println(it?.message) }
+        }.exceptionOrNull()
 
         if (actual?.message?.contains("입력값이 null이거나 빈 공백 문자") == true) {
             assertThat(actual).isNotNull()
@@ -47,7 +47,7 @@ class CalculatorTest {
 
         val actual = runCatching {
             calculator.calculate("+ 2 * 3")
-        }.exceptionOrNull().also { println(it?.message) }
+        }.exceptionOrNull()
 
         if (actual?.message?.contains("올바르지 않은 수식") == true) {
             assertThat(actual).isNotNull()
@@ -60,7 +60,7 @@ class CalculatorTest {
 
         val actual = runCatching {
             calculator.calculate("2 * 3 +")
-        }.exceptionOrNull().also { println(it?.message) }
+        }.exceptionOrNull()
 
         if (actual?.message?.contains("올바르지 않은 수식") == true) {
             assertThat(actual).isNotNull()
@@ -73,7 +73,7 @@ class CalculatorTest {
 
         val actual = runCatching {
             calculator.calculate("2 * * 3")
-        }.exceptionOrNull().also { println(it?.message) }
+        }.exceptionOrNull()
 
         if (actual?.message?.contains("올바르지 않은 수식") == true) {
             assertThat(actual).isNotNull()
@@ -86,7 +86,7 @@ class CalculatorTest {
 
         val actual = runCatching {
             calculator.calculate("2 + 3 * 4 $ 2")
-        }.exceptionOrNull().also { println(it?.message) }
+        }.exceptionOrNull()
 
         if (actual?.message?.contains("사칙연산자가 아닌 기호") == true) {
             assertThat(actual).isNotNull()
@@ -99,7 +99,7 @@ class CalculatorTest {
 
         val actual = runCatching {
             calculator.calculate("2 / 0")
-        }.exceptionOrNull().also { println(it?.message) }
+        }.exceptionOrNull()
 
         if (actual?.message?.contains("0으로 나눌 수 없다") == true) {
             assertThat(actual).isNotNull()
