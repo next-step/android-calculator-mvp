@@ -19,6 +19,15 @@ class CalculatorTest {
         assertThat(actual).isEqualTo("5")
     }
 
+    @Test // 두자리 수 수식 계산
+    fun ` ' 12 + 3 ' 을 계산하고 15를 출력해야 한다`() {
+        val calculator = Calculator()
+
+        val actual = calculator.calculate("12 + 3")
+
+        assertThat(actual).isEqualTo("15")
+    }
+
     @Test // 전체 수식 계산
     fun ` ' 2 + 3 * 4 % 2 ' 을 계산하고 10을 출력해야 한다`() {
         val calculator = Calculator()
