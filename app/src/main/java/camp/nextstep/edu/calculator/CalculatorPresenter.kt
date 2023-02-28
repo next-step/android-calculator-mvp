@@ -17,11 +17,14 @@ class CalculatorPresenter(
     }
 
     override fun calculateAndReset() {
-        try {
+        runCatching {
             expression.calculateAndReset()
+        }.onSuccess {
             view.showExpression(expression.text)
-        } catch (e: IllegalArgumentException) {
-            view.showIncompleteExpressionError()
+        }.onFailure { exception ->
+            if (exception is IllegalArgumentException) {
+                view.showIncompleteExpressionError()
+            }
         }
     }
 }

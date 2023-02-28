@@ -2,7 +2,7 @@ package camp.nextstep.edu.calculator
 
 interface CalculatorContract {
     interface View {
-        var presenter: Presenter
+        val presenter: Presenter
         fun showExpression(expression: String)
         fun showIncompleteExpressionError()
     }
