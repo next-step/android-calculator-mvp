@@ -23,7 +23,7 @@ class Expression(
     }
 
 
-    fun delete() {
+    fun deleteLast() {
         if (expressions.isEmpty()) {
             return
         }
