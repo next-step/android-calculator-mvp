@@ -1,18 +1,19 @@
 package camp.nextstep.edu.calculator
 
 import com.google.common.truth.Truth.assertThat
-import com.nextstep.calculator.Operator.*
+import com.nextstep.calculator.Operator.* // ktlint-disable no-wildcard-imports
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
 import org.junit.Before
 import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertAll
 
 /**
  * @author 박소연
  * @created 2023/02/25
- * @updated 2023/02/25
+ * @updated 2023/03/01
  * @desc 계산기 Presenter의 단위테스트
  */
 class CalculatorPresenterTest {
@@ -36,7 +37,10 @@ class CalculatorPresenterTest {
 
         // then
         val actual = inputSlot.captured
-        assertThat(actual).isEqualTo("1")
+
+        assertAll(
+            { assertThat(actual).isEqualTo("1") }
+        )
         verify { view.showExpression(actual) }
     }
 
@@ -52,7 +56,9 @@ class CalculatorPresenterTest {
 
         // then
         val actual = inputSlot.captured
-        assertThat(actual).isEqualTo("1 +")
+        assertAll(
+            { assertThat(actual).isEqualTo("1 +") }
+        )
         verify { view.showExpression(actual) }
     }
 
@@ -70,7 +76,9 @@ class CalculatorPresenterTest {
 
         // then
         val actual = inputSlot.captured
-        assertThat(actual).isEqualTo("1 +")
+        assertAll(
+            { assertThat(actual).isEqualTo("1 +") }
+        )
         verify { view.showExpression(actual) }
     }
 
@@ -89,7 +97,9 @@ class CalculatorPresenterTest {
 
         // then
         val actual = inputSlot.captured
-        assertThat(actual).isEqualTo("3")
+        assertAll(
+            { assertThat(actual).isEqualTo("3") }
+        )
         verify { view.showExpression(actual) }
     }
 }

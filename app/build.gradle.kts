@@ -51,11 +51,23 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.fragment:fragment-ktx:1.5.5")
 
-    testImplementation("junit:junit:4.13.2")
+//    testImplementation("junit:junit:4.13.2")
     testImplementation("com.google.truth:truth:1.1.3")
     testImplementation("androidx.arch.core:core-testing:2.1.0")
     testImplementation("io.mockk:mockk:1.12.0")
 
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.8.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.2")
+
+    androidTestImplementation("androidx.test:runner:1.5.2")
+    androidTestImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
+    androidTestImplementation("org.junit.jupiter:junit-jupiter-params:5.8.2")
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.2")
+    androidTestImplementation("de.mannodermaus.junit5:android-test-core:1.0.0")
+    androidTestRuntimeOnly("de.mannodermaus.junit5:android-test-runner:1.0.0")
 }
