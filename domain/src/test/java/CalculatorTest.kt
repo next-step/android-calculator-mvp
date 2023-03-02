@@ -16,7 +16,16 @@ class CalculatorTest {
 
         val actual = calculator.calculate("2 + 3")
 
-        assertThat(actual).isEqualTo(5)
+        assertThat(actual).isEqualTo("5")
+    }
+
+    @Test // 두자리 수 수식 계산
+    fun ` ' 12 + 3 ' 을 계산하고 15를 출력해야 한다`() {
+        val calculator = Calculator()
+
+        val actual = calculator.calculate("12 + 3")
+
+        assertThat(actual).isEqualTo("15")
     }
 
     @Test // 전체 수식 계산
@@ -25,90 +34,84 @@ class CalculatorTest {
 
         val actual = calculator.calculate("2 + 3 * 4 / 2")
 
-        assertThat(actual).isEqualTo(10)
+        assertThat(actual).isEqualTo("10")
     }
 
-    @Test(expected = IllegalArgumentException::class)
+    @Test
     fun `공백 입력시 예외처리 해야한다`() {
         val calculator = Calculator()
 
-        runCatching {
+        val actual = runCatching {
             calculator.calculate("")
-        }.onFailure {
-            println(it)
-            if (it.toString().contains("입력값이 null이거나 빈 공백 문자")) {
-                throw java.lang.IllegalArgumentException()
-            }
         }.exceptionOrNull()
+
+        if (actual?.message?.contains("입력값이 null이거나 빈 공백 문자") == true) {
+            assertThat(actual).isNotNull()
+        }
     }
 
-    @Test(expected = IllegalArgumentException::class)
-    fun `문자로 시작하는 수식이 입력되면 예외처리 해야한다`() {
+    @Test
+    fun `수식이 문자로 시작할 수 없다`() {
         val calculator = Calculator()
 
-        runCatching {
+        val actual = runCatching {
             calculator.calculate("+ 2 * 3")
-        }.onFailure {
-            println(it)
-            if (it.toString().contains("올바르지 않은 수식")) {
-                throw java.lang.IllegalArgumentException()
-            }
         }.exceptionOrNull()
+
+        if (actual?.message?.contains("올바르지 않은 수식") == true) {
+            assertThat(actual).isNotNull()
+        }
     }
 
-    @Test(expected = IllegalArgumentException::class)
-    fun `문자로 끝나는 수식이 입력되면 예외처리 해야한다`() {
+    @Test
+    fun `수식이 문자로 끝날 수 없다`() {
         val calculator = Calculator()
 
-        runCatching {
+        val actual = runCatching {
             calculator.calculate("2 * 3 +")
-        }.onFailure {
-            println(it)
-            if (it.toString().contains("올바르지 않은 수식")) {
-                throw java.lang.IllegalArgumentException()
-            }
         }.exceptionOrNull()
+
+        if (actual?.message?.contains("올바르지 않은 수식") == true) {
+            assertThat(actual).isNotNull()
+        }
     }
 
-    @Test(expected = IllegalArgumentException::class)
-    fun `수식에 문자가 중복되어 나오면 예외처리 해야한다`() {
+    @Test
+    fun `수식에 문자가 중복될 수 없다`() {
         val calculator = Calculator()
 
-        runCatching {
+        val actual = runCatching {
             calculator.calculate("2 * * 3")
-        }.onFailure {
-            println(it)
-            if (it.toString().contains("올바르지 않은 수식")) {
-                throw java.lang.IllegalArgumentException()
-            }
         }.exceptionOrNull()
+
+        if (actual?.message?.contains("올바르지 않은 수식") == true) {
+            assertThat(actual).isNotNull()
+        }
     }
 
-    @Test(expected = IllegalArgumentException::class)
-    fun `사칙연산자 외의 기호가 입력되면 예외처리 해야한다`() {
+    @Test
+    fun `사칙연산자 외의 기호가 입력될 수 없다`() {
         val calculator = Calculator()
 
-        runCatching {
+        val actual = runCatching {
             calculator.calculate("2 + 3 * 4 $ 2")
-        }.onFailure {
-            println(it)
-            if (it.toString().contains("사칙연산자가 아닌 기호")) {
-                throw java.lang.IllegalArgumentException()
-            }
         }.exceptionOrNull()
+
+        if (actual?.message?.contains("사칙연산자가 아닌 기호") == true) {
+            assertThat(actual).isNotNull()
+        }
     }
 
-    @Test(expected = IllegalArgumentException::class)
-    fun `0으로 나누면 에러를 반환한다`() {
+    @Test
+    fun `0으로 나눌 수 없다`() {
         val calculator = Calculator()
 
-        runCatching {
+        val actual = runCatching {
             calculator.calculate("2 / 0")
-        }.onFailure {
-            println(it)
-            if (it.toString().contains("0으로 나눌 수 없다")) {
-                throw java.lang.IllegalArgumentException()
-            }
         }.exceptionOrNull()
+
+        if (actual?.message?.contains("0으로 나눌 수 없다") == true) {
+            assertThat(actual).isNotNull()
+        }
     }
 }

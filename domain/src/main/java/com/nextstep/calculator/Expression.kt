@@ -4,19 +4,17 @@ package com.nextstep.calculator
  * @author 박소연
  * @created 2023/02/14
  * @updated 2023/02/14
- * @desc
+ * @desc UI에 표현될 수식을 만드는 객체
  */
 class Expression {
     private var expression = ""
     private var lastIsOperator: Boolean? = null
 
-    fun checkInput(input: String) {
-        runCatching {
-            addNumberToExpression(input.toInt())
-        }.onFailure {
-            Operator.of(input)?.let { addOperatorToExpression(it) }
-        }
-    }
+    // 수식에 정수 추가
+    fun checkInput(input: Int) { addNumberToExpression(input) }
+
+    // 수식에 연산자 추가
+    fun checkInput(input: Operator) { addOperatorToExpression(input) }
 
     // 수식에 숫자 추가
     private fun addNumberToExpression(input: Int) {
@@ -37,11 +35,16 @@ class Expression {
         lastIsOperator = true
     }
 
+    // 마지막 입력값을 제거
     fun removeInput() {
         val value = expression.split(" ")
 
         if (expression.isNotEmpty()) {
-            if (value.last().length > 1) { removeSingleInput() } else { removeInputIncludeSpace() }
+            if (value.last().length > 1) {
+                removeSingleInput()
+            } else {
+                removeInputIncludeSpace()
+            }
         }
     }
 

@@ -15,9 +15,9 @@ import org.junit.Test
  * @desc 계산기 UI 테스트
  */
 
-class MainActivityTest {
+class CalculatorActivityTest {
     @get:Rule
-    var activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
+    var activityScenarioRule = ActivityScenarioRule(CalculatorActivity::class.java)
 
     @Test
     fun 초기_상태에서_0을_누르면_0이_보인다() {
