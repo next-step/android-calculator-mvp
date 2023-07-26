@@ -1,4 +1,4 @@
-package camp.nextstep.edu.calculator.view
+package camp.nextstep.edu.calculator
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
