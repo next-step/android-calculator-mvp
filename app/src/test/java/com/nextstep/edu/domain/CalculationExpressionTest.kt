@@ -36,7 +36,7 @@ class CalculationExpressionTest {
     @Test
     fun `2 곱하기 3`() {
         // given
-        val testParams = "2 곱하기 3"
+        val testParams = "2 * 3"
         // when
         val actual = expressionParser.split(testParams)
         // then
