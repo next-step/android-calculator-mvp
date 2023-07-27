@@ -6,7 +6,7 @@ class Calculator {
 
     private var expressions = ""
 
-    fun addNumberOnExpressions(number: Int) {
+    fun addNumberOnExpressions(number: Int?) {
         validator.operateIfValidate(
             Validator.OperationType.ConcatNumberOperation(
                 number = number,
@@ -17,43 +17,14 @@ class Calculator {
         }
     }
 
-    fun addPlusOnExpression() {
+    fun addBasicOperationOnExpression(basicOperator: String?) {
         validator.operateIfValidate(
             Validator.OperationType.BasicOperation(
+                basicOperator = basicOperator,
                 expression = expressions
             )
         ) {
-            expressions += " + "
-        }
-    }
-
-    fun addMinusOnExpression() {
-        validator.operateIfValidate(
-            Validator.OperationType.BasicOperation(
-                expression = expressions
-            )
-        ) {
-            expressions += " - "
-        }
-    }
-
-    fun addMultiplyOnExpression() {
-        validator.operateIfValidate(
-            Validator.OperationType.BasicOperation(
-                expression = expressions
-            )
-        ) {
-            expressions += " × "
-        }
-    }
-
-    fun addDivideOnExpression() {
-        validator.operateIfValidate(
-            Validator.OperationType.BasicOperation(
-                expression = expressions
-            )
-        ) {
-            expressions += " ÷ "
+            expressions += " $basicOperator "
         }
     }
 

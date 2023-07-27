@@ -1,9 +1,6 @@
 package camp.nextstep.edu.calculator
 
 import android.os.Bundle
-import android.view.View
-import android.view.View.OnClickListener
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
 import camp.nextstep.edu.domain.Calculator
@@ -50,21 +47,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun setOnBasicOperationClickListener() {
         with(binding) {
-            buttonPlus.setOnClickListener {
-                calculator.addPlusOnExpression()
-                setExpressions()
-            }
-            buttonMinus.setOnClickListener {
-                calculator.addMinusOnExpression()
-                setExpressions()
-            }
-            buttonDivide.setOnClickListener {
-                calculator.addDivideOnExpression()
-                setExpressions()
-            }
-            buttonMultiply.setOnClickListener {
-                calculator.addMultiplyOnExpression()
-                setExpressions()
+            val basicOperatorButtons = mapOf(
+                buttonPlus to "+",
+                buttonMinus to "-",
+                buttonDivide to "÷",
+                buttonMultiply to "×"
+            )
+
+            basicOperatorButtons.keys.forEach { button ->
+                button.setOnClickListener {
+                    calculator.addBasicOperationOnExpression(basicOperatorButtons[button])
+                    setExpressions()
+                }
             }
         }
     }

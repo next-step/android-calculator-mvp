@@ -16,6 +16,7 @@ class Validator {
 
             is OperationType.BasicOperation -> validateBaseOperation(
                 expression = operationType.expression,
+                basicOperator = operationType.basicOperator,
                 operation = operation
             )
 
@@ -28,18 +29,21 @@ class Validator {
     }
 
     private fun validateConcatNumberOperation(
-        number: Int,
+        number: Int?,
         expression: String,
         operation: () -> Unit
     ) {
+        if (number == null) throw IllegalArgumentException()
         if (expression.isEmpty() && number == 0) return
         operation()
     }
 
     private fun validateBaseOperation(
         expression: String,
+        basicOperator: String?,
         operation: () -> Unit
     ) {
+        if (basicOperator.isNullOrEmpty()) throw IllegalArgumentException()
         if (isLastExpressionIsNumber(expression)) operation()
     }
 
@@ -64,12 +68,13 @@ class Validator {
 
     sealed class OperationType {
         data class ConcatNumberOperation(
-            val number: Int,
+            val number: Int?,
             val expression: String
         ) : OperationType()
 
         data class BasicOperation(
-            val expression: String
+            val expression: String,
+            val basicOperator: String?
         ) : OperationType()
 
         data class ExecuteOperation(
