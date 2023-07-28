@@ -2,7 +2,7 @@ package camp.nextstep.edu.domain
 
 class Calculator {
 
-    private val validator by lazy { Validator() }
+    private val validator = Validator()
 
     private var expressions = ""
 
