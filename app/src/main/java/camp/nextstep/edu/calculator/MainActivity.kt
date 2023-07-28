@@ -10,7 +10,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)자
+        setContentView(binding.root)
 
         binding.button0.setOnClickListener { binding.textView.text = "0" }
         binding.button1.setOnClickListener { binding.textView.text = "1" }
