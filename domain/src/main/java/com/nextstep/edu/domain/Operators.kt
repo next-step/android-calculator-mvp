@@ -4,41 +4,41 @@ import java.lang.IllegalArgumentException
 
 sealed class Operators {
 
-    abstract fun calculate(): Int
+    abstract val method: String?
+    abstract fun calculate(first: Int, second: Int): Int
 
-    class Add(private val first: Int, private val second: Int): Operators() {
-        override fun calculate(): Int = first + second
+    object Add: Operators() {
+        override val method: String = "+"
+        override fun calculate(first: Int, second: Int): Int = first + second
     }
 
-    class Minus(private val first: Int, private val second: Int): Operators() {
-        override fun calculate(): Int = first - second
+    object Minus: Operators() {
+        override val method: String = "-"
+        override fun calculate(first: Int, second: Int): Int = first - second
     }
 
-    class Multiply(private val first: Int, private val second: Int): Operators() {
-        override fun calculate(): Int = first * second
+    object Multiply: Operators() {
+        override val method: String = "*"
+        override fun calculate(first: Int, second: Int): Int = first * second
     }
 
-    class Divider(private val first: Int, private val second: Int): Operators() {
-        override fun calculate(): Int = first / second
+    object Divider: Operators() {
+        override val method: String = "/"
+        override fun calculate(first: Int, second: Int): Int = first / second
     }
 
     object Unknown: Operators() {
-        override fun calculate(): Int = throw IllegalArgumentException("Unsupported Methods")
+        override val method: String? = null
+        override fun calculate(first: Int, second: Int): Int = throw IllegalArgumentException("Unsupported Methods")
     }
 
     companion object {
-        fun List<String>.toCalculate(): Int {
-            val method = this[1]
-            val first = this[0].toInt()
-            val second = this[2].toInt()
-
-            return when(method) {
-                "+" -> Add(first, second).calculate()
-                "-" -> Minus(first, second).calculate()
-                "*" -> Multiply(first, second).calculate()
-                "/" -> Divider(first, second).calculate()
-                else -> Unknown.calculate()
-            }
+        fun OperatorItems.toCalculate(): Int {
+            return Operators::class.sealedSubclasses
+                .map { it.objectInstance as Operators }
+                .find { it.method == this.method }
+                ?.calculate(this.first.toInt(), this.second.toInt())
+                ?: throw IllegalArgumentException("Unsupported Methods")
         }
     }
 

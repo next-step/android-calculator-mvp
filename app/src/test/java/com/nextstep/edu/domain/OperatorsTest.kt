@@ -48,10 +48,10 @@ class OperatorsTest {
 
     @Test
     fun `연산에 맞게 문자가 들어 오면 연산을 할 수 있다`() {
-        assertEquals(Operators.Add(1, 2).calculate(), calculator.evaluate("1 + 2"))
-        assertEquals(Operators.Minus(1, 2).calculate(), calculator.evaluate("1 - 2"))
-        assertEquals(Operators.Multiply(1, 2).calculate(), calculator.evaluate("1 * 2"))
-        assertEquals(Operators.Divider(1, 2).calculate(), calculator.evaluate("1 / 2"))
+        assertEquals(Operators.Add.calculate(1, 2), calculator.evaluate("1 + 2"))
+        assertEquals(Operators.Minus.calculate(1, 2), calculator.evaluate("1 - 2"))
+        assertEquals(Operators.Multiply.calculate(1, 2), calculator.evaluate("1 * 2"))
+        assertEquals(Operators.Divider.calculate(1, 2), calculator.evaluate("1 / 2"))
     }
 
     @Test
