@@ -116,4 +116,34 @@ class CalculatorTest {
             calculator.evaluate(testParams)
         }
     }
+
+    @Test
+    fun `연산으로 시작하는 경우 IllegalArgumentException 을 던진다`() {
+        // given
+        val testParams = "+ 3 3"
+        // then
+        assertThrows(IllegalArgumentException::class.java) {
+            calculator.evaluate(testParams)
+        }
+    }
+
+    @Test
+    fun `연산으로 종료하는 경우 IllegalArgumentException 을 던진다`() {
+        // given
+        val testParams = "2 3 +"
+        // then
+        assertThrows(IllegalArgumentException::class.java) {
+            calculator.evaluate(testParams)
+        }
+    }
+
+    @Test
+    fun `연산만 있는 경우 IllegalArgumentException 을 던진다`() {
+        // given
+        val testParams = "+ - +"
+        // then
+        assertThrows(IllegalArgumentException::class.java) {
+            calculator.evaluate(testParams)
+        }
+    }
 }
