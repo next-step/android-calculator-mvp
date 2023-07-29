@@ -2,65 +2,37 @@ package camp.nextstep.edu.domain
 
 class Calculator {
 
-    private val validator = Validator()
+    fun evaluate(expression: String): Long {
+        val expressions = ExpressionParser.parse(expression)
+        val validator = Validator()
+        validator.validate(expressions)
 
-    private var expressions = ""
+        var result = expressions.first().toLong()
 
-    fun addNumberOnExpressions(number: Int?) {
-        validator.operateIfValidate(
-            Validator.OperationType.ConcatNumberOperation(
-                number = number,
-                expression = expressions
-            )
-        ) {
-            expressions += "$number"
+        for (i in 1 until  expressions.size step 2) {
+            val operator = expressions[i]
+            val secondNumber = expressions[i + 1].toLong()
+            result = operator.getEvaluationResult(result, secondNumber)
         }
+
+        return result
     }
 
-    fun addBasicOperationOnExpression(basicOperator: String?) {
-        validator.operateIfValidate(
-            Validator.OperationType.BasicOperation(
-                basicOperator = basicOperator,
-                expression = expressions
-            )
-        ) {
-            expressions += " $basicOperator "
-        }
-    }
-
-    fun execute() {
-        validator.operateIfValidate(
-            operationType = Validator.OperationType.ExecuteOperation(
-                expression = expressions
-            ),
-        ) {
-            val expressionPiece = expressions.split(" ")
-            var result = expressionPiece.first().toLong()
-
-            for (i in 1 until  expressionPiece.size step 2) {
-                result = expressionPiece[i].getExecutionResult(result, expressionPiece[i + 1].toLong())
-            }
-
-            expressions = result.toString()
-        }
-    }
-
-    private fun String.getExecutionResult(firstNumber: Long, secondNumber: Long): Long {
+    private fun String.getEvaluationResult(firstNumber: Long, secondNumber: Long): Long {
         return when (this) {
-            "+" -> firstNumber + secondNumber
-            "-" -> firstNumber - secondNumber
-            "÷" -> firstNumber / secondNumber
-            "×" -> firstNumber * secondNumber
+            "+" -> plus(firstNumber, secondNumber)
+            "-" -> minus(firstNumber, secondNumber)
+            "÷" -> divide(firstNumber, secondNumber)
+            "×" -> multiply(firstNumber, secondNumber)
             else -> throw IllegalArgumentException()
         }
     }
 
-    fun deleteExpression() {
-        val expression = expressions.trimEnd().dropLast(1)
-        expressions =
-            if (expression.endsWith(" ")) expression.trimEnd()
-            else expression
-    }
+    private fun plus(firstNumber: Long, secondNumber: Long) = firstNumber + secondNumber
 
-    fun getExpressions() = expressions
+    private fun minus(firstNumber: Long, secondNumber: Long) = firstNumber - secondNumber
+
+    private fun divide(firstNumber: Long, secondNumber: Long) = firstNumber / secondNumber
+
+    private fun multiply(firstNumber: Long, secondNumber: Long) = firstNumber * secondNumber
 }
