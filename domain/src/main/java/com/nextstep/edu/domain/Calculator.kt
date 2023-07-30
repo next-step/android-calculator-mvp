@@ -11,12 +11,11 @@ class Calculator {
         var resultValue = splitInputValue[0]
 
         for (index in 1 until splitInputValue.size step 2) {
-            val operatorItems = OperatorItems(
+            resultValue = toCalculate(
                 method = splitInputValue[index],
                 first = resultValue,
                 second = splitInputValue[index + 1]
-            )
-            resultValue = operatorItems.toCalculate().toString()
+            ).toString()
         }
 
         return resultValue.toInt()
