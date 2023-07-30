@@ -24,6 +24,8 @@ class Expression(
     fun getOperands(): String = operands
 
     fun removeOperands() {
+        if (operands.isBlank()) return
+
         if (operands.last().toString().isBlank()) {
             removeMethods()
         } else {

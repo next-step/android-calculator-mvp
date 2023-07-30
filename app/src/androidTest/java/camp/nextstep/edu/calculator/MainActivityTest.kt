@@ -299,4 +299,30 @@ class MainActivityTest {
         onView(withId(R.id.textView))
             .check(ViewAssertions.matches(withText("")))
     }
+
+    @Test
+    fun 버튼121_더하기_결과를_누르면_아무것도_안변한다() {
+        // given: '121 + '이 입력되면
+        onView(withId(R.id.button1)).perform(click())
+        onView(withId(R.id.button2)).perform(click())
+        onView(withId(R.id.button1)).perform(click())
+        onView(withId(R.id.buttonPlus)).perform(click())
+
+        // when: '='를 입력하면
+        onView(withId(R.id.buttonEquals)).perform(click())
+
+        // then: '121 + '이 보여야 한다.
+        onView(withId(R.id.textView))
+            .check(ViewAssertions.matches(withText("121 + ")))
+    }
+
+    @Test
+    fun 초기상태_지우기_누르면_아무것도_안변한다() {
+        // when: '지우기'를 입력하면
+        onView(withId(R.id.buttonDelete)).perform(click())
+
+        // then: '121 + '이 보여야 한다.
+        onView(withId(R.id.textView))
+            .check(ViewAssertions.matches(withText("")))
+    }
 }
