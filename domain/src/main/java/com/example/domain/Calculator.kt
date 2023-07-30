@@ -4,11 +4,11 @@ class Calculator {
 
 	fun calculate(expression: String?): Int {
 		if (expression.isNullOrBlank()) {
-			throw IllegalArgumentException()
+			throw IllegalArgumentException(EXP_NULL_OR_BLANK)
 		}
 
 		if (expression.last().isDigit().not()) {
-			throw IllegalStateException()
+			throw IllegalStateException(EXP_NOT_COMPLETE)
 		}
 
 		val inputs = expression.split(" ")
@@ -27,5 +27,10 @@ class Calculator {
 		}
 
 		return result
+	}
+
+	companion object {
+		const val EXP_NULL_OR_BLANK = "expression is null or blank"
+		const val EXP_NOT_COMPLETE = "expression is not complete"
 	}
 }
