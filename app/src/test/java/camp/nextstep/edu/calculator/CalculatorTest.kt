@@ -62,7 +62,7 @@ class CalculatorTest {
     @Test
     fun 입력값이_NULL일_경우_에러를_발생시킨다() {
         // when : 입력값이 null이다.
-        val exception = kotlin.runCatching { calculator.evaluate(null) }
+        val exception = kotlin.runCatching { calculator.evaluate(null) }.exceptionOrNull()
 
         // then : IllegalArgumentException이 발생한다.
         assertThat(exception).isInstanceOf(IllegalArgumentException::class.java)
