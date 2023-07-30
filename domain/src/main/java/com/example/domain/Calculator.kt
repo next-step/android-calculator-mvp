@@ -12,14 +12,11 @@ class Calculator {
 		}
 
 		val inputs = expression.split(" ")
-		var result = inputs.firstOrNull()?.toIntOrNull() ?: throw IllegalStateException()
+		var result = inputs.first().toIntOrThrow()
 
 		for (i in 1 until inputs.size step 2) {
-			val op = inputs[i]
-			val number = inputs[i + 1].toIntOrNull() ?: throw IllegalStateException()
-			val operator = Operator.values().find { operator ->
-				operator.op == op
-			} ?: throw IllegalArgumentException()
+			val operator = Operator.getOrThrow(inputs[i])
+			val number = inputs[i + 1].toIntOrThrow()
 
 			when (operator) {
 				Operator.PLUS -> result += number
