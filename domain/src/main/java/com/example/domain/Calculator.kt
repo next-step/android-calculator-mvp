@@ -7,11 +7,11 @@ class Calculator {
 			throw IllegalArgumentException(EXP_NULL_OR_BLANK)
 		}
 
-		if (expression.last().isDigit().not()) {
+		if (expression.trim().last().isDigit().not()) {
 			throw IllegalStateException(EXP_NOT_COMPLETE)
 		}
 
-		val inputs = expression.split(" ")
+		val inputs = expression.trim().split(" ")
 		var result = inputs.first().toIntOrThrow()
 
 		for (i in 1 until inputs.size step 2) {
