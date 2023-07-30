@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             buttonEquals.setOnClickListener {
-                val result = calculator.evaluate(expressionHandler.getExpression())
+                val result = calculator.evaluate(expressionHandler.expression)
                 binding.textView.text = result.toString()
             }
         }
@@ -47,6 +47,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun showExpression(inputValue: String) {
         expressionHandler.addInputValue(inputValue)
-        binding.textView.text = expressionHandler.getExpression()
+        binding.textView.text = expressionHandler.expression
     }
 }

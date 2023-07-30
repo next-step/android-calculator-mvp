@@ -2,9 +2,8 @@ package camp.nextstep.edu.domain
 
 class ExpressionHandler {
 
-    private var expression = ""
-
-    fun getExpression() = expression
+    var expression = ""
+        private set
 
     fun addInputValue(inputValue: String) {
         expression += inputValue
