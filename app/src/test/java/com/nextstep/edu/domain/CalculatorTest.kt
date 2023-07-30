@@ -5,7 +5,7 @@ import org.junit.Test
 
 class CalculatorTest {
 
-    private val calculator = Calculator()
+    private val calculator = Calculator
 
     @Test
     fun `2 더하기 3 = 5`() {

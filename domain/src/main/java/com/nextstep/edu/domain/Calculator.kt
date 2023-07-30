@@ -2,7 +2,7 @@ package com.nextstep.edu.domain
 
 import com.nextstep.edu.domain.Operators.Companion.toCalculate
 
-class Calculator {
+object Calculator {
 
     fun evaluate(inputValue: String): Int {
         val splitInputValue = CalculationExpression.split(inputValue)
