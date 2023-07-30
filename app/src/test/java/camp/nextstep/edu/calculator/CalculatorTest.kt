@@ -4,8 +4,12 @@ import com.example.calculatorlib.Calculator
 import com.google.common.truth.Truth.assertThat
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.Parameterized
+import org.junit.runners.Parameterized.Parameters
 
-class CalculatorTest {
+@RunWith(value = Parameterized::class)
+class CalculatorTest(val input: String, val expected: Int) {
     private lateinit var calculator: Calculator
 
     @Before
@@ -14,7 +18,7 @@ class CalculatorTest {
     }
 
     @Test
-    fun 문자열_수식을_계산한다1() {
+    fun 문자열_수식을_계산한다() {
         // when : calculator를 통해 수식을 계산한다.
         val actual = calculator.evaluate("1 + 2 + 3")
 
@@ -29,6 +33,14 @@ class CalculatorTest {
 
         // then : 사칙 연산의 우선 순위가 아닌 입력 우선 순위로 계산을 진행한다.
         assertThat(actual).isEqualTo(9)
+    }
+
+    @Test
+    fun 여러_문자열_수식을_계산한다() {
+        // when : calculator를 통해 수식을 계산한다.
+        val actual =  calculator.evaluate(input)
+        // then : 사칙 연산의 우선 순위가 아닌 입력 우선 순위로 계산을 진행한다.
+        assertThat(actual).isEqualTo(expected)
     }
 
     @Test
@@ -66,5 +78,17 @@ class CalculatorTest {
 
         // then : IllegalArgumentException이 발생한다.
         assertThat(exception).isInstanceOf(IllegalArgumentException::class.java)
+    }
+
+
+
+    companion object {
+        @JvmStatic
+        @Parameters
+        fun testData() = listOf(
+            arrayOf("2 + 3", 5),
+            arrayOf("3 * 2 - 1", 5),
+            arrayOf("10 * 2 + 8 / 3", 9)
+        )
     }
 }
