@@ -3,14 +3,14 @@ package camp.nextstep.edu.calculator
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
-import camp.nextstep.edu.domain.Calculator
+import camp.nextstep.edu.domain.Evaluator
 import camp.nextstep.edu.domain.ExpressionHandler
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private val expressionHandler = ExpressionHandler()
-    private val calculator = Calculator()
+    private val evaluator = Evaluator()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             buttonEquals.setOnClickListener {
-                val result = calculator.evaluate(expressionHandler.expression)
+                val result = evaluator.evaluate(expressionHandler.expression)
                 binding.textView.text = result.toString()
             }
         }

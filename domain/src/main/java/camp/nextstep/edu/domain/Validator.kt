@@ -32,5 +32,5 @@ class Validator {
             }
     }
 
-    private fun isInvalidOperator(operator: String) = operator !in listOf("+", "-", "÷", "×")
+    private fun isInvalidOperator(operator: String) = operator !in CalculationOperator.values().map { it.symbol }
 }

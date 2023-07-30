@@ -2,12 +2,11 @@ package camp.nextstep.edu.domain
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThrows
-import org.junit.Assert.fail
 import org.junit.Test
 
-class CalculatorTest {
+class EvaluatorTest {
 
-    private val calculator = Calculator()
+    private val evaluator = Evaluator()
 
     @Test
     fun `1 더하기 3을 하면 4가 나온다`() {
@@ -17,7 +16,7 @@ class CalculatorTest {
         val operator = "+"
 
         // when
-        val result = calculator.evaluate("$firstNumber $operator $secondNumber")
+        val result = evaluator.evaluate("$firstNumber $operator $secondNumber")
 
         // then
         assertEquals(result, 4)
@@ -31,7 +30,7 @@ class CalculatorTest {
         val operator = "-"
 
         // when
-        val result = calculator.evaluate("$firstNumber $operator $secondNumber")
+        val result = evaluator.evaluate("$firstNumber $operator $secondNumber")
 
         // then
         assertEquals(result, -2)
@@ -45,7 +44,7 @@ class CalculatorTest {
         val operator = "×"
 
         // when
-        val result = calculator.evaluate("$firstNumber $operator $secondNumber")
+        val result = evaluator.evaluate("$firstNumber $operator $secondNumber")
 
         // then
         assertEquals(result, 6)
@@ -59,7 +58,7 @@ class CalculatorTest {
         val operator = "÷"
 
         // when
-        val result = calculator.evaluate("$firstNumber $operator $secondNumber")
+        val result = evaluator.evaluate("$firstNumber $operator $secondNumber")
 
         // then
         assertEquals(result, 5)
@@ -72,7 +71,7 @@ class CalculatorTest {
             val secondNumber = 2
             val operator = "&"
 
-            calculator.evaluate("$firstNumber $operator $secondNumber")
+            evaluator.evaluate("$firstNumber $operator $secondNumber")
         }
     }
 
@@ -83,7 +82,7 @@ class CalculatorTest {
             val secondNumber = 2
             val operator = "+"
 
-            calculator.evaluate("$firstNumber $operator $secondNumber")
+            evaluator.evaluate("$firstNumber $operator $secondNumber")
         }
     }
 
@@ -94,7 +93,7 @@ class CalculatorTest {
             val secondNumber = ""
             val operator = "+"
 
-            calculator.evaluate("$firstNumber $operator $secondNumber")
+            evaluator.evaluate("$firstNumber $operator $secondNumber")
         }
     }
 
@@ -105,7 +104,7 @@ class CalculatorTest {
             val secondNumber = 2
             val operator = ""
 
-            calculator.evaluate("$firstNumber $operator $secondNumber")
+            evaluator.evaluate("$firstNumber $operator $secondNumber")
         }
     }
 
@@ -116,7 +115,7 @@ class CalculatorTest {
             val secondNumber = 2
             val operator = "+"
 
-            calculator.evaluate("$firstNumber $operator $secondNumber")
+            evaluator.evaluate("$firstNumber $operator $secondNumber")
         }
     }
 
@@ -127,7 +126,7 @@ class CalculatorTest {
             val secondNumber = null
             val operator = "+"
 
-            calculator.evaluate("$firstNumber $operator $secondNumber")
+            evaluator.evaluate("$firstNumber $operator $secondNumber")
         }
     }
 
@@ -138,31 +137,31 @@ class CalculatorTest {
             val secondNumber = 2
             val operator = null
 
-            calculator.evaluate("$firstNumber $operator $secondNumber")
+            evaluator.evaluate("$firstNumber $operator $secondNumber")
         }
     }
 
     @Test
     fun `1 더하기 2 곱하기 3 나누기 3 빼기 1 은 2이다`() {
-        val result = calculator.evaluate("1 + 2 × 3 ÷ 3 - 1")
+        val result = evaluator.evaluate("1 + 2 × 3 ÷ 3 - 1")
         assertEquals(result, 2)
     }
 
     @Test
     fun `1 더하기 0 곱하기 1 나누기 1 빼기 -5 은 -4이다`() {
-        val result = calculator.evaluate("1 + 0 × 1 ÷ 1 - -5")
+        val result = evaluator.evaluate("1 + 0 × 1 ÷ 1 - -5")
         assertEquals(result, 6)
     }
 
     @Test
     fun `5 더하기 0 더하기 0 더하기 7 빼기 3 곱하기 2 나누기 4 는 4 이다`() {
-        val result = calculator.evaluate("5 + 0 + 0 + 7 - 3 × 2 ÷ 4")
+        val result = evaluator.evaluate("5 + 0 + 0 + 7 - 3 × 2 ÷ 4")
         assertEquals(result, 4)
     }
 
     @Test
     fun `0 더하기 -5 곱하기 -1 나누기 5 빼기 0 은 1 이다`() {
-        val result = calculator.evaluate("0 + -5 × -1 ÷ 5 - 0")
+        val result = evaluator.evaluate("0 + -5 × -1 ÷ 5 - 0")
         assertEquals(result, 1)
     }
 }
