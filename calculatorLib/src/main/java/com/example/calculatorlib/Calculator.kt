@@ -1,8 +1,12 @@
 package com.example.calculatorlib
 
+
 class Calculator {
     fun evaluate(str: String?): Int {
+        // 문자열 수식(str)이 null일 경우 IllegalArgumentException 발행
         val numAndOperator = str?.split(" ") ?: throw IllegalArgumentException()
+
+        // 문자열 수식(str)이 공백일 경우 IllegalArgumentException 발행
         if(str.trim() == "")  throw IllegalArgumentException()
 
         // 첫번쨰 숫자
@@ -14,11 +18,11 @@ class Calculator {
 
             if(!operatorVerification(operator)) throw IllegalArgumentException()
 
-            when(numAndOperator[i]) {
-                "+" -> result = addition(result, num.toInt())
-                "-" -> result = subtraction(result, num.toInt())
-                "*" -> result = multiplication(result, num.toInt())
-                "/" -> result = division(result, num.toInt())
+            when(operator) {
+                Operator.PLUS.operator -> result = addition(result, num.toInt())
+                Operator.MINUS.operator -> result = subtraction(result, num.toInt())
+                Operator.MULTIPLIED.operator -> result = multiplication(result, num.toInt())
+                Operator.DIVIDED.operator -> result = division(result, num.toInt())
             }
         }
         return result
@@ -43,5 +47,10 @@ class Calculator {
             return false
         }
         return true
+    }
+
+    private fun numberFormatVerification(num: String): Boolean {
+        val exception = kotlin.runCatching { num.toInt() }.exceptionOrNull()
+        return exception !is NumberFormatException
     }
 }
