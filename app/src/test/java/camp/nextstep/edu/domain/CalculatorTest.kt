@@ -66,7 +66,7 @@ class CalculatorTest {
     }
 
     @Test
-    fun `사칙연산 기호가 아닌 경우 예외를 뱉는다`() {
+    fun `사칙연산 기호가 아닌 경우 IllegalArgumentException 이 발생한다`() {
         assertThrows(IllegalArgumentException::class.java) {
             val firstNumber = 10
             val secondNumber = 2
@@ -77,7 +77,7 @@ class CalculatorTest {
     }
 
     @Test
-    fun `입력값이 공백인 경우 예외를 뱉는다 - 1`() {
+    fun `입력값이 공백인 경우 IllegalArgumentException 이 발생한다 - 1`() {
         assertThrows(IllegalArgumentException::class.java) {
             val firstNumber = ""
             val secondNumber = 2
@@ -88,7 +88,7 @@ class CalculatorTest {
     }
 
     @Test
-    fun `입력값이 공백인 경우 예외를 뱉는다 - 2`() {
+    fun `입력값이 공백인 경우 IllegalArgumentException 이 발생한다 - 2`() {
         assertThrows(IllegalArgumentException::class.java) {
             val firstNumber = 10
             val secondNumber = ""
@@ -99,7 +99,7 @@ class CalculatorTest {
     }
 
     @Test
-    fun `입력값이 공백인 경우 예외를 뱉는다 - 3`() {
+    fun `입력값이 공백인 경우 IllegalArgumentException 이 발생한다 - 3`() {
         assertThrows(IllegalArgumentException::class.java) {
             val firstNumber = 10
             val secondNumber = 2
@@ -110,7 +110,7 @@ class CalculatorTest {
     }
 
     @Test
-    fun `입력값이 null 인 경우 예외를 뱉는다 - 1`() {
+    fun `입력값이 null 인 경우 IllegalArgumentException 이 발생한다 - 1`() {
         assertThrows(IllegalArgumentException::class.java) {
             val firstNumber = null
             val secondNumber = 2
@@ -121,7 +121,7 @@ class CalculatorTest {
     }
 
     @Test
-    fun `입력값이 null 인 경우 예외를 뱉는다 - 2`() {
+    fun `입력값이 null 인 경우 IllegalArgumentException 이 발생한다 - 2`() {
         assertThrows(IllegalArgumentException::class.java) {
             val firstNumber = 10
             val secondNumber = null
@@ -132,7 +132,7 @@ class CalculatorTest {
     }
 
     @Test
-    fun `입력값이 null 인 경우 예외를 뱉는다 - 3`() {
+    fun `입력값이 null 인 경우 IllegalArgumentException 이 발생한다 - 3`() {
         assertThrows(IllegalArgumentException::class.java) {
             val firstNumber = 10
             val secondNumber = 2
