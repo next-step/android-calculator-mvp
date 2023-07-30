@@ -1,6 +1,6 @@
 package com.nextstep.edu.domain
 
-object CalculationExpression {
+object CalculatorExpression {
 
     private const val VALUE_DIVIDER = " "
 

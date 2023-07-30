@@ -5,7 +5,7 @@ import org.junit.Test
 
 class CalculationExpressionTest {
 
-    private val expressionParser = CalculationExpression
+    private val expressionParser = CalculatorExpression
 
     @Test
     fun `2 더하기 3`() {

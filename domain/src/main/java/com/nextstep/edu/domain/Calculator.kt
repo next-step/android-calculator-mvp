@@ -5,8 +5,8 @@ import com.nextstep.edu.domain.Operators.Companion.toCalculate
 object Calculator {
 
     fun evaluate(inputValue: String): Int {
-        val splitInputValue = CalculationExpression.split(inputValue)
-        CalculationExpression.validate(splitInputValue)
+        val splitInputValue = CalculatorExpression.split(inputValue)
+        CalculatorExpression.validate(splitInputValue)
 
         var resultValue = splitInputValue[0]
 
