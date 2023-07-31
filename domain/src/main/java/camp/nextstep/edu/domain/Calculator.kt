@@ -18,12 +18,7 @@ class Calculator {
 			val operator = Operator.getOrThrow(inputs[i])
 			val number = inputs[i + 1].toIntOrThrow()
 
-			when (operator) {
-				Operator.PLUS -> result += number
-				Operator.MINUS -> result -= number
-				Operator.MUL -> result *= number
-				Operator.DIV -> result /= number
-			}
+			result = operator.evaluate(result, number)
 		}
 
 		return result
