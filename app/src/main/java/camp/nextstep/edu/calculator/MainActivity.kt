@@ -3,24 +3,50 @@ package camp.nextstep.edu.calculator
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
+import camp.nextstep.edu.domain.Evaluator
+import camp.nextstep.edu.domain.ExpressionHandler
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+
+    private val expressionHandler = ExpressionHandler()
+    private val evaluator = Evaluator()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.button0.setOnClickListener { binding.textView.text = "0" }
-        binding.button1.setOnClickListener { binding.textView.text = "1" }
-        binding.button2.setOnClickListener { binding.textView.text = "2" }
-        binding.button3.setOnClickListener { binding.textView.text = "3" }
-        binding.button4.setOnClickListener { binding.textView.text = "4" }
-        binding.button5.setOnClickListener { binding.textView.text = "5" }
-        binding.button6.setOnClickListener { binding.textView.text = "6" }
-        binding.button7.setOnClickListener { binding.textView.text = "7" }
-        binding.button8.setOnClickListener { binding.textView.text = "8" }
-        binding.button9.setOnClickListener { binding.textView.text = "9" }
+        with(binding) {
+            button0.setOnClickListener { showExpression("0") }
+            button1.setOnClickListener { showExpression("1") }
+            button2.setOnClickListener { showExpression("2") }
+            button3.setOnClickListener { showExpression("3") }
+            button4.setOnClickListener { showExpression("4") }
+            button5.setOnClickListener { showExpression("5") }
+            button6.setOnClickListener { showExpression("6") }
+            button7.setOnClickListener { showExpression("7") }
+            button8.setOnClickListener { showExpression("8") }
+            button9.setOnClickListener { showExpression("9") }
+
+            buttonPlus.setOnClickListener { showExpression(" + ") }
+            buttonMinus.setOnClickListener { showExpression(" - ") }
+            buttonDivide.setOnClickListener { showExpression(" ÷ ") }
+            buttonMultiply.setOnClickListener { showExpression(" × ") }
+
+            buttonDelete.setOnClickListener {
+                expressionHandler.deleteLast()
+            }
+
+            buttonEquals.setOnClickListener {
+                val result = evaluator.evaluate(expressionHandler.expression)
+                binding.textView.text = result.toString()
+            }
+        }
+    }
+
+    private fun showExpression(inputValue: String) {
+        expressionHandler.addInputValue(inputValue)
+        binding.textView.text = expressionHandler.expression
     }
 }
