@@ -13,10 +13,38 @@ class CalculatorTest {
     }
 
     @Test(expected = IllegalArgumentException::class)
+    fun `last text Empty IllegalArgumentException`() {
+        val calculator = Calculator(InputTextConvertor())
+
+        calculator.evaluate("1 * 2 ")
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun `without blank text IllegalArgumentException`() {
+        val calculator = Calculator(InputTextConvertor())
+
+        calculator.evaluate("1*2")
+    }
+
+    @Test(expected = IllegalArgumentException::class)
     fun `If it is not a operation symbol IllegalArgumentException throw`() {
         val calculator = Calculator(InputTextConvertor())
 
         calculator.evaluate("1 & 2")
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun `invalid expression IllegalArgumentException`() {
+        val calculator = Calculator(InputTextConvertor())
+
+        calculator.evaluate("1 * 2 -")
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun `number text only IllegalArgumentException`() {
+        val calculator = Calculator(InputTextConvertor())
+
+        calculator.evaluate("12345")
     }
 
     @Test
