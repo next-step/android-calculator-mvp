@@ -1,35 +1,22 @@
 package camp.nextstep.edu.calculator.domain
 
 import com.google.common.truth.Truth.assertThat
-import org.junit.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 class CalculatorTest {
     private val calculator = Calculator()
 
-    @Test
-    fun `2 + 3 * 4 나누기 2는 10이다`() {
+    @ParameterizedTest
+    @ValueSource(strings = ["2 + 3 * 4 / 2", "10 - 4 / 3 * 5"])
+    fun `수식이 입력되면, 올바르게 계산한다`(expression: String) {
         // given
-        val expression = ArithmeticExpression("2 + 3 * 4 / 2")
         val expected = 10
 
         // when
-        val actual = calculator.calculate(expression)
+        val actual = calculator.calculate(ArithmeticExpression(expression))
 
         // then
         assertThat(actual).isEqualTo(expected)
     }
-
-    @Test
-    fun `10 - 4 나누기 3 * 5는 10이다`() {
-        // given
-        val expression = ArithmeticExpression("10 - 4 / 3 * 5")
-        val expected = 10
-
-        // when
-        val actual = calculator.calculate(expression)
-
-        // then
-        assertThat(actual).isEqualTo(expected)
-    }
-
 }

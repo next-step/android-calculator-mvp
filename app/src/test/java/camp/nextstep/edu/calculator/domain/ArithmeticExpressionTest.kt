@@ -1,45 +1,23 @@
 package camp.nextstep.edu.calculator.domain
 
 import org.junit.Assert.*
-import com.google.common.truth.Truth.assertThat
-import org.junit.Test
-import java.lang.Exception
+import org.junit.jupiter.api.assertDoesNotThrow
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 class ArithmeticExpressionTest {
 
-    @Test
-    fun `1 + + 2 + 3은 올바르지 않은 수식이다`() {
-        assertThrows(IllegalArgumentException::class.java) { ArithmeticExpression("1 + + 2 + 3") }
+    @ParameterizedTest
+    @ValueSource(strings = ["1 + + 2 + 3", "+ 2 + 3", "1 + 2 +", "1 a 2 +"])
+    fun `올바르지 않은 수식 유효성 검사`(expression: String) {
+        assertThrows(IllegalArgumentException::class.java) { ArithmeticExpression(expression) }
     }
 
-    @Test
-    fun `+ 2 + 3은 올바르지 않은 수식이다`() {
-        assertThrows(IllegalArgumentException::class.java) { ArithmeticExpression("+ 2 + 3") }
-    }
-
-    @Test
-    fun `1 + 2 +은 올바르지 않은 수식이다`() {
-        assertThrows(IllegalArgumentException::class.java) { ArithmeticExpression("1 + 2 +") }
-    }
-
-    @Test
-    fun `1 a 2 + 은 올바르지 않은 수식이다`() {
-        assertThrows(IllegalArgumentException::class.java) { ArithmeticExpression("1 a 2 +") }
-    }
-
-    @Test
-    fun `1 + 2 + 3 + 5는 올바른 수식이다`() {
-        // given
-        var isExceptionThrown = false
-
-        // when
-        try {
-            ArithmeticExpression("1 + 2 + 3 + 5")
-        } catch (e: Exception) {
-            isExceptionThrown = true
+    @ParameterizedTest
+    @ValueSource(strings = ["1 + 2 + 3 + 5", "1 - 4 * 2 / 3"])
+    fun `올바른 유효성 검사`(expression: String) {
+        assertDoesNotThrow {
+            ArithmeticExpression(expression)
         }
-
-        // then
-        assertThat(isExceptionThrown).isFalse()
     }
 }
