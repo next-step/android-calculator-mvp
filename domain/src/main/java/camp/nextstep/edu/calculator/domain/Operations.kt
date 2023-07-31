@@ -20,14 +20,9 @@ sealed class Operations(val operationText: String) {
     }
 
     companion object {
-        fun toOperation(text: String): Operations? {
-            return when (text) {
-                Addition.operationText -> Addition
-                Subtraction.operationText -> Subtraction
-                Multiplication.operationText -> Multiplication
-                Division.operationText -> Division
-                else -> null
-            }
+        fun findOperation(text: String): Operations? {
+            val sealedSubclasses = Operations::class.sealedSubclasses.map { it.objectInstance }
+            return sealedSubclasses.find { operations -> operations?.operationText == text }
         }
     }
 }
