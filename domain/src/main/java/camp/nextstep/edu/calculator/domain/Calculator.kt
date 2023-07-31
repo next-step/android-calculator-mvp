@@ -1,0 +1,28 @@
+package camp.nextstep.edu.calculator.domain
+
+object Calculator {
+
+    private const val SEPERATOR = " "
+    private const val LAST_INDEX = 1
+    private const val NEXT_PART_INDEX = 2
+    private const val NUMBER_POSITION = 0
+    private const val OPERATOR_POSITION = 1
+
+    fun evaluate(formulaString: String?): String {
+        if (formulaString.isNullOrBlank()) {
+            throw IllegalArgumentException("Input value is empty")
+        }
+        val formulaList = formulaString.split(SEPERATOR)
+        val resultValue = recursiveCalculator(formulaList.reversed())
+        println(resultValue)
+        return resultValue
+    }
+
+    private fun recursiveCalculator(formulaList: List<String>): String {
+        return if (formulaList.size == LAST_INDEX) {
+            formulaList[NUMBER_POSITION]
+        } else {
+            Operator.getOperator(formulaList[OPERATOR_POSITION]).calculate(recursiveCalculator(formulaList.drop(NEXT_PART_INDEX)), formulaList[NUMBER_POSITION])
+        }
+    }
+}
