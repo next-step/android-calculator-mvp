@@ -16,7 +16,7 @@ class MainActivityTest {
     @Test
     fun button0() {
         // when: '0' 버튼을 누르면
-        onView(withId(R.id.button1)).perform(click())
+        onView(withId(R.id.button0)).perform(click())
 
         // then: '0'이 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("0")))
@@ -34,7 +34,7 @@ class MainActivityTest {
     @Test
     fun button2() {
         // when: '2' 버튼을 누르면
-        onView(withId(R.id.button1)).perform(click())
+        onView(withId(R.id.button2)).perform(click())
 
         // then: '2'이 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("2")))
@@ -43,7 +43,7 @@ class MainActivityTest {
     @Test
     fun button3() {
         // when: '3' 버튼을 누르면
-        onView(withId(R.id.button1)).perform(click())
+        onView(withId(R.id.button3)).perform(click())
 
         // then: '3'이 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("3")))
@@ -52,7 +52,7 @@ class MainActivityTest {
     @Test
     fun button4() {
         // when: '4' 버튼을 누르면
-        onView(withId(R.id.button1)).perform(click())
+        onView(withId(R.id.button4)).perform(click())
 
         // then: '4'이 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("4")))
@@ -61,7 +61,7 @@ class MainActivityTest {
     @Test
     fun button5() {
         // when: '5' 버튼을 누르면
-        onView(withId(R.id.button1)).perform(click())
+        onView(withId(R.id.button5)).perform(click())
 
         // then: '5'이 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("5")))
@@ -70,7 +70,7 @@ class MainActivityTest {
     @Test
     fun button6() {
         // when: '6' 버튼을 누르면
-        onView(withId(R.id.button1)).perform(click())
+        onView(withId(R.id.button6)).perform(click())
 
         // then: '6'이 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("6")))
@@ -79,7 +79,7 @@ class MainActivityTest {
     @Test
     fun button7() {
         // when: '7' 버튼을 누르면
-        onView(withId(R.id.button1)).perform(click())
+        onView(withId(R.id.button7)).perform(click())
 
         // then: '7'이 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("7")))
@@ -88,7 +88,7 @@ class MainActivityTest {
     @Test
     fun button8() {
         // when: '8' 버튼을 누르면
-        onView(withId(R.id.button1)).perform(click())
+        onView(withId(R.id.button8)).perform(click())
 
         // then: '8'이 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("8")))
@@ -98,7 +98,7 @@ class MainActivityTest {
     @Test
     fun button9() {
         // when: '9' 버튼을 누르면
-        onView(withId(R.id.button1)).perform(click())
+        onView(withId(R.id.button9)).perform(click())
 
         // then: '9'이 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("9")))
