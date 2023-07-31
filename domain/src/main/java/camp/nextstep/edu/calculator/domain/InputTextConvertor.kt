@@ -1,9 +1,13 @@
 package camp.nextstep.edu.calculator.domain
 
 class InputTextConvertor {
-    fun getNotEmptyText(text: String?): String {
-        require(!text.isNullOrBlank()) { "null Or Empty" }
-        return text
+    fun getSplitStrings(input: String?): List<String> {
+        return getNotEmptyText(input).let {
+            val splitStrings = it.split(splitText)
+            require(splitStrings.isNotEmpty()) { "input text array error" }
+            require(splitStrings.size % 2 == 1) { "input text array error" }
+            splitStrings
+        }
     }
 
     fun getNumberText(text: String?): Int {
@@ -20,5 +24,14 @@ class InputTextConvertor {
             require(convertOperation != null) { "Operation text error" }
             convertOperation
         }
+    }
+
+    private fun getNotEmptyText(text: String?): String {
+        require(!text.isNullOrBlank()) { "null Or Empty" }
+        return text
+    }
+
+    companion object {
+        private const val splitText = " "
     }
 }

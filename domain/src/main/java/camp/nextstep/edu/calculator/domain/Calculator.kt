@@ -4,7 +4,7 @@ class Calculator(private val convertor: InputTextConvertor) {
     private var evaluateValue = 0
 
     fun evaluate(input: String?): Int {
-        val splitArray = splitInputText(input)
+        val splitArray = convertor.getSplitStrings(input)
         var operation: Operations? = null
 
         splitArray.forEachIndexed { index, str ->
@@ -21,14 +21,5 @@ class Calculator(private val convertor: InputTextConvertor) {
         evaluateValue = operation?.run {
             evaluate(evaluateValue, value)
         } ?: value
-    }
-
-    private fun splitInputText(input: String?): List<String> {
-        val inputStr = convertor.getNotEmptyText(input)
-        return inputStr.split(splitText)
-    }
-
-    companion object {
-        private const val splitText = " "
     }
 }
