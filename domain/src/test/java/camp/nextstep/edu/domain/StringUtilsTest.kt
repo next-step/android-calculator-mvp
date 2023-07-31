@@ -1,6 +1,7 @@
 package camp.nextstep.edu.domain
 
 import com.google.common.truth.Truth.assertThat
+import org.junit.Assert.assertThrows
 import org.junit.Test
 
 class StringUtilsTest {
@@ -10,12 +11,13 @@ class StringUtilsTest {
 		// given
 		val str = "string"
 
-		try {
+		// then
+		assertThrows(
+			CAST_INT_EXCEPTION,
+			IllegalStateException::class.java
+		) {
 			// when
 			str.toIntOrThrow()
-		} catch (e: IllegalStateException) {
-			// then
-			assertThat(e.message).isEqualTo(CAST_INT_EXCEPTION)
 		}
 	}
 

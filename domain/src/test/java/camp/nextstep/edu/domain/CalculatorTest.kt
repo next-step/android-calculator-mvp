@@ -1,11 +1,12 @@
 package camp.nextstep.edu.domain
 
 import com.google.common.truth.Truth.assertThat
-import org.junit.Assert.fail
+import org.junit.Assert.assertThrows
 import org.junit.Before
 import org.junit.Test
 
 class CalculatorTest {
+
 	private lateinit var calculator: Calculator
 
 	@Before
@@ -18,13 +19,13 @@ class CalculatorTest {
 		// given
 		val expression: String? = null
 
-		try {
+		// then
+		assertThrows(
+			Calculator.EXP_NULL_OR_BLANK,
+			IllegalArgumentException::class.java
+		) {
 			// when
 			calculator.calculate(expression)
-			fail()
-		} catch (e: IllegalArgumentException) {
-			// then
-			assertThat(e.message).isEqualTo(Calculator.EXP_NULL_OR_BLANK)
 		}
 	}
 
@@ -33,13 +34,13 @@ class CalculatorTest {
 		// given
 		val expression = "    "
 
-		try {
+		// then
+		assertThrows(
+			Calculator.EXP_NULL_OR_BLANK,
+			IllegalArgumentException::class.java
+		) {
 			// when
 			calculator.calculate(expression)
-			fail()
-		} catch (e: IllegalArgumentException) {
-			// then
-			assertThat(e.message).isEqualTo(Calculator.EXP_NULL_OR_BLANK)
 		}
 	}
 
@@ -48,13 +49,13 @@ class CalculatorTest {
 		// given
 		val expression = "1 + 2 + "
 
-		try {
+		// then
+		assertThrows(
+			Calculator.EXP_NOT_COMPLETE,
+			IllegalStateException::class.java
+		) {
 			// when
 			calculator.calculate(expression)
-			fail()
-		} catch (e: IllegalStateException) {
-			// then
-			assertThat(e.message).isEqualTo(Calculator.EXP_NOT_COMPLETE)
 		}
 	}
 
@@ -82,14 +83,15 @@ class CalculatorTest {
 		assertThat(result).isEqualTo(10)
 	}
 
-	@Test(expected = ArithmeticException::class)
+	@Test
 	fun `0으로 나눴을 때 테스트`() {
 		// given
 		val expression = "2 + 2 / 0"
 
-		// when
-		calculator.calculate(expression)
-
-		// then: throw ArithmeticException
+		// then
+		assertThrows(ArithmeticException::class.java) {
+			// when
+			calculator.calculate(expression)
+		}
 	}
 }

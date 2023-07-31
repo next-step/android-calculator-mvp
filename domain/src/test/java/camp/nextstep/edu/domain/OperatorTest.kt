@@ -1,6 +1,7 @@
 package camp.nextstep.edu.domain
 
 import com.google.common.truth.Truth.assertThat
+import org.junit.Assert.assertThrows
 import org.junit.Test
 
 class OperatorTest {
@@ -10,12 +11,13 @@ class OperatorTest {
 		// given
 		val op = "&"
 
-		try {
+		// then
+		assertThrows(
+			Operator.INVALID_OPERATOR,
+			IllegalArgumentException::class.java
+		) {
 			// when
 			Operator.getOrThrow(op)
-		} catch (e: IllegalArgumentException) {
-			// then
-			assertThat(e.message).isEqualTo(Operator.INVALID_OPERATOR)
 		}
 	}
 
