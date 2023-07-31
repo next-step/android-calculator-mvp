@@ -7,52 +7,53 @@ class Expression(
 ) {
 
     private val calculator = Calculator
-    private var operands: String = ""
+    var expressions: String
+        private set
 
     init {
-        this.operands = operands
+        this.expressions = operands
     }
 
     fun setOperands(operand: String) {
-        operands += "$operand"
+        expressions += "$operand"
     }
 
     fun setMethods(operand: String) {
-        operands += " $operand "
+        expressions += " $operand "
     }
 
-    fun getOperands(): String = operands
+    fun getOperands(): String = expressions
 
-    fun removeOperands() {
-        if (operands.isBlank()) return
+    fun removeLatestOperands() {
+        if (expressions.isBlank()) return
 
-        if (operands.last().toString().isBlank()) {
-            removeMethods()
+        if (expressions.last().toString().isBlank()) {
+            removeLatestMethods()
         } else {
-            removeNumber()
+            removeLatestNumber()
         }
     }
 
-    private fun removeNumber() {
-        operands = Optional.ofNullable(operands)
+    private fun removeLatestNumber() {
+        expressions = Optional.ofNullable(expressions)
             .filter { str: String -> str.isNotEmpty() }
             .map { str: String -> str.substring(0, str.length - 1) }
-            .orElse(operands)
+            .orElse(expressions)
     }
 
-    private fun removeMethods() {
-        operands = Optional.ofNullable(operands)
+    private fun removeLatestMethods() {
+        expressions = Optional.ofNullable(expressions)
             .filter { str: String -> str.isNotEmpty() }
             .map { str: String -> str.substring(0, str.length - 3) }
-            .orElse(operands)
+            .orElse(expressions)
     }
 
     fun resetMemory() {
-        operands = ""
+        expressions = ""
     }
 
     fun resultCalculate() {
-        operands = calculator.evaluate(operands).toString()
+        expressions = calculator.evaluate(expressions).toString()
     }
 
 }
