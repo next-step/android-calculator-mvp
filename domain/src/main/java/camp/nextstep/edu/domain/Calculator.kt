@@ -3,9 +3,8 @@ package camp.nextstep.edu.domain
 class Calculator {
 
 	fun calculate(expression: String?): Int {
-		if (expression.isNullOrBlank()) {
-			throw IllegalArgumentException(EXP_NULL_OR_BLANK)
-		}
+		requireNotNull(expression) { EXP_IS_NULL}
+		require(expression.isNotBlank()) { EXP_IS_BLANK }
 
 		if (expression.trim().last().isDigit().not()) {
 			throw IllegalStateException(EXP_NOT_COMPLETE)
@@ -25,7 +24,8 @@ class Calculator {
 	}
 
 	companion object {
-		const val EXP_NULL_OR_BLANK = "expression is null or blank"
+		const val EXP_IS_NULL = "expression is null"
+		const val EXP_IS_BLANK = "expression is blank"
 		const val EXP_NOT_COMPLETE = "expression is not complete"
 	}
 }

@@ -21,7 +21,7 @@ class CalculatorTest {
 
 		// then
 		assertThrows(
-			Calculator.EXP_NULL_OR_BLANK,
+			Calculator.EXP_IS_NULL,
 			IllegalArgumentException::class.java
 		) {
 			// when
@@ -36,7 +36,7 @@ class CalculatorTest {
 
 		// then
 		assertThrows(
-			Calculator.EXP_NULL_OR_BLANK,
+			Calculator.EXP_IS_BLANK,
 			IllegalArgumentException::class.java
 		) {
 			// when
