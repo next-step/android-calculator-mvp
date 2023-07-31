@@ -21,35 +21,9 @@ class Calculator {
             val operator = Operator.find(numAndOperator[i])
             val num = numAndOperator[i+1]
 
-            result = when(operator) {
-                Operator.PLUS -> addition(result, num.toInt())
-                Operator.MINUS -> subtraction(result, num.toInt())
-                Operator.MULTIPLIED -> multiplication(result, num.toInt())
-                Operator.DIVIDED -> division(result, num.toInt())
-            }
+            result = operator.calculator(result, num.toInt())
         }
         return result
-    }
-
-    // 덧셈
-    private fun addition(num1: Int, num2: Int) = num1 + num2
-
-    // 뺄셈
-    private fun subtraction(num1: Int, num2: Int) = num1 - num2
-
-    // 곱셈
-    private fun multiplication(num1: Int, num2: Int) = num1 * num2
-
-    // 나눗셈
-    private fun division(num1: Int, num2: Int) = num1 / num2
-
-    // 입력값 null 이거나 빈 공백 문자일 경우 IllegalArgumentException throw
-    // 사칙연산 기호가 아닌 경우 IllegalArgumentException throw
-    private fun operatorVerification(operator: String): Boolean {
-        if(!(operator == "+" || operator == "-" ||operator == "*" ||operator == "/")) {
-            return false
-        }
-        return true
     }
 
     private fun String.isEmpty(): Boolean {
