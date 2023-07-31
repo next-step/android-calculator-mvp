@@ -19,6 +19,7 @@ class Expression(
     }
 
     fun setMethods(operand: String) {
+        if (expressions.isBlank()) return
         expressions += " $operand "
     }
 
