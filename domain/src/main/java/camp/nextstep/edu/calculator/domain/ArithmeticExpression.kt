@@ -19,16 +19,14 @@ value class ArithmeticExpression(private val expression: String) {
 
     private fun isValidExpression(): Boolean {
         val expressionItemsList = getExpressionItemList()
+        val isValidItemCount = expressionItemsList.count() % 2 == 1
 
         return when {
-            !isValidItemCount(expressionItemsList) -> false
+            !isValidItemCount -> false
             !isValidItemSequence(expressionItemsList) -> false
             else -> true
         }
     }
-
-    private fun isValidItemCount(expressionItemsList: List<String>) =
-        expressionItemsList.count() % 2 == 1
 
     private fun isValidItemSequence(expressionItemsList: List<String>) =
         isValidOperatorSequence(expressionItemsList) &&

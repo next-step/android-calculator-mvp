@@ -19,12 +19,6 @@ enum class ArithmeticOperator(val value: String) {
 
     companion object {
         fun isArithmeticOperator(param: String) =
-            when (param) {
-                PLUS.value -> true
-                MINUS.value -> true
-                MULTIPLY.value -> true
-                DIVIDE.value -> true
-                else -> false
-            }
+            param in ArithmeticOperator.values().map { it.value }
     }
 }

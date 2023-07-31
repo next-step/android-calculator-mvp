@@ -22,11 +22,8 @@ class Calculator {
     }
 
     private fun operate(operator: String, operand1: Int, operand2: Int): Int =
-        when (operator) {
-            ArithmeticOperator.PLUS.value -> ArithmeticOperator.PLUS(operand1, operand2)
-            ArithmeticOperator.MINUS.value -> ArithmeticOperator.MINUS(operand1, operand2)
-            ArithmeticOperator.MULTIPLY.value -> ArithmeticOperator.MULTIPLY(operand1, operand2)
-            ArithmeticOperator.DIVIDE.value -> ArithmeticOperator.DIVIDE(operand1, operand2)
-            else -> operand1
-        }
+        ArithmeticOperator.values()
+            .find { it.value == operator }
+            ?.invoke(operand1, operand2)
+            ?: operand1
 }
