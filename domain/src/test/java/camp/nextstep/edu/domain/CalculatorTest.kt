@@ -82,16 +82,4 @@ class CalculatorTest {
 		// then
 		assertThat(result).isEqualTo(10)
 	}
-
-	@Test
-	fun `0으로 나눴을 때 테스트`() {
-		// given
-		val expression = "2 + 2 / 0"
-
-		// then
-		assertThrows(ArithmeticException::class.java) {
-			// when
-			calculator.calculate(expression)
-		}
-	}
 }

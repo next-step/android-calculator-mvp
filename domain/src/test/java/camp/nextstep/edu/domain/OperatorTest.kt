@@ -32,4 +32,49 @@ class OperatorTest {
 		// then
 		assertThat(operator).isEqualTo(Operator.MUL)
 	}
+
+	@Test
+	fun `덧셈 테스트`() {
+		// when
+		val result = Operator.PLUS.evaluate(3, 2)
+
+		// then
+		assertThat(result).isEqualTo(5)
+	}
+
+	@Test
+	fun `뺄셈 테스트`() {
+		// when
+		val result = Operator.MINUS.evaluate(3, 2)
+
+		// then
+		assertThat(result).isEqualTo(1)
+	}
+
+	@Test
+	fun `곱셈 테스트`() {
+		// when
+		val result = Operator.MUL.evaluate(3, 2)
+
+		// then
+		assertThat(result).isEqualTo(6)
+	}
+
+	@Test
+	fun `나눗셈 테스트`() {
+		// when
+		val result = Operator.DIV.evaluate(4, 2)
+
+		// then
+		assertThat(result).isEqualTo(2)
+	}
+
+	@Test
+	fun `0으로 나눴을때 테스트`() {
+		// then
+		assertThrows(ArithmeticException::class.java) {
+			// when
+			Operator.DIV.evaluate(4, 0)
+		}
+	}
 }
