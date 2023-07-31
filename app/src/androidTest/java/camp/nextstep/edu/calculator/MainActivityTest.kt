@@ -11,7 +11,7 @@ import org.junit.Test
 
 class MainActivityTest {
     @get:Rule
-    private val activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
+    val activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
     fun button0() {
