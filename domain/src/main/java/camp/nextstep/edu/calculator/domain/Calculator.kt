@@ -1,6 +1,6 @@
 package camp.nextstep.edu.calculator.domain
 
-class Calculator {
+class Calculator(private val convertor: InputTextConvertor) {
     private var evaluateValue = 0
 
     fun evaluate(input: String?): Int {
@@ -9,9 +9,9 @@ class Calculator {
 
         splitArray.forEachIndexed { index, str ->
             if (index % 2 == 0) {
-                evaluate(operation, str.trim().toInt())
+                evaluate(operation, convertor.getNumberText(str))
             } else {
-                operation = getOperation(str.trim())
+                operation = convertor.getOperationText(str)
             }
         }
         return evaluateValue
@@ -24,19 +24,8 @@ class Calculator {
     }
 
     private fun splitInputText(input: String?): List<String> {
-        val inputStr = checkEmpty(input)
+        val inputStr = convertor.getNotEmptyText(input)
         return inputStr.split(splitText)
-    }
-
-    private fun checkEmpty(text: String?): String {
-        require(!text.isNullOrBlank()) { "null Or Empty" }
-        return text
-    }
-
-    private fun getOperation(operationText: String): Operations {
-        val operation = Operations.findOperation(operationText)
-        require(operation != null) { "no Operations" }
-        return operation
     }
 
     companion object {

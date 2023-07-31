@@ -7,21 +7,21 @@ class CalculatorTest {
 
     @Test(expected = IllegalArgumentException::class)
     fun `null Or Empty IllegalArgumentException`() {
-        val calculator = Calculator()
+        val calculator = Calculator(InputTextConvertor())
 
         calculator.evaluate(" ")
     }
 
     @Test(expected = IllegalArgumentException::class)
     fun `If it is not a operation symbol IllegalArgumentException throw`() {
-        val calculator = Calculator()
+        val calculator = Calculator(InputTextConvertor())
 
         calculator.evaluate("1 & 2")
     }
 
     @Test
     fun addition() {
-        val calculator = Calculator()
+        val calculator = Calculator(InputTextConvertor())
 
         val actual: Int = calculator.evaluate("1 + 2")
 
@@ -30,7 +30,7 @@ class CalculatorTest {
 
     @Test
     fun subtraction() {
-        val calculator = Calculator()
+        val calculator = Calculator(InputTextConvertor())
 
         val actual: Int = calculator.evaluate("1 - 2")
 
@@ -39,7 +39,7 @@ class CalculatorTest {
 
     @Test
     fun multiplication() {
-        val calculator = Calculator()
+        val calculator = Calculator(InputTextConvertor())
 
         val actual: Int = calculator.evaluate("1 * 2")
 
@@ -48,7 +48,7 @@ class CalculatorTest {
 
     @Test
     fun division() {
-        val calculator = Calculator()
+        val calculator = Calculator(InputTextConvertor())
 
         val actual: Int = calculator.evaluate("1 / 2")
 
@@ -57,7 +57,7 @@ class CalculatorTest {
 
     @Test
     fun evaluatesExpression() {
-        val calculator = Calculator()
+        val calculator = Calculator(InputTextConvertor())
 
         val actual: Int = calculator.evaluate("2 + 3 * 4 / 2")
 
