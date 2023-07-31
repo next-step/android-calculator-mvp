@@ -4,8 +4,9 @@ class InputTextConvertor {
     fun getSplitStrings(input: String?): List<String> {
         return getNotEmptyText(input).let {
             val splitStrings = it.split(splitText)
-            require(splitStrings.isNotEmpty()) { "input text array error" }
-            require(splitStrings.size % 2 == 1) { "input text array error" }
+            require(splitStrings.isNotEmpty()) { "input text array empty error" }
+            require(splitStrings.size > 2) { "input text array count not enough error" }
+            require(splitStrings.size % 2 == 1) { "input text array count incorrect error" }
             splitStrings
         }
     }
