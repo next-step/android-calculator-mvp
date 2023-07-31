@@ -1,4 +1,4 @@
-package com.example.domain
+package camp.nextstep.edu.domain
 
 const val CAST_INT_EXCEPTION = "cast int exception"
 

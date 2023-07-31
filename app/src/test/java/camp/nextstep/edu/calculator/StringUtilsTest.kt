@@ -1,7 +1,7 @@
 package camp.nextstep.edu.calculator
 
-import com.example.domain.CAST_INT_EXCEPTION
-import com.example.domain.toIntOrThrow
+import camp.nextstep.edu.domain.CAST_INT_EXCEPTION
+import camp.nextstep.edu.domain.toIntOrThrow
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 

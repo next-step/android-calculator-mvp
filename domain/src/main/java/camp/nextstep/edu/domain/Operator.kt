@@ -1,4 +1,4 @@
-package com.example.domain
+package camp.nextstep.edu.domain
 
 enum class Operator(val op: String) {
 	PLUS("+"), MINUS("-"), MUL("*"), DIV("/");

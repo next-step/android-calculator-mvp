@@ -1,4 +1,4 @@
-package com.example.domain
+package camp.nextstep.edu.domain
 
 class Calculator {
 

@@ -1,6 +1,6 @@
 package camp.nextstep.edu.calculator
 
-import com.example.domain.Operator
+import camp.nextstep.edu.domain.Operator
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 
