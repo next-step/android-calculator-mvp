@@ -1,7 +1,5 @@
 package camp.nextstep.edu.calculator.domain
 
-import java.lang.IllegalArgumentException
-
 class Calculator {
     private var evaluateValue = 0
 
@@ -31,13 +29,14 @@ class Calculator {
     }
 
     private fun checkEmpty(text: String?): String {
-        if (text.isNullOrBlank()) throw IllegalArgumentException("null Or Empty")
+        require(!text.isNullOrBlank()) { "null Or Empty" }
         return text
     }
 
     private fun getOperation(operationText: String): Operations {
-        return Operations.toOperation(operationText)
-            ?: throw IllegalArgumentException("no Operations")
+        val operation = Operations.findOperation(operationText)
+        require(operation != null) { "no Operations" }
+        return operation
     }
 
     companion object {
