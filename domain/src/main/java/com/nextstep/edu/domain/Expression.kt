@@ -3,33 +3,31 @@ package com.nextstep.edu.domain
 import java.util.Optional
 
 class Expression(
-    operands: String = ""
+    initExpressions: String = "",
+    val calculator: Calculator = Calculator
 ) {
 
-    private val calculator = Calculator
     var expressions: String
         private set
 
     init {
-        this.expressions = operands
+        this.expressions = initExpressions
     }
 
     fun setOperands(operand: String) {
         expressions += "$operand"
     }
 
-    fun setMethods(operand: String) {
+    fun setMethods(method: String) {
         if (expressions.isBlank()) return
-        expressions += " $operand "
+        expressions += " $method "
     }
 
-    fun getOperands(): String = expressions
-
-    fun removeLatestOperands() {
+    fun removeLatestExpression() {
         if (expressions.isBlank()) return
 
         if (expressions.last().toString().isBlank()) {
-            removeLatestMethods()
+            removeLatestMethod()
         } else {
             removeLatestNumber()
         }
@@ -42,7 +40,7 @@ class Expression(
             .orElse(expressions)
     }
 
-    private fun removeLatestMethods() {
+    private fun removeLatestMethod() {
         expressions = Optional.ofNullable(expressions)
             .filter { str: String -> str.isNotEmpty() }
             .map { str: String -> str.substring(0, str.length - 3) }
