@@ -91,6 +91,19 @@ class ExpressionTest {
 	}
 
 	@Test
+	fun `연산자가 이미 존재할때, 연산자를 추가하면, 덮어씌여진다`() {
+		// given
+		expression.insertOperand("1")
+		expression.insertOperator(Operator.PLUS)
+
+		// when
+		expression.insertOperator(Operator.MUL)
+
+		// then
+		assertThat(expression.toString()).isEqualTo("1 * ")
+	}
+
+	@Test
 	fun `계산식이 빈 값일 때, 제거하면, 아무것도 제거되지 않는다`() {
 		// when
 		expression.delete()

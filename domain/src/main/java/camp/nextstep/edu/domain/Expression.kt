@@ -22,6 +22,10 @@ class Expression {
 			return
 		}
 
+		if (expStringBuilder.last() == EXP_DELIMITER) {
+			deleteWithDelimiter()
+		}
+
 		expStringBuilder.append(EXP_DELIMITER)
 		expStringBuilder.append(operator.op)
 		expStringBuilder.append(EXP_DELIMITER)
