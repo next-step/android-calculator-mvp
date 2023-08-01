@@ -27,6 +27,28 @@ class Expression {
 		expStringBuilder.append(EXP_DELIMITER)
 	}
 
+	fun delete() {
+		if (expStringBuilder.isEmpty()) {
+			return
+		}
+
+		if (expStringBuilder.last() == EXP_DELIMITER) {
+			deleteWithDelimiter()
+		} else {
+			expStringBuilder.deleteCharAt(expStringBuilder.lastIndex)
+		}
+	}
+
+	private fun deleteWithDelimiter() {
+		repeat(3) {
+			expStringBuilder.deleteCharAt(expStringBuilder.lastIndex)
+		}
+	}
+
+	fun clear() {
+		expStringBuilder.clear()
+	}
+
 	companion object {
 		const val EXP_IS_BLANK = "expression is blank"
 		const val EXP_NOT_COMPLETE = "expression is not complete"
