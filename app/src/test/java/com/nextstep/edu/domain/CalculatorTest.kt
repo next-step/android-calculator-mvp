@@ -5,7 +5,7 @@ import org.junit.Test
 
 class CalculatorTest {
 
-    private val calculator = Calculator()
+    private val calculator = Calculator
 
     @Test
     fun `2 더하기 3 = 5`() {
@@ -70,7 +70,7 @@ class CalculatorTest {
     @Test
     fun `6 나누기 3 = 2`() {
         // given
-        val testParams = "6 / 3"
+        val testParams = "6 ÷ 3"
         // when
         val actual = calculator.evaluate(testParams)
         // then
@@ -80,7 +80,7 @@ class CalculatorTest {
     @Test
     fun `6 나누기 3 나누기 2 = 1`() {
         // given
-        val testParams = "6 / 3 / 2"
+        val testParams = "6 ÷ 3 ÷ 2"
         // when
         val actual = calculator.evaluate(testParams)
         // then
@@ -90,7 +90,7 @@ class CalculatorTest {
     @Test
     fun `1 더하기 3 곱하기 2 나누기 4 = 2`() {
         // given
-        val testParams = "1 + 3 * 2 / 4"
+        val testParams = "1 + 3 * 2 ÷ 4"
         // when
         val actual = calculator.evaluate(testParams)
         // then
@@ -100,7 +100,7 @@ class CalculatorTest {
     @Test
     fun `6 빼기 10 곱하기 2 나누기 2 = -4`() {
         // given
-        val testParams = "6 - 10 * 2 / 2"
+        val testParams = "6 - 10 * 2 ÷ 2"
         // when
         val actual = calculator.evaluate(testParams)
         // then

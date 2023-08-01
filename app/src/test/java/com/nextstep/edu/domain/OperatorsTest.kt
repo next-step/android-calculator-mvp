@@ -4,7 +4,7 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class OperatorsTest {
-    private val calculator = Calculator()
+    private val calculator = Calculator
 
     @Test
     fun `2 더하기 3 = 5`() {
@@ -39,7 +39,7 @@ class OperatorsTest {
     @Test
     fun `6 나누기 3 = 2`() {
         // given
-        val testParams = "6 / 3"
+        val testParams = "6 ÷ 3"
         // when
         val actual = calculator.evaluate(testParams)
         // then
@@ -51,7 +51,7 @@ class OperatorsTest {
         assertEquals(Operators.Add.calculate(1, 2), calculator.evaluate("1 + 2"))
         assertEquals(Operators.Minus.calculate(1, 2), calculator.evaluate("1 - 2"))
         assertEquals(Operators.Multiply.calculate(1, 2), calculator.evaluate("1 * 2"))
-        assertEquals(Operators.Divider.calculate(1, 2), calculator.evaluate("1 / 2"))
+        assertEquals(Operators.Divider.calculate(1, 2), calculator.evaluate("1 ÷ 2"))
     }
 
     @Test

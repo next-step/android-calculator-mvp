@@ -23,7 +23,7 @@ sealed class Operators {
     }
 
     object Divider: Operators() {
-        override val method: String = "/"
+        override val method: String = "÷"
         override fun calculate(first: Int, second: Int): Int = first / second
     }
 
@@ -33,11 +33,11 @@ sealed class Operators {
     }
 
     companion object {
-        fun OperatorItems.toCalculate(): Int {
+        fun toCalculate(method: String, first: String, second: String): Int {
             return Operators::class.sealedSubclasses
                 .map { it.objectInstance as Operators }
-                .find { it.method == this.method }
-                ?.calculate(this.first.toInt(), this.second.toInt())
+                .find { it.method == method }
+                ?.calculate(first.toInt(), second.toInt())
                 ?: throw IllegalArgumentException("Unsupported Methods")
         }
     }
