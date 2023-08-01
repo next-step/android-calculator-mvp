@@ -3,14 +3,26 @@ package camp.nextstep.edu.domain
 class Calculator {
 
 	fun calculate(expression: String?): Int {
-		requireNotNull(expression) { EXP_IS_NULL}
+		requireNotNull(expression) { EXP_IS_NULL }
 		require(expression.isNotBlank()) { EXP_IS_BLANK }
 
-		if (expression.trim().last().isDigit().not()) {
-			throw IllegalStateException(EXP_NOT_COMPLETE)
-		}
+		checkIsCompleteExpression(expression)
 
-		val inputs = expression.trim().split(" ")
+		val inputs = parseExpression(expression)
+		return calculate(inputs)
+	}
+
+	private fun checkIsCompleteExpression(expression: String) {
+		check(expression.trim().last().isDigit()) {
+			EXP_NOT_COMPLETE
+		}
+	}
+
+	private fun parseExpression(expression: String): List<String> {
+		return expression.trim().split(" ")
+	}
+
+	private fun calculate(inputs: List<String>): Int {
 		var result = inputs.first().toIntOrThrow()
 
 		for (i in 1 until inputs.size step 2) {
