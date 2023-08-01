@@ -1,56 +1,49 @@
 package camp.nextstep.edu.calculator.domain
 
 import com.google.common.truth.Truth.assertThat
+import org.junit.Before
 import org.junit.Test
 
 class CalculatorTest {
+    private lateinit var calculator: Calculator
+
+    @Before
+    fun initialize() {
+        calculator = Calculator(InputTextConvertor())
+    }
 
     @Test(expected = IllegalArgumentException::class)
     fun `null Or Empty IllegalArgumentException`() {
-        val calculator = Calculator(InputTextConvertor())
-
         calculator.evaluate(" ")
     }
 
     @Test(expected = IllegalArgumentException::class)
     fun `last text Empty IllegalArgumentException`() {
-        val calculator = Calculator(InputTextConvertor())
-
         calculator.evaluate("1 * 2 ")
     }
 
     @Test(expected = IllegalArgumentException::class)
     fun `without blank text IllegalArgumentException`() {
-        val calculator = Calculator(InputTextConvertor())
-
         calculator.evaluate("1*2")
     }
 
     @Test(expected = IllegalArgumentException::class)
     fun `If it is not a operation symbol IllegalArgumentException throw`() {
-        val calculator = Calculator(InputTextConvertor())
-
         calculator.evaluate("1 & 2")
     }
 
     @Test(expected = IllegalArgumentException::class)
     fun `invalid expression IllegalArgumentException`() {
-        val calculator = Calculator(InputTextConvertor())
-
         calculator.evaluate("1 * 2 -")
     }
 
     @Test(expected = IllegalArgumentException::class)
     fun `number text only IllegalArgumentException`() {
-        val calculator = Calculator(InputTextConvertor())
-
         calculator.evaluate("12345")
     }
 
     @Test
     fun addition() {
-        val calculator = Calculator(InputTextConvertor())
-
         val actual: Int = calculator.evaluate("1 + 2")
 
         assertThat(actual).isEqualTo(1 + 2)
@@ -58,8 +51,6 @@ class CalculatorTest {
 
     @Test
     fun subtraction() {
-        val calculator = Calculator(InputTextConvertor())
-
         val actual: Int = calculator.evaluate("1 - 2")
 
         assertThat(actual).isEqualTo(1 - 2)
@@ -67,8 +58,6 @@ class CalculatorTest {
 
     @Test
     fun multiplication() {
-        val calculator = Calculator(InputTextConvertor())
-
         val actual: Int = calculator.evaluate("1 * 2")
 
         assertThat(actual).isEqualTo(1 * 2)
@@ -76,8 +65,6 @@ class CalculatorTest {
 
     @Test
     fun division() {
-        val calculator = Calculator(InputTextConvertor())
-
         val actual: Int = calculator.evaluate("1 / 2")
 
         assertThat(actual).isEqualTo(1 / 2)
@@ -85,8 +72,6 @@ class CalculatorTest {
 
     @Test
     fun evaluatesExpression() {
-        val calculator = Calculator(InputTextConvertor())
-
         val actual: Int = calculator.evaluate("2 + 3 * 4 / 2")
 
         assertThat(actual).isEqualTo(10)
