@@ -1,14 +1,17 @@
 package camp.nextstep.edu.calculator
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
+import camp.nextstep.edu.domain.Calculator
 import camp.nextstep.edu.domain.Expression
 import camp.nextstep.edu.domain.Operator
 
 class MainActivity : AppCompatActivity() {
 	private lateinit var binding: ActivityMainBinding
 	private lateinit var expression: Expression
+	private lateinit var calculator: Calculator
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -16,13 +19,20 @@ class MainActivity : AppCompatActivity() {
 		setContentView(binding.root)
 
 		initExpression()
+		initCalculator()
 
 		setOperandListener()
 		setOperatorListener()
+		setDeleteListener()
+		setEqualsListener()
 	}
 
 	private fun initExpression() {
 		expression = Expression()
+	}
+
+	private fun initCalculator() {
+		calculator = Calculator()
 	}
 
 	private fun setOperandListener() {
@@ -55,7 +65,44 @@ class MainActivity : AppCompatActivity() {
 		showExpression()
 	}
 
+	private fun setDeleteListener() {
+		binding.buttonDelete.setOnClickListener {
+			expression.delete()
+			showExpression()
+		}
+	}
+
 	private fun showExpression() {
 		binding.textView.text = expression.toString()
+	}
+
+	private fun setEqualsListener() {
+		binding.buttonEquals.setOnClickListener {
+			showResultOrThrow()
+		}
+	}
+
+	private fun showResultOrThrow() {
+		try {
+			val result = calculator.calculate(expression.toString())
+			showResult(result)
+		} catch (e: IllegalStateException) {
+			showToastIfNeed(e)
+		} catch (e: IllegalArgumentException) {
+			Unit
+		} catch (e: ArithmeticException) {
+			Unit
+		}
+	}
+
+	private fun showResult(result: Int) {
+		binding.textView.text = result.toString()
+		expression.clear()
+	}
+
+	private fun showToastIfNeed(e: IllegalStateException) {
+		if (e.message == Expression.EXP_NOT_COMPLETE) {
+			Toast.makeText(this, "완성되지 않은 수식입니다.", Toast.LENGTH_LONG).show()
+		}
 	}
 }
