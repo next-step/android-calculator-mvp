@@ -5,14 +5,14 @@ import org.junit.Test
 
 class CalculationExpressionTest {
 
-    private val expressionParser = CalculatorExpression
+    private val calculatorExpression = CalculatorExpression
 
     @Test
     fun `2 더하기 3`() {
         // given
         val testParams = "2 + 3"
         // when
-        val actual = expressionParser.split(testParams)
+        val actual = calculatorExpression.split(testParams)
         // then
         assertEquals(
             listOf("2", "+", "3"),
@@ -25,7 +25,7 @@ class CalculationExpressionTest {
         // given
         val testParams = "2 - 3"
         // when
-        val actual = expressionParser.split(testParams)
+        val actual = calculatorExpression.split(testParams)
         // then
         assertEquals(
             listOf("2", "-", "3"),
@@ -38,7 +38,7 @@ class CalculationExpressionTest {
         // given
         val testParams = "2 * 3"
         // when
-        val actual = expressionParser.split(testParams)
+        val actual = calculatorExpression.split(testParams)
         // then
         assertEquals(
             listOf("2", "*", "3"),
@@ -51,7 +51,7 @@ class CalculationExpressionTest {
         // given
         val testParams = "2 ÷ 3"
         // when
-        val actual = expressionParser.split(testParams)
+        val actual = calculatorExpression.split(testParams)
         // then
         assertEquals(
             listOf("2", "÷", "3"),
@@ -63,7 +63,7 @@ class CalculationExpressionTest {
     fun `문자열에 빈값이 입력하는 경우 IllegalArgumentException 을 던진다1`() {
         val testParams = listOf("2", "", "3")
         assertThrows(IllegalArgumentException::class.java) {
-            expressionParser.validate(testParams)
+            calculatorExpression.validate(testParams)
         }
     }
 
@@ -71,7 +71,7 @@ class CalculationExpressionTest {
     fun `문자열에 빈값이 입력하는 경우 IllegalArgumentException 을 던진다2`() {
         val testParams = listOf("", "", "3")
         assertThrows(IllegalArgumentException::class.java) {
-            expressionParser.validate(testParams)
+            calculatorExpression.validate(testParams)
         }
     }
 
@@ -79,7 +79,7 @@ class CalculationExpressionTest {
     fun `문자열에 빈값이 입력하는 경우 IllegalArgumentException 을 던진다3`() {
         val testParams = listOf("", "", "")
         assertThrows(IllegalArgumentException::class.java) {
-            expressionParser.validate(testParams)
+            calculatorExpression.validate(testParams)
         }
     }
 
@@ -87,7 +87,7 @@ class CalculationExpressionTest {
     fun `빈 문자을 입력하는 경우 IllegalArgumentException 을 던진다`() {
         val testParams = ""
         assertThrows(IllegalArgumentException::class.java) {
-            expressionParser.split(testParams)
+            calculatorExpression.split(testParams)
         }
     }
 
@@ -95,7 +95,7 @@ class CalculationExpressionTest {
     fun `빈 문자열을 입력하는 경우 IllegalArgumentException 을 던진다`() {
         val testParams = "   "
         assertThrows(IllegalArgumentException::class.java) {
-            expressionParser.split(testParams)
+            calculatorExpression.split(testParams)
         }
     }
 }

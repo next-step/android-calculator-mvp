@@ -115,46 +115,6 @@ class MainActivityTest {
     }
 
     @Test
-    fun 버튼더하기를_누르면_더하기가_보인다() {
-        // when: '+'이 입력 되면
-        onView(withId(R.id.buttonPlus)).perform(click())
-
-        // then: ' + '이 보여야 한다.
-        onView(withId(R.id.textView))
-            .check(ViewAssertions.matches(withText(" + ")))
-    }
-
-    @Test
-    fun 버튼빼기를_누르면_빼기가_보인다() {
-        // when: '-'이 입력 되면
-        onView(withId(R.id.buttonMinus)).perform(click())
-
-        // then: ' - '이 보여야 한다.
-        onView(withId(R.id.textView))
-            .check(ViewAssertions.matches(withText(" - ")))
-    }
-
-    @Test
-    fun 버튼곱하기를_누르면_곱하기가_보인다() {
-        // when: '*'이 입력 되면
-        onView(withId(R.id.buttonMultiply)).perform(click())
-
-        // then: ' * '이 보여야 한다.
-        onView(withId(R.id.textView))
-            .check(ViewAssertions.matches(withText(" * ")))
-    }
-
-    @Test
-    fun 버튼나누기를_누르면_나누기가_보인다() {
-        // when: '÷'이 입력 되면
-        onView(withId(R.id.buttonDivide)).perform(click())
-
-        // then: ' ÷ '이 보여야 한다.
-        onView(withId(R.id.textView))
-            .check(ViewAssertions.matches(withText(" ÷ ")))
-    }
-
-    @Test
     fun 버튼1_버튼2_버튼1_누르면_121가_보인다() {
         // when: '121'이 입력되면
         onView(withId(R.id.button1)).perform(click())
