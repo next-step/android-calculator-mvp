@@ -11,6 +11,7 @@ import camp.nextstep.edu.calculator.domain.Calculator
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var calculator: Calculator
+
     private var currentInput: String = ""
         set(value) {
             field = value
@@ -24,6 +25,16 @@ class MainActivity : AppCompatActivity() {
 
         calculator = Calculator()
 
+        initNumericKeypad()
+        initOperatorButtons()
+
+        with(binding) {
+            buttonEquals.setOnClickListener { setEqualsClickListener() }
+            buttonDelete.setOnClickListener { setDeleteClickListener() }
+        }
+    }
+
+    private fun initNumericKeypad() {
         with(binding) {
             button0.setOnClickListener { currentInput += "0" }
             button1.setOnClickListener { currentInput += "1" }
@@ -35,25 +46,15 @@ class MainActivity : AppCompatActivity() {
             button7.setOnClickListener { currentInput += "7" }
             button8.setOnClickListener { currentInput += "8" }
             button9.setOnClickListener { currentInput += "9" }
+        }
+    }
 
-            buttonPlus.setOnClickListener {
-                setOperatorClickListener(ArithmeticOperator.PLUS)
-            }
-            buttonMinus.setOnClickListener {
-                setOperatorClickListener(ArithmeticOperator.MINUS)
-            }
-            buttonMultiply.setOnClickListener {
-                setOperatorClickListener(ArithmeticOperator.MULTIPLY)
-            }
-            buttonDivide.setOnClickListener {
-                setOperatorClickListener(ArithmeticOperator.DIVIDE)
-            }
-            buttonEquals.setOnClickListener {
-                setEqualsClickListener()
-            }
-            buttonDelete.setOnClickListener {
-                setDeleteClickListener()
-            }
+    private fun initOperatorButtons() {
+        with(binding) {
+            buttonPlus.setOnClickListener { setOperatorClickListener(ArithmeticOperator.PLUS) }
+            buttonMinus.setOnClickListener { setOperatorClickListener(ArithmeticOperator.MINUS) }
+            buttonMultiply.setOnClickListener { setOperatorClickListener(ArithmeticOperator.MULTIPLY) }
+            buttonDivide.setOnClickListener { setOperatorClickListener(ArithmeticOperator.DIVIDE) }
         }
     }
 
