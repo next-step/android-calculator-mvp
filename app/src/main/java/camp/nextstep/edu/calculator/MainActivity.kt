@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
 
 	private fun showResultOrThrow() {
 		try {
-			val result = calculator.calculate(expression.toString())
+			val result = calculator.calculate(expression.getOrThrow())
 			showResult(result)
 		} catch (e: IllegalStateException) {
 			showToastIfNeed(e)
