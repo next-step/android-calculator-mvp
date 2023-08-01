@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
         calculator = Calculator()
 
-        initNumericKeypad()
+        initOperandButtons()
         initOperatorButtons()
 
         with(binding) {
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initNumericKeypad() {
+    private fun initOperandButtons() {
         with(binding) {
             button0.setOnClickListener { currentInput += "0" }
             button1.setOnClickListener { currentInput += "1" }
