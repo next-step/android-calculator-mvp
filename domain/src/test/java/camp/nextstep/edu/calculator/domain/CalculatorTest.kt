@@ -71,7 +71,7 @@ class CalculatorTest {
     }
 
     @Test
-    fun evaluatesExpression() {
+    fun `2 + 3 * 4 ÷ 2 표현식이 주어졌을때, 계산하면, 10이 된다`() {
         val actual: Int = calculator.evaluate("2 + 3 * 4 / 2")
 
         assertThat(actual).isEqualTo(10)
