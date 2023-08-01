@@ -19,9 +19,9 @@ class InputTextConvertor {
         }
     }
 
-    fun getOperationText(text: String?): Operations {
+    fun getOperationText(text: String?): Operation {
         return getNotEmptyText(text).let {
-            val convertOperation = Operations.findOperation(it.trim())
+            val convertOperation = Operation.findOperation(it.trim())
             require(convertOperation != null) { "Operation text error" }
             convertOperation
         }

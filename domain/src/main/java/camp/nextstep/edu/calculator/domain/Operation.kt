@@ -1,27 +1,27 @@
 package camp.nextstep.edu.calculator.domain
 
-sealed class Operations(val operationText: String) {
+sealed class Operation(val operationText: String) {
     abstract fun evaluate(x: Int, y: Int): Int
 
-    object Addition : Operations("+") {
+    object Addition : Operation("+") {
         override fun evaluate(x: Int, y: Int): Int = x + y
     }
 
-    object Subtraction : Operations("-") {
+    object Subtraction : Operation("-") {
         override fun evaluate(x: Int, y: Int): Int = x - y
     }
 
-    object Multiplication : Operations("*") {
+    object Multiplication : Operation("*") {
         override fun evaluate(x: Int, y: Int): Int = x * y
     }
 
-    object Division : Operations("/") {
+    object Division : Operation("/") {
         override fun evaluate(x: Int, y: Int): Int = x / y
     }
 
     companion object {
-        fun findOperation(text: String): Operations? {
-            val sealedSubclasses = Operations::class.sealedSubclasses.map { it.objectInstance }
+        fun findOperation(text: String): Operation? {
+            val sealedSubclasses = Operation::class.sealedSubclasses.map { it.objectInstance }
             return sealedSubclasses.find { operations -> operations?.operationText == text }
         }
     }
