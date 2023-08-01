@@ -5,7 +5,7 @@ class Expression {
 	private val expStringBuilder = StringBuilder()
 
 	fun getOrThrow(): String {
-		val expression = expStringBuilder.toString()
+		val expression = this.toString()
 
 		require(expression.isNotBlank()) { EXP_IS_BLANK }
 		check(expression.trim().last().isDigit()) { EXP_NOT_COMPLETE }
@@ -17,13 +17,13 @@ class Expression {
 		expStringBuilder.append(operand)
 	}
 
-	fun insertOperator(operator: String) {
+	fun insertOperator(operator: Operator) {
 		if (expStringBuilder.isEmpty()) {
 			return
 		}
 
 		expStringBuilder.append(EXP_DELIMITER)
-		expStringBuilder.append(operator)
+		expStringBuilder.append(operator.op)
 		expStringBuilder.append(EXP_DELIMITER)
 	}
 
@@ -47,6 +47,10 @@ class Expression {
 
 	fun clear() {
 		expStringBuilder.clear()
+	}
+
+	override fun toString(): String {
+		return expStringBuilder.toString()
 	}
 
 	companion object {
