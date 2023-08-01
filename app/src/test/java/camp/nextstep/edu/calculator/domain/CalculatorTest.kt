@@ -1,6 +1,7 @@
 package camp.nextstep.edu.calculator.domain
 
 import com.google.common.truth.Truth.assertThat
+import org.junit.Assert.assertThrows
 import org.junit.Test
 
 class CalculatorTest {
@@ -31,26 +32,52 @@ class CalculatorTest {
 
     @Test
     fun `입력값이 null이거나 빈 공백 문자일 경우 IllegalArgumentException throw`() {
-        runCatching {
+        assertThrows(IllegalArgumentException::class.java) {
             Calculator.evaluate(null)
-        }.getOrElse {
-            assertThat(it).isInstanceOf(IllegalArgumentException::class.java)
         }
 
-        runCatching {
+        assertThrows(IllegalArgumentException::class.java) {
             Calculator.evaluate(" ")
-        }.getOrElse {
-            assertThat(it).isInstanceOf(IllegalArgumentException::class.java)
         }
     }
 
     @Test
     fun `사칙연산 기호가 아닌 경우 IllegalArgumentException throw`() {
-        runCatching {
+        assertThrows(IllegalArgumentException::class.java) {
             Calculator.evaluate("1 a 1")
-        }.getOrElse {
-            assertThat(it).isInstanceOf(IllegalArgumentException::class.java)
         }
+    }
+
+    @Test
+    fun `계산식이 중간에 끊기는 경우 IllegalStateException throw`() {
+        assertThrows(IllegalStateException::class.java) {
+            Calculator.evaluate("1 + 1 *")
+        }
+    }
+
+    @Test
+    fun `계산 20 + 3`() {
+        val actual = Calculator.evaluate("20 + 3")
+        assertThat(actual).isEqualTo("23")
+    }
+
+    @Test
+    fun `계산 a + 3 IllegalArgumentException throw`() {
+        assertThrows(IllegalArgumentException::class.java) {
+            Calculator.evaluate("a + 3")
+        }
+    }
+
+    @Test
+    fun `계산 -5 + 3`() {
+        val actual = Calculator.evaluate("-5 + 3")
+        assertThat(actual).isEqualTo("-2")
+    }
+
+    @Test
+    fun `계산 0 + 3`() {
+        val actual = Calculator.evaluate("0 + 3")
+        assertThat(actual).isEqualTo("3")
     }
 
     @Test

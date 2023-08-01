@@ -1,28 +1,44 @@
 package camp.nextstep.edu.calculator.domain
 
 object Calculator {
-
     private const val SEPERATOR = " "
-    private const val LAST_INDEX = 1
-    private const val NEXT_PART_INDEX = 2
-    private const val NUMBER_POSITION = 0
-    private const val OPERATOR_POSITION = 1
+    private const val DEFAULT_POSITON = 0
+    private const val NEXT_NUMBER_INDEX = 2
+    private const val EXTRA_ITEM_COUNT = 1
 
     fun evaluate(formulaString: String?): String {
-        if (formulaString.isNullOrBlank()) {
-            throw IllegalArgumentException("Input value is empty")
+        require(!formulaString.isNullOrEmpty() && formulaString.trim() != "") {
+            "Input value is empty"
         }
-        val formulaList = formulaString.split(SEPERATOR)
-        val resultValue = recursiveCalculator(formulaList.reversed())
-        println(resultValue)
-        return resultValue
+        val formulas = formulaString.split(SEPERATOR)
+        check(formulas.size / NEXT_NUMBER_INDEX == EXTRA_ITEM_COUNT) {
+            "Formulas must have odd size Items"
+        }
+        return calculate(formulas)
     }
 
-    private fun recursiveCalculator(formulaList: List<String>): String {
-        return if (formulaList.size == LAST_INDEX) {
-            formulaList[NUMBER_POSITION]
-        } else {
-            Operator.getOperator(formulaList[OPERATOR_POSITION]).calculate(recursiveCalculator(formulaList.drop(NEXT_PART_INDEX)), formulaList[NUMBER_POSITION])
+    private fun calculate(formulas: List<String>): String {
+        var index = DEFAULT_POSITON
+        var resultNumber = formulas[index]
+        require(resultNumber.isNum()) {
+            "Parameter must be Number"
         }
+        while(formulas.size > index + NEXT_NUMBER_INDEX) {
+            index = index.inc()
+            val operator = formulas[index]
+            index = index.inc()
+            val postNumber = formulas[index]
+            require(postNumber.isNum()) {
+                "Parameter must be Number"
+            }
+            resultNumber = Operator.getOperator(operator)
+                .calculate(resultNumber, postNumber)
+        }
+        return resultNumber
+    }
+
+    private fun String.isNum(): Boolean {
+        this.toIntOrNull() ?: false
+        return true
     }
 }
