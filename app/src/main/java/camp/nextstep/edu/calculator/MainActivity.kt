@@ -7,16 +7,12 @@ import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
 import camp.nextstep.edu.calculator.domain.ArithmeticExpression
 import camp.nextstep.edu.calculator.domain.ArithmeticOperator
 import camp.nextstep.edu.calculator.domain.Calculator
+import camp.nextstep.edu.calculator.domain.Expression
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var calculator: Calculator
-
-    private var currentInput: String = ""
-        set(value) {
-            field = value
-            binding.textView.text = currentInput
-        }
+    private lateinit var expression: Expression
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         calculator = Calculator()
+        expression = Expression { value -> binding.textView.text = value }
 
         initOperandButtons()
         initOperatorButtons()
@@ -36,16 +33,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun initOperandButtons() {
         with(binding) {
-            button0.setOnClickListener { currentInput += "0" }
-            button1.setOnClickListener { currentInput += "1" }
-            button2.setOnClickListener { currentInput += "2" }
-            button3.setOnClickListener { currentInput += "3" }
-            button4.setOnClickListener { currentInput += "4" }
-            button5.setOnClickListener { currentInput += "5" }
-            button6.setOnClickListener { currentInput += "6" }
-            button7.setOnClickListener { currentInput += "7" }
-            button8.setOnClickListener { currentInput += "8" }
-            button9.setOnClickListener { currentInput += "9" }
+            button0.setOnClickListener { expression.setOperand("0") }
+            button1.setOnClickListener { expression.setOperand("1") }
+            button2.setOnClickListener { expression.setOperand("2") }
+            button3.setOnClickListener { expression.setOperand("3") }
+            button4.setOnClickListener { expression.setOperand("4") }
+            button5.setOnClickListener { expression.setOperand("5") }
+            button6.setOnClickListener { expression.setOperand("6") }
+            button7.setOnClickListener { expression.setOperand("7") }
+            button8.setOnClickListener { expression.setOperand("8") }
+            button9.setOnClickListener { expression.setOperand("9") }
         }
     }
 
@@ -59,35 +56,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setOperatorClickListener(operator: ArithmeticOperator) {
-        if (currentInput.last().isDigit()) {
-            currentInput += " ${operator.value} "
-            return
-        }
-
-        if (ArithmeticOperator.isArithmeticOperator(currentInput.trimEnd().last().toString())) {
-            currentInput =
-                currentInput.dropLast(3) + " ${operator.value} "
-        }
+        expression.setOperator(operator.value)
     }
 
     private fun setEqualsClickListener() {
         kotlin.runCatching {
-            calculator.calculate(ArithmeticExpression(currentInput)).toString()
+            calculator.calculate(ArithmeticExpression(expression.value)).toString()
         }.onSuccess { result ->
-            currentInput = result
+            expression.setEquals(result)
         }.onFailure { exception ->
             Toast.makeText(this, exception.message, Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun setDeleteClickListener() {
-        if (currentInput.last().isDigit()) {
-            currentInput = currentInput.dropLast(1)
-            return
-        }
-
-        if (ArithmeticOperator.isArithmeticOperator(currentInput.trimEnd().last().toString())) {
-            currentInput = currentInput.dropLast(3)
-        }
+        expression.setDelete()
     }
 }
