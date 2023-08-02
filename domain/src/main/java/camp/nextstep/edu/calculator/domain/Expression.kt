@@ -1,17 +1,16 @@
 package camp.nextstep.edu.calculator.domain
 
-class Expression(formulaString: String?) {
+class Expression {
 
-    private val formulas: List<String>
-    init {
-        require(!formulaString.isNullOrEmpty() && formulaString.trim() != "") {
+    constructor(formulaString: String?) {
+        val formula = formulaString?.trim()
+        require(!formula.isNullOrEmpty() && formula != "") {
             "Input value is empty"
         }
-        formulas = formulaString.split(SEPERATOR)
+        formulas = formula.split(SEPERATOR).toMutableList()
         check(formulas.size % NUMBER_INDEX_STEP == EXTRA_ITEM_COUNT) {
-            "Formulas must have odd size Items"
+            "완성되지 않은 수식입니다"
         }
-
         formulas.withIndex()
             .filter { (index, formula) -> index % NUMBER_INDEX_STEP == 0}
             .map { (index, formula) ->
@@ -21,13 +20,11 @@ class Expression(formulaString: String?) {
             }
     }
 
+    val formulas: List<String>
+
     private fun String.isNum(): Boolean {
         this.toIntOrNull() ?: return false
         return true
-    }
-
-    fun getExpressions(): List<String> {
-        return formulas
     }
 
     companion object {

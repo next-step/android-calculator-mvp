@@ -8,7 +8,7 @@ object Calculator {
 
     fun evaluate(formulaString: String?): String {
         val expression = Expression(formulaString)
-        return calculate(expression.getExpressions())
+        return calculate(expression.formulas)
     }
 
     private fun calculate(formulas: List<String>): String {
