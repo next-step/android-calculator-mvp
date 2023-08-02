@@ -49,12 +49,12 @@ class CalculationExpressionTest {
     @Test
     fun `2 나누기 3`() {
         // given
-        val testParams = "2 ÷ 3"
+        val testParams = "2 / 3"
         // when
         val actual = calculatorExpression.split(testParams)
         // then
         assertEquals(
-            listOf("2", "÷", "3"),
+            listOf("2", "/", "3"),
             actual
         )
     }

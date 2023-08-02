@@ -23,7 +23,7 @@ sealed class Operators {
     }
 
     object Divider: Operators() {
-        override val method: String = "÷"
+        override val method: String = "/"
         override fun calculate(first: Int, second: Int): Int = first / second
     }
 
