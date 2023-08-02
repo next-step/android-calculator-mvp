@@ -4,7 +4,6 @@ import java.util.Optional
 
 class Expression(
     initExpressions: String = "",
-    val calculator: Calculator = Calculator
 ) {
 
     var expressions: String
@@ -14,14 +13,23 @@ class Expression(
         this.expressions = initExpressions
     }
 
-    fun setOperands(operand: String) {
-        expressions += "$operand"
+    fun setExpressions(expression: String) {
+        if (expression.toIntOrNull() == null) {
+            setMethods(expression)
+        } else {
+            setOperands(expression)
+        }
     }
 
-    fun setMethods(method: String) {
+    private fun setOperands(operand: String) {
+        expressions += operand
+    }
+
+    private fun setMethods(method: String) {
         if (expressions.isBlank()) return
         expressions += " $method "
     }
+
 
     fun removeLatestExpression() {
         if (expressions.isBlank()) return
@@ -49,10 +57,6 @@ class Expression(
 
     fun resetMemory() {
         expressions = ""
-    }
-
-    fun resultCalculate() {
-        expressions = calculator.evaluate(expressions).toString()
     }
 
 }

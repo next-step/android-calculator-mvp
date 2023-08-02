@@ -1,7 +1,6 @@
 package camp.nextstep.edu.calculator
 
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
@@ -12,30 +11,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private val expression = Expression(calculator = Calculator)
-
-    private val onClickListener = View.OnClickListener { view ->
-        when (view) {
-            binding.button0 -> expression.setOperands("0")
-            binding.button1 -> expression.setOperands("1")
-            binding.button2 -> expression.setOperands("2")
-            binding.button3 -> expression.setOperands("3")
-            binding.button4 -> expression.setOperands("4")
-            binding.button5 -> expression.setOperands("5")
-            binding.button6 -> expression.setOperands("6")
-            binding.button7 -> expression.setOperands("7")
-            binding.button8 -> expression.setOperands("8")
-            binding.button9 -> expression.setOperands("9")
-            binding.buttonPlus -> expression.setMethods("+")
-            binding.buttonMinus -> expression.setMethods("-")
-            binding.buttonMultiply -> expression.setMethods("*")
-            binding.buttonDivide -> expression.setMethods("÷")
-            binding.buttonDelete -> expression.removeLatestExpression()
-            binding.buttonMemory -> expression.resetMemory()
-        }
-        setResultText()
-    }
-
+    private val expression = Expression()
+    private val calculator = Calculator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,33 +23,44 @@ class MainActivity : AppCompatActivity() {
 
     private fun initClickListener() {
 
-        binding.button0.setOnClickListener(onClickListener)
-        binding.button1.setOnClickListener(onClickListener)
-        binding.button2.setOnClickListener(onClickListener)
-        binding.button3.setOnClickListener(onClickListener)
-        binding.button4.setOnClickListener(onClickListener)
-        binding.button5.setOnClickListener(onClickListener)
-        binding.button6.setOnClickListener(onClickListener)
-        binding.button7.setOnClickListener(onClickListener)
-        binding.button8.setOnClickListener(onClickListener)
-        binding.button9.setOnClickListener(onClickListener)
+        binding.button0.setOnClickListener { onClickButtons("0") }
+        binding.button1.setOnClickListener { onClickButtons("1") }
+        binding.button2.setOnClickListener { onClickButtons("2") }
+        binding.button3.setOnClickListener { onClickButtons("3") }
+        binding.button4.setOnClickListener { onClickButtons("4") }
+        binding.button5.setOnClickListener { onClickButtons("5") }
+        binding.button6.setOnClickListener { onClickButtons("6") }
+        binding.button7.setOnClickListener { onClickButtons("7") }
+        binding.button8.setOnClickListener { onClickButtons("8") }
+        binding.button9.setOnClickListener { onClickButtons("9") }
 
-        binding.buttonPlus.setOnClickListener(onClickListener)
-        binding.buttonMinus.setOnClickListener(onClickListener)
-        binding.buttonDivide.setOnClickListener(onClickListener)
-        binding.buttonMultiply.setOnClickListener(onClickListener)
+        binding.buttonPlus.setOnClickListener { onClickButtons("+") }
+        binding.buttonMinus.setOnClickListener { onClickButtons("-") }
+        binding.buttonDivide.setOnClickListener { onClickButtons("*") }
+        binding.buttonMultiply.setOnClickListener { onClickButtons("÷") }
 
-        binding.buttonDelete.setOnClickListener(onClickListener)
-        binding.buttonMemory.setOnClickListener(onClickListener)
+        binding.buttonDelete.setOnClickListener {
+            expression.removeLatestExpression()
+            setResultText()
+        }
+        binding.buttonMemory.setOnClickListener {
+            expression.resetMemory()
+            setResultText()
+        }
 
         binding.buttonEquals.setOnClickListener {
             onResultEquals()
         }
     }
 
+    private fun onClickButtons(text: String) {
+        expression.setExpressions(text)
+        setResultText()
+    }
+
     private fun onResultEquals() {
         runCatching {
-            expression.resultCalculate()
+            calculator.evaluate(expression.expressions)
         }.onSuccess {
             setResultText()
         }.onFailure {
