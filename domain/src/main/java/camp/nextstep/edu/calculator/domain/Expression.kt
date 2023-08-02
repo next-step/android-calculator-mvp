@@ -12,6 +12,8 @@ class Expression(
     }
 
     fun setOperator(operator: String) {
+        if (value.isEmpty()) return
+
         if (value.last().isDigit()) {
             value += " $operator "
             onValueChanged(value)
@@ -30,6 +32,8 @@ class Expression(
     }
 
     fun setDelete() {
+        if (value.isEmpty()) return
+
         if (value.last().isDigit()) {
             value = value.dropLast(1)
             onValueChanged(value)
