@@ -18,6 +18,9 @@
         * [x] 요구사항에 따른 테스트 코드 수정(숫자 미 입력시 사칙연산 클릭시 반응X)
         * [x] Expressions 클래스 내부 변수명, 함수명, 파라미터 기능에 맞도록 네이밍 수정
         * [x] View.OnClickListener 내부 Button에 대해서 의존적이던 내용 수정
+    * 3차 피드백
+        * [x] Expression이 Calculator에 대한 의존성을 가지던 문제 수정
+        * [x] View.OnClickListener -> 기능 함수로 수정
 
 # Step3(2023-07-29) #
     * [x] 사용자가 입력한 문자열 값에 따라 사칙 연산을 수행할 수 있는 계산기 구현
