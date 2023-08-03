@@ -6,9 +6,9 @@ object Calculator {
 
     fun calculate(input: String): Operand {
         require(input.isNotBlank()) { "빈 공백은 입력할 수 없습니다." }
-        val inputOperands = input.getListByDivRest(0)
+        val inputOperands = input.getListByDivRest(EVEN_NUMBER)
 
-        val inputOperators = input.getListByDivRest(1)
+        val inputOperators = input.getListByDivRest(ODD_NUMBER)
         val operands = toOperandsList(inputOperands)
         val operators = toOperatorList(inputOperators)
 
@@ -17,7 +17,7 @@ object Calculator {
         }
     }
 
-    private fun splitList(input: String): List<String> = input.split(" ")
+    private fun splitList(input: String): List<String> = input.split(SPACE)
 
     private fun String.getListByDivRest(rest: Int): List<String> = splitList(this).filterIndexed { index, _ ->
         index % 2 == rest
@@ -31,3 +31,7 @@ object Calculator {
         findOperator(it)
     }
 }
+
+const val SPACE = " "
+const val EVEN_NUMBER = 0
+const val ODD_NUMBER = 1
