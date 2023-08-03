@@ -7,10 +7,10 @@ object Calculator {
     fun calculate(input: String): Operand {
         require(input.isNotBlank()) { "빈 공백은 입력할 수 없습니다." }
         val inputOperands = input.getListByDivRest(EVEN_NUMBER)
-
         val inputOperators = input.getListByDivRest(ODD_NUMBER)
-        val operands = toOperandsList(inputOperands)
-        val operators = toOperatorList(inputOperators)
+
+        val operands = inputOperands.toOperandsList()
+        val operators = inputOperators.toOperatorList()
 
         return operands.reduceIndexed { index, first, second ->
             operators[index - 1].calculate(first, second)
@@ -23,11 +23,11 @@ object Calculator {
         index % 2 == rest
     }
 
-    private fun toOperandsList(inputOperands: List<String>): List<Operand> = inputOperands.map {
+    private fun List<String>.toOperandsList(): List<Operand> = this.map {
         Operand(it.toBigDecimal())
     }
 
-    private fun toOperatorList(inputOperators: List<String>): List<Operator> = inputOperators.map {
+    private fun List<String>.toOperatorList(): List<Operator> = this.map {
         findOperator(it)
     }
 }
