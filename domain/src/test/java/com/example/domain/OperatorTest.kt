@@ -4,6 +4,7 @@ import org.junit.Assert.*
 import org.junit.Test
 import com.example.domain.OperatorFinder.Companion.findOperator
 import com.google.common.truth.Truth.assertThat
+import java.lang.IllegalArgumentException
 
 class OperatorTest {
 
@@ -33,5 +34,12 @@ class OperatorTest {
         val result = findOperator("/").calculate(Operand(3), Operand(2))
 
         assertThat(result).isEqualTo(Operand(1.5))
+    }
+
+    @Test
+    fun 숫자_0으로_나눗셈_연산은_불가능하다() {
+        assertThrows(IllegalArgumentException::class.java) {
+            findOperator("/").calculate(Operand(4), Operand(0))
+        }
     }
 }
