@@ -14,9 +14,13 @@ class CalculatorTest(
 
     private val calculator = Calculator
 
+    // when
+    private val actual = calculator.calculate(input)
+
+    // then
     @Test
     fun 사칙연산_계산_테스트() {
-        assertThat(calculator.calculate(input)).isEqualTo(Operand(result))
+        assertThat(actual).isEqualTo(Operand(result))
     }
 
     companion object {
