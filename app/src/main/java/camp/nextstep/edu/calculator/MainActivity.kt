@@ -1,26 +1,62 @@
 package camp.nextstep.edu.calculator
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
+import camp.nextstep.edu.calculator.domain.InputTextConvertor
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var inputTextManager: InputTextManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.button0.setOnClickListener { binding.textView.text = "0" }
-        binding.button1.setOnClickListener { binding.textView.text = "1" }
-        binding.button2.setOnClickListener { binding.textView.text = "2" }
-        binding.button3.setOnClickListener { binding.textView.text = "3" }
-        binding.button4.setOnClickListener { binding.textView.text = "4" }
-        binding.button5.setOnClickListener { binding.textView.text = "5" }
-        binding.button6.setOnClickListener { binding.textView.text = "6" }
-        binding.button7.setOnClickListener { binding.textView.text = "7" }
-        binding.button8.setOnClickListener { binding.textView.text = "8" }
-        binding.button9.setOnClickListener { binding.textView.text = "9" }
+        inputTextManager = InputTextManager(InputTextConvertor())
+
+        binding.button0.setOnClickListener { setInputText("0") }
+        binding.button1.setOnClickListener { setInputText("1") }
+        binding.button2.setOnClickListener { setInputText("2") }
+        binding.button3.setOnClickListener { setInputText("3") }
+        binding.button4.setOnClickListener { setInputText("4") }
+        binding.button5.setOnClickListener { setInputText("5") }
+        binding.button6.setOnClickListener { setInputText("6") }
+        binding.button7.setOnClickListener { setInputText("7") }
+        binding.button8.setOnClickListener { setInputText("8") }
+        binding.button9.setOnClickListener { setInputText("9") }
+
+        binding.buttonPlus.setOnClickListener { setInputText("+") }
+        binding.buttonMinus.setOnClickListener { setInputText("-") }
+        binding.buttonMultiply.setOnClickListener { setInputText("*") }
+        binding.buttonDivide.setOnClickListener { setInputText("/") }
+
+        binding.buttonDelete.setOnClickListener { setRemoveText() }
+        binding.buttonEquals.setOnClickListener { setEqualsText() }
+    }
+
+    private fun setInputText(inputText: String) {
+        binding.textView.text = inputTextManager.addText(
+            binding.textView.text.toString(), inputText
+        )
+    }
+
+    private fun setRemoveText() {
+        binding.textView.text = inputTextManager.removeText(
+            binding.textView.text.toString()
+        )
+    }
+
+    private fun setEqualsText() {
+        with (binding.textView) {
+            val equalsText = inputTextManager.equalsText(text.toString())
+            if (equalsText.equals(text.toString(), false)) {
+                Toast.makeText(this@MainActivity, " 완성되지 않은 수식입니다", Toast.LENGTH_SHORT).show()
+            } else {
+                text = equalsText
+            }
+        }
     }
 }
