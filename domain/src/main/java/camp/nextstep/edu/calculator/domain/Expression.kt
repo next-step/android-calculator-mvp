@@ -2,6 +2,10 @@ package camp.nextstep.edu.calculator.domain
 
 class Expression {
 
+    var formulas = listOf<String>()
+
+    constructor()
+
     constructor(formulaString: String?) {
         val formula = formulaString?.trim()
         require(!formula.isNullOrEmpty() && formula != "") {
@@ -20,7 +24,40 @@ class Expression {
             }
     }
 
-    val formulas: List<String>
+    fun addOperand(operand: String): String {
+        val lastFormula = formulas.lastOrNull()
+        formulas = if(lastFormula == null) {
+            formulas + operand
+        } else {
+            if(lastFormula.isNum()) {
+                formulas.dropLast(1) + (lastFormula + operand)
+            } else {
+                formulas + operand
+            }
+        }
+        return getFormulaString()
+    }
+
+    fun addOpCode(opCode: String): String {
+        val lastFormula = formulas.lastOrNull()
+        if(lastFormula != null) {
+            if(lastFormula.isNum()) {
+                formulas = formulas + opCode
+            }
+        }
+        return getFormulaString()
+    }
+
+    fun removeLast(): String {
+        if(formulas.isNotEmpty()) {
+            formulas = formulas.dropLast(1)
+        }
+        return getFormulaString()
+    }
+
+    fun getFormulaString(): String {
+        return formulas.joinToString(" ")
+    }
 
     private fun String.isNum(): Boolean {
         this.toIntOrNull() ?: return false
