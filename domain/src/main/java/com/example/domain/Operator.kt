@@ -19,7 +19,9 @@ enum class Operator(
     DIV("/", { first, second ->
         runCatching {
             first.div(second)
-        }.getOrDefault(Operand(0))
+        }.getOrElse {
+            throw IllegalArgumentException("0으로 나눌 수 없습니다.")
+        }
     });
 }
 
