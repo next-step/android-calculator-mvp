@@ -1,64 +1,68 @@
 package com.camp.nextstep.edu.domain
 
+import com.camp.nextstep.edu.domain.Operator.TokenType
+import com.camp.nextstep.edu.domain.Operator.TokenType.*
+
 class Calculator {
-    private var result: Int = 0
 
-    fun evaluate(s: String): Int {
-        if (s.isEmpty()) throw IllegalArgumentException("string is empty")
+    private fun parseFormula(inputString: String): List<String> {
+        val regex = Regex("""\s*([-+*/])\s*|\s*([\d.]+)\s*""")
+        val tokens = mutableListOf<String>()
 
-        val tokens = s.split(" ")
-        var firstOperand: Int? = null
-        var secondOperand: Int? = null
-        var operatorStr: String = ""
-
-        for (token in tokens) {
-            if (token.matches(Regex("""\d+"""))) {
-                // 숫자인 경우
-                if (null == firstOperand) {
-                    firstOperand = token.toInt()
-                } else {
-                    secondOperand = token.toInt()
-
-                    operation(
-                        firstOperand = firstOperand,
-                        secondOperand = secondOperand,
-                        operatorStr = operatorStr
-                    )
-
-                    firstOperand = result
-                }
-            } else { //if(token.matches(Regex("""[-+*/]"""))) {
-                // 사칙 연산 기호
-                operatorStr = token
+        regex.findAll(inputString).forEach { matchResult ->
+            val (operator, operand) = matchResult.destructured
+            if (operator.isNotEmpty()) {
+                tokens.add(operator)
+            }
+            if (operand.isNotEmpty()) {
+                tokens.add(operand)
             }
         }
-        return result
+        return tokens
     }
 
-    private fun operation(
-        firstOperand: Int,
-        secondOperand: Int,
-        operatorStr: String
-    ) = when(operatorStr) {
-        "+" -> add(firstOperand, secondOperand)
-        "-" -> minus(firstOperand, secondOperand)
-        "*" -> multiply(firstOperand, secondOperand)
-        "/" -> divide(firstOperand, secondOperand)
-        else -> throw IllegalArgumentException("Invalid operator: $operatorStr")
+    private fun validate(list: List<String>) {
+        check(Operator.isOperator(list.first()).not()) {
+            throw IllegalArgumentException("not valid formula")
+        }
+        check(Operator.isOperator(list.last()).not()) {
+            throw IllegalArgumentException("not valid formula")
+        }
+
+        val regex = Regex("(.)\\1+")
+        check(regex.matches(
+            list.toString().removePrefix("[").removeSuffix("]").replace(",", " ")
+        )) {
+            throw IllegalArgumentException("not valid formula")
+        }
+
     }
 
-    private fun add(firstOperand: Int, secondOperand: Int) {
-        result = firstOperand + secondOperand
-    }
-    private fun minus(firstOperand: Int, secondOperand: Int) {
-        result = firstOperand - secondOperand
-    }
-    private fun multiply(firstOperand: Int, secondOperand: Int) {
-        result = firstOperand * secondOperand
-    }
-    private fun divide(firstOperand: Int, secondOperand: Int) {
-        result = firstOperand / secondOperand
-    }
+    fun evaluate(inputString: String): Int {
+        check(inputString.isNotEmpty()) {
+            "string is empty"
+        }
 
+        val formulaList = parseFormula(inputString).toMutableList()
+
+        validate(formulaList)
+
+        val recursiveCount = formulaList.size / 2
+        for (i: Int in 0 .. recursiveCount) {
+            if (1 == formulaList.size) break
+
+            val leftOperand = formulaList[0].toInt()
+            val operator = formulaList[1]
+            val rightOperand = formulaList[2].toInt()
+
+            val result = Operator.operator(operator, leftOperand, rightOperand)
+            repeat(3) {
+                formulaList.removeFirst()
+            }
+            formulaList.add(0, "$result")
+        }
+
+        return formulaList.last().toInt()
+    }
 
 }
