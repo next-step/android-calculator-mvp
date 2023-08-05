@@ -1,15 +1,10 @@
 package com.example.calculatorlib
 
-
 class Calculator {
     fun evaluate(str: String?): Int {
 
         require(!str.isNullOrEmpty()) {
-            "문자열 수식(str)이 null일 경우 IllegalArgumentException 발행"
-        }
-
-        require(!str.isEmpty()) {
-            "문자열 수식(str)이 공백일 경우 IllegalArgumentException 발행"
+            "문자열 수식(str)이 null 혹은 공백일 경우 IllegalArgumentException 발행"
         }
 
         val numAndOperator = str.split(" ")
@@ -24,10 +19,5 @@ class Calculator {
             result = operator.calculator(result, num.toInt())
         }
         return result
-    }
-
-    private fun String.isEmpty(): Boolean {
-        return this.trim() == ""
-
     }
 }

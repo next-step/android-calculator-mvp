@@ -1,20 +1,15 @@
 package com.example.calculatorlib
 
-enum class Operator(val operator: String) {
-    PLUS("+"),
-    MINUS("-"),
-    MULTIPLIED("*"),
-    DIVIDED("/");
+enum class Operator(val operator: String, val calculator: (Int, Int) -> Int) {
+    PLUS("+", { left, right -> left + right }),
+    MINUS("-", { left, right -> left - right }),
+    MULTIPLIED("*", { left, right -> left * right }),
+    DIVIDED("/", { left, right -> left / right });
 
-    fun calculator(result: Int, num: Int) = when(Operator.find(operator)) {
-        PLUS -> addition(result, num)
-        MINUS -> subtraction(result, num)
-        MULTIPLIED -> multiplication(result, num)
-        DIVIDED -> division(result, num)
-    }
     companion object {
         fun find(operator: String): Operator {
-            return values().find { it.operator == operator } ?: throw IllegalArgumentException("사칙연산 기호가 아닌 경우 IllegalArgumentException 발행")
+            return values().find { it.operator == operator }
+                ?: throw IllegalArgumentException("사칙연산 기호가 아닌 경우 IllegalArgumentException 발행 - 입력값 : $operator")
         }
 
         // 덧셈

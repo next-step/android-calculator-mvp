@@ -8,8 +8,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import org.junit.runners.Parameterized.Parameters
 
-@RunWith(value = Parameterized::class)
-class CalculatorTest(private val input: String, private val expected: Int) {
+class CalculatorTest {
     private lateinit var calculator: Calculator
 
     @Before
@@ -33,33 +32,6 @@ class CalculatorTest(private val input: String, private val expected: Int) {
 
         // then : 사칙 연산의 우선 순위가 아닌 입력 우선 순위로 계산을 진행한다.
         assertThat(actual).isEqualTo(9)
-    }
-
-    @Test
-    fun 여러_문자열_수식을_계산한다() {
-        // when : calculator를 통해 수식을 계산한다.
-        val actual =  calculator.evaluate(input)
-        // then : 사칙 연산의 우선 순위가 아닌 입력 우선 순위로 계산을 진행한다.
-        assertThat(actual).isEqualTo(expected)
-    }
-    companion object {
-        @JvmStatic
-        @Parameters
-        fun testData() = listOf(
-            arrayOf("2 + 3", 5),
-            arrayOf("3 * 2 - 1", 5),
-            arrayOf("10 * 2 + 8 / 3", 9)
-        )
-    }
-}
-
-@RunWith(value = Parameterized::class)
-class CalculatorErrorTest(private val input: String?, private val expected: Exception) {
-
-    private lateinit var calculator: Calculator
-    @Before
-    fun initCalculator() {
-        calculator = Calculator()
     }
 
     @Test
@@ -97,6 +69,43 @@ class CalculatorErrorTest(private val input: String?, private val expected: Exce
 
         // then : IllegalArgumentException이 발생한다.
         assertThat(exception).isInstanceOf(IllegalArgumentException::class.java)
+    }
+}
+
+@RunWith(value = Parameterized::class)
+class ManyCalculatorTest(private val input: String, private val expected: Int) {
+
+    private lateinit var calculator: Calculator
+    @Before
+    fun initCalculator() {
+        calculator = Calculator()
+    }
+
+    @Test
+    fun 여러_문자열_수식을_계산한다() {
+        // when : calculator를 통해 수식을 계산한다.
+        val actual =  calculator.evaluate(input)
+        // then : 사칙 연산의 우선 순위가 아닌 입력 우선 순위로 계산을 진행한다.
+        assertThat(actual).isEqualTo(expected)
+    }
+    companion object {
+        @JvmStatic
+        @Parameters
+        fun testData() = listOf(
+            arrayOf("2 + 3", 5),
+            arrayOf("3 * 2 - 1", 5),
+            arrayOf("10 * 2 + 8 / 3", 9)
+        )
+    }
+}
+
+@RunWith(value = Parameterized::class)
+class ManyCalculatorErrorTest(private val input: String?, private val expected: Exception) {
+
+    private lateinit var calculator: Calculator
+    @Before
+    fun initCalculator() {
+        calculator = Calculator()
     }
 
 
