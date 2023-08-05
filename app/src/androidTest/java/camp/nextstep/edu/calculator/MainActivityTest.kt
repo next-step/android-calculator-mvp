@@ -131,7 +131,7 @@ class MainActivityTest {
         onView(withId(R.id.buttonPlus)).perform(click())
 
         // then: '1 +'이 보여야 한다
-        onView(withId(R.id.textView)).check(matches(withText("1 + ")))
+        onView(withId(R.id.textView)).check(matches(withText("1 +")))
     }
 
     @Test
@@ -141,7 +141,7 @@ class MainActivityTest {
         onView(withId(R.id.buttonMinus)).perform(click())
 
         // then: '1 -'이 보여야 한다
-        onView(withId(R.id.textView)).check(matches(withText("1 - ")))
+        onView(withId(R.id.textView)).check(matches(withText("1 -")))
     }
 
     @Test
@@ -163,8 +163,8 @@ class MainActivityTest {
         // when: '지우기 ' 버튼을 누르면
         onView(withId(R.id.buttonDelete)).perform(click())
 
-        // then: '32 + '이 보여야 한다
-        onView(withId(R.id.textView)).check(matches(withText("32 + ")))
+        // then: '32 +'이 보여야 한다
+        onView(withId(R.id.textView)).check(matches(withText("32 +")))
 
         // when: '지우기 ' 버튼을 누르면
         onView(withId(R.id.buttonDelete)).perform(click())
@@ -195,5 +195,24 @@ class MainActivityTest {
 
         // then: '5'이 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("5")))
+    }
+
+    @Test
+    fun click0_and_4() {
+        // when: '0 4' 버튼을 누르면
+        onView(withId(R.id.button0)).perform(click())
+        onView(withId(R.id.button4)).perform(click())
+
+        // then: '4'이 보여야 한다
+        onView(withId(R.id.textView)).check(matches(withText("4")))
+    }
+
+    @Test
+    fun clickplus_first() {
+        // when: 'plus' 버튼을 누르면
+        onView(withId(R.id.buttonPlus)).perform(click())
+
+        // then: ''이 보여야 한다
+        onView(withId(R.id.textView)).check(matches(withText("")))
     }
 }

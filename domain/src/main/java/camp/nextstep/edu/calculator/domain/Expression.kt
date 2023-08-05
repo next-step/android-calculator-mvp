@@ -1,62 +1,75 @@
 package camp.nextstep.edu.calculator.domain
 
-class Expression {
+class Expression(formulaString: String? = "") {
+    val formulas: List<String>
+        get() {
+            require(_formulas.isNotEmpty()) {
+                "Input value is empty"
+            }
+            check(_formulas.size % NUMBER_INDEX_STEP == EXTRA_ITEM_COUNT) {
+                "완성되지 않은 수식입니다"
+            }
+            _formulas.withIndex()
+                .filter { (index, formula) -> index % NUMBER_INDEX_STEP == 0}
+                .map { (index, formula) ->
+                    require(formula.isNum()) {
+                        "Parameter must be Number"
+                    }
+                }
+            return _formulas
+        }
+    private var _formulas: List<String>
 
-    var formulas = listOf<String>()
-
-    constructor()
-
-    constructor(formulaString: String?) {
+    init {
         val formula = formulaString?.trim()
-        require(!formula.isNullOrEmpty() && formula != "") {
+        require(formula != null) {
             "Input value is empty"
         }
-        formulas = formula.split(SEPERATOR).toMutableList()
-        check(formulas.size % NUMBER_INDEX_STEP == EXTRA_ITEM_COUNT) {
-            "완성되지 않은 수식입니다"
-        }
-        formulas.withIndex()
-            .filter { (index, formula) -> index % NUMBER_INDEX_STEP == 0}
-            .map { (index, formula) ->
-                require(formula.isNum()) {
-                    "Parameter must be Number"
-                }
-            }
+        _formulas = formula.split(SEPERATOR)
     }
 
     fun addOperand(operand: String): String {
-        val lastFormula = formulas.lastOrNull()
-        formulas = if(lastFormula == null) {
-            formulas + operand
+        val lastFormula = _formulas.lastOrNull()
+        _formulas = if(lastFormula.isNullOrEmpty()) {
+            listOf(operand)
         } else {
             if(lastFormula.isNum()) {
-                formulas.dropLast(1) + (lastFormula + operand)
+                _formulas.dropLast(1) + (getLastOperand(lastFormula) + operand)
             } else {
-                formulas + operand
+                _formulas + operand
             }
         }
         return getFormulaString()
     }
 
-    fun addOpCode(opCode: String): String {
-        val lastFormula = formulas.lastOrNull()
-        if(lastFormula != null) {
-            if(lastFormula.isNum()) {
-                formulas = formulas + opCode
-            }
+    private fun getLastOperand(lastFormula: String): String = (if (lastFormula == "0") "" else lastFormula)
+
+    fun addOpcode(opcode: String): String {
+        val lastFormula = _formulas.lastOrNull()
+        check(!lastFormula.isNullOrEmpty()) {
+            "완성되지 않은 수식입니다"
+        }
+        if(lastFormula.isNum()) {
+            _formulas = _formulas + opcode
         }
         return getFormulaString()
     }
 
     fun removeLast(): String {
-        if(formulas.isNotEmpty()) {
-            formulas = formulas.dropLast(1)
+        val lastFormula = _formulas.lastOrNull()
+        if(lastFormula.isNullOrEmpty()) {
+            return ""
+        }
+        _formulas = if(lastFormula.isNum() && lastFormula.length > 1) {
+            _formulas.dropLast(1) + lastFormula.dropLast(1)
+        } else {
+            _formulas.dropLast(1)
         }
         return getFormulaString()
     }
 
     fun getFormulaString(): String {
-        return formulas.joinToString(" ")
+        return _formulas.joinToString(" ")
     }
 
     private fun String.isNum(): Boolean {

@@ -28,13 +28,23 @@ class MainActivity : AppCompatActivity() {
         binding.button8.setOnClickListener { binding.textView.text = expression.addOperand("8") }
         binding.button9.setOnClickListener { binding.textView.text = expression.addOperand("9") }
 
-        binding.buttonPlus.setOnClickListener { binding.textView.text = expression.addOpCode("+") }
-        binding.buttonMinus.setOnClickListener { binding.textView.text = expression.addOpCode("-") }
-        binding.buttonMultiply.setOnClickListener { binding.textView.text = expression.addOpCode("*") }
-        binding.buttonDivide.setOnClickListener { binding.textView.text = expression.addOpCode("/") }
+        binding.buttonPlus.setOnClickListener { binding.textView.text = addOpcode("+") }
+        binding.buttonMinus.setOnClickListener { binding.textView.text = addOpcode("-") }
+        binding.buttonMultiply.setOnClickListener { binding.textView.text = addOpcode("*") }
+        binding.buttonDivide.setOnClickListener { binding.textView.text = addOpcode("/") }
 
         binding.buttonDelete.setOnClickListener { binding.textView.text = expression.removeLast() }
         binding.buttonEquals.setOnClickListener { calculateExpression() }
+    }
+
+    private fun addOpcode(opcode: String): String {
+        var formula = ""
+        runCatching {
+            formula = expression.addOpcode(opcode)
+        }.getOrElse {
+            Toast.makeText(this@MainActivity, it.message, Toast.LENGTH_SHORT).show()
+        }
+        return formula
     }
 
     private fun calculateExpression() {
