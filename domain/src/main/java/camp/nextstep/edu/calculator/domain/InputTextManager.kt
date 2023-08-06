@@ -6,18 +6,26 @@ class InputTextManager(private val inputTextConvertor: InputTextConvertor) {
             require(addText.isNotEmpty()) { "input text empty error" }
 
             if (prevText.isEmpty()) {
-                val number = inputTextConvertor.getNumberText(addText)
-                if (number == 0) prevText else number.toString()
+                getFirstInputText(prevText, addText)
             } else {
-                val splitStrings = prevText.trim().split(" ")
-
-                if (splitStrings.size.isOperand()) {
-                    getNumberText(prevText, addText)
-                } else {
-                    getOperationText(prevText, addText)
-                }
+                getNumberOrOperationText(prevText, addText)
             }
         }.getOrDefault(prevText)
+    }
+
+    private fun getFirstInputText(prevText: String, addText: String): String {
+        val number = inputTextConvertor.getNumberText(addText)
+        return if (number == 0) prevText else number.toString()
+    }
+
+    private fun getNumberOrOperationText(prevText: String, addText: String): String {
+        val splitStrings = prevText.trim().split(" ")
+
+        return if (splitStrings.size.isOperand()) {
+            getNumberText(prevText, addText)
+        } else {
+            getOperationText(prevText, addText)
+        }
     }
 
     private fun getNumberText(prevText: String, addText: String): String {
