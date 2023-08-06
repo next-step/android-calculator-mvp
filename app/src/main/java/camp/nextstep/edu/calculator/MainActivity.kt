@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setEqualsText() {
-        with (binding.textView) {
+        with(binding.textView) {
             val equalsText = inputTextManager.equalsText(text.toString())
             if (equalsText.equals(text.toString(), false)) {
                 Toast.makeText(this@MainActivity, " 완성되지 않은 수식입니다", Toast.LENGTH_SHORT).show()
