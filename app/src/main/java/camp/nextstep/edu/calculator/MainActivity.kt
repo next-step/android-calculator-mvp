@@ -4,19 +4,20 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
+import camp.nextstep.edu.calculator.domain.ExpressionManager
 import camp.nextstep.edu.calculator.domain.InputTextConvertor
-import camp.nextstep.edu.calculator.domain.InputTextManager
+import camp.nextstep.edu.calculator.domain.ExpressionTextManager
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var inputTextManager: InputTextManager
+    private lateinit var expressionTextManager: ExpressionTextManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        inputTextManager = InputTextManager(InputTextConvertor())
+        expressionTextManager = ExpressionTextManager(InputTextConvertor(), ExpressionManager())
 
         binding.button0.setOnClickListener { setInputText("0") }
         binding.button1.setOnClickListener { setInputText("1") }
@@ -39,22 +40,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setInputText(inputText: String) {
-        binding.textView.text = inputTextManager.addText(
-            binding.textView.text.toString(), inputText
-        )
+        binding.textView.text = expressionTextManager.addText(inputText)
     }
 
     private fun setRemoveText() {
-        binding.textView.text = inputTextManager.removeText(
-            binding.textView.text.toString()
-        )
+        binding.textView.text = expressionTextManager.removeText()
     }
 
     private fun setEqualsText() {
         with(binding.textView) {
-            val equalsText = inputTextManager.calculateText(text.toString())
+            val equalsText = expressionTextManager.calculateText()
             if (equalsText.equals(text.toString(), false)) {
-                Toast.makeText(this@MainActivity, " 완성되지 않은 수식입니다", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, "완성되지 않은 수식입니다", Toast.LENGTH_SHORT).show()
             } else {
                 text = equalsText
             }
