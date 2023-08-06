@@ -16,122 +16,114 @@ class MainActivityCalculatorTest {
 
     @Test
     fun `빈문자가_입력된상태에서_1을클릭하면_1이입력된다`() {
-        activityScenarioRule.scenario.onActivity {
-            it.findViewById<TextView>(R.id.textView).text = ""
-        }
+        수식을_입력한다("")
 
-        onView(withId(R.id.button1)).perform(click())
+        버튼을_클릭한다(R.id.button1)
 
-        onView(withId(R.id.textView)).check(matches(withText("1")))
+        수식을_확인한다("1")
     }
 
     @Test
     fun `5_더하기_입력된상태에서_1을클릭하면_5더하기1_이입력된다`() {
-        activityScenarioRule.scenario.onActivity {
-            it.findViewById<TextView>(R.id.textView).text = "5 + "
-        }
+        수식을_입력한다("5 + ")
 
-        onView(withId(R.id.button1)).perform(click())
+        버튼을_클릭한다(R.id.button1)
 
-        onView(withId(R.id.textView)).check(matches(withText("5 + 1")))
+        수식을_확인한다("5 + 1")
     }
 
     @Test
     fun `8이입력된상태에서_9를클릭하면_89가_이입력된다`() {
-        activityScenarioRule.scenario.onActivity {
-            it.findViewById<TextView>(R.id.textView).text = "8"
-        }
+        수식을_입력한다("8")
 
-        onView(withId(R.id.button9)).perform(click())
+        버튼을_클릭한다(R.id.button9)
 
-        onView(withId(R.id.textView)).check(matches(withText("89")))
+        수식을_확인한다("89")
     }
 
     @Test
     fun `빈문자가_입력된상태에서_더하기를_클릭하면_빈문자그대로_보여진다`() {
-        activityScenarioRule.scenario.onActivity {
-            it.findViewById<TextView>(R.id.textView).text = ""
-        }
+        수식을_입력한다("")
 
-        onView(withId(R.id.buttonPlus)).perform(click())
+        버튼을_클릭한다(R.id.buttonPlus)
 
-        onView(withId(R.id.textView)).check(matches(withText("")))
+        수식을_확인한다("")
     }
 
     @Test
     fun `1입력된상태에서_더하기를_클릭하면_1_더하기가_입력된다`() {
-        activityScenarioRule.scenario.onActivity {
-            it.findViewById<TextView>(R.id.textView).text = "1"
-        }
+        수식을_입력한다("1")
 
-        onView(withId(R.id.buttonPlus)).perform(click())
+        버튼을_클릭한다(R.id.buttonPlus)
 
-        onView(withId(R.id.textView)).check(matches(withText("1 + ")))
+        수식을_확인한다("1 + ")
     }
 
     @Test
     fun `1_더하기_가_입력된상태에서_뺴기를_클릭하면_1_뺴기가_입력된다`() {
-        activityScenarioRule.scenario.onActivity {
-            it.findViewById<TextView>(R.id.textView).text = "1 + "
-        }
+        수식을_입력한다("1 + ")
 
-        onView(withId(R.id.buttonMinus)).perform(click())
+        버튼을_클릭한다(R.id.buttonMinus)
 
-        onView(withId(R.id.textView)).check(matches(withText("1 - ")))
+        수식을_확인한다("1 - ")
     }
 
     @Test
     fun `빈문자가_입력된상태에서_삭제를_클릭하면_빈문자그대로_보여진다`() {
-        activityScenarioRule.scenario.onActivity {
-            it.findViewById<TextView>(R.id.textView).text = ""
-        }
+        수식을_입력한다("")
 
-        onView(withId(R.id.buttonDelete)).perform(click())
+        버튼을_클릭한다(R.id.buttonDelete)
 
-        onView(withId(R.id.textView)).check(matches(withText("")))
+        수식을_확인한다("")
     }
 
     @Test
     fun `32_더하기_1_입력된상태에서_삭제를_클릭하면_32_더하기가_입력된다`() {
-        activityScenarioRule.scenario.onActivity {
-            it.findViewById<TextView>(R.id.textView).text = "32 + 1"
-        }
+        수식을_입력한다("32 + 1")
 
-        onView(withId(R.id.buttonDelete)).perform(click())
+        버튼을_클릭한다(R.id.buttonDelete)
 
-        onView(withId(R.id.textView)).check(matches(withText("32 + ")))
+        수식을_확인한다("32 + ")
     }
 
     @Test
     fun `32_더하기_입력된상태에서_삭제를_클릭하면_32_입력된다`() {
-        activityScenarioRule.scenario.onActivity {
-            it.findViewById<TextView>(R.id.textView).text = "32 + "
-        }
+        수식을_입력한다("32 + ")
 
-        onView(withId(R.id.buttonDelete)).perform(click())
+        버튼을_클릭한다(R.id.buttonDelete)
 
-        onView(withId(R.id.textView)).check(matches(withText("32")))
+        수식을_확인한다("32")
     }
 
     @Test
     fun `32_입력된상태에서_삭제를_클릭하면_3_입력된다`() {
-        activityScenarioRule.scenario.onActivity {
-            it.findViewById<TextView>(R.id.textView).text = "32"
-        }
+        수식을_입력한다("32")
 
-        onView(withId(R.id.buttonDelete)).perform(click())
+        버튼을_클릭한다(R.id.buttonDelete)
 
-        onView(withId(R.id.textView)).check(matches(withText("3")))
+        수식을_확인한다("3")
     }
 
     @Test
     fun `3_더하기_2_입력된상태에서_등호_클릭하면_5_입력된다`() {
+        수식을_입력한다("3 + 2")
+
+        버튼을_클릭한다(R.id.buttonEquals)
+
+        수식을_확인한다("5")
+    }
+
+    private fun `수식을_입력한다`(text: String) {
         activityScenarioRule.scenario.onActivity {
-            it.findViewById<TextView>(R.id.textView).text = "3 + 2"
+            it.findViewById<TextView>(R.id.textView).text = text
         }
+    }
 
-        onView(withId(R.id.buttonEquals)).perform(click())
+    private fun `버튼을_클릭한다`(btnResId: Int) {
+        onView(withId(btnResId)).perform(click())
+    }
 
-        onView(withId(R.id.textView)).check(matches(withText("5")))
+    private fun `수식을_확인한다`(resultText: String) {
+        onView(withId(R.id.textView)).check(matches(withText(resultText)))
     }
 }
