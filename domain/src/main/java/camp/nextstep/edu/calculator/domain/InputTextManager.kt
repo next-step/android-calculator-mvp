@@ -47,7 +47,7 @@ class InputTextManager(private val inputTextConvertor: InputTextConvertor) {
         }.getOrDefault(text)
     }
 
-    fun equalsText(text: String): String {
+    fun calculateText(text: String): String {
         return runCatching {
             require(text.isNotEmpty()) { "input text empty error" }
 
