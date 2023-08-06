@@ -1,63 +1,65 @@
 package camp.nextstep.edu.domain
 
-class Expression(exp: String = "") {
 
-	private val stringBuilder: StringBuilder = StringBuilder(exp)
+data class Expression(private val exp: String = "") {
 
 	fun getOrThrow(): String {
-		val expression = this.toString()
+		require(exp.isNotBlank()) { EXP_IS_BLANK }
+		check(exp.trim().last().isDigit()) { EXP_NOT_COMPLETE }
 
-		require(expression.isNotBlank()) { EXP_IS_BLANK }
-		check(expression.trim().last().isDigit()) { EXP_NOT_COMPLETE }
-
-		return expression
+		return this.toString()
 	}
 
-	fun insertOperand(operand: String) {
-		stringBuilder.append(operand)
+	fun insertOperand(operand: String): Expression {
+		return this.copy(exp = exp.plus(operand))
 	}
 
-	fun insertOperator(operator: Operator) {
-		if (stringBuilder.isEmpty()) {
-			return
+	fun insertOperator(operator: Operator): Expression {
+		if (exp.isEmpty()) {
+			return this
 		}
 
-		if (stringBuilder.last() == EXP_DELIMITER) {
-			deleteWithDelimiter()
-		}
-
-		stringBuilder.append(EXP_DELIMITER)
-		stringBuilder.append(operator.op)
-		stringBuilder.append(EXP_DELIMITER)
-	}
-
-	fun delete() {
-		if (stringBuilder.isEmpty()) {
-			return
-		}
-
-		if (stringBuilder.last() == EXP_DELIMITER) {
-			deleteWithDelimiter()
+		return if (isOperator(exp.last())) {
+			this.copy(exp = exp.dropLast(1).plus(operator.op))
 		} else {
-			stringBuilder.deleteCharAt(stringBuilder.lastIndex)
+			this.copy(exp = exp.plus(operator.op))
 		}
 	}
 
-	private fun deleteWithDelimiter() {
-		repeat(TRIPLE_ITERATIONS) {
-			stringBuilder.deleteCharAt(stringBuilder.lastIndex)
+	private fun isOperator(char: Char): Boolean {
+		return Operator.values().find { operator ->
+			operator.op == char.toString()
+		} != null
+	}
+
+	fun delete(): Expression {
+		if (exp.isEmpty()) {
+			return this
 		}
+
+		return this.copy(exp = exp.dropLast(1))
 	}
 
 	override fun toString(): String {
-		return stringBuilder.toString()
+		val sb = StringBuilder()
+
+		exp.forEach { char ->
+			if (isOperator(char)) {
+				sb.append(EXP_DELIMITER)
+				sb.append(char)
+				sb.append(EXP_DELIMITER)
+			} else {
+				sb.append(char)
+			}
+		}
+
+		return sb.toString()
 	}
 
 	companion object {
 		const val EXP_IS_BLANK = "expression is blank"
 		const val EXP_NOT_COMPLETE = "expression is not complete"
 
-		const val EXP_DELIMITER = ' '
-		const val TRIPLE_ITERATIONS = 3
+		const val EXP_DELIMITER = " "
 	}
 }

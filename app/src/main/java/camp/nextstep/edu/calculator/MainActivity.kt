@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 	}
 
 	private fun insertOperand(operand: String) {
-		expression.insertOperand(operand)
+		expression = expression.insertOperand(operand)
 		showExpression()
 	}
 
@@ -57,13 +57,13 @@ class MainActivity : AppCompatActivity() {
 	}
 
 	private fun insertOperator(operator: Operator) {
-		expression.insertOperator(operator)
+		expression = expression.insertOperator(operator)
 		showExpression()
 	}
 
 	private fun setDeleteListener() {
 		binding.buttonDelete.setOnClickListener {
-			expression.delete()
+			expression = expression.delete()
 			showExpression()
 		}
 	}
