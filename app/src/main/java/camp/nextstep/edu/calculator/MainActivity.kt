@@ -10,29 +10,18 @@ import camp.nextstep.edu.domain.Operator
 
 class MainActivity : AppCompatActivity() {
 	private lateinit var binding: ActivityMainBinding
-	private lateinit var expression: Expression
-	private lateinit var calculator: Calculator
+	private val expression = Expression()
+	private val calculator = Calculator()
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		binding = ActivityMainBinding.inflate(layoutInflater)
 		setContentView(binding.root)
 
-		initExpression()
-		initCalculator()
-
 		setOperandListener()
 		setOperatorListener()
 		setDeleteListener()
 		setEqualsListener()
-	}
-
-	private fun initExpression() {
-		expression = Expression()
-	}
-
-	private fun initCalculator() {
-		calculator = Calculator()
 	}
 
 	private fun setOperandListener() {
