@@ -23,4 +23,8 @@ class Calculator {
 
 		return result
 	}
+
+	companion object {
+		const val DIVIDE_BY_ZERO = "divide by zero"
+	}
 }

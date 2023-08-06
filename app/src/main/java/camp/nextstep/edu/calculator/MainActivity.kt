@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
+import camp.nextstep.edu.domain.CAST_INT_EXCEPTION
 import camp.nextstep.edu.domain.Calculator
 import camp.nextstep.edu.domain.Expression
 import camp.nextstep.edu.domain.Operator
@@ -72,15 +73,12 @@ class MainActivity : AppCompatActivity() {
 	}
 
 	private fun showResultOrThrow() {
-		try {
-			val result = calculator.calculate(expression.getOrThrow())
-			showResult(result)
-		} catch (e: IllegalStateException) {
-			showToastIfNeed(e)
-		} catch (e: IllegalArgumentException) {
-			Unit
-		} catch (e: ArithmeticException) {
-			Unit
+		runCatching {
+			calculator.calculate(expression.getOrThrow())
+		}.onSuccess {
+			showResult(it)
+		}.onFailure {
+			showToastIfNeed(it.message)
 		}
 	}
 
@@ -89,9 +87,14 @@ class MainActivity : AppCompatActivity() {
 		expression.clear()
 	}
 
-	private fun showToastIfNeed(e: IllegalStateException) {
-		if (e.message == Expression.EXP_NOT_COMPLETE) {
-			Toast.makeText(this, "완성되지 않은 수식입니다.", Toast.LENGTH_LONG).show()
+	private fun showToastIfNeed(errorMessage: String?) {
+		when (errorMessage) {
+			Expression.EXP_NOT_COMPLETE -> Toast.makeText(this, "완성되지 않은 수식입니다.", Toast.LENGTH_LONG).show()
+			Expression.EXP_IS_BLANK -> Toast.makeText(this, "계산식이 입력되지 않았습니다.", Toast.LENGTH_LONG).show()
+			Operator.INVALID_OPERATOR -> Toast.makeText(this, "유효하지 않은 연산자가 입력되었습니다.", Toast.LENGTH_LONG).show()
+			CAST_INT_EXCEPTION -> Toast.makeText(this, "숫자가 아닌 피연산자가 입력되었습니다.", Toast.LENGTH_LONG).show()
+			Calculator.DIVIDE_BY_ZERO -> Toast.makeText(this, "0으로 나눌 수 없습니다.", Toast.LENGTH_LONG).show()
+			else -> Unit
 		}
 	}
 }
