@@ -44,7 +44,7 @@ class Expression(exp: String = "") {
 	}
 
 	private fun deleteWithDelimiter() {
-		repeat(3) {
+		repeat(TRIPLE_ITERATIONS) {
 			stringBuilder.deleteCharAt(stringBuilder.lastIndex)
 		}
 	}
@@ -58,5 +58,6 @@ class Expression(exp: String = "") {
 		const val EXP_NOT_COMPLETE = "expression is not complete"
 
 		const val EXP_DELIMITER = ' '
+		const val TRIPLE_ITERATIONS = 3
 	}
 }
