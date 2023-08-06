@@ -2,20 +2,9 @@ package camp.nextstep.edu.domain
 
 class Calculator {
 
-	fun calculate(expression: String?): Int {
-		requireNotNull(expression) { EXP_IS_NULL }
-		require(expression.isNotBlank()) { EXP_IS_BLANK }
-
-		checkIsCompleteExpression(expression)
-
+	fun calculate(expression: String): Int {
 		val inputs = parseExpression(expression)
 		return calculate(inputs)
-	}
-
-	private fun checkIsCompleteExpression(expression: String) {
-		check(expression.trim().last().isDigit()) {
-			EXP_NOT_COMPLETE
-		}
 	}
 
 	private fun parseExpression(expression: String): List<String> {
@@ -36,8 +25,6 @@ class Calculator {
 	}
 
 	companion object {
-		const val EXP_IS_NULL = "expression is null"
-		const val EXP_IS_BLANK = "expression is blank"
-		const val EXP_NOT_COMPLETE = "expression is not complete"
+		const val DIVIDE_BY_ZERO = "divide by zero"
 	}
 }
