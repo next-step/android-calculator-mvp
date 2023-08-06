@@ -1,8 +1,4 @@
-package camp.nextstep.edu.calculator
-
-import camp.nextstep.edu.calculator.domain.Calculator
-import camp.nextstep.edu.calculator.domain.InputTextConvertor
-import camp.nextstep.edu.calculator.domain.Operation
+package camp.nextstep.edu.calculator.domain
 
 class InputTextManager(private val inputTextConvertor: InputTextConvertor) {
     fun addText(prevText: String, addText: String): String {

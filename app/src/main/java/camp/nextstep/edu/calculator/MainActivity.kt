@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
 import camp.nextstep.edu.calculator.domain.InputTextConvertor
+import camp.nextstep.edu.calculator.domain.InputTextManager
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
