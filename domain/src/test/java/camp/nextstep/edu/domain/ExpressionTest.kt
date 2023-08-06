@@ -16,6 +16,9 @@ class ExpressionTest {
 
 	@Test
 	fun `계산식이 공백일 때, 계산식을 get 하면, 예외를 던진다`() {
+		// given
+		expression = Expression("  ")
+
 		// then
 		assertThrows(
 			Expression.EXP_IS_BLANK,
@@ -29,10 +32,7 @@ class ExpressionTest {
 	@Test
 	fun `계산식이 유효하지 않을 때, 계산식을 get 하면, 예외를 던진다`() {
 		// given
-		expression.insertOperand("1")
-		expression.insertOperator(Operator.PLUS)
-		expression.insertOperand("2")
-		expression.insertOperator(Operator.MUL)
+		expression = Expression("1 + 2 * ")
 
 		// then
 		assertThrows(
@@ -47,11 +47,7 @@ class ExpressionTest {
 	@Test
 	fun `계산식이 유효할 때, 계산식을 get 하면, 계산식 문자열을 반환한다`() {
 		// given
-		expression.insertOperand("1")
-		expression.insertOperator(Operator.PLUS)
-		expression.insertOperand("2")
-		expression.insertOperator(Operator.MUL)
-		expression.insertOperand("4")
+		expression = Expression("1 + 2 * 4")
 
 		// when
 		val expression = expression.getOrThrow()
@@ -81,7 +77,7 @@ class ExpressionTest {
 	@Test
 	fun `계산식이 빈 값일 아닐때, 연산자를 추가하면, 좌우 공백이 함께 추가된다`() {
 		// given
-		expression.insertOperand("1")
+		expression = Expression("1")
 
 		// when
 		expression.insertOperator(Operator.PLUS)
@@ -93,8 +89,7 @@ class ExpressionTest {
 	@Test
 	fun `연산자가 이미 존재할때, 연산자를 추가하면, 덮어씌여진다`() {
 		// given
-		expression.insertOperand("1")
-		expression.insertOperator(Operator.PLUS)
+		expression = Expression("1 + ")
 
 		// when
 		expression.insertOperator(Operator.MUL)
@@ -115,9 +110,7 @@ class ExpressionTest {
 	@Test
 	fun `계산식이 빈 값이 아닐때, 피연산자를 제거하면, 그대로 제거된다`() {
 		// given
-		expression.insertOperand("1")
-		expression.insertOperator(Operator.PLUS)
-		expression.insertOperand("2")
+		expression = Expression("1 + 2")
 
 		// when
 		expression.delete()
@@ -129,27 +122,12 @@ class ExpressionTest {
 	@Test
 	fun `계산식이 빈 값이 아닐때, 연산자를 제거하면, 좌우 공백도 같이 제거된다`() {
 		// given
-		expression.insertOperand("1")
-		expression.insertOperator(Operator.PLUS)
+		expression = Expression("1 + ")
 
 		// when
 		expression.delete()
 
 		// then
 		assertThat(expression.toString()).isEqualTo("1")
-	}
-
-	@Test
-	fun `계산식을 초기화하면, 계산식이 빈 값이 된다`() {
-		// given
-		expression.insertOperand("1")
-		expression.insertOperator(Operator.PLUS)
-		expression.insertOperand("2")
-
-		// when
-		expression.clear()
-
-		// then
-		assertThat(expression.toString()).isEqualTo("")
 	}
 }

@@ -1,8 +1,8 @@
 package camp.nextstep.edu.domain
 
-class Expression {
+class Expression(exp: String = "") {
 
-	private val expStringBuilder = StringBuilder()
+	private val stringBuilder: StringBuilder = StringBuilder(exp)
 
 	fun getOrThrow(): String {
 		val expression = this.toString()
@@ -14,47 +14,43 @@ class Expression {
 	}
 
 	fun insertOperand(operand: String) {
-		expStringBuilder.append(operand)
+		stringBuilder.append(operand)
 	}
 
 	fun insertOperator(operator: Operator) {
-		if (expStringBuilder.isEmpty()) {
+		if (stringBuilder.isEmpty()) {
 			return
 		}
 
-		if (expStringBuilder.last() == EXP_DELIMITER) {
+		if (stringBuilder.last() == EXP_DELIMITER) {
 			deleteWithDelimiter()
 		}
 
-		expStringBuilder.append(EXP_DELIMITER)
-		expStringBuilder.append(operator.op)
-		expStringBuilder.append(EXP_DELIMITER)
+		stringBuilder.append(EXP_DELIMITER)
+		stringBuilder.append(operator.op)
+		stringBuilder.append(EXP_DELIMITER)
 	}
 
 	fun delete() {
-		if (expStringBuilder.isEmpty()) {
+		if (stringBuilder.isEmpty()) {
 			return
 		}
 
-		if (expStringBuilder.last() == EXP_DELIMITER) {
+		if (stringBuilder.last() == EXP_DELIMITER) {
 			deleteWithDelimiter()
 		} else {
-			expStringBuilder.deleteCharAt(expStringBuilder.lastIndex)
+			stringBuilder.deleteCharAt(stringBuilder.lastIndex)
 		}
 	}
 
 	private fun deleteWithDelimiter() {
 		repeat(3) {
-			expStringBuilder.deleteCharAt(expStringBuilder.lastIndex)
+			stringBuilder.deleteCharAt(stringBuilder.lastIndex)
 		}
 	}
 
-	fun clear() {
-		expStringBuilder.clear()
-	}
-
 	override fun toString(): String {
-		return expStringBuilder.toString()
+		return stringBuilder.toString()
 	}
 
 	companion object {
