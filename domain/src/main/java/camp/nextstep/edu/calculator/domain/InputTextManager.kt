@@ -41,7 +41,11 @@ class InputTextManager(private val inputTextConvertor: InputTextConvertor) {
             require(text.isNotEmpty()) { "input text empty error" }
 
             val splitStrings = text.trim().split(" ")
-            val subIndex = if (splitStrings.size.isOperand()) 1 else 3
+            val subIndex = if (splitStrings.size.isOperand()) {
+                OPERAND_TEXT_REMOVE_LENGTH
+            } else {
+                NUMBER_TEXT_REMOVE_LENGTH
+            }
 
             text.subSequence(0, text.length - subIndex).toString()
         }.getOrDefault(text)
@@ -63,4 +67,9 @@ class InputTextManager(private val inputTextConvertor: InputTextConvertor) {
 
     private fun Int.isOperand(): Boolean = this % 2 == 1
     private fun Int.sumText(prevText: String): String = prevText + this.toString()
+
+    companion object {
+        const val NUMBER_TEXT_REMOVE_LENGTH = 3
+        const val OPERAND_TEXT_REMOVE_LENGTH = 1
+    }
 }
