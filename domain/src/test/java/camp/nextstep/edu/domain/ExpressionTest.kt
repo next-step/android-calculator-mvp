@@ -25,7 +25,7 @@ class ExpressionTest {
 			IllegalArgumentException::class.java
 		) {
 			// when
-			expression.getOrThrow()
+			expression.getCompleteExpression()
 		}
 	}
 
@@ -40,7 +40,7 @@ class ExpressionTest {
 			IllegalStateException::class.java
 		) {
 			// when
-			expression.getOrThrow()
+			expression.getCompleteExpression()
 		}
 	}
 
@@ -50,7 +50,7 @@ class ExpressionTest {
 		expression = Expression("1+2*4")
 
 		// when
-		val expression = expression.getOrThrow()
+		val expression = expression.getCompleteExpression()
 
 		// then
 		assertThat(expression).isEqualTo("1 + 2 * 4")
@@ -59,7 +59,7 @@ class ExpressionTest {
 	@Test
 	fun `피연산자를 추가하면, 그대로 추가된다`() {
 		// when
-		expression = expression.insertOperand("1")
+		expression += "1"
 
 		// then
 		assertThat(expression.toString()).isEqualTo("1")
@@ -68,7 +68,7 @@ class ExpressionTest {
 	@Test
 	fun `계산식이 빈 값일 때, 연산자를 추가하면, 추가되지 않는다`() {
 		// when
-		expression.insertOperator(Operator.PLUS)
+		expression += Operator.PLUS
 
 		// then
 		assertThat(expression.toString()).isEqualTo("")
@@ -80,7 +80,7 @@ class ExpressionTest {
 		expression = Expression("1")
 
 		// when
-		expression = expression.insertOperator(Operator.PLUS)
+		expression += Operator.PLUS
 
 		// then
 		assertThat(expression.toString()).isEqualTo("1 + ")
@@ -92,7 +92,7 @@ class ExpressionTest {
 		expression = Expression("1+")
 
 		// when
-		expression = expression.insertOperator(Operator.MUL)
+		expression += Operator.MUL
 
 		// then
 		assertThat(expression.toString()).isEqualTo("1 * ")

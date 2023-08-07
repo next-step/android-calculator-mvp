@@ -27,10 +27,18 @@ enum class Operator(val op: String) {
 	companion object {
 		const val INVALID_OPERATOR = "invalid operator"
 
-		fun getOrThrow(op: String): Operator {
+		private fun get(op: String): Operator? {
 			return Operator.values().find { operator ->
 				operator.op == op
-			} ?: throw IllegalArgumentException(INVALID_OPERATOR)
+			}
+		}
+
+		fun getOrThrow(op: String): Operator {
+			return get(op) ?: throw IllegalArgumentException(INVALID_OPERATOR)
+		}
+
+		fun contains(op: String): Boolean {
+			return get(op) != null
 		}
 	}
 }
