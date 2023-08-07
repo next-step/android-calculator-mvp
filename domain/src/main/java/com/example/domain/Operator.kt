@@ -20,6 +20,7 @@ enum class Operator(
         runCatching {
             first.div(second)
         }.getOrElse {
+            println(it)
             throw IllegalArgumentException("0으로 나눌 수 없습니다.")
         }
     });
