@@ -1,41 +1,13 @@
 package com.camp.nextstep.edu.domain
 
-import com.camp.nextstep.edu.domain.Operator.TokenType
-import com.camp.nextstep.edu.domain.Operator.TokenType.*
 
 class Calculator {
-
-    private fun parseFormula(inputString: String): List<String> {
-        val regex = Regex("""\s*([-+*/])\s*|\s*([\d.]+)\s*""")
-        val tokens = mutableListOf<String>()
-
-        regex.findAll(inputString).forEach { matchResult ->
-            val (operator, operand) = matchResult.destructured
-            if (operator.isNotEmpty()) {
-                tokens.add(operator)
-            }
-            if (operand.isNotEmpty()) {
-                tokens.add(operand)
-            }
-        }
-        return tokens
+    private val formulaRegex by lazy {
+        Regex("""\s*([-+*/])\s*|\s*([\d.]+)\s*""")
     }
 
-    private fun validate(list: List<String>) {
-        check(Operator.isOperator(list.first()).not()) {
-            throw IllegalArgumentException("not valid formula")
-        }
-        check(Operator.isOperator(list.last()).not()) {
-            throw IllegalArgumentException("not valid formula")
-        }
-
-        val regex = Regex("(.)\\1+")
-        check(regex.matches(
-            list.toString().removePrefix("[").removeSuffix("]").replace(",", " ")
-        )) {
-            throw IllegalArgumentException("not valid formula")
-        }
-
+    private val validateConsecutiveCharRegex by lazy {
+        Regex("\\b(?:\\d+\\s*\\+\\s*)+\\d+\\b|\\b(?:\\d+\\s*\\+\\+\\s*)+\\d+\\b|\\b(?:\\d+\\s*\\-\\s*)+\\d+\\b|\\b(?:\\d+\\s*\\*\\s*)+\\d+\\b|\\b(?:\\d+\\s*\\/\\s*)+\\d+\\b")
     }
 
     fun evaluate(inputString: String): Int {
@@ -64,5 +36,39 @@ class Calculator {
 
         return formulaList.last().toInt()
     }
+
+    private fun parseFormula(inputString: String): List<String> {
+        val tokens = mutableListOf<String>()
+        formulaRegex.findAll(inputString).forEach { matchResult ->
+            val (operator, operand) = matchResult.destructured
+            if (operator.isNotEmpty()) {
+                tokens.add(operator)
+            }
+            if (operand.isNotEmpty()) {
+                tokens.add(operand)
+            }
+        }
+        return tokens
+    }
+
+    private fun validate(list: List<String>) {
+        require(Operator.isOperator(list.first()).not()) {
+            "not valid formula"
+        }
+        require(Operator.isOperator(list.last()).not()) {
+            "not valid formula"
+        }
+
+        list.joinToString()
+
+        check(validateConsecutiveCharRegex.matches(
+            list.joinToString(" ")
+        )) {
+            "not valid formula"
+        }
+
+    }
+
+
 
 }

@@ -1,16 +1,8 @@
 package com.camp.nextstep.edu.domain
 
-import com.camp.nextstep.edu.domain.Operator.TokenType.*
+import com.camp.nextstep.edu.domain.TokenType.*
 
 class Operator {
-
-    sealed class TokenType(val operator: String)  {
-        object Plus: TokenType("+")
-        object Minus: TokenType("-")
-        object Multiply: TokenType("*")
-        object Divide: TokenType("/")
-    }
-
     companion object {
         fun isOperator(operator: String) = when(operator) {
             Plus.operator,
@@ -25,7 +17,7 @@ class Operator {
             Minus.operator -> minus(leftOperand, rightOperand)
             Multiply.operator -> multiply(leftOperand, rightOperand)
             Divide.operator -> divide(leftOperand, rightOperand)
-            else -> 0
+            else -> throw UnsupportedOperationException("not support operator : $operator")
         }
 
         fun plus(leftOperand: Int, rightOperand: Int): Int = (leftOperand + rightOperand)
