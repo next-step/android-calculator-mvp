@@ -1,11 +1,14 @@
 package camp.nextstep.edu.calculator
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
+import com.example.domain.Calculator
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private val calculator = Calculator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -14,43 +17,80 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.button0.setOnClickListener {
-            binding.textView.text = "0"
+            clickButton("0")
         }
 
         binding.button1.setOnClickListener {
-            binding.textView.text = "1"
+            clickButton("1")
         }
 
         binding.button2.setOnClickListener {
-            binding.textView.text = "2"
+            clickButton("2")
         }
 
         binding.button3.setOnClickListener {
-            binding.textView.text = "3"
+            clickButton("3")
         }
 
         binding.button4.setOnClickListener {
-            binding.textView.text = "4"
+            clickButton("4")
         }
 
         binding.button5.setOnClickListener {
-            binding.textView.text = "5"
+            clickButton("5")
         }
 
         binding.button6.setOnClickListener {
-            binding.textView.text = "6"
+            clickButton("6")
         }
 
         binding.button7.setOnClickListener {
-            binding.textView.text = "7"
+            clickButton("7")
         }
 
         binding.button8.setOnClickListener {
-            binding.textView.text = "8"
+            clickButton("8")
         }
 
         binding.button9.setOnClickListener {
-            binding.textView.text = "9"
+            clickButton("9")
+        }
+
+        binding.buttonPlus.setOnClickListener {
+            clickButton("+")
+        }
+
+        binding.buttonMinus.setOnClickListener {
+            clickButton("-")
+        }
+
+        binding.buttonMultiply.setOnClickListener {
+            clickButton("*")
+        }
+
+        binding.buttonDivide.setOnClickListener {
+            clickButton("/")
+        }
+
+        binding.buttonDelete.setOnClickListener {
+            calculator.removeLastInput()
+            binding.textView.text = getOperand()
+        }
+
+        binding.buttonEquals.setOnClickListener {
+            runCatching { calculator.calculate(getOperand()) }.onSuccess { result ->
+                binding.textView.text = result.toString()
+            }.onFailure { throwable ->
+                Toast.makeText(this, throwable.message, Toast.LENGTH_SHORT).show()
+            }
         }
     }
+
+    private fun clickButton(input: String) {
+        if (calculator.addInput(input)) {
+            binding.textView.text = getOperand()
+        }
+    }
+
+    private fun getOperand() = calculator.currentOperandList.joinToString(" ")
 }
