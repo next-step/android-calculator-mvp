@@ -19,17 +19,11 @@ data class Expression(private val exp: String = "") {
 			return this
 		}
 
-		return if (isOperator(exp.last())) {
+		return if (Operator.contains(exp.last().toString())) {
 			this.copy(exp = exp.dropLast(1).plus(operator.op))
 		} else {
 			this.copy(exp = exp.plus(operator.op))
 		}
-	}
-
-	private fun isOperator(char: Char): Boolean {
-		return Operator.values().find { operator ->
-			operator.op == char.toString()
-		} != null
 	}
 
 	fun delete(): Expression {
@@ -44,7 +38,7 @@ data class Expression(private val exp: String = "") {
 		val sb = StringBuilder()
 
 		exp.forEach { char ->
-			if (isOperator(char)) {
+			if (Operator.contains(char.toString())) {
 				sb.append(EXP_DELIMITER)
 				sb.append(char)
 				sb.append(EXP_DELIMITER)
