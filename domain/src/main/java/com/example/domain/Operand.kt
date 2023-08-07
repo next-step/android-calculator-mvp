@@ -1,6 +1,7 @@
 package com.example.domain
 
 import java.math.BigDecimal
+import java.math.MathContext
 
 @JvmInline
 value class Operand(private val value: BigDecimal) {
@@ -13,6 +14,9 @@ value class Operand(private val value: BigDecimal) {
 
     operator fun times(other: Operand): Operand = Operand(value.multiply(other.value))
 
-    operator fun div(other: Operand): Operand = Operand(value.divide(other.value))
+    operator fun div(other: Operand): Operand = Operand(value.divide(other.value, MathContext.DECIMAL64))
 
+    override fun toString(): String {
+        return this.value.toString().trim()
+    }
 }
