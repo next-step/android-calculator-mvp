@@ -25,7 +25,7 @@ class ExpressionTest {
 			IllegalArgumentException::class.java
 		) {
 			// when
-			expression.getOrThrow()
+			expression.getCompleteExpression()
 		}
 	}
 
@@ -40,7 +40,7 @@ class ExpressionTest {
 			IllegalStateException::class.java
 		) {
 			// when
-			expression.getOrThrow()
+			expression.getCompleteExpression()
 		}
 	}
 
@@ -50,7 +50,7 @@ class ExpressionTest {
 		expression = Expression("1+2*4")
 
 		// when
-		val expression = expression.getOrThrow()
+		val expression = expression.getCompleteExpression()
 
 		// then
 		assertThat(expression).isEqualTo("1 + 2 * 4")

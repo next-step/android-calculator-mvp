@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
 
 	private fun showResultOrThrow() {
 		runCatching {
-			calculator.calculate(expression.getOrThrow())
+			calculator.calculate(expression.getCompleteExpression())
 		}.onSuccess {
 			showResult(it)
 		}.onFailure {

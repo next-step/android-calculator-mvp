@@ -3,7 +3,7 @@ package camp.nextstep.edu.domain
 
 data class Expression(private val exp: String = "") {
 
-	fun getOrThrow(): String {
+	fun getCompleteExpression(): String {
 		require(exp.isNotBlank()) { EXP_IS_BLANK }
 		check(exp.trim().last().isDigit()) { EXP_NOT_COMPLETE }
 
