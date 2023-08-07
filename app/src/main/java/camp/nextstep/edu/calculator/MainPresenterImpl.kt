@@ -6,11 +6,12 @@ import camp.nextstep.edu.domain.Expression
 import camp.nextstep.edu.domain.Operator
 
 class MainPresenterImpl(
-	private val view: MainContract.View
+	private val view: MainContract.View,
+	exp: String = ""
 ) : MainContract.Presenter {
 
 	private val calculator: Calculator = Calculator()
-	private var expression: Expression = Expression()
+	private var expression: Expression = Expression(exp)
 
 	override fun plus(operand: String) {
 		expression += operand
@@ -33,7 +34,7 @@ class MainPresenterImpl(
 		}.onSuccess {
 			showResult(it)
 		}.onFailure {
-			showToastIfNeed(it.message)
+			view.showToast(it.message)
 		}
 	}
 
@@ -44,16 +45,5 @@ class MainPresenterImpl(
 
 	private fun initExpression() {
 		expression = Expression()
-	}
-
-	private fun showToastIfNeed(errorMessage: String?) {
-		when (errorMessage) {
-			Expression.EXP_NOT_COMPLETE -> view.showToast("완성되지 않은 수식입니다.")
-			Expression.EXP_IS_BLANK -> view.showToast("계산식이 입력되지 않았습니다.")
-			Operator.INVALID_OPERATOR -> view.showToast("유효하지 않은 연산자가 입력되었습니다.")
-			CAST_INT_EXCEPTION -> view.showToast("숫자가 아닌 피연산자가 입력되었습니다.")
-			Calculator.DIVIDE_BY_ZERO -> view.showToast("0으로 나눌 수 없습니다.")
-			else -> Unit
-		}
 	}
 }
