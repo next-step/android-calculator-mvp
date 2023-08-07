@@ -5,10 +5,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
 import com.example.domain.Calculator
+import com.example.domain.Expression
+import com.example.domain.Operator
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val calculator = Calculator
+    private val expression = Expression
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,29 +60,33 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.buttonPlus.setOnClickListener {
-            clickButton("+")
+            clickButton(Operator.PLUS.operator)
         }
 
         binding.buttonMinus.setOnClickListener {
-            clickButton("-")
+            clickButton(Operator.MINUS.operator)
         }
 
         binding.buttonMultiply.setOnClickListener {
-            clickButton("*")
+            clickButton(Operator.TIMES.operator)
         }
 
         binding.buttonDivide.setOnClickListener {
-            clickButton("/")
+            clickButton(Operator.DIV.operator)
         }
 
         binding.buttonDelete.setOnClickListener {
-            calculator.removeLastInput()
+            expression.removeLastInput()
             binding.textView.text = getOperand()
         }
 
         binding.buttonEquals.setOnClickListener {
-            runCatching { calculator.calculate(getOperand()) }.onSuccess { result ->
+            runCatching {
+                expression.isValidExpression()
+                calculator.calculate(getOperand())
+            }.onSuccess { result ->
                 binding.textView.text = result.toString()
+                expression.clearCurrentOperandList()
             }.onFailure { throwable ->
                 Toast.makeText(this, throwable.message, Toast.LENGTH_SHORT).show()
             }
@@ -87,10 +94,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun clickButton(input: String) {
-        if (calculator.addInput(input)) {
+        if (expression.addInput(input)) {
             binding.textView.text = getOperand()
         }
     }
 
-    private fun getOperand() = calculator.currentOperandList.joinToString(" ")
+    private fun getOperand() = expression.currentOperandList.joinToString(" ")
 }
