@@ -3,7 +3,7 @@ package camp.nextstep.edu.calculator.domain
 class Calculator(private val convertor: InputTextConvertor) {
     fun evaluate(input: String?): Int {
         val splitArray = convertor.getSplitStrings(input)
-        var operation: Operations? = null
+        var operation: Operation? = null
         var evaluateValue = 0
 
         splitArray.forEachIndexed { index, str ->
@@ -18,7 +18,7 @@ class Calculator(private val convertor: InputTextConvertor) {
         return evaluateValue
     }
 
-    private fun evaluate(operation: Operations?, evaluateValue: Int, value: Int): Int {
+    private fun evaluate(operation: Operation?, evaluateValue: Int, value: Int): Int {
         return operation?.run {
             evaluate(evaluateValue, value)
         } ?: value

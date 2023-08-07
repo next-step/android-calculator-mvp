@@ -40,6 +40,9 @@ android {
         viewBinding = true
         dataBinding = true
     }
+    testOptions {
+        animationsDisabled = true
+    }
 }
 
 dependencies {
