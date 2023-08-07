@@ -9,8 +9,10 @@ import camp.nextstep.edu.domain.Calculator
 import camp.nextstep.edu.domain.Expression
 import camp.nextstep.edu.domain.Operator
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainContract.View {
 	private lateinit var binding: ActivityMainBinding
+	override lateinit var presenter: MainContract.Presenter
+
 	private val calculator = Calculator()
 	private var expression = Expression()
 
@@ -19,10 +21,17 @@ class MainActivity : AppCompatActivity() {
 		binding = ActivityMainBinding.inflate(layoutInflater)
 		setContentView(binding.root)
 
+		initMainPresenter()
+
 		setOperandListener()
 		setOperatorListener()
 		setDeleteListener()
 		setEqualsListener()
+	}
+
+
+	private fun initMainPresenter() {
+		presenter = MainPresenterImpl(this)
 	}
 
 	private fun setOperandListener() {
