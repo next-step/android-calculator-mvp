@@ -1,8 +1,10 @@
 package com.camp.nextstep.edu.domain
-
-sealed class TokenType(val operator: String)  {
-    object Plus: TokenType("+")
-    object Minus: TokenType("-")
-    object Multiply: TokenType("*")
-    object Divide: TokenType("/")
+enum class TokenType(
+    val operator: String,
+    val operation: (Int, Int) -> Int,
+) {
+    Plus("+", { x, y -> x + y }),
+    Minus("-", { x, y -> x - y }),
+    Multiply("*", { x, y -> x * y }),
+    Divide("/", { x, y -> x / y })
 }
