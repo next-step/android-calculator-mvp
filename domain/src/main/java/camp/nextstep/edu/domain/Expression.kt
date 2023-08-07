@@ -10,11 +10,11 @@ data class Expression(private val exp: String = "") {
 		return this.toString()
 	}
 
-	fun insertOperand(operand: String): Expression {
+	operator fun plus(operand: String): Expression {
 		return this.copy(exp = exp.plus(operand))
 	}
 
-	fun insertOperator(operator: Operator): Expression {
+	operator fun plus(operator: Operator): Expression {
 		if (exp.isEmpty()) {
 			return this
 		}

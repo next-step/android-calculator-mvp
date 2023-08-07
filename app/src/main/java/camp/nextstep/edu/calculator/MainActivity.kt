@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 	}
 
 	private fun insertOperand(operand: String) {
-		expression = expression.insertOperand(operand)
+		expression += operand
 		showExpression()
 	}
 
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
 	}
 
 	private fun insertOperator(operator: Operator) {
-		expression = expression.insertOperator(operator)
+		expression += operator
 		showExpression()
 	}
 
