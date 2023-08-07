@@ -1,19 +1,34 @@
 package camp.nextstep.edu.calculator.domain
 
 class ExpressionManager {
-    private val expressionStack: ArrayDeque<Expression> = ArrayDeque()
+    private var expressionStack: List<Expression> = listOf()
 
-    fun addExpression(expression: Expression) = expressionStack.add(expression)
-
-    fun setLastExpression(expression: Expression) {
-        expressionStack.apply { set(lastIndex, expression) }
+    fun addExpression(expression: Expression) {
+        ArrayDeque(expressionStack).apply {
+            add(expression)
+            expressionStack = toList()
+        }
     }
 
-    fun removeLastExpression(): Expression = expressionStack.removeLast()
+    fun setLastExpression(expression: Expression) {
+        ArrayDeque(expressionStack).apply {
+            set(lastIndex, expression)
+            expressionStack = toList()
+        }
+    }
+
+    fun removeLastExpression() {
+        ArrayDeque(expressionStack).apply {
+            removeLast()
+            expressionStack = toList()
+        }
+    }
 
     fun lastExpression(): Expression = expressionStack.last()
 
-    fun clear() = expressionStack.clear()
+    fun clear() {
+        expressionStack = emptyList()
+    }
 
     fun isEmpty(): Boolean = expressionStack.lastOrNull() == null
 
