@@ -91,7 +91,7 @@ object Calculator {
     private fun String.isOperator(): Boolean =
         runCatching { findOperator(this) }.getOrNull() != null
 
-    private fun clearCurrentOperandList() {
+    fun clearCurrentOperandList() {
         currentOperandList.clear()
         updateCurrentInputState()
     }
