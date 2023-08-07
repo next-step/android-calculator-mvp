@@ -38,16 +38,20 @@ data class Expression(private val exp: String = "") {
 		val sb = StringBuilder()
 
 		exp.forEach { char ->
-			if (Operator.contains(char.toString())) {
-				sb.append(EXP_DELIMITER)
-				sb.append(char)
-				sb.append(EXP_DELIMITER)
-			} else {
-				sb.append(char)
-			}
+			append(sb, char)
 		}
 
 		return sb.toString()
+	}
+
+	private fun append(sb: StringBuilder, char: Char) {
+		if (Operator.contains(char.toString())) {
+			sb.append(EXP_DELIMITER)
+			sb.append(char)
+			sb.append(EXP_DELIMITER)
+		} else {
+			sb.append(char)
+		}
 	}
 
 	companion object {
