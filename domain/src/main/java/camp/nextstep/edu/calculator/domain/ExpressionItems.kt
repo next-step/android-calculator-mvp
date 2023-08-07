@@ -1,16 +1,16 @@
 package camp.nextstep.edu.calculator.domain
 
-class ExpressionManager {
-    private var expressionStack: List<Expression> = listOf()
+class ExpressionItems {
+    private var expressionStack: List<ExpressionItem> = listOf()
 
-    fun addExpression(expression: Expression) {
+    fun addExpression(expression: ExpressionItem) {
         ArrayDeque(expressionStack).apply {
             add(expression)
             expressionStack = toList()
         }
     }
 
-    fun setLastExpression(expression: Expression) {
+    fun setLastExpression(expression: ExpressionItem) {
         ArrayDeque(expressionStack).apply {
             set(lastIndex, expression)
             expressionStack = toList()
@@ -24,7 +24,7 @@ class ExpressionManager {
         }
     }
 
-    fun lastExpression(): Expression = expressionStack.last()
+    fun lastExpression(): ExpressionItem = expressionStack.last()
 
     fun clear() {
         expressionStack = emptyList()
