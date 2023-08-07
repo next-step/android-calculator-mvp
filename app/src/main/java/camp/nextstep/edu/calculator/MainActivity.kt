@@ -11,24 +11,18 @@ import camp.nextstep.edu.domain.Operator
 
 class MainActivity : AppCompatActivity() {
 	private lateinit var binding: ActivityMainBinding
-	private lateinit var expression: Expression
 	private val calculator = Calculator()
+	private var expression = Expression()
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		binding = ActivityMainBinding.inflate(layoutInflater)
 		setContentView(binding.root)
 
-		initExpression()
-
 		setOperandListener()
 		setOperatorListener()
 		setDeleteListener()
 		setEqualsListener()
-	}
-
-	private fun initExpression() {
-		expression = Expression()
 	}
 
 	private fun setOperandListener() {
@@ -91,6 +85,10 @@ class MainActivity : AppCompatActivity() {
 	private fun showResult(result: Int) {
 		binding.textView.text = result.toString()
 		initExpression()
+	}
+
+	private fun initExpression() {
+		expression = Expression()
 	}
 
 	private fun showToastIfNeed(errorMessage: String?) {
