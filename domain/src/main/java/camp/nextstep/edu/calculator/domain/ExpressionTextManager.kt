@@ -1,6 +1,6 @@
 package camp.nextstep.edu.calculator.domain
 
-import camp.nextstep.edu.calculator.domain.Expression.NumberExpression
+import camp.nextstep.edu.calculator.domain.Expression.OperandExpression
 import camp.nextstep.edu.calculator.domain.Expression.OperationExpression
 
 class ExpressionTextManager(
@@ -24,27 +24,27 @@ class ExpressionTextManager(
         val number = inputTextConvertor.getNumberText(addText)
         require(number != 0) { "first input text zero" }
 
-        expressionManager.addExpression(NumberExpression(number))
+        expressionManager.addExpression(OperandExpression(Operand(number)))
     }
 
     private fun addNumberOrOperationText(addText: String) {
         val expression = expressionManager.lastExpression()
 
-        if (expression is NumberExpression) {
+        if (expression is OperandExpression) {
             addNumberText(expression, addText)
         } else {
             addOperationText(addText)
         }
     }
 
-    private fun addNumberText(expression: NumberExpression, addText: String) {
+    private fun addNumberText(expression: OperandExpression, addText: String) {
         val operation: Operation? = Operation.findOperation(addText)
 
         if (operation != null) {
             val operationExpression = OperationExpression(operation)
             expressionManager.addExpression(operationExpression)
         } else {
-            expression.addNumberText(inputTextConvertor.getNumberText(addText))
+            expression.operand.addNumberText(inputTextConvertor.getNumberText(addText))
         }
     }
 
@@ -55,7 +55,9 @@ class ExpressionTextManager(
             val operationExpression = OperationExpression(operation)
             expressionManager.setLastExpression(operationExpression)
         } else {
-            expressionManager.addExpression(NumberExpression(inputTextConvertor.getNumberText(addText)))
+            expressionManager.addExpression(
+                OperandExpression(Operand(inputTextConvertor.getNumberText(addText)))
+            )
         }
     }
 
@@ -63,7 +65,7 @@ class ExpressionTextManager(
         return runCatching {
             val expression = expressionManager.lastExpression()
 
-            if (expression is NumberExpression) {
+            if (expression is OperandExpression) {
                 removeExpressionText(expression)
             } else {
                 expressionManager.removeLastExpression()
@@ -73,8 +75,8 @@ class ExpressionTextManager(
         }.getOrDefault(expressionManager.getText())
     }
 
-    private fun removeExpressionText(expression: NumberExpression) {
-        if (!expression.removeNumberText()) {
+    private fun removeExpressionText(expression: OperandExpression) {
+        if (!expression.operand.removeNumberText()) {
             expressionManager.removeLastExpression()
         }
     }
