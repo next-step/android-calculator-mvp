@@ -4,56 +4,43 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
-import camp.nextstep.edu.calculator.domain.Calculator
-import camp.nextstep.edu.calculator.domain.Expression
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var binding: ActivityMainBinding
-
-    private var expression = Expression()
+    override lateinit var presenter: MainContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.button0.setOnClickListener { binding.textView.text = expression.addOperand("0") }
-        binding.button1.setOnClickListener { binding.textView.text = expression.addOperand("1") }
-        binding.button2.setOnClickListener { binding.textView.text = expression.addOperand("2") }
-        binding.button3.setOnClickListener { binding.textView.text = expression.addOperand("3") }
-        binding.button4.setOnClickListener { binding.textView.text = expression.addOperand("4") }
-        binding.button5.setOnClickListener { binding.textView.text = expression.addOperand("5") }
-        binding.button6.setOnClickListener { binding.textView.text = expression.addOperand("6") }
-        binding.button7.setOnClickListener { binding.textView.text = expression.addOperand("7") }
-        binding.button8.setOnClickListener { binding.textView.text = expression.addOperand("8") }
-        binding.button9.setOnClickListener { binding.textView.text = expression.addOperand("9") }
+        presenter = MainPresenter(this)
 
-        binding.buttonPlus.setOnClickListener { binding.textView.text = addOpcode("+") }
-        binding.buttonMinus.setOnClickListener { binding.textView.text = addOpcode("-") }
-        binding.buttonMultiply.setOnClickListener { binding.textView.text = addOpcode("*") }
-        binding.buttonDivide.setOnClickListener { binding.textView.text = addOpcode("/") }
+        binding.button0.setOnClickListener { presenter.addOperand("0") }
+        binding.button1.setOnClickListener { presenter.addOperand("1") }
+        binding.button2.setOnClickListener { presenter.addOperand("2") }
+        binding.button3.setOnClickListener { presenter.addOperand("3") }
+        binding.button4.setOnClickListener { presenter.addOperand("4") }
+        binding.button5.setOnClickListener { presenter.addOperand("5") }
+        binding.button6.setOnClickListener { presenter.addOperand("6") }
+        binding.button7.setOnClickListener { presenter.addOperand("7") }
+        binding.button8.setOnClickListener { presenter.addOperand("8") }
+        binding.button9.setOnClickListener { presenter.addOperand("9") }
 
-        binding.buttonDelete.setOnClickListener { binding.textView.text = expression.removeLast() }
-        binding.buttonEquals.setOnClickListener { calculateExpression() }
+        binding.buttonPlus.setOnClickListener { presenter.addOpcode("+") }
+        binding.buttonMinus.setOnClickListener { presenter.addOpcode("-") }
+        binding.buttonMultiply.setOnClickListener { presenter.addOpcode("*") }
+        binding.buttonDivide.setOnClickListener { presenter.addOpcode("/") }
+
+        binding.buttonDelete.setOnClickListener { presenter.deleteFormula() }
+        binding.buttonEquals.setOnClickListener { presenter.calculate() }
     }
 
-    private fun addOpcode(opcode: String): String {
-        var formula = ""
-        runCatching {
-            formula = expression.addOpcode(opcode)
-        }.getOrElse {
-            Toast.makeText(this@MainActivity, it.message, Toast.LENGTH_SHORT).show()
-        }
-        return formula
+    override fun showExpression(expression: String) {
+        binding.textView.text = expression
     }
 
-    private fun calculateExpression() {
-        runCatching {
-            val result = Calculator.evaluate(expression.getFormulaString())
-            expression = Expression(result)
-            binding.textView.text = result
-        }.getOrElse {
-            Toast.makeText(this@MainActivity, it.message, Toast.LENGTH_SHORT).show()
-        }
+    override fun showError(message: String?) {
+        Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
     }
 }

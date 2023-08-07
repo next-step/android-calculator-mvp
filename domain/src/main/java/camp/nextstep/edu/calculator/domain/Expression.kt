@@ -18,25 +18,25 @@ class Expression(formulaString: String? = "") {
                 }
             return _formulas
         }
-    private var _formulas: List<String>
+    private var _formulas: MutableList<String>
 
     init {
         val formula = formulaString?.trim()
-        require(formula != null) {
+        requireNotNull(formula) {
             "Input value is empty"
         }
-        _formulas = formula.split(SEPERATOR)
+        _formulas = formula.split(SEPERATOR).toMutableList()
     }
 
     fun addOperand(operand: String): String {
         val lastFormula = _formulas.lastOrNull()
-        _formulas = if(lastFormula.isNullOrEmpty()) {
-            listOf(operand)
+        if(lastFormula.isNullOrEmpty()) {
+            _formulas[0] = operand
         } else {
             if(lastFormula.isNum()) {
-                _formulas.dropLast(1) + (getLastOperand(lastFormula) + operand)
+                _formulas[_formulas.lastIndex] = (getLastOperand(lastFormula) + operand)
             } else {
-                _formulas + operand
+                _formulas.add(operand)
             }
         }
         return getFormulaString()
@@ -50,7 +50,7 @@ class Expression(formulaString: String? = "") {
             "완성되지 않은 수식입니다"
         }
         if(lastFormula.isNum()) {
-            _formulas = _formulas + opcode
+            _formulas.add(opcode)
         }
         return getFormulaString()
     }
@@ -60,10 +60,10 @@ class Expression(formulaString: String? = "") {
         if(lastFormula.isNullOrEmpty()) {
             return ""
         }
-        _formulas = if(lastFormula.isNum() && lastFormula.length > 1) {
-            _formulas.dropLast(1) + lastFormula.dropLast(1)
+        if(lastFormula.isNum() && lastFormula.length > 1) {
+            _formulas[_formulas.lastIndex] = lastFormula.dropLast(1)
         } else {
-            _formulas.dropLast(1)
+            _formulas.removeLast()
         }
         return getFormulaString()
     }

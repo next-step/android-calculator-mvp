@@ -6,8 +6,7 @@ object Calculator {
     private const val NEXT_INDEX_STEP = 2
     private const val FIRST_INDEX = 1
 
-    fun evaluate(formulaString: String?): String {
-        val expression = Expression(formulaString)
+    fun evaluate(expression: Expression): String {
         return calculate(expression.formulas)
     }
 
