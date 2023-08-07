@@ -2,6 +2,7 @@ package com.example.domain
 
 import com.google.common.truth.Truth.assertThat
 import org.junit.Assert.*
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
@@ -13,16 +14,21 @@ class CalculatorTest(
 ) {
 
     private val calculator = Calculator
+    private val expression = Expression
+
+    @Before
+    fun init() {
+        expression.clearCurrentOperandList()
+    }
 
     // then
     @Test
     fun 사칙연산_계산_테스트() {
         input.split(" ").forEach {
-            calculator.addInput(it)
+            expression.addInput(it)
         }
         val actual = calculator.calculate(input)
         assertThat(actual).isEqualTo(Operand(result))
-        calculator.clearCurrentOperandList()
     }
 
     companion object {
