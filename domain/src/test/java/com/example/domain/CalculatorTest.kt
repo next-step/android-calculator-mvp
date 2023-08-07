@@ -14,13 +14,15 @@ class CalculatorTest(
 
     private val calculator = Calculator
 
-    // when
-    private val actual = calculator.calculate(input)
-
     // then
     @Test
     fun 사칙연산_계산_테스트() {
+        input.split(" ").forEach {
+            calculator.addInput(it)
+        }
+        val actual = calculator.calculate(input)
         assertThat(actual).isEqualTo(Operand(result))
+        calculator.clearCurrentOperandList()
     }
 
     companion object {
