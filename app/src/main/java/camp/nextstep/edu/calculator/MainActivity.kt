@@ -1,14 +1,16 @@
 package camp.nextstep.edu.calculator
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
 import camp.nextstep.edu.calculator.domain.ExpressionItems
 import camp.nextstep.edu.calculator.domain.InputTextConvertor
 import camp.nextstep.edu.calculator.domain.Expression
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), Contract.View {
+
+    override val presenter: Contract.Presenter = ExpressionPresenter(this)
+
     private lateinit var binding: ActivityMainBinding
     private lateinit var expressionTextManager: Expression
 
@@ -39,22 +41,27 @@ class MainActivity : AppCompatActivity() {
         binding.buttonEquals.setOnClickListener { setEqualsText() }
     }
 
+    override fun display(text: String) {
+        binding.textView.text = text
+    }
+
     private fun setInputText(inputText: String) {
-        binding.textView.text = expressionTextManager.addExpression(inputText)
+        presenter.addExpressionText(inputText)
     }
 
     private fun setRemoveText() {
-        binding.textView.text = expressionTextManager.removeExpressionItem()
+        presenter.removeExpressionItem()
     }
 
     private fun setEqualsText() {
-        with(binding.textView) {
-            val equalsText = expressionTextManager.calculate()
-            if (equalsText.equals(text.toString(), false)) {
-                Toast.makeText(this@MainActivity, "완성되지 않은 수식입니다", Toast.LENGTH_SHORT).show()
-            } else {
-                text = equalsText
-            }
-        }
+        presenter.calculate()
+//        with(binding.textView) {
+//            val equalsText = expressionTextManager.calculate()
+//            if (equalsText.equals(text.toString(), false)) {
+//                Toast.makeText(this@MainActivity, "완성되지 않은 수식입니다", Toast.LENGTH_SHORT).show()
+//            } else {
+//                text = equalsText
+//            }
+//        }
     }
 }
