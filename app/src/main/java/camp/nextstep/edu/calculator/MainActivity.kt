@@ -5,7 +5,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
 import com.example.calculatorlib.Calculator
-import com.example.formulalib.Formula
+import com.example.calculatorlib.Formula
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
