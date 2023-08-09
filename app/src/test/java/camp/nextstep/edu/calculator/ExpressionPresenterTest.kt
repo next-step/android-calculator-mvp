@@ -2,7 +2,9 @@ package camp.nextstep.edu.calculator
 
 import com.google.common.truth.Truth.assertThat
 import io.mockk.CapturingSlot
+import io.mockk.Runs
 import io.mockk.every
+import io.mockk.just
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
@@ -20,29 +22,12 @@ class ExpressionPresenterTest {
     }
 
     @Test
-    fun `숫자가 입력되면 수식에 추가되고 변경된 수식을 보여줘야 한다`() {
-        // given
-        val expressionSlot = slot<String>()
-        every { view.display(capture(expressionSlot)) } answers { nothing }
-
-        // when
-        presenter.addExpressionText("1")
-
-        // then
-        val actual: String = expressionSlot.captured
-        assertThat(actual).isEqualTo("1")
-        verify { view.display(actual) }
-    }
-
-    @Test
     fun `1 입력하면 1이출력된다`() {
-        val expressionSlot = `뷰호출을 정의한다`()
+        every { view.display("1") } just Runs
 
         presenter.addExpressionText("1")
 
-        val actual: String = expressionSlot.captured
-        assertThat(actual).isEqualTo("1")
-        verify { view.display(actual) }
+        verify { view.display("1") }
     }
 
     @Test
@@ -69,13 +54,11 @@ class ExpressionPresenterTest {
 
     @Test
     fun `+ 입력하면 빈문자가 출력된다`() {
-        val expressionSlot = `뷰호출을 정의한다`()
+        every { view.display("") } just Runs
 
         `수식을 입력한다`(listOf("+"))
 
-        val actual: String = expressionSlot.captured
-        assertThat(actual).isEqualTo("")
-        verify { view.display(actual) }
+        verify { view.display("") }
     }
 
     @Test
@@ -103,13 +86,11 @@ class ExpressionPresenterTest {
 
     @Test
     fun `삭제를 호출하면 빈문자가 출력된다`() {
-        val expressionSlot = `뷰호출을 정의한다`()
+        every { view.display("") } just Runs
 
         presenter.removeExpressionItem()
 
-        val actual: String = expressionSlot.captured
-        assertThat(actual).isEqualTo("")
-        verify { view.display(actual) }
+        verify { view.display("") }
     }
 
     @Test
@@ -163,7 +144,7 @@ class ExpressionPresenterTest {
 
     private fun `뷰호출을 정의한다`(): CapturingSlot<String> {
         val expressionSlot = slot<String>()
-        every { view.display(capture(expressionSlot)) } answers { nothing }
+        every { view.display(capture(expressionSlot)) } just Runs
         return expressionSlot
     }
 
