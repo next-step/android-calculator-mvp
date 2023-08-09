@@ -3,23 +3,17 @@ package camp.nextstep.edu.calculator
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
-import camp.nextstep.edu.calculator.domain.ExpressionItems
-import camp.nextstep.edu.calculator.domain.InputTextConvertor
-import camp.nextstep.edu.calculator.domain.Expression
 
 class MainActivity : AppCompatActivity(), Contract.View {
 
     override val presenter: Contract.Presenter = ExpressionPresenter(this)
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var expressionTextManager: Expression
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        expressionTextManager = Expression(InputTextConvertor(), ExpressionItems())
 
         binding.button0.setOnClickListener { setInputText("0") }
         binding.button1.setOnClickListener { setInputText("1") }
