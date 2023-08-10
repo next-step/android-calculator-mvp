@@ -6,17 +6,22 @@ import camp.nextstep.edu.calculator.domain.InputTextConvertor
 
 class ExpressionPresenter(
     private val view: Contract.View,
-    private val expression: Expression = Expression(InputTextConvertor(), ExpressionItems())
+    private val expression: Expression = Expression(InputTextConvertor())
 ) : Contract.Presenter {
+
+    private var expressionItems = ExpressionItems(emptyList())
+
     override fun addExpressionText(text: String) {
-        view.display(expression.addExpression(text))
+        expressionItems = expression.addExpression(expressionItems, text)
+        view.display(expressionItems.getText())
     }
 
     override fun removeExpressionItem() {
-        view.display(expression.removeExpressionItem())
+        expressionItems = expression.removeExpressionItem(expressionItems)
+        view.display(expressionItems.getText())
     }
 
     override fun calculate() {
-        view.display(expression.calculate())
+        view.display(expressionItems.calculate(InputTextConvertor()))
     }
 }

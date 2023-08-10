@@ -1,34 +1,28 @@
 package camp.nextstep.edu.calculator.domain
 
-class ExpressionItems {
-    private var expressionStack: List<ExpressionItem> = listOf()
+class ExpressionItems(private val expressionStack: List<ExpressionItem>) {
 
-    fun addExpression(expression: ExpressionItem) {
-        ArrayDeque(expressionStack).apply {
-            add(expression)
-            expressionStack = toList()
-        }
+    fun addExpression(expression: ExpressionItem): ExpressionItems {
+        return ExpressionItems(expressionStack + expression)
     }
 
-    fun setLastExpression(expression: ExpressionItem) {
-        ArrayDeque(expressionStack).apply {
-            set(lastIndex, expression)
-            expressionStack = toList()
-        }
+    fun setLastExpression(expression: ExpressionItem): ExpressionItems {
+        return ExpressionItems(
+            ArrayDeque(expressionStack).apply {
+                set(lastIndex, expression)
+            }.toList()
+        )
     }
 
-    fun removeLastExpression() {
-        ArrayDeque(expressionStack).apply {
-            removeLast()
-            expressionStack = toList()
-        }
+    fun removeLastExpression(): ExpressionItems {
+        return ExpressionItems(
+            ArrayDeque(expressionStack).apply {
+                removeLast()
+            }.toList()
+        )
     }
 
     fun lastExpression(): ExpressionItem = expressionStack.last()
-
-    fun clear() {
-        expressionStack = emptyList()
-    }
 
     fun isEmpty(): Boolean = expressionStack.lastOrNull() == null
 
@@ -38,5 +32,11 @@ class ExpressionItems {
                 append(expression.getText())
             }
         }.toString()
+    }
+
+    fun calculate(inputTextConvertor: InputTextConvertor): String {
+        return runCatching {
+            Calculator(inputTextConvertor).evaluate(getText()).toString()
+        }.getOrDefault(getText())
     }
 }

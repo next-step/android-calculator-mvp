@@ -1,5 +1,7 @@
 package camp.nextstep.edu.calculator.domain
 
+import camp.nextstep.edu.calculator.domain.ExpressionItem.Operation
+
 class InputTextConvertor {
     fun getSplitStrings(input: String?): List<String> {
         return getNotEmptyText(input).let {

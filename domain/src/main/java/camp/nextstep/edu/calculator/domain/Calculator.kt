@@ -1,5 +1,7 @@
 package camp.nextstep.edu.calculator.domain
 
+import camp.nextstep.edu.calculator.domain.ExpressionItem.Operation
+
 class Calculator(private val convertor: InputTextConvertor) {
     fun evaluate(input: String?): Int {
         val splitArray = convertor.getSplitStrings(input)

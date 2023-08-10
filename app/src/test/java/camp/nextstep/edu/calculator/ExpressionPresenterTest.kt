@@ -36,9 +36,7 @@ class ExpressionPresenterTest {
 
         `수식을 입력한다`(listOf("5", "+", "1"))
 
-        val actual: String = expressionSlot.captured
-        assertThat(actual).isEqualTo("5 + 1")
-        verify { view.display(actual) }
+        `수식을 확인한다`("5 + 1", expressionSlot.captured)
     }
 
     @Test
@@ -47,9 +45,7 @@ class ExpressionPresenterTest {
 
         `수식을 입력한다`(listOf("8", "9"))
 
-        val actual: String = expressionSlot.captured
-        assertThat(actual).isEqualTo("89")
-        verify { view.display(actual) }
+        `수식을 확인한다`("89", expressionSlot.captured)
     }
 
     @Test
@@ -67,21 +63,16 @@ class ExpressionPresenterTest {
 
         `수식을 입력한다`(listOf("1", "+"))
 
-        val actual: String = expressionSlot.captured
-        assertThat(actual).isEqualTo("1 + ")
-        verify { view.display(actual) }
+        `수식을 확인한다`("1 + ", expressionSlot.captured)
     }
 
     @Test
     fun `1 + 입력하고 - 를 입력하면 1 - 가 출력된다`() {
         val expressionSlot = `뷰호출을 정의한다`()
 
-        `수식을 입력한다`(listOf("1", "+"))
-        `수식을 입력한다`(listOf("-"))
+        `수식을 입력한다`(listOf("1", "+", "-"))
 
-        val actual: String = expressionSlot.captured
-        assertThat(actual).isEqualTo("1 - ")
-        verify { view.display(actual) }
+        `수식을 확인한다`("1 - ", expressionSlot.captured)
     }
 
     @Test
@@ -98,11 +89,10 @@ class ExpressionPresenterTest {
         val expressionSlot = `뷰호출을 정의한다`()
 
         `수식을 입력한다`(listOf("3", "2", "+", "1"))
+        // 삭제한다
         presenter.removeExpressionItem()
 
-        val actual: String = expressionSlot.captured
-        assertThat(actual).isEqualTo("32 + ")
-        verify { view.display(actual) }
+        `수식을 확인한다`("32 + ", expressionSlot.captured)
     }
 
     @Test
@@ -110,11 +100,10 @@ class ExpressionPresenterTest {
         val expressionSlot = `뷰호출을 정의한다`()
 
         `수식을 입력한다`(listOf("3", "2", "+"))
+        // 삭제한다
         presenter.removeExpressionItem()
 
-        val actual: String = expressionSlot.captured
-        assertThat(actual).isEqualTo("32")
-        verify { view.display(actual) }
+        `수식을 확인한다`("32", expressionSlot.captured)
     }
 
     @Test
@@ -122,24 +111,21 @@ class ExpressionPresenterTest {
         val expressionSlot = `뷰호출을 정의한다`()
 
         `수식을 입력한다`(listOf("3", "2"))
+        // 삭제한다
         presenter.removeExpressionItem()
 
-        val actual: String = expressionSlot.captured
-        assertThat(actual).isEqualTo("3")
-        verify { view.display(actual) }
+        `수식을 확인한다`("3", expressionSlot.captured)
     }
 
     @Test
     fun `3 + 2 입력하고 계산을 호출하면 5 가 출력된다`() {
-        // 수식을_입력한다("3 + 2")
         val expressionSlot = `뷰호출을 정의한다`()
 
         `수식을 입력한다`(listOf("3", "+", "2"))
+        // 계산한다
         presenter.calculate()
 
-        val actual: String = expressionSlot.captured
-        assertThat(actual).isEqualTo("5")
-        verify { view.display(actual) }
+        `수식을 확인한다`("5", expressionSlot.captured)
     }
 
     private fun `뷰호출을 정의한다`(): CapturingSlot<String> {
@@ -152,5 +138,10 @@ class ExpressionPresenterTest {
         for (expression in expressions) {
             presenter.addExpressionText(expression)
         }
+    }
+
+    private fun `수식을 확인한다`(expected: String, actual: String) {
+        assertThat(actual).isEqualTo(expected)
+        verify { view.display(actual) }
     }
 }

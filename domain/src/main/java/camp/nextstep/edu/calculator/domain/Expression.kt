@@ -1,91 +1,71 @@
 package camp.nextstep.edu.calculator.domain
 
-import camp.nextstep.edu.calculator.domain.ExpressionItem.OperandExpression
-import camp.nextstep.edu.calculator.domain.ExpressionItem.OperationExpression
+import camp.nextstep.edu.calculator.domain.ExpressionItem.Operand
+import camp.nextstep.edu.calculator.domain.ExpressionItem.Operation
 
-class Expression(
-    private val inputTextConvertor: InputTextConvertor,
-    private val expressionItems: ExpressionItems
-) {
-    fun addExpression(addText: String): String {
-        val defaultText = expressionItems.getText()
-
+class Expression(private val inputTextConvertor: InputTextConvertor) {
+    fun addExpression(expressionItems: ExpressionItems, addText: String): ExpressionItems {
         return runCatching {
-            if (expressionItems.isEmpty()) addFirstExpression(addText)
-            else addOperandOrOperationText(addText)
-
-            expressionItems.getText()
-        }.getOrDefault(defaultText)
+            if (expressionItems.isEmpty()) addFirstExpression(expressionItems, addText)
+            else addOperandOrOperationText(expressionItems, addText)
+        }.getOrDefault(expressionItems)
     }
 
-    private fun addFirstExpression(addText: String) {
+    private fun addFirstExpression(expressionItems: ExpressionItems, addText: String): ExpressionItems {
         val number = inputTextConvertor.getNumberText(addText)
         require(number != 0) { "first input text zero" }
 
-        expressionItems.addExpression(OperandExpression(Operand(number)))
+        return expressionItems.addExpression(Operand(number))
     }
 
-    private fun addOperandOrOperationText(addText: String) {
+    private fun addOperandOrOperationText(expressionItems: ExpressionItems, addText: String): ExpressionItems {
         val expression = expressionItems.lastExpression()
 
-        if (expression is OperandExpression) {
-            addOperand(expression, addText)
+        return if (expression is Operand) {
+            addOperand(expressionItems, expression, addText)
         } else {
-            addOperation(addText)
+            addOperation(expressionItems, addText)
         }
     }
 
-    private fun addOperand(expression: OperandExpression, addText: String) {
+    private fun addOperand(expressionItems: ExpressionItems, operand: Operand, addText: String): ExpressionItems {
         val operation: Operation? = Operation.findOperation(addText)
 
-        if (operation != null) {
-            val operationExpression = OperationExpression(operation)
-            expressionItems.addExpression(operationExpression)
+        return if (operation != null) {
+            expressionItems.addExpression(operation)
         } else {
-            expression.operand.addNumberText(inputTextConvertor.getNumberText(addText))
+            operand.addNumberText(inputTextConvertor.getNumberText(addText))
+            expressionItems
         }
     }
 
-    private fun addOperation(addText: String) {
+    private fun addOperation(expressionItems: ExpressionItems, addText: String): ExpressionItems {
         val operation: Operation? = Operation.findOperation(addText)
 
-        if (operation != null) {
-            val operationExpression = OperationExpression(operation)
-            expressionItems.setLastExpression(operationExpression)
+        return if (operation != null) {
+            expressionItems.setLastExpression(operation)
         } else {
-            expressionItems.addExpression(
-                OperandExpression(Operand(inputTextConvertor.getNumberText(addText)))
-            )
+            expressionItems.addExpression(Operand(inputTextConvertor.getNumberText(addText)))
         }
     }
 
-    fun removeExpressionItem(): String {
+    fun removeExpressionItem(expressionItems: ExpressionItems): ExpressionItems {
         return runCatching {
             val expression = expressionItems.lastExpression()
 
-            if (expression is OperandExpression) {
-                removeExpressionItem(expression)
+            return if (expression is Operand) {
+                removeExpressionItem(expressionItems, expression)
             } else {
                 expressionItems.removeLastExpression()
             }
-
-            expressionItems.getText()
-        }.getOrDefault(expressionItems.getText())
+        }.getOrDefault(expressionItems)
     }
 
-    private fun removeExpressionItem(expression: OperandExpression) {
-        if (!expression.operand.removeNumberText()) {
+    private fun removeExpressionItem(expressionItems: ExpressionItems, operand: Operand): ExpressionItems {
+        return if (!operand.removeNumberText()) {
             expressionItems.removeLastExpression()
+        } else {
+            expressionItems
         }
-    }
-
-    fun calculate(): String {
-        val expressionText = expressionItems.getText()
-        return runCatching {
-            Calculator(inputTextConvertor).evaluate(expressionText).toString().apply {
-                expressionItems.clear()
-                addExpression(this)
-            }
-        }.getOrDefault(expressionText)
     }
 }
