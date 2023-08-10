@@ -10,6 +10,6 @@ interface Contract {
     interface Presenter {
         fun addExpressionText(text: String)
         fun removeExpressionItem()
-        fun calculate()
+        fun calculate(): Boolean
     }
 }

@@ -82,4 +82,16 @@ class ExpressionTest {
 
         assertThat(actual).isEqualTo("")
     }
+
+    @Test
+    fun `1 + 을추가하고 계산을 호출하여 입력 텍스트와 계산 후 텍스트가 같은지 확인 완성되지 않은 수식`() {
+        val expressionItems = ExpressionItems(
+            listOf(Operand(1), Operation.Addition)
+        )
+
+        val beforeText = expressionItems.getText()
+        val resultText = expressionItems.calculate(InputTextConvertor())
+
+        assertThat(beforeText).isEqualTo(resultText)
+    }
 }

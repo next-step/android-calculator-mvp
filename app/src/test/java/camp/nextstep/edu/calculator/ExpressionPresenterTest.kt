@@ -128,6 +128,18 @@ class ExpressionPresenterTest {
         `수식을 확인한다`("5", expressionSlot.captured)
     }
 
+    @Test
+    fun `3 + 입력하고 계산을 호출하면 수식이 실패했는지 확인한다`() {
+        val expressionSlot = `뷰호출을 정의한다`()
+
+        `수식을 입력한다`(listOf("3", "+"))
+        // 계산한다
+        val actual = presenter.calculate()
+
+        assertThat(actual).isFalse()
+        `수식을 확인한다`("3 + ", expressionSlot.captured)
+    }
+
     private fun `뷰호출을 정의한다`(): CapturingSlot<String> {
         val expressionSlot = slot<String>()
         every { view.display(capture(expressionSlot)) } just Runs

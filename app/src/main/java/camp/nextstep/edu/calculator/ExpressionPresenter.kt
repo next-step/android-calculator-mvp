@@ -21,7 +21,10 @@ class ExpressionPresenter(
         view.display(expressionItems.getText())
     }
 
-    override fun calculate() {
-        view.display(expressionItems.calculate(InputTextConvertor()))
+    override fun calculate(): Boolean {
+        val expressionText = expressionItems.getText()
+        val calculateText = expressionItems.calculate(InputTextConvertor())
+        view.display(calculateText)
+        return expressionText != calculateText
     }
 }
