@@ -51,7 +51,7 @@ class Formula {
         return formula[lastIndex].isDigit()
     }
 
-    // 최근 항목 삭게
+    // 최근 항목 삭제
     fun deleteLastStr(): String {
         if (formula.isEmpty()) return formula
 
