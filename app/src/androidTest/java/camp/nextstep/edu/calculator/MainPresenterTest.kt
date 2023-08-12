@@ -16,7 +16,7 @@ class MainPresenterTest {
     @Before
     fun setUp() {
         view = mockk<MainActivity>()
-        presenter = MainPresenterImpl(view)
+        presenter = MainPresenter(view)
     }
 
     @Test

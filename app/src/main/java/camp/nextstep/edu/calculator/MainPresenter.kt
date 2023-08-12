@@ -5,7 +5,7 @@ import camp.nextstep.edu.calculator.domain.ArithmeticOperator
 import camp.nextstep.edu.calculator.domain.Calculator
 import camp.nextstep.edu.calculator.domain.Expression
 
-class MainPresenterImpl(private val view: MainContract.View) : MainContract.Presenter {
+class MainPresenter(private val view: MainContract.View) : MainContract.Presenter {
     private val calculator = Calculator()
     private val expression = Expression("")
 
