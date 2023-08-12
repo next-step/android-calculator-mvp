@@ -17,6 +17,7 @@ class ExpressionItemsTest {
     @Test
     fun `피연산자 1을추가하고 반환값이 1인지 확인`() {
         val actual = (expressionItems + Operand(1)).getText()
+        println("actual: $actual")
 
         assertThat(actual).isEqualTo("1")
     }
@@ -32,7 +33,7 @@ class ExpressionItemsTest {
     fun `피연산자 1을추가하고 연산자 + 을추가하고 반환문자가 1 + 인지 확인`() {
         val actual = (expressionItems + Operand(1) + Operation.Addition).getText()
 
-        assertThat(actual).isEqualTo("1 + ")
+        assertThat(actual).isEqualTo("1 +")
     }
 
     @Test
@@ -53,7 +54,7 @@ class ExpressionItemsTest {
 
         val actual = expressionItems.removeLastExpression().getText()
 
-        assertThat(actual).isEqualTo("1 + ")
+        assertThat(actual).isEqualTo("1 +")
     }
 
     @Test

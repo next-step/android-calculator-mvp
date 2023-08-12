@@ -35,6 +35,6 @@ class InputTextConvertor {
     }
 
     companion object {
-        private const val splitText = " "
+        const val splitText = " "
     }
 }

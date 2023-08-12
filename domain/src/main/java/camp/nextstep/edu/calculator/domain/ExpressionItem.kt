@@ -12,22 +12,22 @@ sealed class ExpressionItem {
 
         object Addition : Operation("+") {
             override fun evaluate(x: Int, y: Int): Int = x + y
-            override fun getText(): String = " $operationText "
+            override fun getText(): String = operationText
         }
 
         object Subtraction : Operation("-") {
             override fun evaluate(x: Int, y: Int): Int = x - y
-            override fun getText(): String = " $operationText "
+            override fun getText(): String = operationText
         }
 
         object Multiplication : Operation("*") {
             override fun evaluate(x: Int, y: Int): Int = x * y
-            override fun getText(): String = " $operationText "
+            override fun getText(): String = operationText
         }
 
         object Division : Operation("/") {
             override fun evaluate(x: Int, y: Int): Int = x / y
-            override fun getText(): String = " $operationText "
+            override fun getText(): String = operationText
         }
 
         companion object {

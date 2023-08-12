@@ -87,11 +87,7 @@ class ExpressionItems(private val expressionStack: List<ExpressionItem>) {
     }
 
     fun getText(): String {
-        return StringBuilder().apply {
-            for (expression in expressionStack) {
-                append(expression.getText())
-            }
-        }.toString()
+        return expressionStack.joinToString(separator = InputTextConvertor.splitText) { it.getText() }
     }
 }
 

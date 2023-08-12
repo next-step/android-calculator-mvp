@@ -66,7 +66,7 @@ class ExpressionPresenterTest {
 
         `수식을 입력한다`(listOf(Operand(1), Operation.Addition))
 
-        `수식을 확인한다`("1 + ", expressionSlot.captured)
+        `수식을 확인한다`("1 +", expressionSlot.captured)
     }
 
     @Test
@@ -75,7 +75,7 @@ class ExpressionPresenterTest {
 
         `수식을 입력한다`(listOf(Operand(1), Operation.Addition, Operation.Subtraction))
 
-        `수식을 확인한다`("1 - ", expressionSlot.captured)
+        `수식을 확인한다`("1 -", expressionSlot.captured)
     }
 
     @Test
@@ -95,7 +95,7 @@ class ExpressionPresenterTest {
         // 삭제한다
         presenter.removeExpressionItem()
 
-        `수식을 확인한다`("32 + ", expressionSlot.captured)
+        `수식을 확인한다`("32 +", expressionSlot.captured)
     }
 
     @Test
