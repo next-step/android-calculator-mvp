@@ -33,10 +33,4 @@ class ExpressionItems(private val expressionStack: List<ExpressionItem>) {
             }
         }.toString()
     }
-
-    fun calculate(inputTextConvertor: InputTextConvertor): String {
-        return runCatching {
-            Calculator(inputTextConvertor).evaluate(getText()).toString()
-        }.getOrDefault(getText())
-    }
 }

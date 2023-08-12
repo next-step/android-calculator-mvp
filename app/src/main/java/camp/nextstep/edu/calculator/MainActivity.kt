@@ -40,6 +40,10 @@ class MainActivity : AppCompatActivity(), Contract.View {
         binding.textView.text = text
     }
 
+    override fun displayExpressionError() {
+        Toast.makeText(this@MainActivity, "완성되지 않은 수식입니다", Toast.LENGTH_SHORT).show()
+    }
+
     private fun setInputText(inputText: String) {
         presenter.addExpressionText(inputText)
     }
@@ -49,8 +53,6 @@ class MainActivity : AppCompatActivity(), Contract.View {
     }
 
     private fun setEqualsText() {
-        if (!presenter.calculate()) {
-            Toast.makeText(this@MainActivity, "완성되지 않은 수식입니다", Toast.LENGTH_SHORT).show()
-        }
+        presenter.calculate()
     }
 }

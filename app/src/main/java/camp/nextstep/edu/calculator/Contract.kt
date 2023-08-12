@@ -5,11 +5,12 @@ interface Contract {
         val presenter: Presenter
 
         fun display(text: String)
+        fun displayExpressionError()
     }
 
     interface Presenter {
         fun addExpressionText(text: String)
         fun removeExpressionItem()
-        fun calculate(): Boolean
+        fun calculate()
     }
 }

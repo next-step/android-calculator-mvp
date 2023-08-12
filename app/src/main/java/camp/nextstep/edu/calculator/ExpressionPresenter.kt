@@ -1,5 +1,6 @@
 package camp.nextstep.edu.calculator
 
+import camp.nextstep.edu.calculator.domain.Calculator
 import camp.nextstep.edu.calculator.domain.Expression
 import camp.nextstep.edu.calculator.domain.ExpressionItems
 import camp.nextstep.edu.calculator.domain.InputTextConvertor
@@ -21,10 +22,10 @@ class ExpressionPresenter(
         view.display(expressionItems.getText())
     }
 
-    override fun calculate(): Boolean {
+    override fun calculate() {
         val expressionText = expressionItems.getText()
-        val calculateText = expressionItems.calculate(InputTextConvertor())
-        view.display(calculateText)
-        return expressionText != calculateText
+        Calculator(InputTextConvertor()).evaluate(expressionText)?.let {
+            view.display(it.toString())
+        } ?: view.displayExpressionError()
     }
 }
