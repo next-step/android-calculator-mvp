@@ -1,5 +1,8 @@
 package camp.nextstep.edu.calculator
 
+import camp.nextstep.edu.calculator.domain.ExpressionItem.Operand
+import camp.nextstep.edu.calculator.domain.ExpressionItem.Operation
+
 interface Contract {
     interface View {
         val presenter: Presenter
@@ -9,7 +12,8 @@ interface Contract {
     }
 
     interface Presenter {
-        fun addExpressionText(text: String)
+        fun addOperandExpression(operand: Operand)
+        fun addOperationExpression(operation: Operation)
         fun removeExpressionItem()
         fun calculate()
     }

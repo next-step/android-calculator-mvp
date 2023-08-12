@@ -1,5 +1,8 @@
 package camp.nextstep.edu.calculator
 
+import camp.nextstep.edu.calculator.domain.ExpressionItem
+import camp.nextstep.edu.calculator.domain.ExpressionItem.Operand
+import camp.nextstep.edu.calculator.domain.ExpressionItem.Operation
 import com.google.common.truth.Truth.assertThat
 import io.mockk.CapturingSlot
 import io.mockk.Runs
@@ -25,7 +28,7 @@ class ExpressionPresenterTest {
     fun `1 입력하면 1이출력된다`() {
         every { view.display("1") } just Runs
 
-        presenter.addExpressionText("1")
+        presenter.addOperandExpression(Operand(1))
 
         verify { view.display("1") }
     }
@@ -34,7 +37,7 @@ class ExpressionPresenterTest {
     fun `5 + 1 수식을 입력하면 5 + 1 출력된다`() {
         val expressionSlot = `뷰호출을 정의한다`()
 
-        `수식을 입력한다`(listOf("5", "+", "1"))
+        `수식을 입력한다`(listOf(Operand(5), Operation.Addition, Operand(1)))
 
         `수식을 확인한다`("5 + 1", expressionSlot.captured)
     }
@@ -43,7 +46,7 @@ class ExpressionPresenterTest {
     fun `89를 입력하면_89가 출력된다`() {
         val expressionSlot = `뷰호출을 정의한다`()
 
-        `수식을 입력한다`(listOf("8", "9"))
+        `수식을 입력한다`(listOf(Operand(8), Operand(9)))
 
         `수식을 확인한다`("89", expressionSlot.captured)
     }
@@ -52,7 +55,7 @@ class ExpressionPresenterTest {
     fun `+ 입력하면 빈문자가 출력된다`() {
         every { view.display("") } just Runs
 
-        `수식을 입력한다`(listOf("+"))
+        `수식을 입력한다`(listOf(Operation.Addition))
 
         verify { view.display("") }
     }
@@ -61,7 +64,7 @@ class ExpressionPresenterTest {
     fun `1 + 입력하면 1 + 가출력된다`() {
         val expressionSlot = `뷰호출을 정의한다`()
 
-        `수식을 입력한다`(listOf("1", "+"))
+        `수식을 입력한다`(listOf(Operand(1), Operation.Addition))
 
         `수식을 확인한다`("1 + ", expressionSlot.captured)
     }
@@ -70,7 +73,7 @@ class ExpressionPresenterTest {
     fun `1 + 입력하고 - 를 입력하면 1 - 가 출력된다`() {
         val expressionSlot = `뷰호출을 정의한다`()
 
-        `수식을 입력한다`(listOf("1", "+", "-"))
+        `수식을 입력한다`(listOf(Operand(1), Operation.Addition, Operation.Subtraction))
 
         `수식을 확인한다`("1 - ", expressionSlot.captured)
     }
@@ -88,7 +91,7 @@ class ExpressionPresenterTest {
     fun `32 + 1 입력하고 삭제를 호출하면 32 + 가출력된다`() {
         val expressionSlot = `뷰호출을 정의한다`()
 
-        `수식을 입력한다`(listOf("3", "2", "+", "1"))
+        `수식을 입력한다`(listOf(Operand(3), Operand(2), Operation.Addition, Operand(1)))
         // 삭제한다
         presenter.removeExpressionItem()
 
@@ -99,7 +102,7 @@ class ExpressionPresenterTest {
     fun `32 + 입력하고 삭제를 호출하면 32 가 출력된다`() {
         val expressionSlot = `뷰호출을 정의한다`()
 
-        `수식을 입력한다`(listOf("3", "2", "+"))
+        `수식을 입력한다`(listOf(Operand(3), Operand(2), Operation.Addition))
         // 삭제한다
         presenter.removeExpressionItem()
 
@@ -110,7 +113,7 @@ class ExpressionPresenterTest {
     fun `32 입력하고 삭제를 호출하면 3 출력된다`() {
         val expressionSlot = `뷰호출을 정의한다`()
 
-        `수식을 입력한다`(listOf("3", "2"))
+        `수식을 입력한다`(listOf(Operand(3), Operand(2)))
         // 삭제한다
         presenter.removeExpressionItem()
 
@@ -121,7 +124,7 @@ class ExpressionPresenterTest {
     fun `3 + 2 입력하고 계산을 호출하면 5 가 출력된다`() {
         val expressionSlot = `뷰호출을 정의한다`()
 
-        `수식을 입력한다`(listOf("3", "+", "2"))
+        `수식을 입력한다`(listOf(Operand(3), Operation.Addition, Operand(2)))
         // 계산한다
         presenter.calculate()
 
@@ -133,7 +136,7 @@ class ExpressionPresenterTest {
         `뷰호출을 정의한다`()
         every { view.displayExpressionError() } just Runs
 
-        `수식을 입력한다`(listOf("3", "+"))
+        `수식을 입력한다`(listOf(Operand(3), Operation.Addition))
         presenter.calculate()
 
         verify { view.displayExpressionError() }
@@ -145,9 +148,17 @@ class ExpressionPresenterTest {
         return expressionSlot
     }
 
-    private fun `수식을 입력한다`(expressions: List<String>) {
+    private fun `수식을 입력한다`(expressions: List<ExpressionItem>) {
         for (expression in expressions) {
-            presenter.addExpressionText(expression)
+            when (expression) {
+                is Operand -> {
+                    presenter.addOperandExpression(expression)
+                }
+
+                is Operation -> {
+                    presenter.addOperationExpression(expression)
+                }
+            }
         }
     }
 

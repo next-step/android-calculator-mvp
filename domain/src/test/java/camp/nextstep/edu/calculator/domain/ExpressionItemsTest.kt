@@ -6,79 +6,70 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Before
 import org.junit.Test
 
-class ExpressionTest {
-    private lateinit var expression: Expression
+class ExpressionItemsTest {
+    private lateinit var expressionItems: ExpressionItems
 
     @Before
     fun initialize() {
-        expression = Expression(InputTextConvertor())
+        expressionItems = ExpressionItems(emptyList())
     }
 
     @Test
     fun `피연산자 1을추가하고 반환값이 1인지 확인`() {
-        val actual = expression.addExpression(
-            ExpressionItems(emptyList()), "1"
-        ).getText()
+        val actual = (expressionItems + Operand(1)).getText()
 
         assertThat(actual).isEqualTo("1")
     }
 
     @Test
     fun `연산자 + 을추가하고 반환값이 빈문자인지 확인`() {
-        val actual = expression.addExpression(
-            ExpressionItems(emptyList()), "+"
-        ).getText()
+        val actual = (expressionItems + Operation.Addition).getText()
 
         assertThat(actual).isEqualTo("")
     }
 
     @Test
-    fun `피연산자 1을추가하고 연산자 + 을추가하고 반환값이 1 + 인지 확인`() {
-        val expressionItems = ExpressionItems(listOf(Operand(1)))
-
-        val actual = expression.addExpression(expressionItems, "+").getText()
+    fun `피연산자 1을추가하고 연산자 + 을추가하고 반환문자가 1 + 인지 확인`() {
+        val actual = (expressionItems + Operand(1) + Operation.Addition).getText()
 
         assertThat(actual).isEqualTo("1 + ")
     }
 
     @Test
     fun `피연산자 1을추가하고 연산자 + 을추가하고 피연산자 2를추가하고 반환값이 1 + 2 인지 확인`() {
-        val expressionItems = ExpressionItems(
-            listOf(Operand(1), Operation.Addition)
-        )
-
-        val actual = expression.addExpression(expressionItems, "2").getText()
+        val actual = (
+            expressionItems +
+                Operand(1) +
+                Operation.Addition +
+                Operand(2)
+            ).getText()
 
         assertThat(actual).isEqualTo("1 + 2")
     }
 
     @Test
     fun `피연산자 1을추가하고 연산자 +을추가하고 피연산자 2를추가하고 삭제를 호출하여 반환값이 1 + 인지 확인`() {
-        val expressionItems = ExpressionItems(
-            listOf(Operand(1), Operation.Addition, Operand(2))
-        )
+        expressionItems = expressionItems + Operand(1) + Operation.Addition + Operand(2)
 
-        val actual = expression.removeExpressionItem(expressionItems).getText()
+        val actual = expressionItems.removeLastExpression().getText()
 
         assertThat(actual).isEqualTo("1 + ")
     }
 
     @Test
     fun `피연산자 1을추가하고 연산자 +을추가하고 삭제를 호출하여 반환값이 1 인지 확인`() {
-        val expressionItems = ExpressionItems(
-            listOf(Operand(1), Operation.Addition)
-        )
+        expressionItems = expressionItems + Operand(1) + Operation.Addition
 
-        val actual = expression.removeExpressionItem(expressionItems).getText()
+        val actual = expressionItems.removeLastExpression().getText()
 
         assertThat(actual).isEqualTo("1")
     }
 
     @Test
     fun `피연산자 1을추가하고 삭제를 호출하여 반환값이 빈문자인지 확인`() {
-        val expressionItems = ExpressionItems(listOf(Operand(1)))
+        expressionItems += Operand(1)
 
-        val actual = expression.removeExpressionItem(expressionItems).getText()
+        val actual = expressionItems.removeLastExpression().getText()
 
         assertThat(actual).isEqualTo("")
     }

@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
+import camp.nextstep.edu.calculator.domain.ExpressionItem.Operand
+import camp.nextstep.edu.calculator.domain.ExpressionItem.Operation
 
 class MainActivity : AppCompatActivity(), Contract.View {
 
@@ -16,24 +18,24 @@ class MainActivity : AppCompatActivity(), Contract.View {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.button0.setOnClickListener { setInputText("0") }
-        binding.button1.setOnClickListener { setInputText("1") }
-        binding.button2.setOnClickListener { setInputText("2") }
-        binding.button3.setOnClickListener { setInputText("3") }
-        binding.button4.setOnClickListener { setInputText("4") }
-        binding.button5.setOnClickListener { setInputText("5") }
-        binding.button6.setOnClickListener { setInputText("6") }
-        binding.button7.setOnClickListener { setInputText("7") }
-        binding.button8.setOnClickListener { setInputText("8") }
-        binding.button9.setOnClickListener { setInputText("9") }
+        binding.button0.setOnClickListener { addOperand("0") }
+        binding.button1.setOnClickListener { addOperand("1") }
+        binding.button2.setOnClickListener { addOperand("2") }
+        binding.button3.setOnClickListener { addOperand("3") }
+        binding.button4.setOnClickListener { addOperand("4") }
+        binding.button5.setOnClickListener { addOperand("5") }
+        binding.button6.setOnClickListener { addOperand("6") }
+        binding.button7.setOnClickListener { addOperand("7") }
+        binding.button8.setOnClickListener { addOperand("8") }
+        binding.button9.setOnClickListener { addOperand("9") }
 
-        binding.buttonPlus.setOnClickListener { setInputText("+") }
-        binding.buttonMinus.setOnClickListener { setInputText("-") }
-        binding.buttonMultiply.setOnClickListener { setInputText("*") }
-        binding.buttonDivide.setOnClickListener { setInputText("/") }
+        binding.buttonPlus.setOnClickListener { addOperation(Operation.Addition) }
+        binding.buttonMinus.setOnClickListener { addOperation(Operation.Subtraction) }
+        binding.buttonMultiply.setOnClickListener { addOperation(Operation.Multiplication) }
+        binding.buttonDivide.setOnClickListener { addOperation(Operation.Division) }
 
-        binding.buttonDelete.setOnClickListener { setRemoveText() }
-        binding.buttonEquals.setOnClickListener { setEqualsText() }
+        binding.buttonDelete.setOnClickListener { removeExpressionItem() }
+        binding.buttonEquals.setOnClickListener { calculate() }
     }
 
     override fun display(text: String) {
@@ -44,15 +46,19 @@ class MainActivity : AppCompatActivity(), Contract.View {
         Toast.makeText(this@MainActivity, "완성되지 않은 수식입니다", Toast.LENGTH_SHORT).show()
     }
 
-    private fun setInputText(inputText: String) {
-        presenter.addExpressionText(inputText)
+    private fun addOperand(inputText: String) {
+        presenter.addOperandExpression(Operand(inputText.toInt()))
     }
 
-    private fun setRemoveText() {
+    private fun addOperation(operation: Operation) {
+        presenter.addOperationExpression(operation)
+    }
+
+    private fun removeExpressionItem() {
         presenter.removeExpressionItem()
     }
 
-    private fun setEqualsText() {
+    private fun calculate() {
         presenter.calculate()
     }
 }
