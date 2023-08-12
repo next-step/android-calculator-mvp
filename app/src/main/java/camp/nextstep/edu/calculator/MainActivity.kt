@@ -4,57 +4,61 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
-import camp.nextstep.edu.calculator.domain.ExpressionManager
-import camp.nextstep.edu.calculator.domain.InputTextConvertor
-import camp.nextstep.edu.calculator.domain.ExpressionTextManager
+import camp.nextstep.edu.calculator.domain.ExpressionItem.Operand
+import camp.nextstep.edu.calculator.domain.ExpressionItem.Operation
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), Contract.View {
+
+    override val presenter: Contract.Presenter = ExpressionPresenter(this)
+
     private lateinit var binding: ActivityMainBinding
-    private lateinit var expressionTextManager: ExpressionTextManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        expressionTextManager = ExpressionTextManager(InputTextConvertor(), ExpressionManager())
+        binding.button0.setOnClickListener { addOperand("0") }
+        binding.button1.setOnClickListener { addOperand("1") }
+        binding.button2.setOnClickListener { addOperand("2") }
+        binding.button3.setOnClickListener { addOperand("3") }
+        binding.button4.setOnClickListener { addOperand("4") }
+        binding.button5.setOnClickListener { addOperand("5") }
+        binding.button6.setOnClickListener { addOperand("6") }
+        binding.button7.setOnClickListener { addOperand("7") }
+        binding.button8.setOnClickListener { addOperand("8") }
+        binding.button9.setOnClickListener { addOperand("9") }
 
-        binding.button0.setOnClickListener { setInputText("0") }
-        binding.button1.setOnClickListener { setInputText("1") }
-        binding.button2.setOnClickListener { setInputText("2") }
-        binding.button3.setOnClickListener { setInputText("3") }
-        binding.button4.setOnClickListener { setInputText("4") }
-        binding.button5.setOnClickListener { setInputText("5") }
-        binding.button6.setOnClickListener { setInputText("6") }
-        binding.button7.setOnClickListener { setInputText("7") }
-        binding.button8.setOnClickListener { setInputText("8") }
-        binding.button9.setOnClickListener { setInputText("9") }
+        binding.buttonPlus.setOnClickListener { addOperation(Operation.Addition) }
+        binding.buttonMinus.setOnClickListener { addOperation(Operation.Subtraction) }
+        binding.buttonMultiply.setOnClickListener { addOperation(Operation.Multiplication) }
+        binding.buttonDivide.setOnClickListener { addOperation(Operation.Division) }
 
-        binding.buttonPlus.setOnClickListener { setInputText("+") }
-        binding.buttonMinus.setOnClickListener { setInputText("-") }
-        binding.buttonMultiply.setOnClickListener { setInputText("*") }
-        binding.buttonDivide.setOnClickListener { setInputText("/") }
-
-        binding.buttonDelete.setOnClickListener { setRemoveText() }
-        binding.buttonEquals.setOnClickListener { setEqualsText() }
+        binding.buttonDelete.setOnClickListener { removeExpressionItem() }
+        binding.buttonEquals.setOnClickListener { calculate() }
     }
 
-    private fun setInputText(inputText: String) {
-        binding.textView.text = expressionTextManager.addText(inputText)
+    override fun display(text: String) {
+        binding.textView.text = text
     }
 
-    private fun setRemoveText() {
-        binding.textView.text = expressionTextManager.removeText()
+    override fun displayExpressionError() {
+        Toast.makeText(this@MainActivity, "완성되지 않은 수식입니다", Toast.LENGTH_SHORT).show()
     }
 
-    private fun setEqualsText() {
-        with(binding.textView) {
-            val equalsText = expressionTextManager.calculateText()
-            if (equalsText.equals(text.toString(), false)) {
-                Toast.makeText(this@MainActivity, "완성되지 않은 수식입니다", Toast.LENGTH_SHORT).show()
-            } else {
-                text = equalsText
-            }
-        }
+    private fun addOperand(inputText: String) {
+        presenter.addOperandExpression(Operand(inputText.toInt()))
+    }
+
+    private fun addOperation(operation: Operation) {
+        presenter.addOperationExpression(operation)
+    }
+
+    private fun removeExpressionItem() {
+        presenter.removeExpressionItem()
+    }
+
+    private fun calculate() {
+        presenter.calculate()
     }
 }
