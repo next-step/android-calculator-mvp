@@ -1,14 +1,8 @@
 package com.example.calculatorlib
 
-class Formula {
-    private var formula: String = ""
+class Formula(private var formula: String = "") {
 
     fun getFormula() = formula
-
-    // 테스트를 위한 setter
-    fun setFormula(formula: String) {
-        this.formula = formula
-    }
 
     // 숫자 추가
     fun addNumber(char: Char): String {
