@@ -134,7 +134,7 @@ class MainActivityTest {
         onView(withId(R.id.buttonEquals)).perform(click())
 
         // than : 계산된 수식 값이 보여야 한다.
-        onView(withId(R.id.textView)).check(matches(withText("20")))
+        onView(withId(R.id.textView)).check(matches(withText("32 - 12\n= 20")))
     }
 
 

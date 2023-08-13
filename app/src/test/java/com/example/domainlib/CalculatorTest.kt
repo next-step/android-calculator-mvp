@@ -1,6 +1,5 @@
-package camp.nextstep.edu.calculator
+package com.example.domainlib
 
-import com.example.calculatorlib.Calculator
 import com.google.common.truth.Truth.assertThat
 import org.junit.Before
 import org.junit.Test
@@ -8,7 +7,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import org.junit.runners.Parameterized.Parameters
 
-class CalculatorTest {
+class DomainTest {
     private lateinit var calculator: Calculator
 
     @Before
@@ -128,3 +127,17 @@ class ManyCalculatorErrorTest(private val input: String?, private val expected: 
         )
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

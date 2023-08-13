@@ -1,4 +1,4 @@
-package com.example.calculatorlib
+package com.example.domainlib
 
 class Calculator {
     fun evaluate(str: String?): Int {
