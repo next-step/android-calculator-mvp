@@ -1,6 +1,5 @@
-package camp.nextstep.edu.calculator
+package com.example.domainlib
 
-import com.example.calculatorlib.Formula
 import com.google.common.truth.Truth
 import org.junit.Test
 

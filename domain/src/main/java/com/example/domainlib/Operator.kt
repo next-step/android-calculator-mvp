@@ -1,4 +1,4 @@
-package com.example.calculatorlib
+package com.example.domainlib
 
 enum class Operator(val operator: String, val calculator: (Int, Int) -> Int) {
     PLUS("+", { left, right -> left + right }),

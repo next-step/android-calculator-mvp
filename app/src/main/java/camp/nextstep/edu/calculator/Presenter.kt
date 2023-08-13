@@ -1,7 +1,7 @@
 package camp.nextstep.edu.calculator
 
-import com.example.calculatorlib.Calculator
-import com.example.calculatorlib.Formula
+import com.example.domainlib.Calculator
+import com.example.domainlib.Formula
 
 class Presenter(private val view: Contract.View): Contract.Presenter {
 

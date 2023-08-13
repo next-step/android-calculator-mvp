@@ -1,4 +1,4 @@
-package com.example.calculatorlib
+package com.example.domainlib
 
 class Formula(private var formula: String = "") {
 
