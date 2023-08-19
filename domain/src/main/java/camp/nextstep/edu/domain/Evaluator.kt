@@ -12,10 +12,14 @@ class Evaluator {
         var result = expressions.first().toLong()
 
         for (i in 1 until  expressions.size step 2) {
-            val operator = expressions[i]
+            val operator = CalculationOperator.valueOf(expressions[i])
             val secondNumber = expressions[i + 1].toLong()
 
-            result = operator.getCalculationResult(result, secondNumber)
+            result = getCalculationResult(
+                firstNumber = result,
+                secondNumber = secondNumber,
+                operator = operator,
+            )
         }
 
         return result

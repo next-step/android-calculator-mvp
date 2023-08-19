@@ -3,6 +3,7 @@ package camp.nextstep.edu.calculator
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
+import camp.nextstep.edu.domain.CalculationOperator
 import camp.nextstep.edu.domain.Evaluator
 import camp.nextstep.edu.domain.ExpressionHandler
 
@@ -29,10 +30,10 @@ class MainActivity : AppCompatActivity() {
             button8.setOnClickListener { showExpression("8") }
             button9.setOnClickListener { showExpression("9") }
 
-            buttonPlus.setOnClickListener { showExpression(" + ") }
-            buttonMinus.setOnClickListener { showExpression(" - ") }
-            buttonDivide.setOnClickListener { showExpression(" ÷ ") }
-            buttonMultiply.setOnClickListener { showExpression(" × ") }
+            buttonPlus.setOnClickListener { showExpression(" ${CalculationOperator.PLUS.symbol} ") }
+            buttonMinus.setOnClickListener { showExpression(" ${CalculationOperator.MINUS.symbol} ") }
+            buttonDivide.setOnClickListener { showExpression(" ${CalculationOperator.DIVIDE.symbol} ") }
+            buttonMultiply.setOnClickListener { showExpression(" ${CalculationOperator.MULTIPLY.symbol} ") }
 
             buttonDelete.setOnClickListener {
                 expressionHandler.deleteLast()

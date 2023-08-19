@@ -11,47 +11,68 @@ class CalculationOperatorTest {
             val operator = "tan"
             val firstNumber = 30L
             val secondNumber = 1L
-            operator.getCalculationResult(firstNumber, secondNumber)
+            getCalculationResult(
+                firstNumber = firstNumber,
+                secondNumber = secondNumber,
+                operator = CalculationOperator.valueOf(operator),
+            )
         }
     }
 
     @Test
-    fun `5 + 3 이 들어온 경우 IllegalArgumentException 이 발생하지 않고 8이 리턴된다`() {
+    fun `정상적인 수식이 입력된 경우, 예외가 발생하지 않고 정상적인 연산 결과가 출력된다 - 1`() {
         val operator = "+"
         val firstNumber = 5L
         val secondNumber = 3L
 
-        val result = operator.getCalculationResult(firstNumber, secondNumber)
+        val result = getCalculationResult(
+            firstNumber = firstNumber,
+            secondNumber = secondNumber,
+            operator = CalculationOperator.valueOf(operator),
+        )
+
         assertEquals(result, 8)
     }
 
     @Test
-    fun `3 - 5 이 들어온 경우 IllegalArgumentException 이 발생하지 않고 -2가 리턴된다`() {
+    fun `정상적인 수식이 입력된 경우, 예외가 발생하지 않고 정상적인 연산 결과가 출력된다 - 2`() {
         val operator = "-"
         val firstNumber = 3L
         val secondNumber = 5L
 
-        val result = operator.getCalculationResult(firstNumber, secondNumber)
+        val result = getCalculationResult(
+            firstNumber = firstNumber,
+            secondNumber = secondNumber,
+            operator = CalculationOperator.valueOf(operator),
+        )
         assertEquals(result, -2)
     }
 
     @Test
-    fun `3 × 5 이 들어온 경우 IllegalArgumentException 이 발생하지 않고 15가 리턴된다`() {
+    fun `정상적인 수식이 입력된 경우, 예외가 발생하지 않고 정상적인 연산 결과가 출력된다 - 3`() {
         val operator = "×"
         val firstNumber = 3L
         val secondNumber = 5L
 
-        val result = operator.getCalculationResult(firstNumber, secondNumber)
+        val result = getCalculationResult(
+            firstNumber = firstNumber,
+            secondNumber = secondNumber,
+            operator = CalculationOperator.valueOf(operator),
+        )
         assertEquals(result, 15)
     }
 
     @Test
-    fun `9 ÷ 3 이 들어온 경우 IllegalArgumentException 이 발생하지 않고 3이 리턴된다`() {
+    fun `정상적인 수식이 입력된 경우, 예외가 발생하지 않고 정상적인 연산 결과가 출력된다 - 4`() {
         val operator = "÷"
         val firstNumber = 9L
         val secondNumber = 3L
 
-        val result = operator.getCalculationResult(firstNumber, secondNumber)
+        val result = getCalculationResult(
+            firstNumber = firstNumber,
+            secondNumber = secondNumber,
+            operator = CalculationOperator.valueOf(operator),
+        )
         assertEquals(result, 3)
     }
 }
