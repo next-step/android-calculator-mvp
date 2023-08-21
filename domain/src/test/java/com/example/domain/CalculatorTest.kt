@@ -16,6 +16,24 @@ class CalculatorTest(
     private val calculator = Calculator
     private val expression = Expression
 
+    private fun addToInput(input: String): Boolean {
+        return when (expression.lastInputState) {
+            InputState.Init -> {
+                expression.currentInitStateInput(input)
+            }
+
+            InputState.Operand -> {
+                expression.currentOperandStateInput(input)
+            }
+
+            InputState.Operator -> {
+                expression.currentOperatorStateInput(input)
+            }
+
+            else -> false
+        }
+    }
+
     @Before
     fun init() {
         expression.clearCurrentOperandList()
@@ -25,7 +43,7 @@ class CalculatorTest(
     @Test
     fun 사칙연산_계산_테스트() {
         input.split(" ").forEach {
-            expression.addInput(it)
+            addToInput(it)
         }
         val actual = calculator.calculate(input)
         assertThat(actual).isEqualTo(Operand(result))

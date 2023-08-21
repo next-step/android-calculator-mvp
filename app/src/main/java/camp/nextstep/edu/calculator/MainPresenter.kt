@@ -27,15 +27,15 @@ class MainPresenter(
     override fun addToInput(input: String): Boolean {
         return when (expression.lastInputState) {
             InputState.Init -> {
-                expression.currentInit(input)
+                expression.currentInitStateInput(input)
             }
 
             InputState.Operand -> {
-                expression.currentOperand(input)
+                expression.currentOperandStateInput(input)
             }
 
             InputState.Operator -> {
-                expression.currentOperator(input)
+                expression.currentOperatorStateInput(input)
             }
 
             else -> false

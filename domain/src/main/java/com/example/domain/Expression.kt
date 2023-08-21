@@ -5,15 +5,12 @@
 
 package com.example.domain
 
-import com.example.domain.Expression.isOperand
-import com.example.domain.Expression.isOperator
-
 object Expression {
 
     val currentOperandList = mutableListOf<String>()
     var lastInputState = InputState.Init
 
-    fun currentInit(input: String): Boolean {
+    fun currentInitStateInput(input: String): Boolean {
         if (input.isOperand()) {
             addElement(input)
             lastInputState = InputState.Operand
@@ -22,7 +19,7 @@ object Expression {
         return false
     }
 
-    fun currentOperand(input: String): Boolean {
+    fun currentOperandStateInput(input: String): Boolean {
         if (input.isOperand()) {
             currentOperandList[currentOperandList.lastIndex] =
                 currentOperandList.last() + input
@@ -35,7 +32,7 @@ object Expression {
         return false
     }
 
-    fun currentOperator(input: String): Boolean {
+    fun currentOperatorStateInput(input: String): Boolean {
         if (input.isOperand()) {
             addElement(input)
             lastInputState = InputState.Operand
@@ -46,42 +43,6 @@ object Expression {
         }
         return false
     }
-
-//    fun addInput(input: String): Boolean {
-//        when (lastInputState) {
-//            InputState.Init -> {
-//                if (input.isOperand()) {
-//                    addElement(input)
-//                    lastInputState = InputState.Operand
-//                    return true
-//                }
-//            }
-//
-//            InputState.Operand -> {
-//                if (input.isOperand()) {
-//                    currentOperandList[currentOperandList.lastIndex] =
-//                        currentOperandList.last() + input
-//                    return true
-//                } else if (input.isOperator()) {
-//                    addElement(input)
-//                    lastInputState = InputState.Operator
-//                    return true
-//                }
-//            }
-//
-//            InputState.Operator -> {
-//                if (input.isOperand()) {
-//                    addElement(input)
-//                    lastInputState = InputState.Operand
-//                    return true
-//                } else if (input.isOperator()) {
-//                    currentOperandList[currentOperandList.lastIndex] = input
-//                    return true
-//                }
-//            }
-//        }
-//        return false
-//    }
 
     private fun addElement(input: String) = currentOperandList.add(input)
 
