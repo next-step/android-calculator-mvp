@@ -6,7 +6,6 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import com.example.domain.Calculator
 import com.example.domain.Expression
 import org.junit.Assert.*
 import org.junit.Before
@@ -18,8 +17,6 @@ class MainActivityTest {
 
     @get:Rule
     var activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
-
-    private val calculator = Calculator
     private val expression = Expression
 
     @Before
