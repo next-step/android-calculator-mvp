@@ -11,6 +11,7 @@ class CalculationOperatorTest {
             val operator = "tan"
             val firstNumber = 30L
             val secondNumber = 1L
+
             getCalculationResult(
                 firstNumber = firstNumber,
                 secondNumber = secondNumber,
@@ -21,14 +22,16 @@ class CalculationOperatorTest {
 
     @Test
     fun `정상적인 수식이 입력된 경우, 예외가 발생하지 않고 정상적인 연산 결과가 출력된다 - 1`() {
-        val operator = "+"
+        val plusOperator = "+"
+        val operator = CalculationOperator.values().firstOrNull { it.symbol == plusOperator }
+            ?: CalculationOperator.PLUS
         val firstNumber = 5L
         val secondNumber = 3L
 
         val result = getCalculationResult(
             firstNumber = firstNumber,
             secondNumber = secondNumber,
-            operator = CalculationOperator.valueOf(operator),
+            operator = operator,
         )
 
         assertEquals(result, 8)
@@ -36,42 +39,49 @@ class CalculationOperatorTest {
 
     @Test
     fun `정상적인 수식이 입력된 경우, 예외가 발생하지 않고 정상적인 연산 결과가 출력된다 - 2`() {
-        val operator = "-"
+        val minusOperator = "-"
+        val operator = CalculationOperator.values().firstOrNull { it.symbol == minusOperator }
+            ?: CalculationOperator.MINUS
         val firstNumber = 3L
         val secondNumber = 5L
 
         val result = getCalculationResult(
             firstNumber = firstNumber,
             secondNumber = secondNumber,
-            operator = CalculationOperator.valueOf(operator),
+            operator = operator,
         )
+
         assertEquals(result, -2)
     }
 
     @Test
     fun `정상적인 수식이 입력된 경우, 예외가 발생하지 않고 정상적인 연산 결과가 출력된다 - 3`() {
-        val operator = "×"
+        val multiplyOperator = "×"
+        val operator = CalculationOperator.values().firstOrNull { it.symbol == multiplyOperator }
+            ?: CalculationOperator.MULTIPLY
         val firstNumber = 3L
         val secondNumber = 5L
 
         val result = getCalculationResult(
             firstNumber = firstNumber,
             secondNumber = secondNumber,
-            operator = CalculationOperator.valueOf(operator),
+            operator = operator,
         )
         assertEquals(result, 15)
     }
 
     @Test
     fun `정상적인 수식이 입력된 경우, 예외가 발생하지 않고 정상적인 연산 결과가 출력된다 - 4`() {
-        val operator = "÷"
+        val multiplyOperator = "÷"
+        val operator = CalculationOperator.values().firstOrNull { it.symbol == multiplyOperator }
+            ?: CalculationOperator.DIVIDE
         val firstNumber = 9L
         val secondNumber = 3L
 
         val result = getCalculationResult(
             firstNumber = firstNumber,
             secondNumber = secondNumber,
-            operator = CalculationOperator.valueOf(operator),
+            operator = operator,
         )
         assertEquals(result, 3)
     }

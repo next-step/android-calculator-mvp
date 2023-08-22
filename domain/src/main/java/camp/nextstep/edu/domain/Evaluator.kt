@@ -11,8 +11,10 @@ class Evaluator {
 
         var result = expressions.first().toLong()
 
-        for (i in 1 until  expressions.size step 2) {
-            val operator = CalculationOperator.valueOf(expressions[i])
+        for (i in 1 until expressions.size step 2) {
+            val operator =
+                CalculationOperator.values().firstOrNull { it.symbol == expressions[i] }
+                    ?: CalculationOperator.PLUS
             val secondNumber = expressions[i + 1].toLong()
 
             result = getCalculationResult(

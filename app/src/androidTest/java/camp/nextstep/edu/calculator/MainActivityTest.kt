@@ -14,6 +14,72 @@ class MainActivityTest {
     val activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
+    fun 입력된_피연산자가_없을때_숫자를_클릭하면_숫자가_노출된다() {
+        onView(withId(R.id.button3)).perform(click())
+        onView(withId(R.id.textView)).check(matches(withText("3")))
+    }
+
+    @Test
+    fun 입력된_피연산자가_있을때_숫자를_클릭하면_연속된_숫자가_노출된다() {
+        onView(withId(R.id.button8)).perform(click())
+        onView(withId(R.id.button9)).perform(click())
+        onView(withId(R.id.textView)).check(matches(withText("89")))
+    }
+
+    @Test
+    fun 입력된_피연산자가_없을때_연산자를_클릭하면_아무것도_노출되지_않는다() {
+        onView(withId(R.id.buttonDivide)).perform(click())
+        onView(withId(R.id.textView)).check(matches(withText("")))
+    }
+
+    @Test
+    fun 입력된_피연산자가_있을때_연산자를_클릭하면_연산자가_노출된다() {
+        onView(withId(R.id.button3)).perform(click())
+        onView(withId(R.id.buttonPlus)).perform(click())
+        onView(withId(R.id.textView)).check(matches(withText("3 + ")))
+    }
+
+    @Test
+    fun 입력된_피연산자와_연산자가_있을때_연산자를_클릭하면_연산자가_대체된다() {
+        onView(withId(R.id.button3)).perform(click())
+        onView(withId(R.id.buttonPlus)).perform(click())
+        onView(withId(R.id.buttonMinus)).perform(click())
+        onView(withId(R.id.textView)).check(matches(withText("3 - ")))
+    }
+
+    @Test
+    fun 입력된_수식이_없을때_지우기_버튼을_클릭하면_아무_변화가_없다() {
+        onView(withId(R.id.buttonDelete)).perform(click())
+        onView(withId(R.id.textView)).check(matches(withText("")))
+    }
+
+    @Test
+    fun 입력된_수식에서_지우기_버튼을_클릭하면_마지막으로_입력된_연산자_혹은_피연산자가_지워진다() {
+        onView(withId(R.id.button3)).perform(click())
+        onView(withId(R.id.button2)).perform(click())
+        onView(withId(R.id.buttonPlus)).perform(click())
+        onView(withId(R.id.button1)).perform(click())
+        onView(withId(R.id.textView)).check(matches(withText("32 + 1")))
+        onView(withId(R.id.buttonDelete)).perform(click())
+        onView(withId(R.id.textView)).check(matches(withText("32 +")))
+        onView(withId(R.id.buttonDelete)).perform(click())
+        onView(withId(R.id.textView)).check(matches(withText("32")))
+        onView(withId(R.id.buttonDelete)).perform(click())
+        onView(withId(R.id.textView)).check(matches(withText("3")))
+        onView(withId(R.id.buttonDelete)).perform(click())
+        onView(withId(R.id.textView)).check(matches(withText("")))
+    }
+
+    @Test
+    fun 입력된_수식이_완전하고_계산버튼_클릭시_계산결과가_노출된다() {
+        onView(withId(R.id.button3)).perform(click())
+        onView(withId(R.id.buttonPlus)).perform(click())
+        onView(withId(R.id.button2)).perform(click())
+        onView(withId(R.id.buttonEquals)).perform(click())
+        onView(withId(R.id.textView)).check(matches(withText("5")))
+    }
+
+    @Test
     fun button0() {
         // when : 계산기 버튼 0을 클릭하면
         onView(withId(R.id.button0)).perform(click())
