@@ -91,4 +91,6 @@ object Expression {
     fun isValidExpression() {
         require(lastInputState == InputState.Operand && currentOperandList.size > 2) { "완성되지 않은 수식입니다." }
     }
+
+    fun showExpression() = currentOperandList.joinToString(" ")
 }

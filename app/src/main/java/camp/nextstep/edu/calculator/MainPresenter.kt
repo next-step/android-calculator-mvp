@@ -16,11 +16,10 @@ class MainPresenter(
 
     private val calculator = Calculator
     private val expression = Expression
-    private fun getOperand() = expression.currentOperandList.joinToString(" ")
 
     override fun clickButton(input: String) {
         if (addToInput(input)) {
-            view.showResult(getOperand())
+            view.showResult(expression.showExpression())
         }
     }
 
@@ -44,13 +43,13 @@ class MainPresenter(
 
     override fun removeLast() {
         expression.removeLastInput()
-        view.showResult(getOperand())
+        view.showResult(expression.showExpression())
     }
 
     override fun calculate() {
         runCatching {
             expression.isValidExpression()
-            calculator.calculate(getOperand())
+            calculator.calculate(expression.showExpression())
         }.onSuccess { result ->
             view.showResult(result.toString())
             clearCurrentOperandList()
