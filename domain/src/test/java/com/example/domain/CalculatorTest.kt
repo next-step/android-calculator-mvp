@@ -16,7 +16,7 @@ class CalculatorTest(
     private val calculator = Calculator
     private val expression = Expression
 
-    private fun addToInput(input: String): Boolean {
+    private fun addToInput(input: String): Result<Unit> {
         return when (expression.lastInputState) {
             InputState.Init -> {
                 expression.currentInitStateInput(input)
@@ -30,7 +30,7 @@ class CalculatorTest(
                 expression.currentOperatorStateInput(input)
             }
 
-            else -> false
+            else -> Result.failure(IllegalArgumentException("오류가 발생했습니다. 계산기를 초기화해주세요."))
         }
     }
 
