@@ -4,93 +4,97 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
-import com.example.domain.Calculator
+import com.example.domain.Operator
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainContract.View {
+
+    override lateinit var presenter: MainContract.Presenter
     private lateinit var binding: ActivityMainBinding
-    private val calculator = Calculator
+
+    override fun showResult(result: String) {
+        binding.textView.text = result
+    }
+
+    override fun showError(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+
+        initPresenter()
+        initView()
         setContentView(binding.root)
+    }
 
+    private fun initPresenter() {
+        presenter = MainPresenter(this)
+    }
 
+    private fun initView() {
+        binding = ActivityMainBinding.inflate(layoutInflater)
         binding.button0.setOnClickListener {
-            clickButton("0")
+            presenter.clickButton("0")
         }
 
         binding.button1.setOnClickListener {
-            clickButton("1")
+            presenter.clickButton("1")
         }
 
         binding.button2.setOnClickListener {
-            clickButton("2")
+            presenter.clickButton("2")
         }
 
         binding.button3.setOnClickListener {
-            clickButton("3")
+            presenter.clickButton("3")
         }
 
         binding.button4.setOnClickListener {
-            clickButton("4")
+            presenter.clickButton("4")
         }
 
         binding.button5.setOnClickListener {
-            clickButton("5")
+            presenter.clickButton("5")
         }
 
         binding.button6.setOnClickListener {
-            clickButton("6")
+            presenter.clickButton("6")
         }
 
         binding.button7.setOnClickListener {
-            clickButton("7")
+            presenter.clickButton("7")
         }
 
         binding.button8.setOnClickListener {
-            clickButton("8")
+            presenter.clickButton("8")
         }
 
         binding.button9.setOnClickListener {
-            clickButton("9")
+            presenter.clickButton("9")
         }
 
         binding.buttonPlus.setOnClickListener {
-            clickButton("+")
+            presenter.clickButton(Operator.PLUS.operator)
         }
 
         binding.buttonMinus.setOnClickListener {
-            clickButton("-")
+            presenter.clickButton(Operator.MINUS.operator)
         }
 
         binding.buttonMultiply.setOnClickListener {
-            clickButton("*")
+            presenter.clickButton(Operator.TIMES.operator)
         }
 
         binding.buttonDivide.setOnClickListener {
-            clickButton("/")
+            presenter.clickButton(Operator.DIV.operator)
         }
 
         binding.buttonDelete.setOnClickListener {
-            calculator.removeLastInput()
-            binding.textView.text = getOperand()
+            presenter.removeLast()
         }
 
         binding.buttonEquals.setOnClickListener {
-            runCatching { calculator.calculate(getOperand()) }.onSuccess { result ->
-                binding.textView.text = result.toString()
-            }.onFailure { throwable ->
-                Toast.makeText(this, throwable.message, Toast.LENGTH_SHORT).show()
-            }
+            presenter.calculate()
         }
     }
-
-    private fun clickButton(input: String) {
-        if (calculator.addInput(input)) {
-            binding.textView.text = getOperand()
-        }
-    }
-
-    private fun getOperand() = calculator.currentOperandList.joinToString(" ")
 }

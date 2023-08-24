@@ -2,6 +2,7 @@ package com.example.domain
 
 import com.google.common.truth.Truth.assertThat
 import org.junit.Assert.*
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
@@ -13,16 +14,39 @@ class CalculatorTest(
 ) {
 
     private val calculator = Calculator
+    private val expression = Expression
+
+    private fun addToInput(input: String): Result<Unit> {
+        return when (expression.lastInputState) {
+            InputState.Init -> {
+                expression.currentInitStateInput(input)
+            }
+
+            InputState.Operand -> {
+                expression.currentOperandStateInput(input)
+            }
+
+            InputState.Operator -> {
+                expression.currentOperatorStateInput(input)
+            }
+
+            else -> Result.failure(IllegalArgumentException("오류가 발생했습니다. 계산기를 초기화해주세요."))
+        }
+    }
+
+    @Before
+    fun init() {
+        expression.clearCurrentOperandList()
+    }
 
     // then
     @Test
     fun 사칙연산_계산_테스트() {
         input.split(" ").forEach {
-            calculator.addInput(it)
+            addToInput(it)
         }
         val actual = calculator.calculate(input)
         assertThat(actual).isEqualTo(Operand(result))
-        calculator.clearCurrentOperandList()
     }
 
     companion object {

@@ -6,8 +6,9 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import com.example.domain.Calculator
+import com.example.domain.Expression
 import org.junit.Assert.*
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import java.lang.IllegalArgumentException
@@ -16,8 +17,12 @@ class MainActivityTest {
 
     @get:Rule
     var activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
+    private val expression = Expression
 
-    private val calculator = Calculator
+    @Before
+    fun init() {
+        expression.clearCurrentOperandList()
+    }
 
     @Test
     fun `사용자가_피연산자_0_버튼을_누르면_화면에_0이_보여야_한다`() {
@@ -26,7 +31,6 @@ class MainActivityTest {
 
         // then: '0'이 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("0")))
-        calculator.clearCurrentOperandList()
     }
 
     @Test
@@ -36,7 +40,6 @@ class MainActivityTest {
 
         // then: '1'이 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("1")))
-        calculator.clearCurrentOperandList()
     }
 
     @Test
@@ -46,7 +49,6 @@ class MainActivityTest {
 
         // then: '2'이 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("2")))
-        calculator.clearCurrentOperandList()
     }
 
     @Test
@@ -56,7 +58,6 @@ class MainActivityTest {
 
         // then: '3'이 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("3")))
-        calculator.clearCurrentOperandList()
     }
 
     @Test
@@ -66,7 +67,6 @@ class MainActivityTest {
 
         // then: '4'이 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("4")))
-        calculator.clearCurrentOperandList()
     }
 
     @Test
@@ -76,7 +76,6 @@ class MainActivityTest {
 
         // then: '5'이 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("5")))
-        calculator.clearCurrentOperandList()
     }
 
     @Test
@@ -86,7 +85,6 @@ class MainActivityTest {
 
         // then: '6'이 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("6")))
-        calculator.clearCurrentOperandList()
     }
 
     @Test
@@ -96,7 +94,6 @@ class MainActivityTest {
 
         // then: '7'이 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("7")))
-        calculator.clearCurrentOperandList()
     }
 
     @Test
@@ -106,7 +103,6 @@ class MainActivityTest {
 
         // then: '8'이 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("8")))
-        calculator.clearCurrentOperandList()
     }
 
     @Test
@@ -118,7 +114,6 @@ class MainActivityTest {
 
         // then: '5 + 1' 이 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("5 + 1")))
-        calculator.clearCurrentOperandList()
     }
 
     @Test
@@ -129,7 +124,6 @@ class MainActivityTest {
 
         // then: '89'가 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("89")))
-        calculator.clearCurrentOperandList()
     }
 
     @Test
@@ -142,7 +136,6 @@ class MainActivityTest {
 
         // then: 공백이 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("")))
-        calculator.clearCurrentOperandList()
     }
 
     @Test
@@ -153,7 +146,6 @@ class MainActivityTest {
 
         // then: '1 +'이 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("1 +")))
-        calculator.clearCurrentOperandList()
     }
 
     @Test
@@ -165,7 +157,6 @@ class MainActivityTest {
 
         // then: '1 -'이 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("1 -")))
-        calculator.clearCurrentOperandList()
     }
 
     @Test
@@ -175,7 +166,6 @@ class MainActivityTest {
 
         // then: '0' 이 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("")))
-        calculator.clearCurrentOperandList()
     }
 
     @Test
@@ -189,7 +179,6 @@ class MainActivityTest {
 
         // then: '32 +' 이 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("32 +")))
-        calculator.clearCurrentOperandList()
     }
 
     @Test
@@ -204,7 +193,6 @@ class MainActivityTest {
 
         // then: '32' 이 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("32")))
-        calculator.clearCurrentOperandList()
     }
 
     @Test
@@ -217,7 +205,6 @@ class MainActivityTest {
 
         // then: '5' 이 보여야 한다
         onView(withId(R.id.textView)).check(matches(withText("5")))
-        calculator.clearCurrentOperandList()
     }
 
     @Test
@@ -237,6 +224,5 @@ class MainActivityTest {
             assert(it is IllegalArgumentException)
             assertEquals(it.message, "완성되지 않은 수식입니다")
         }
-        calculator.clearCurrentOperandList()
     }
 }
