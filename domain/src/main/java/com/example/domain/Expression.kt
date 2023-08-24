@@ -7,41 +7,41 @@ package com.example.domain
 
 object Expression {
 
-    val currentOperandList = mutableListOf<String>()
+    private val currentOperandList = mutableListOf<String>()
     var lastInputState = InputState.Init
 
-    fun currentInitStateInput(input: String): Boolean {
+    fun currentInitStateInput(input: String): Result<Unit> {
         if (input.isOperand()) {
             addElement(input)
             lastInputState = InputState.Operand
-            return true
+            return Result.success(Unit)
         }
-        return false
+        return Result.failure(IllegalArgumentException(NEED_OPERAND))
     }
 
-    fun currentOperandStateInput(input: String): Boolean {
+    fun currentOperandStateInput(input: String): Result<Unit> {
         if (input.isOperand()) {
             currentOperandList[currentOperandList.lastIndex] =
                 currentOperandList.last() + input
-            return true
+            return Result.success(Unit)
         } else if (input.isOperator()) {
             addElement(input)
             lastInputState = InputState.Operator
-            return true
+            return Result.success(Unit)
         }
-        return false
+        return Result.failure(IllegalArgumentException(NEED_OPERAND_AND_OPERATOR))
     }
 
-    fun currentOperatorStateInput(input: String): Boolean {
+    fun currentOperatorStateInput(input: String): Result<Unit> {
         if (input.isOperand()) {
             addElement(input)
             lastInputState = InputState.Operand
-            return true
+            return Result.success(Unit)
         } else if (input.isOperator()) {
             currentOperandList[currentOperandList.lastIndex] = input
-            return true
+            return Result.success(Unit)
         }
-        return false
+        return Result.failure(IllegalArgumentException(NEED_OPERAND_AND_OPERATOR))
     }
 
     private fun addElement(input: String) = currentOperandList.add(input)
@@ -94,3 +94,7 @@ object Expression {
 
     fun showExpression() = currentOperandList.joinToString(" ")
 }
+
+const val NEED_OPERAND = "숫자를 먼저 입력해주세요."
+const val NEED_OPERAND_AND_OPERATOR = "숫자 또는 연산자를 입력해주세요."
+

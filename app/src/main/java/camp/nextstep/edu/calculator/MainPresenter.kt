@@ -18,12 +18,16 @@ class MainPresenter(
     private val expression = Expression
 
     override fun clickButton(input: String) {
-        if (addToInput(input)) {
-            view.showResult(expression.showExpression())
-        }
+        addToInput(input)
+            .onSuccess {
+                view.showResult(expression.showExpression())
+            }
+            .onFailure {
+                view.showError(it.message ?: DEFAULT_ERROR_MSG)
+            }
     }
 
-    override fun addToInput(input: String): Boolean {
+    override fun addToInput(input: String): Result<Unit> {
         return when (expression.lastInputState) {
             InputState.Init -> {
                 expression.currentInitStateInput(input)
@@ -37,7 +41,7 @@ class MainPresenter(
                 expression.currentOperatorStateInput(input)
             }
 
-            else -> false
+            else -> Result.failure(IllegalArgumentException(DEFAULT_ERROR_MSG))
         }
     }
 
@@ -54,7 +58,7 @@ class MainPresenter(
             view.showResult(result.toString())
             clearCurrentOperandList()
         }.onFailure { throwable ->
-            view.showError(throwable.message ?: "에러")
+            view.showError(throwable.message ?: DEFAULT_ERROR_MSG)
         }
     }
 
@@ -62,3 +66,5 @@ class MainPresenter(
         expression.clearCurrentOperandList()
     }
 }
+
+const val DEFAULT_ERROR_MSG = "오류가 발생했습니다. 계산기를 초기화해주세요."

@@ -16,7 +16,7 @@ interface MainContract {
     interface Presenter {
         fun clickButton(input: String)
 
-        fun addToInput(input: String): Boolean
+        fun addToInput(input: String): Result<Unit>
         fun removeLast()
         fun calculate()
         fun clearCurrentOperandList()
