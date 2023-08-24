@@ -22,10 +22,17 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        presenter = MainPresenter(this)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        initPresenter()
+        initView()
         setContentView(binding.root)
+    }
 
+    private fun initPresenter() {
+        presenter = MainPresenter(this)
+    }
+
+    private fun initView() {
+        binding = ActivityMainBinding.inflate(layoutInflater)
         binding.button0.setOnClickListener {
             presenter.clickButton("0")
         }
