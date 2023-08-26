@@ -1,6 +1,6 @@
 package camp.nextstep.edu.domain
 
-import camp.nextstep.edu.domain.CalculationOperator.Companion.getCalculationResult
+import camp.nextstep.edu.domain.CalculationOperator.Companion.getEvaluation
 import org.junit.Assert.*
 import org.junit.Test
 
@@ -12,7 +12,7 @@ class CalculationOperatorTest {
             val firstNumber = 30L
             val secondNumber = 1L
 
-            getCalculationResult(
+            getEvaluation(
                 firstNumber = firstNumber,
                 secondNumber = secondNumber,
                 operator = CalculationOperator.valueOf(operator),
@@ -28,7 +28,7 @@ class CalculationOperatorTest {
         val firstNumber = 5L
         val secondNumber = 3L
 
-        val result = getCalculationResult(
+        val result = getEvaluation(
             firstNumber = firstNumber,
             secondNumber = secondNumber,
             operator = operator,
@@ -45,7 +45,7 @@ class CalculationOperatorTest {
         val firstNumber = 3L
         val secondNumber = 5L
 
-        val result = getCalculationResult(
+        val result = getEvaluation(
             firstNumber = firstNumber,
             secondNumber = secondNumber,
             operator = operator,
@@ -62,7 +62,7 @@ class CalculationOperatorTest {
         val firstNumber = 3L
         val secondNumber = 5L
 
-        val result = getCalculationResult(
+        val result = getEvaluation(
             firstNumber = firstNumber,
             secondNumber = secondNumber,
             operator = operator,
@@ -78,7 +78,7 @@ class CalculationOperatorTest {
         val firstNumber = 9L
         val secondNumber = 3L
 
-        val result = getCalculationResult(
+        val result = getEvaluation(
             firstNumber = firstNumber,
             secondNumber = secondNumber,
             operator = operator,
