@@ -1,15 +1,37 @@
 package camp.nextstep.edu.domain
 
-class ExpressionHandler {
+class ExpressionHandler(
+    private val onExpressionChanged: (expression: String) -> Unit
+) {
 
     var expression = ""
         private set
 
     fun addInputValue(inputValue: String) {
-        expression += inputValue
+        val isDigitInputValue = inputValue.trim().first().isDigit()
+        val isExpressionEmpty = expression == "0" || expression.isEmpty()
+        val lastExpression = expression.trimEnd().lastOrNull()
+
+        if (isExpressionEmpty && !isDigitInputValue) return
+        if (lastExpression?.isDigit() == false && !isDigitInputValue) {
+            expression = expression.trimEnd().dropLast(1).trimEnd() + inputValue
+        } else {
+            expression += inputValue
+        }
+
+        onExpressionChanged(expression)
     }
 
     fun deleteLast() {
-        expression = expression.dropLast(1)
+        val deletedExpression = expression.trimEnd().dropLast(1)
+        expression =
+            if (deletedExpression.endsWith(" ")) deletedExpression.trimEnd()
+            else deletedExpression
+
+        onExpressionChanged(expression)
+    }
+
+    fun setEvaluationResult(result: String) {
+        onExpressionChanged(result)
     }
 }

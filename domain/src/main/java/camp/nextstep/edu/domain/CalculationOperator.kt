@@ -17,11 +17,15 @@ enum class CalculationOperator(val symbol: String) {
     abstract fun calculate(firstNumber: Long, secondNumber: Long): Long
 
     companion object {
-        fun String.getCalculationResult(firstNumber: Long, secondNumber: Long): Long {
-            return CalculationOperator.values()
-                .find { it.symbol == this }
-                ?.calculate(firstNumber, secondNumber)
+
+        fun getOperator(operator: String) =
+            CalculationOperator.values().firstOrNull { it.symbol == operator }
                 ?: throw IllegalArgumentException("Unknown Operator.")
-        }
+
+        fun getEvaluation(
+            firstNumber: Long,
+            secondNumber: Long,
+            operator: CalculationOperator
+        ) = getOperator(operator.symbol).calculate(firstNumber, secondNumber)
     }
 }
