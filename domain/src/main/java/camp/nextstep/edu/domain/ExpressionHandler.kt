@@ -24,8 +24,4 @@ class ExpressionHandler {
             if (deletedExpression.endsWith(" ")) deletedExpression.trimEnd()
             else deletedExpression
     }
-
-    fun setEvaluationResult(result: String) {
-
-    }
 }
