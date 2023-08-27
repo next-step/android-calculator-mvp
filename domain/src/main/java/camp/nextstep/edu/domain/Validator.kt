@@ -6,7 +6,7 @@ class Validator {
             || hasValidOperatorInNumberIndex(expressions)
             || hasInvalidValue(expressions)
         ) {
-            throw IllegalArgumentException()
+            throw IllegalArgumentException("유효하지 않은 수식입니다.")
         }
     }
 

@@ -1,8 +1,6 @@
 package camp.nextstep.edu.domain
 
-class ExpressionHandler(
-    private val onExpressionChanged: (expression: String) -> Unit
-) {
+class ExpressionHandler {
 
     var expression = ""
         private set
@@ -18,8 +16,6 @@ class ExpressionHandler(
         } else {
             expression += inputValue
         }
-
-        onExpressionChanged(expression)
     }
 
     fun deleteLast() {
@@ -27,11 +23,5 @@ class ExpressionHandler(
         expression =
             if (deletedExpression.endsWith(" ")) deletedExpression.trimEnd()
             else deletedExpression
-
-        onExpressionChanged(expression)
-    }
-
-    fun setEvaluationResult(result: String) {
-        onExpressionChanged(result)
     }
 }

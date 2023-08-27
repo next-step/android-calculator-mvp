@@ -5,21 +5,18 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import camp.nextstep.edu.calculator.databinding.ActivityMainBinding
 import camp.nextstep.edu.domain.CalculationOperator
-import camp.nextstep.edu.domain.Evaluator
-import camp.nextstep.edu.domain.ExpressionHandler
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainContract.View {
+
+    override lateinit var presenter: MainContract.Presenter
     private lateinit var binding: ActivityMainBinding
-
-    private lateinit var expressionHandler: ExpressionHandler
-    private val evaluator = Evaluator()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        expressionHandler = ExpressionHandler { binding.textView.text = it }
+        initMainPresenter()
 
         setOnNumberClickListener()
         setOnOperatorClickListener()
@@ -27,53 +24,51 @@ class MainActivity : AppCompatActivity() {
         setOnCalculateClickListener()
     }
 
+    private fun initMainPresenter() {
+        presenter = MainPresenter(this)
+    }
+
     private fun setOnNumberClickListener() {
         with(binding) {
-            button1.setOnClickListener { expressionHandler.addInputValue("1") }
-            button0.setOnClickListener { expressionHandler.addInputValue("0") }
-            button2.setOnClickListener { expressionHandler.addInputValue("2") }
-            button3.setOnClickListener { expressionHandler.addInputValue("3") }
-            button4.setOnClickListener { expressionHandler.addInputValue("4") }
-            button5.setOnClickListener { expressionHandler.addInputValue("5") }
-            button6.setOnClickListener { expressionHandler.addInputValue("6") }
-            button7.setOnClickListener { expressionHandler.addInputValue("7") }
-            button8.setOnClickListener { expressionHandler.addInputValue("8") }
-            button9.setOnClickListener { expressionHandler.addInputValue("9") }
+            button0.setOnClickListener { presenter.addInputValue("0") }
+            button1.setOnClickListener { presenter.addInputValue("1") }
+            button2.setOnClickListener { presenter.addInputValue("2") }
+            button3.setOnClickListener { presenter.addInputValue("3") }
+            button4.setOnClickListener { presenter.addInputValue("4") }
+            button5.setOnClickListener { presenter.addInputValue("5") }
+            button6.setOnClickListener { presenter.addInputValue("6") }
+            button7.setOnClickListener { presenter.addInputValue("7") }
+            button8.setOnClickListener { presenter.addInputValue("8") }
+            button9.setOnClickListener { presenter.addInputValue("9") }
         }
     }
 
     private fun setOnOperatorClickListener() {
         with(binding) {
-            buttonPlus.setOnClickListener { expressionHandler.addInputValue(" ${CalculationOperator.PLUS.symbol} ") }
-            buttonMinus.setOnClickListener { expressionHandler.addInputValue(" ${CalculationOperator.MINUS.symbol} ") }
-            buttonDivide.setOnClickListener { expressionHandler.addInputValue(" ${CalculationOperator.DIVIDE.symbol} ") }
-            buttonMultiply.setOnClickListener { expressionHandler.addInputValue(" ${CalculationOperator.MULTIPLY.symbol} ") }
+            buttonPlus.setOnClickListener { presenter.addInputValue(" ${CalculationOperator.PLUS.symbol} ") }
+            buttonMinus.setOnClickListener { presenter.addInputValue(" ${CalculationOperator.MINUS.symbol} ") }
+            buttonDivide.setOnClickListener { presenter.addInputValue(" ${CalculationOperator.DIVIDE.symbol} ") }
+            buttonMultiply.setOnClickListener { presenter.addInputValue(" ${CalculationOperator.MULTIPLY.symbol} ") }
         }
     }
 
     private fun setOnDeleteClickListener() {
         binding.buttonDelete.setOnClickListener {
-            expressionHandler.deleteLast()
+            presenter.deleteLast()
         }
     }
 
     private fun setOnCalculateClickListener() {
         binding.buttonEquals.setOnClickListener {
-            showResultOrThrow()
+            presenter.evaluate()
         }
     }
 
-    private fun showResultOrThrow() {
-        runCatching {
-            evaluator.evaluate(expressionHandler.expression)
-        }.onSuccess {
-            expressionHandler.setEvaluationResult(it.toString())
-        }.onFailure {
-            Toast.makeText(
-                this@MainActivity,
-                getString(R.string.incomplete_expression),
-                Toast.LENGTH_SHORT
-            ).show()
-        }
+    override fun showExpression(expression: String) {
+        binding.textView.text = expression
+    }
+
+    override fun showToast(message: String) {
+        Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
     }
 }
